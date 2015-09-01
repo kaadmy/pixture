@@ -6,5 +6,6 @@ Adds the required stuff to run
 
 WARNING: This mod will not be compatible with existing mods, tons of stuff has been renamed!
 
-Asset license: WTFPL
+Sound license: CC0
+Texture license: WTFPL
 Source license: WTFPL(Some code from minetest_game's default mod)
