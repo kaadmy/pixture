@@ -5,5 +5,5 @@ Tweaked by Kadmy, for Pixture
 
 Right-click a bed to sleep, right-click again to get out.
 
-Asset license: CC0
-Source license: MIT(originally WTFPL)
+Asset license: WTFPL
+Source licens: WTFPL

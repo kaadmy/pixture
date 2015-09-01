@@ -4,5 +4,5 @@ By Kaadmy, for Pixture
 
 Trading/currency mod; required by mobs
 
-Asset license: CC0
-Source license: MIT
+Asset license: WTFPL
+Source license: WTFPL

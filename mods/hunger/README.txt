@@ -1,12 +1,12 @@
 Hunger mod
 ==========
-For nodetest
+For Voxelgarden(By Casimir?)
 Tweaked by Kaadmy, for Pixture
 
-Only mod that isn't MIT or WTFPL :(
+Only mod that isn't WTFPL :(
 Though most is re-written anyway...
 
-Asset license: CC0
+Asset license: WTFPL
 Source license:
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by

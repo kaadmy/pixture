@@ -5,27 +5,27 @@
 function default.furnace_active_formspec(percent, item_percent)
    local form = default.ui.get_page("core_2part")
    form = form .. "list[current_player;main;0.25,4.75;8,4;]"
-   form_furnace = form_furnace .. "listring[current_player;main]"
+   form = form .. "listring[current_player;main]"
    form = form .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
    form = form .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
 
    form = form .. "list[current_name;src;2.25,0.75;1,1;]"
-   form_furnace = form_furnace .. "listring[current_name;src]"
+   form = form .. "listring[current_name;src]"
    form = form .. default.ui.get_itemslot_bg(2.25, 0.75, 1, 1)
 
    form = form .. "list[current_name;fuel;2.25,2.75;1,1;]"
    form = form .. default.ui.get_itemslot_bg(2.25, 2.75, 1, 1)
 
    form = form .. "list[current_name;dst;4.25,1.25;2,2;]"
-   form_furnace = form_furnace .. "listring[current_name;dst]"
+   form = form .. "listring[current_name;dst]"
    form = form .. default.ui.get_hotbar_itemslot_bg(4.25, 1.25, 2, 2)
 
    form = form .. "image[2.25,1.75;1,1;ui_fire_bg.png^[lowpart:"
    form = form .. (100-percent) .. ":ui_fire.png]"
    form = form .. "image[3.25,1.75;1,1;ui_arrow_bg.png^[lowpart:"
    form = form .. (item_percent) .. ":ui_arrow.png^[transformR270]"
-   return form
 
+   return form
 end
 
 local form_furnace = default.ui.get_page("core_2part")

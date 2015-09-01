@@ -270,14 +270,19 @@ default.ui.register_page("core_notabs", form_core_notabs)
 default.ui.register_page("core_notabs_2part", form_core_notabs .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]")
 
 local form_crafting = default.ui.get_page("core_2part")
+form_crafting = form_crafting .. "list[current_player;main;0.25,4.75;8,4;]"
+form_crafting = form_crafting .. "listring[current_player;main]"
+form_crafting = form_crafting .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
+form_crafting = form_crafting .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
+
 form_crafting = form_crafting .. "list[current_player;craft;2.25,0.75;3,3;]"
+form_crafting = form_crafting .. "listring[current_player;craft]"
+
 form_crafting = form_crafting .. "image[5.25,1.75;1,1;ui_arrow.png^[transformR270]"
+
 form_crafting = form_crafting .. "list[current_player;craftpreview;6.25,1.75;1,1;]"
 form_crafting = form_crafting .. default.ui.get_itemslot_bg(2.25, 0.75, 3, 3)
 form_crafting = form_crafting .. default.ui.get_itemslot_bg(6.25, 1.75, 1, 1)
-form_crafting = form_crafting .. "list[current_player;main;0.25,4.75;8,4;]"
-form_crafting = form_crafting .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
-form_crafting = form_crafting .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
 default.ui.register_page("core_crafting", form_crafting)
 
 function default.ui.receive_fields(player, form_name, fields)

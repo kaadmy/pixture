@@ -7,4 +7,4 @@ Mod originally designed for Pixture, may not work elsewhere
 This mod adds books that can be written to, just
     left-click while holding one, write, and save
 
-Source license: MIT
+Source license: WTFPL

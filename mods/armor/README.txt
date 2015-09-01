@@ -5,5 +5,5 @@ By Kaadmy, for Pixture
 
 Adds craftable and wearable armor
 
-Asset license: CC0
-Source code license: MIT
+Asset license: WTFPL
+Source code license: WTFPL
