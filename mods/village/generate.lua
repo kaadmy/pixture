@@ -17,29 +17,25 @@ village.chunkdefs["livestock_pen"] = {
 village.chunkdefs["lamppost"] = { -- not road because of road height limit of 1 nodes
    entity_chance = 2,
    entities = {
-      ["mobs:npc_farmer"] = 1,
-      ["mobs:npc_tavernkeeper"] = 1,
+      ["mobs:npc_butcher"] = 1,
    },
 }
 village.chunkdefs["well"] = {
    entities = {
       ["mobs:npc_farmer"] = 1,
-      ["mobs:npc_tavernkeeper"] = 2,
+      ["mobs:npc_tavernkeeper"] = 1,
    },
 }
 village.chunkdefs["house"] = {
    entity_chance = 2,
    entities = {
       ["mobs:npc_farmer"] = 1,
-      ["mobs:npc_butcher"] = 1,
    },
 }
 village.chunkdefs["tavern"] = {
    entity_chance = 2,
    entities = {
       ["mobs:npc_tavernkeeper"] = 1,
-      ["mobs:npc_butcher"] = 2,
-      ["mobs:npc_blacksmith"] = 1,
    },
 }
 
@@ -50,7 +46,7 @@ village.chunkdefs["forge"] = {
    },
 }
 village.chunkdefs["orchard"] = {
-   entity_chance = 3,
+   entity_chance = 2,
    entities = {
       ["mobs:npc_farmer"] = 1,
    },
@@ -62,10 +58,9 @@ village.chunkdefs["farm"] = {
    },
 }
 village.chunkdefs["farm_papyrus"] = {
-   entity_chance = 3,
+   entity_chance = 2,
    entities = {
       ["mobs:npc_farmer"] = 1,
-      ["mobs:npc_tavernkeeper"] = 1,
    },
 }
 
@@ -168,10 +163,10 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 
 	 if #ent_spawns > 0 then
 	    for ent, amt in pairs(chunkdef.entities) do
-	       for j = 0, pr:next(0, amt) do
+	       for j = 1, pr:next(1, amt) do
 		  local spawn = util.choice_element(ent_spawns, pr)
-		  spawn.y = spawn.y + 1.6
 		  if spawn ~= nil then
+		     spawn.y = spawn.y + 1.6
 		     minetest.add_entity(spawn, ent)
 		  end
 	       end
