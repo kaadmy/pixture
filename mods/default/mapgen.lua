@@ -206,7 +206,7 @@ end
 local mg_params = minetest.get_mapgen_params()
 
 if mg_params.mgname == "v6" then
-   default.log("please use v5 or v7 mapgen instead; v6 mapgen may not work and is not supported.", "warning")
+   default.log("please use v5 or v7 mapgen instead; v6 mapgen may not work and is not supported.", "info")
    --   minetest.register_on_generated(default.mgv6_ongen)
 end
 
@@ -220,14 +220,26 @@ minetest.clear_registered_biomes()
 
 minetest.register_biome(
    {
+      name = "Deep Forest",
+      node_top = "default:dirt",		depth_top = 1,
+      node_filler = "default:dirt",			depth_filler = 6,
+      node_underwater = "default:dirt",
+      node_shore_top = "default:dirt",
+      node_shore_filler = "default:dirt",      	height_shore = 0,
+      y_min = 10,					y_max = 50,
+      heat_point = 30,			        humidity_point = 40,
+   })
+
+minetest.register_biome(
+   {
       name = "Forest",
       node_top = "default:dirt_with_grass",		depth_top = 1,
       node_filler = "default:dirt",			depth_filler = 6,
       node_underwater = "default:dirt",
       node_shore_top = "default:sand",
       node_shore_filler = "default:sandstone",      	height_shore = 0,
-      y_min = 10,					y_max = 200,
-      heat_point = 30,			        humidity_point = 40,
+      y_min = 0,					y_max = 500,
+      heat_point = 35,			        humidity_point = 40,
    })
 
 minetest.register_biome(
@@ -284,13 +296,13 @@ minetest.register_decoration(
 minetest.register_decoration(
    {
       deco_type = "schematic",
-      place_on = {"default:dirt_with_grass"},
+      place_on = {"default:dirt_with_grass", "default:dirt"},
       sidelen = 16,
       fill_ratio = 0.009,
-      biomes = {"Forest"},
+      biomes = {"Forest", "Deep Forest"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
-      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_gigatree.mts",
       y_min = -32000,
       y_max = 32000,
    })

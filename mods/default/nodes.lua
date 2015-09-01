@@ -279,7 +279,7 @@ minetest.register_node(
       paramtype = "light",
       waving = 1,
       is_ground_content = false,
-      groups = {snappy=3, leafdecay=4, fall_damage_add_percent=-5, leaves = 1},
+      groups = {snappy=3, leafdecay=6, fall_damage_add_percent=-5, leaves = 1},
       drop = {
 	 max_items = 1,
 	 items = {
