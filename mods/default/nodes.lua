@@ -39,7 +39,7 @@ minetest.register_node(
    {
       description = "Stone with Coal",
       tiles ={"default_stone.png^default_mineral_coal.png"},
-      groups = {cracky=1, stone=1},
+      groups = {cracky=1, stone=1, not_in_craftingguide = 1},
       drop = "default:lump_coal",
       is_ground_content = true,
       sounds = default.node_sound_stone_defaults(),
@@ -50,7 +50,7 @@ minetest.register_node(
    {
       description = "Stone with Iron",
       tiles ={"default_stone.png^default_mineral_iron.png"},
-      groups = {cracky=1, stone=1},
+      groups = {cracky=1, stone=1, not_in_craftingguide = 1},
       drop = "default:lump_iron",
       is_ground_content = true,
       sounds = default.node_sound_stone_defaults(),
@@ -92,7 +92,7 @@ minetest.register_node(
    {
       description = "Dirt with Grass",
       tiles ={"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
-      groups = {crumbly=3, soil=1, fall_damage_add_percent=-5},
+      groups = {crumbly=3, soil=1, fall_damage_add_percent=-5, not_in_craftingguide = 1},
       drop = {
 	 max_items = 3,
 	 items = {
