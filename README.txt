@@ -9,5 +9,5 @@ Special credits:
     Sounds in the default mod are all by Kenney(CC0)
     All textures/models by Kaadmy(CC0)
 
-Asset license: almost all CC0, see per-mod READMEs.
-Source license: almost all MIT, see per-mod READMEs.
+Asset license: all WTFPL or CC0, see per-mod READMEs.
+Source license: all WTFPL or LGPLv2.1, see per-mod READMEs.
