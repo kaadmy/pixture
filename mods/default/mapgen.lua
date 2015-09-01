@@ -238,7 +238,7 @@ minetest.register_biome(
       node_underwater = "default:dirt",
       node_shore_top = "default:sand",
       node_shore_filler = "default:sandstone",      	height_shore = 0,
-      y_min = 0,					y_max = 500,
+      y_min = 0,					y_max = 200,
       heat_point = 35,			        humidity_point = 40,
    })
 
