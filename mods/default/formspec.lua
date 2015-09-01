@@ -177,7 +177,7 @@ function default.ui.item_group(x, y, group, name)
    local itemname = ""
 
    for itemn, itemdef in pairs(minetest.registered_items) do
-      if minetest.get_item_group(itemn, group) ~= 0 then
+      if minetest.get_item_group(itemn, group) ~= 0 and minetest.get_item_group(itemn, "not_in_craftingguide") ~= 1 then
 	 itemname = itemn
       end
    end

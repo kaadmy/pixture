@@ -137,7 +137,7 @@ local function load_recipes()
    for itemname, itemdef in pairs(minetest.registered_items) do
       local recipes = minetest.get_all_craft_recipes(itemname)
       
-      if recipes ~= nil and itemname ~= "" then
+      if recipes ~= nil and itemname ~= "" and minetest.get_item_group(itemname, "not_in_craftingguide") ~= 1 then
 --	 print(dump(recipes))
 	 craftingguide.items[itemname] = recipes
 	 table.insert(craftingguide.itemlist, itemname)
