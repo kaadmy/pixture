@@ -221,7 +221,7 @@ minetest.clear_registered_biomes()
 minetest.register_biome(
    {
       name = "Deep Forest",
-      node_top = "default:dirt",		depth_top = 1,
+      node_top = "default:dirt_with_grass",		depth_top = 1,
       node_filler = "default:dirt",			depth_filler = 6,
       node_underwater = "default:dirt",
       node_shore_top = "default:dirt",
@@ -296,12 +296,26 @@ minetest.register_decoration(
 minetest.register_decoration(
    {
       deco_type = "schematic",
-      place_on = {"default:dirt_with_grass", "default:dirt"},
+      place_on = {"default:dirt_with_grass"},
       sidelen = 16,
       fill_ratio = 0.009,
       biomes = {"Forest", "Deep Forest"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      y_min = -32000,
+      y_max = 32000,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_grass"},
+      sidelen = 16,
+      fill_ratio = 0.028,
+      biomes = {"Deep Forest"},
+      flags = "place_center_x, place_center_z",
+--      replacements = {["default:leaves"] = "default:leaves_birch", ["default:tree"] = "default:tree_birch"},
       schematic = minetest.get_modpath("default").."/schematics/default_gigatree.mts",
       y_min = -32000,
       y_max = 32000,
@@ -355,8 +369,20 @@ minetest.register_decoration(
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
       sidelen = 16,
-      fill_ratio = 0.15,
-      biomes = {"Grassland", "Forest"},
+      fill_ratio = 0.18,
+      biomes = {"Grassland"},
+      decoration = {"default:grass"},
+      y_min = 0,
+      y_max = 32000,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.08,
+      biomes = {"Forest", "Deep Forest"},
       decoration = {"default:grass"},
       y_min = 0,
       y_max = 32000,
@@ -369,6 +395,18 @@ minetest.register_decoration(
       sidelen = 16,
       fill_ratio = 0.08,
       biomes = {"Forest"},
+      decoration = {"default:tall_grass"},
+      y_min = 0,
+      y_max = 32000,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.15,
+      biomes = {"Deep Forest"},
       decoration = {"default:tall_grass"},
       y_min = 0,
       y_max = 32000,
