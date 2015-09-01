@@ -39,7 +39,7 @@ minetest.register_node(
    {
       description = "Stone with Coal",
       tiles ={"default_stone.png^default_mineral_coal.png"},
-      groups = {cracky=1, stone=1, not_in_craftingguide = 1},
+      groups = {cracky = 1, stone = 1, not_in_craftingguide = 1},
       drop = "default:lump_coal",
       is_ground_content = true,
       sounds = default.node_sound_stone_defaults(),
