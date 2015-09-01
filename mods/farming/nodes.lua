@@ -6,6 +6,7 @@ minetest.register_node(
       tiles = {"farming_wheat_1.png"},
       inventory_image = "farming_wheat_4.png",
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -29,6 +30,7 @@ minetest.register_node(
       drawtype = "plantlike",
       tiles = {"farming_wheat_2.png"},
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -41,7 +43,7 @@ minetest.register_node(
 	 type = "fixed",
 	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5+(4/16), 0.5}
       },
-      groups = {dig_immediate=2},
+      groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
    })
 
@@ -52,6 +54,7 @@ minetest.register_node(
       drawtype = "plantlike",
       tiles = {"farming_wheat_3.png"},
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -64,7 +67,7 @@ minetest.register_node(
 	 type = "fixed",
 	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5+(4/16), 0.5}
       },
-      groups = {dig_immediate=2},
+      groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
    })
 
@@ -75,6 +78,7 @@ minetest.register_node(
       drawtype = "plantlike",
       tiles = {"farming_wheat_4.png"},
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -90,7 +94,7 @@ minetest.register_node(
 	 type = "fixed",
 	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5+(4/16), 0.5}
       },
-      groups = {dig_immediate=2},
+      groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
    })
 
@@ -102,6 +106,7 @@ minetest.register_node(
       tiles = {"farming_cotton_1.png"},
       inventory_image = "farming_cotton_4.png",
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -125,6 +130,7 @@ minetest.register_node(
       drawtype = "plantlike",
       tiles = {"farming_cotton_2.png"},
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -137,7 +143,7 @@ minetest.register_node(
 	 type = "fixed",
 	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5+(4/16), 0.5}
       },
-      groups = {dig_immediate=2},
+      groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
    })
 
@@ -148,6 +154,7 @@ minetest.register_node(
       drawtype = "plantlike",
       tiles = {"farming_cotton_3.png"},
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -160,7 +167,7 @@ minetest.register_node(
 	 type = "fixed",
 	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5+(4/16), 0.5}
       },
-      groups = {dig_immediate=2},
+      groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
    })
 
@@ -171,6 +178,7 @@ minetest.register_node(
       drawtype = "plantlike",
       tiles = {"farming_cotton_4.png"},
       paramtype = "light",
+      waving = 1,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -186,7 +194,7 @@ minetest.register_node(
 	 type = "fixed",
 	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5+(4/16), 0.5}
       },
-      groups = {dig_immediate=2},
+      groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
    })
 
