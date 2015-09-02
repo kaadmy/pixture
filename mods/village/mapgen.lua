@@ -39,7 +39,7 @@ minetest.register_abm(
 		  if node.name  == "village:grassland_village_mg" then
 		     if pr:next(1, 100) == 1 then
 			print("Spawning a (Mapgen)Grassland village at "..dump(pos))
-			village.spawn_village(pos, pr)
+			minetest.after(3.0, function() village.spawn_village(pos, pr) end) -- a short delay to (hopefully)ensure that the surrounding terrain is generated
 		     end
 		  else
 		     print("Spawning a Grassland village at "..dump(pos))
