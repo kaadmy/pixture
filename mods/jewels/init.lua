@@ -67,15 +67,21 @@ function jewels.register_jewel(toolname, new_toolname, def)
 
 	    if data.stats.maxlevel and cap.maxlevel then
 	       cap.maxlevel = cap.maxlevel + data.stats.maxlevel
-	       desc = desc .. "\nDig level: " .. p(data.stats.maxlevel)
 	    end
 
 	    if data.stats.uses and cap.uses then
 	       cap.uses = cap.uses + data.stats.uses
-	       desc = desc .. "\nUses: " .. p(data.stats.uses)
 	    end
 	 end
-	 desc = desc .. "\nDig speed: " .. p(data.stats.digspeed) .. " seconds"
+
+	 desc = desc .. "\nDig time: " .. p(data.stats.digspeed) .. " seconds"
+      end
+
+      if data.stats.uses then
+	 desc = desc .. "\nUses: " .. p(data.stats.uses)
+      end
+      if data.stats.maxlevel then
+	 desc = desc .. "\nDig level: " .. p(data.stats.maxlevel)
       end
 
       if data.stats.fleshy and new_tooldef.tool_capabilities.damage_groups and new_tooldef.tool_capabilities.damage_groups.fleshy then
@@ -89,15 +95,6 @@ function jewels.register_jewel(toolname, new_toolname, def)
    minetest.register_tool(new_toolname, new_tooldef)
 end
 
-jewels.register_jewel(
-   "default:pick_steel",
-   "jewels:pick_steel_digspeed",
-   {
-      stats = {
-	 fleshy = 2,
-      }
-   })
-
 minetest.register_craftitem(
    "jewels:jewel",
    {
@@ -106,3 +103,4 @@ minetest.register_craftitem(
       stack_max = 10
    })
 
+dofile(minetest.get_modpath("jewels").."/jewels.lua")
