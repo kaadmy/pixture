@@ -124,7 +124,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
       {x = pos.x+12, y = pos.y+16, z = pos.z+12},
       "default:chest",
       function(pos)
-	 village.goodies.fill(pos, chunktype, pr, "main", 3)
+	 goodies.fill(pos, chunktype, pr, "main", 3)
       end)
    util.nodefunc(
       pos,
@@ -181,9 +181,9 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 	 {x = pos.x+12, y = pos.y+16, z = pos.z+12},
 	 "default:furnace",
 	 function(pos)
-	    village.goodies.fill(pos, "FURNACE_SRC", pr, "src", 1)
-	    village.goodies.fill(pos, "FURNACE_DST", pr, "dst", 1)
-	    village.goodies.fill(pos, "FURNACE_FUEL", pr, "fuel", 1)
+	    goodies.fill(pos, "FURNACE_SRC", pr, "src", 1)
+	    goodies.fill(pos, "FURNACE_DST", pr, "dst", 1)
+	    goodies.fill(pos, "FURNACE_FUEL", pr, "fuel", 1)
 	 end)
    end
 end
