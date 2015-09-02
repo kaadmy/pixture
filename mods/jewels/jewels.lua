@@ -330,3 +330,4 @@ jewels.register_jewel(
       }
    })
 
+default.log("jewels", "loaded")

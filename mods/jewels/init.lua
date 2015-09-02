@@ -103,4 +103,44 @@ minetest.register_craftitem(
       stack_max = 10
    })
 
+minetest.register_node(
+   "jewels:bench",
+   {
+      description = "Jewelers Workbench",
+      tiles ={"jewels_bench_top.png", "jewels_bench_bottom.png", "jewels_bench_sides.png"},
+      paramtype2 = "facedir",
+      groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+      legacy_facedir_simple = true,
+      is_ground_content = false,
+      sounds = default.node_sound_wood_defaults(),
+      on_construct = function(pos)
+			local meta = minetest.get_meta(pos)
+			meta:set_string("formspec", default.ui.get_page("jewels_bench"))
+			meta:set_string("infotext", "Jewelers Workbench")
+
+			local inv = meta:get_inventory()
+			inv:set_size("main", 1)
+		     end,
+      can_dig = function(pos, player)
+		   local meta = minetest.get_meta(pos)
+		   local inv = meta:get_inventory()
+		   return inv:is_empty("main")
+		end,
+   })
+
+local form_bench = default.ui.get_page("core_2part")
+form_bench = form_bench .. "list[current_name;main;2.25,1.75;1,1;]"
+form_bench = form_bench .. "listring[current_name;main]"
+form_bench = form_bench .. default.ui.get_itemslot_bg(2.25, 1.75, 1, 1)
+
+form_bench = form_bench .. "label[3.25,2;Place unjeweled tool here, then rightclick on bench]"
+
+form_bench = form_bench .. "list[current_player;main;0.25,4.75;8,4;]"
+form_bench = form_bench .. "listring[current_player;main]"
+form_bench = form_bench .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
+form_bench = form_bench .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
+default.ui.register_page("jewels_bench", form_bench)
+
 dofile(minetest.get_modpath("jewels").."/jewels.lua")
+
+default.log("mod:jewels", "loaded")
