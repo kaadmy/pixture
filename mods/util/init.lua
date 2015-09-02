@@ -141,7 +141,11 @@ function util.choice(tab, pr)
 
    if #choices <= 0 then return end
 
-   return choices[pr:next(1, #choices)]
+   if pr then
+      return choices[pr:next(1, #choices)]
+   else
+      return choices[math.random(1, #choices)]
+   end
 end
 
 function util.choice_element(tab, pr)
@@ -155,6 +159,10 @@ function util.choice_element(tab, pr)
 
    if #choices <= 0 then return end
 
-   return choices[pr:next(1, #choices)]
+   if pr then
+      return choices[pr:next(1, #choices)]
+   else
+      return choices[math.random(1, #choices)]
+   end
 end
 
