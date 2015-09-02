@@ -30,7 +30,7 @@ if minetest.setting_getbool("creative_mode") == true then
       {
 	 type = "none",
 	 wield_image = "wieldhand.png",
-	 wield_scale = {x=1,y=1,z=2.0},
+	 wield_scale = {x=1.5,y=3,z=3},
 	 tool_capabilities = {
 	    full_punch_interval = 1.0,
 	    max_drop_level = 0,
