@@ -11,18 +11,11 @@ minetest.register_node(
 minetest.register_node(
    "village:grassland_village",
    {
-      description = "Cillage spawner",
-      drawtype = "airlike",
-      paramtype = "light",
-      sunlight_propagates = true,
-      walkable = false,
-      pointable = false,
-      diggable = false,
-      buildable_to = false,
-      is_ground_content = true,
-      air_equivalent = true,
-      drop = "",
-      groups = {not_in_craftingguide = 1},
+      description = "Village spawner",
+      tiles = {"default_grass.png^default_book.png"},
+      is_ground_content = false,
+      groups = {dig_immediate = 2},
+      sounds = default.node_sound_wood_defaults()
    })
 
 minetest.register_node(
