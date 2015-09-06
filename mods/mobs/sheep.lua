@@ -20,6 +20,7 @@ mobs:register_mob(
       makes_footstep_sound = true,
       sounds = {
 	 random = "mobs_sheep",
+	 distance = 16,
       },
       walk_velocity = 1,
       walk_chance = 150,

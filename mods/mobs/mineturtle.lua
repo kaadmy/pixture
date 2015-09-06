@@ -6,7 +6,6 @@ mobs:register_mob(
       type = "monster",
       passive = false,
       attack_type = "explode",
-      damage = 2,
       hp_min = 10,
       hp_max = 15,
       armor = 200,
@@ -20,6 +19,7 @@ mobs:register_mob(
       sounds = {
 	 random = "mobs_mineturtle",
 	 explode= "tnt_explode",
+	 distance = 16,
       },
       walk_velocity = 2,
       run_velocity = 4,
