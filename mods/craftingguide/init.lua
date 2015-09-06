@@ -42,7 +42,7 @@ function craftingguide.get_formspec(name)
    local recipes = craftingguide.items[user.item]
    local recipe = recipes[user.itemno]
 
-   print(dump(recipe))
+--   print(dump(recipe))
    for slot_index, itemname in pairs(recipe.items) do
       local x = slot_index - 1
 
