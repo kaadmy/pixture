@@ -11,21 +11,35 @@ minetest.register_node(
 minetest.register_node(
    "village:grassland_village",
    {
-      description = "Spawns a village at this block when placed",
-      tiles = {"default_grass.png^default_book.png"},
-      is_ground_content = false,
-      groups = {dig_immediate = 2},
-      sounds = default.node_sound_wood_defaults()
+      description = "Cillage spawner",
+      drawtype = "airlike",
+      paramtype = "light",
+      sunlight_propagates = true,
+      walkable = false,
+      pointable = false,
+      diggable = false,
+      buildable_to = false,
+      is_ground_content = true,
+      air_equivalent = true,
+      drop = "",
+      groups = {not_in_craftingguide = 1},
    })
 
 minetest.register_node(
    "village:grassland_village_mg",
    {
       description = "Mapgen village spawner(Has chance of not spawning village)",
-      tiles = {"default_grass.png^default_book.png"},
-      is_ground_content = false,
-      groups = {dig_immediate = 2},
-      sounds = default.node_sound_wood_defaults()
+      drawtype = "airlike",
+      paramtype = "light",
+      sunlight_propagates = true,
+      walkable = false,
+      pointable = false,
+      diggable = false,
+      buildable_to = false,
+      is_ground_content = true,
+      air_equivalent = true,
+      drop = "",
+      groups = {not_in_craftingguide = 1},
    })
 
 minetest.register_abm(
