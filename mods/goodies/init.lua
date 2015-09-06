@@ -53,6 +53,19 @@ if minetest.get_modpath("village") ~= nil then
       ["default:bucket"] = 8,
       ["default:bucket_water"] = 12,
    }
+
+   -- jewels and gold
+   if minetest.get_modpath("jewels") ~= nil then
+      goodies.types["house"]["jewels:bench"] = 24 -- jeweling benches
+      goodies.types["house"]["jewels:jewel"] = 34
+      goodies.types["tavern"]["jewels:jewel"] = 32
+      goodies.types["forge"]["jewels:jewel"] = 30
+   end
+   if minetest.get_modpath("gold") ~= nil then
+      goodies.types["house"]["gold:gold"] = 12
+      goodies.types["tavern"]["gold:gold"] = 10
+      goodies.types["forge"]["gold:gold"] = 8
+   end
 end
 
 function goodies.fill(pos, ctype, pr, listname, keepchance)

@@ -8,96 +8,126 @@ gold = {}
 gold.pr = PseudoRandom(minetest.get_mapgen_params().seed+8732)
 
 gold.trades = {}
+gold.trade_names = {}
 
-gold.trades["farmer"] = {
-   -- plants
-   {"gold:gold", "", "farming:wheat_1 6"},
-   {"gold:gold 3", "", "farming:cotton_1 4"},
-   {"gold:gold 5", "", "farming:cotton_1 8"},
-   {"gold:gold", "", "default:papyrus 4"},
-   {"gold:gold 4", "", "default:cactus 2"},
+if minetest.get_modpath("mobs") ~= nil then
+   gold.trades["farmer"] = {
+      -- plants
+      {"gold:gold", "", "farming:wheat_1 6"},
+      {"gold:gold 3", "", "farming:cotton_1 4"},
+      {"gold:gold 5", "", "farming:cotton_1 8"},
+      {"gold:gold", "", "default:papyrus 4"},
+      {"gold:gold 4", "", "default:cactus 2"},
 
-   -- crafts
-   {"gold:gold 7", "", "farming:cotton_bale 3"},
+      -- crafts
+      {"gold:gold 7", "", "farming:cotton_bale 3"},
 
-   -- materials
-   {"default:planks 3", "farming:cotton_bale 3", "bed:bed"},
+      -- materials
+      {"default:planks 3", "farming:cotton_bale 3", "bed:bed"},
 
-   -- tool repair
-   {"gold:gold 6", "default:shovel_stone", "default:shovel_stone"},
-   {"gold:gold 8", "default:shovel_steel", "default:shovel_steel"},
-   {"gold:gold 10", "default:shovel_carbonsteel", "default:shovel_carbonsteel"},
-}
-gold.trades["tavernkeeper"] = {
-   -- materials
-   {"gold:gold 2", "", "default:planks 12"},
-   {"gold:gold 2", "", "default:planks_birch 8"},
+      -- tool repair
+      {"gold:gold 6", "default:shovel_stone", "default:shovel_stone"},
+      {"gold:gold 8", "default:shovel_steel", "default:shovel_steel"},
+      {"gold:gold 10", "default:shovel_carbonsteel", "default:shovel_carbonsteel"},
+   }
+   gold.trades["tavernkeeper"] = {
+      -- materials
+      {"gold:gold 2", "", "default:planks 12"},
+      {"gold:gold 2", "", "default:planks_birch 8"},
 
-   -- useables
-   {"gold:gold 9", "", "bed:bed"},
-   {"gold:gold 5", "", "default:chest"},
-   {"default:planks_birch 3", "mobs:wool 3", "bed:bed"},
+      -- useables
+      {"gold:gold 9", "", "bed:bed"},
+      {"gold:gold 5", "", "default:chest"},
+      {"default:planks_birch 3", "mobs:wool 3", "bed:bed"},
 
-   -- filling buckets
-   {"gold:gold", "default:bucket", "default:bucket_water"},
-}
-gold.trades["blacksmith"] = {
-   -- smeltables
-   {"gold:gold", "", "default:lump_coal"},
-   {"gold:gold 3", "", "default:lump_iron"},
-   {"gold:gold 5", "", "default:dust_carbonsteel"},
+      -- filling buckets
+      {"gold:gold", "default:bucket", "default:bucket_water"},
+   }
+   gold.trades["blacksmith"] = {
+      -- smeltables
+      {"gold:gold", "", "default:lump_coal"},
+      {"gold:gold 3", "", "default:lump_iron"},
+      {"gold:gold 5", "", "default:dust_carbonsteel"},
 
-   -- materials
-   {"gold:gold 2", "", "default:cobble 10"},
-   {"gold:gold 3", "", "default:stone 10"},
-   {"gold:gold 5", "", "default:reinforced_cobble 10"},
-   {"gold:gold 25", "", "default:block_steel"},
-   {"gold:gold 6", "", "default:glass 5"},
+      -- materials
+      {"gold:gold 2", "", "default:cobble 10"},
+      {"gold:gold 3", "", "default:stone 10"},
+      {"gold:gold 5", "", "default:reinforced_cobble 10"},
+      {"gold:gold 25", "", "default:block_steel"},
+      {"gold:gold 6", "", "default:glass 5"},
 
-   -- usebles
-   {"gold:gold 7", "", "default:furnace"},
+      -- usebles
+      {"gold:gold 7", "", "default:furnace"},
 
-   -- ingots
-   {"gold:gold 5", "", "default:ingot_steel"},
-   {"gold:gold 8", "", "default:ingot_carbonsteel"},
+      -- ingots
+      {"gold:gold 5", "", "default:ingot_steel"},
+      {"gold:gold 8", "", "default:ingot_carbonsteel"},
 
-   -- auto smelting
-   {"gold:gold 2", "default:lump_iron", "default:ingot_steel"},
-   {"gold:gold 4", "default:dust_carbonsteel", "default:ingot_carbonsteel"},
+      -- auto smelting
+      {"gold:gold 2", "default:lump_iron", "default:ingot_steel"},
+      {"gold:gold 4", "default:dust_carbonsteel", "default:ingot_carbonsteel"},
 
-   -- tool repair
-   {"gold:gold 8", "default:pick_stone", "default:pick_stone"},
-   {"gold:gold 12", "default:pick_steel", "default:pick_steel"},
-   {"gold:gold 16", "default:pick_carbonsteel", "default:pick_carbonsteel"},
-}
-gold.trades["butcher"] = {
-   -- materials
-   {"gold:gold 3", "", "default:planks_oak 10"},
+      -- tool repair
+      {"gold:gold 8", "default:pick_stone", "default:pick_stone"},
+      {"gold:gold 12", "default:pick_steel", "default:pick_steel"},
+      {"gold:gold 16", "default:pick_carbonsteel", "default:pick_carbonsteel"},
+   }
+   gold.trades["butcher"] = {
+      -- materials
+      {"gold:gold 3", "", "default:planks_oak 10"},
 
-   -- cooked edibles
-   {"gold:gold 2", "", "mobs:meat"},
-   {"gold:gold 3", "", "mobs:pork"},
+      -- cooked edibles
+      {"gold:gold 2", "", "mobs:meat"},
+      {"gold:gold 3", "", "mobs:pork"},
 
-   -- raw edibles
-   {"gold:gold 2", "", "mobs:meat_raw 2"},
-   {"gold:gold 3", "", "mobs:pork_raw 2"},
+      -- raw edibles
+      {"gold:gold 2", "", "mobs:meat_raw 2"},
+      {"gold:gold 3", "", "mobs:pork_raw 2"},
 
-   -- cooking edibles
-   {"gold:gold 1", "mobs:meat_raw", "mobs:meat"},
-   {"gold:gold 2", "mobs:pork_raw", "mobs:pork"},
+      -- cooking edibles
+      {"gold:gold 1", "mobs:meat_raw", "mobs:meat"},
+      {"gold:gold 2", "mobs:pork_raw", "mobs:pork"},
 
-   -- tool repair
-   {"gold:gold 5", "default:spear_stone", "default:spear_stone"},
-   {"gold:gold 7", "default:spear_steel", "default:spear_steel"},
-   {"gold:gold 11", "default:spear_carbonsteel", "default:spear_carbonsteel"},
-}
+      -- tool repair
+      {"gold:gold 5", "default:spear_stone", "default:spear_stone"},
+      {"gold:gold 7", "default:spear_steel", "default:spear_steel"},
+      {"gold:gold 11", "default:spear_carbonsteel", "default:spear_carbonsteel"},
 
-gold.trade_names = {
-   ["farmer"] = "Farmer",
-   ["tavernkeeper"] = "Tavern Keeper",
-   ["blacksmith"] = "Blacksmith",
-   ["butcher"] = "Butcher",
-}
+   }
+   -- trading currency
+   if minetest.get_modpath("jewels") ~= nil then -- jewels/gold
+      --farmer
+      table.insert(gold.trades["farmer"], {"gold:gold 16", "", "jewels:jewel"})
+      table.insert(gold.trades["farmer"], {"gold:gold 22", "", "jewels:jewel 2"})
+      table.insert(gold.trades["farmer"], {"gold:gold 34", "", "jewels:jewel 4"})
+
+      table.insert(gold.trades["farmer"], {"jewels:jewel", "", "gold:gold 14"})
+      table.insert(gold.trades["farmer"], {"jewels:jewel 2", "", "gold:gold 20"})
+      table.insert(gold.trades["farmer"], {"jewels:jewel 4", "", "gold:gold 32"})
+
+      table.insert(gold.trades["farmer"], {"default:planks 6", "", "gold:gold"})
+
+      -- tavern keeper
+      table.insert(gold.trades["tavernkeeper"], {"gold:gold 14", "", "jewels:jewel"})
+      table.insert(gold.trades["tavernkeeper"], {"gold:gold 20", "", "jewels:jewel 2"})
+      table.insert(gold.trades["tavernkeeper"], {"gold:gold 32", "", "jewels:jewel 4"})
+
+      -- blacksmith
+      table.insert(gold.trades["blacksmith"], {"default:ingot_steel 14", "", "jewels:jewel"})
+      table.insert(gold.trades["blacksmith"], {"default:ingot_steel 20", "", "jewels:jewel 2"})
+      table.insert(gold.trades["blacksmith"], {"default:ingot_steel 32", "", "jewels:jewel 4"})
+   end
+
+   -- butcher(no mod check)
+   table.insert(gold.trades["butcher"], {"mobs:meat_raw 3", "", "gold:gold"})
+   table.insert(gold.trades["butcher"], {"mobs:meat_raw 4", "", "gold:gold 2"})
+   table.insert(gold.trades["butcher"], {"mobs:meat_raw 5", "", "gold:gold 4"})
+
+   gold.trade_names["farmer"] = "Farmer"
+   gold.trade_names["tavernkeeper"] = "Tavern Keeper"
+   gold.trade_names["blacksmith"] = "Blacksmith"
+   gold.trade_names["butcher"] = "Butcher"
+end
 
 local form_trading = ""
 
