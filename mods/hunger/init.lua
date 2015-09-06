@@ -14,7 +14,7 @@ hunger.saturation = {} -- how saturated with food the player is
 local player_step = {}
 local player_health_step = {}
 local player_bar = {}
-local base_interval = 1
+local base_interval = 1.5 -- seconds per hunger update, 1.5 is about ok
 local file = minetest.get_worldpath() .. "/hunger"
 
 function hunger.save_hunger()
