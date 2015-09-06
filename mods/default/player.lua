@@ -11,7 +11,8 @@ local function step(dtime)
 	 minetest.sound_play(
 	    "default_hurt",
 	    {
-	       to_player = name
+	       pos = player_pos,
+	       max_hear_distance = 8,
 	    })	 
       end
       player_health[name] = player:get_hp()
@@ -31,7 +32,8 @@ local function step(dtime)
 	    player_soundspec[name]=minetest.sound_play(
 	       "default_water",
 	       {
-		  to_player = name
+		  pos = player_pos,
+		  max_hear_distance = 16,
 	       })
 	    player_lastsound[name] = 0
 	 end
@@ -45,7 +47,7 @@ local function step(dtime)
       
       local grass_pos=minetest.find_node_near(player_pos, 1, {"default:dirt_with_grass"})
 
-      if grass_pos ~= nil and math.random(1, 400) == 1 then
+      if grass_pos ~= nil and math.random(1, 500) == 1 then
 	 if grass_pos.x == player_pos.x and grass_pos.z == player_pos.z then
 	    minetest.set_node(grass_pos, {name = "default:dirt"})
 	 end
