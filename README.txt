@@ -10,7 +10,9 @@
 
 =======================================================
 By Kaadmy
-Extra-special credit to Kenney(kenney.nl)
+Inspiration by Kenney(kenney.nl)
+
+Note: Mapgen v6 should NOT be used, only v5 or v7 mapgens are supported; v6 may fail.
 
 Special credits:
     Extra-special credit to Kenney(kenney.nl) for the inspiration, most of the graphics design
