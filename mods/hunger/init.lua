@@ -43,7 +43,7 @@ local function load_hunger()
 	 hunger.hunger[name] = hnger
 	 hunger.saturation[name] = sat
 
-	 print("[hunger] '"..name.."' has "..hnger.." hunger and is saturated to "..sat.."%")
+	 minetest.log("action", name.." has "..hnger.." hunger and is saturated to "..sat.."%")
       until input:read(0) == nil
       io.close(input)
    else
@@ -72,8 +72,7 @@ function hunger.update_bar(player)
    end
 end
 
-if minetest.setting_getbool("enable_damage") == true then
-
+if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunger_enable") then
    -- Prevent players from starving while afk (<--joke)
    minetest.register_on_dignode(
       function(pos, oldnode, player)
@@ -193,11 +192,10 @@ if minetest.setting_getbool("enable_damage") == true then
 	    hunger.moving[name] = moving
 	 end
 	 
-	 timer = timer + dtime;
+	 timer = timer + dtime
 	 
 	 if timer < base_interval then return end
 	 timer = 0
-	 local change = false
 	 for _,player in ipairs(minetest.get_connected_players()) do
 	    local name = player:get_player_name()
 	    local hp = player:get_hp()
@@ -229,8 +227,6 @@ if minetest.setting_getbool("enable_damage") == true then
 		     minetest.chat_send_player(name, "You are hungry.")
 		  end
 	       end
-	       
-	       change = true
 	    end
 
 	    hunger.active[name] = 0
@@ -239,18 +235,23 @@ if minetest.setting_getbool("enable_damage") == true then
 	    if player_health_step[name] == nil then player_health_step[name] = 0 end
 
 	    player_health_step[name] = player_health_step[name] + 1
-
 	    if player_health_step[name] >= 5 and player:get_hp() < 20 and hunger.hunger[name] >= 16 then
 	       player_health_step[name] = 0
 	       player:set_hp(hp+1)
 	    end
 	 end
 
-	 if change then hunger.save_hunger() end
+	 hunger.save_hunger()
       end)
 else
    minetest.register_on_item_eat(
       function(hpdata, replace_with_item, itemstack, player, pointed_thing)
-	 return
+	 local headpos  = player:getpos()
+	 headpos.y = headpos.y + 1
+	 minetest.sound_play("hunger_eat", {pos = headpos, max_hear_distance = 8})
+
+	 itemstack:take_item(1)
+
+	 return itemstack
       end)
 end
