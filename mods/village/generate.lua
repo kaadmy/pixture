@@ -207,15 +207,15 @@ function village.spawn_road(pos, houses, built, roads, depth, pr)
 	 nextpos.x = nextpos.x + 12
       end
 
-      if built[dump(nextpos)] == nil then
-	 built[dump(nextpos)] = true
+      if built[default.dumpvec(nextpos)] == nil then
+	 built[default.dumpvec(nextpos)] = true
 	 if depth <= 0 or pr:next(1, 8) < 6 then
-	    houses[dump(nextpos)] = {pos = nextpos, front = pos}
+	    houses[default.dumpvec(nextpos)] = {pos = nextpos, front = pos}
 	    
 	    local structure = util.choice_element(village.chunktypes, pr)
 	    village.spawn_chunk(nextpos, orient, {}, pr, structure)
 	 else
-	    roads[dump(nextpos)] = {pos = nextpos}
+	    roads[default.dumpvec(nextpos)] = {pos = nextpos}
 	    village.spawn_road(nextpos, houses, built, roads, depth - 1, pr)
 	 end
       end
@@ -237,18 +237,18 @@ function village.spawn_village(pos, pr)
    local built = {}
    local roads = {}
 
-   built[dump(pos)] = true
+   built[default.dumpvec(pos)] = true
 
    village.spawn_road(pos, houses, built, roads, depth, pr)
 
    local function connects(pos, nextpos)
-      if houses[dump(nextpos)] ~= nil then
-	 if vector.equals(houses[dump(nextpos)].front, pos) then
+      if houses[default.dumpvec(nextpos)] ~= nil then
+	 if vector.equals(houses[default.dumpvec(nextpos)].front, pos) then
 	    return true
 	 end
       end
 
-      if roads[dump(nextpos)] ~= nil then
+      if roads[default.dumpvec(nextpos)] ~= nil then
 	 return true
       end
 

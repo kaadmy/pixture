@@ -10,7 +10,11 @@ default.WATER_VISC = 1
 default.LIGHT_MAX = 14
 
 function default.log(text, type)
-   print("Pixture ["..type.."] "..text)
+   minetest.log("Pixture ["..type.."] "..text)
+end
+
+function default.dumpvec(v)
+   return v.x..":"..v.y..":"..v.z
 end
 
 minetest.nodedef_default.stack_max = 60

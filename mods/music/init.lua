@@ -9,7 +9,7 @@ music.players = {} -- music players
 
 if minetest.setting_getbool("music_enable") then
    function music.stop(pos)
-      local dp = dump(pos)
+      local dp = default.dumpvec(pos)
 
       local meta = minetest.get_meta(pos)
       meta:set_string("infotext", "Music player(Off)")
@@ -22,7 +22,7 @@ if minetest.setting_getbool("music_enable") then
    end
    
    function music.start(pos)
-      local dp = dump(pos)
+      local dp = default.dumpvec(pos)
 
       local meta = minetest.get_meta(pos)
       meta:set_string("infotext", "Music player(On)")
@@ -52,7 +52,7 @@ if minetest.setting_getbool("music_enable") then
    end
 
    function music.update(pos)
-      local dp = dump(pos)
+      local dp = default.dumpvec(pos)
 
       if music.players[dp] ~= nil then
 	 local node = minetest.get_node(pos)
@@ -70,7 +70,7 @@ if minetest.setting_getbool("music_enable") then
    end
 
    function music.toggle(pos)
-      local dp = dump(pos)
+      local dp = default.dumpvec(pos)
       
       if music.players[dp] == nil then
 	 music.start(pos)
@@ -128,7 +128,7 @@ if minetest.setting_getbool("music_enable") then
 	 chance = 1,
 	 interval = 1,
 	 action = function(pos, node)
-		     if music.players[dump(pos)] == nil then
+		     if music.players[default.dumpvec(pos)] == nil then
 			local meta = minetest.get_meta(pos)
 			if meta:get_int("music_player_enabled") == 1 then
 			   music.start(pos)
