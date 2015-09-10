@@ -133,7 +133,30 @@ local function on_joinplayer(player)
 end
 
 local function on_die(player)
-   -- remove your armor(when i get to doing it...)
+   local pos = player:getpos()
+
+   local inv = player:get_inventory()
+
+   for _, slot in ipairs(armor.slots) do
+      local item = inv:get_stack("armor_"..slot, 1)
+
+      local rpos = {
+	 x = pos.x + math.random(-0.2, 0.2),
+	 y = pos.y,
+	 z = pos.z + math.random(-0.2, 0.2)
+      }
+
+      drop = minetest.add_item(rpos, item)
+      
+      if drop then
+	 drop:setvelocity(
+	    {
+	       x = math.random(-0.3, 0.3),
+	       y = 3,
+	       z = math.random(-0.3, 0.3),
+	    })
+      end
+   end
 end
 
 local function step(dtime)
