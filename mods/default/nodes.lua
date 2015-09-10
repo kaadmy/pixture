@@ -705,8 +705,9 @@ minetest.register_node(
       on_construct = function(pos)
 			--local n = minetest.get_node(pos)
 			local meta = minetest.get_meta(pos)
-			meta:set_string("formspec", "field[text;;${text}]")
-			meta:set_string("infotext", "\"\"")
+			meta:set_string("formspec", default.ui.get_page("core_field"))
+			--			"field[text;;${text}]")
+			meta:set_string("infotext", '""')
 		     end,
       on_receive_fields = function(pos, formname, fields, sender)
 			     --print("Sign at "..minetest.pos_to_string(pos).." got "..dump(fields))

@@ -269,6 +269,15 @@ form_core_notabs = form_core_notabs .. "background[0,0;8.5,9;ui_formspec_bg_tall
 default.ui.register_page("core_notabs", form_core_notabs)
 default.ui.register_page("core_notabs_2part", form_core_notabs .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]")
 
+local form_core_field = ""
+form_core_field = form_core_field .. "size[8.5,5]"
+form_core_field = form_core_field .. default.ui.core.colors
+form_core_field = form_core_field .. default.ui.core.bg
+form_core_field = form_core_field .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]"
+form_core_field = form_core_field .. "field[1,1.75;7,0;text;;${text}]"
+form_core_field = form_core_field .. default.ui.button_exit(2.75, 3, 3, 1, "", "Write", false)
+default.ui.register_page("core_field", form_core_field)
+
 local form_crafting = default.ui.get_page("core_2part")
 form_crafting = form_crafting .. "list[current_player;main;0.25,4.75;8,4;]"
 form_crafting = form_crafting .. "listring[current_player;main]"
