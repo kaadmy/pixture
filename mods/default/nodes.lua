@@ -442,12 +442,10 @@ minetest.register_node(
       paramtype2 = "facedir",
       on_construct = function(pos)
 			local meta = minetest.get_meta(pos)
-			meta:set_string("formspec", default.base_formspec..
-					"list[current_name;main;0,1.25;8,2;]"..
-					default.get_slot_bg(0,1.25,8,2))
+			meta:set_string("formspec", default.ui.get_page("core_bookshelf"))
 			meta:set_string("infotext", "Bookshelf")
 			local inv = meta:get_inventory()
-			inv:set_size("main", 8*2)
+			inv:set_size("main", 4*2)
 		     end,
       can_dig = function(pos,player)
 		   local meta = minetest.get_meta(pos);

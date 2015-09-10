@@ -285,6 +285,17 @@ form_crafting = form_crafting .. default.ui.get_itemslot_bg(2.25, 0.75, 3, 3)
 form_crafting = form_crafting .. default.ui.get_itemslot_bg(6.25, 1.75, 1, 1)
 default.ui.register_page("core_crafting", form_crafting)
 
+local form_bookshelf = default.ui.get_page("core_2part")
+form_bookshelf = form_bookshelf .. "list[current_player;main;0.25,4.75;8,4;]"
+form_bookshelf = form_bookshelf .. "listring[current_player;main]"
+form_bookshelf = form_bookshelf .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
+form_bookshelf = form_bookshelf .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
+
+form_bookshelf = form_bookshelf .. "list[current_name;main;2.25,1.25;4,2;]"
+form_bookshelf = form_bookshelf .. "listring[current_name;main]"
+form_bookshelf = form_bookshelf .. default.ui.get_itemslot_bg(2.25, 1.25, 4, 2)
+default.ui.register_page("core_bookshelf", form_bookshelf)
+
 function default.ui.receive_fields(player, form_name, fields)
    local name = player:get_player_name()
 
