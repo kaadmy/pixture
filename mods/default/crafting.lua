@@ -185,19 +185,10 @@ minetest.register_craft(
 
 minetest.register_craft(
    {
-      output = "default:fiber 2",
-      type = "shapeless",
-      recipe = {
-	 "default:tall_grass"
-      }
-   })
-
-minetest.register_craft(
-   {
       output = "default:fiber 3",
       type = "shapeless",
       recipe = {
-	 "default:leaves", "default:leaves", "default:leaves", "default:leaves"
+	 "group:leaves", "group:leaves", "group:leaves", "group:leaves"
       }
    })
 
