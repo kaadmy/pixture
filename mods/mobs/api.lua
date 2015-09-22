@@ -3,9 +3,9 @@ mobs = {}
 mobs.mod = "redo"
 
 -- Initial settings check
-local damage_enabled = minetest.setting_getbool("enable_damage") or true
+local damage_enabled = minetest.setting_getbool("enable_damage") or false
 local peaceful_only = minetest.setting_getbool("only_peaceful_mobs") or false
-local enable_blood = minetest.setting_getbool("mobs_enable_blood") or true
+local enable_blood = minetest.setting_getbool("mobs_enable_blood") or false
 mobs.protected = tonumber(minetest.setting_get("mobs_spawn_protected")) or 0
 mobs.remove = minetest.setting_getbool("remove_far_mobs") or false
 
@@ -1205,11 +1205,14 @@ function mobs:register_mob(name, def)
 		       end
 
 		       -- blood_particles
-		       if self.blood_amount > 0
-			  and enable_blood == true then
+		       if self.blood_amount > 0 then
 			  local pos = self.object:getpos()
-			  pos.y = pos.y + (-self.collisionbox[2] + self.collisionbox[5]) / 2
-			  effect(pos, self.blood_amount, self.blood_texture)
+			  pos.y = pos.y + (-self.collisionbox[2] + self.collisionbox[5]) / 3
+			  if enable_blood then
+			     effect(pos, self.blood_amount, self.blood_texture)
+			  else
+			     effect(pos, self.blood_amount, "default_grass_clump_tall.png")
+			  end
 		       end
 
 		       -- knock back effect
@@ -1330,10 +1333,10 @@ function effect(pos, amount, texture, max_size)
 	 time = 0.25,
 	 minpos = pos,
 	 maxpos = pos,
-	 minvel = {x = -0, y = -2, z = -0},
-	 maxvel = {x = 2,  y = 2,  z = 2},
-	 minacc = {x = -4, y = -4, z = -4},
-	 maxacc = {x = 4, y = 4, z = 4},
+	 minvel = {x = -0, y = 2, z = -0},
+	 maxvel = {x = 2,  y = 6,  z = 2},
+	 minacc = {x = -4, y = -16, z = -4},
+	 maxacc = {x = 4, y = -4, z = 4},
 	 minexptime = 0.1,
 	 maxexptime = 1,
 	 minsize = 1,
