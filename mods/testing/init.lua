@@ -27,4 +27,10 @@ if minetest.setting_getbool("testing_enable") then
       default.dumpvec({x=0,y=50,z=100})
    end
    print(string.format("10000 iterations with(custom function) default.dumpvec({x=0,y=50,z=100}) took %.2fms", (os.clock() - t4) * 1000))
+
+   local t5 = os.clock()
+   for i = 1, 10000 do
+      minetest.hash_node_position({x=0,y=50,z=100})
+   end
+   print(string.format("10000 iterations with minetest.hash_node_position({x=0,y=50,z=100}) took %.2fms", (os.clock() - t5) * 1000))
 end
