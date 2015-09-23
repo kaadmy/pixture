@@ -792,6 +792,7 @@ minetest.register_node(
       },
       sunlight_propagates = true,
       walkable = false,
+      attached_node = true,
       groups = {fleshy=3,dig_immediate=2},
       on_use = minetest.item_eat({hp = 2, sat = 10}),
       sounds = default.node_sound_defaults(),
