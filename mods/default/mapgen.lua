@@ -351,17 +351,33 @@ minetest.register_decoration(
 minetest.register_decoration(
    {
       deco_type = "simple",
-      place_on = "default:sand",
-      spawn_by = "default:water_source",
-      num_spawn_by = 2,
+      place_on = {"default:sand", "default:dirt", "default:dirt_with_grass"},
+      spawn_by = {"default:water_source", "default:water_flowing"},
+      num_spawn_by = 1,
       sidelen = 16,
-      fill_ratio = 0.07,
-      biomes = {"Grassland Ocean"},
+      fill_ratio = 0.08,
+      biomes = {"Grassland Ocean", "Grassland", "Forest"},
       decoration = {"default:papyrus"},
       height = 2,
       height_max = 3,
       y_min = 0,
-      y_max = 5,
+      y_max = 31000,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = {"default:sand", "default:dirt", "default:dirt_with_grass"},
+      spawn_by = {"default:water_source", "default:water_flowing"},
+      num_spawn_by = 1,
+      sidelen = 16,
+      fill_ratio = 0.22,
+      biomes = {"Deep Forest"},
+      decoration = {"default:papyrus"},
+      height = 2,
+      height_max = 3,
+      y_min = 0,
+      y_max = 31000,
    })
 
 minetest.register_decoration(
