@@ -50,7 +50,7 @@ farming.register_plant=function(name, plant)
 				chance = plant.grow_time/4,
 				action = function(pos, node, active_object_count, active_object_count_wider)
 					    grow_plant(pos, name, plant)
-					    if weather == "storm" then
+					    if weather.weather == "storm" then
 					       grow_plant(pos, name, plant)
 					    end
 					 end
