@@ -44,7 +44,7 @@ minetest.register_abm(
 		  minetest.remove_node(pos)
 		  local pr = PseudoRandom(minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z)
 		  if node.name  == "village:grassland_village_mg" then
-		     if pr:next(1, 100) == 1 then
+		     if pr:next(1, 80) == 1 then
 			print("Spawning a (Mapgen)Grassland village at "..dump(pos))
 			minetest.after(3.0, function() village.spawn_village(pos, pr) end) -- a short delay to (hopefully)ensure that the surrounding terrain is generated
 		     end
