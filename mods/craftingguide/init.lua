@@ -41,16 +41,21 @@ function craftingguide.get_formspec(name)
    local recipes = craftingguide.items[user.item]
    local recipe = recipes[user.itemno]
 
---   print(dump(recipe))
+   print(dump(recipe))
    for slot_index, itemname in pairs(recipe.items) do
       local x = slot_index - 1
 
       local group = string.match(itemname, "group:(.*)")
 
+      local w = 3
+      if recipe.width ~= 0 then
+	 w = recipe.width
+      end
+
       if group == nil then
-	 form = form .. default.ui.fake_simple_itemstack(1.25 + (x % 3), 0.5 + math.floor(x / 3), itemname, "guide_craftgrid_"..itemname)
+	 form = form .. default.ui.fake_simple_itemstack(1.25 + (x % w), 0.5 + math.floor(x / w), itemname, "guide_craftgrid_"..itemname)
       else
-	 form = form .. default.ui.item_group(1.25 + (x % 3), 0.5 + math.floor(x / 3), group, "guide_craftgrid_"..itemname)
+	 form = form .. default.ui.item_group(1.25 + (x % w), 0.5 + math.floor(x / w), group, "guide_craftgrid_"..itemname)
       end
    end
 
