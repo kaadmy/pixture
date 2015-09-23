@@ -255,6 +255,13 @@ minetest.register_craftitem(
       stack_max = 120
    })
 
+minetest.register_craft(
+   {
+      output = "gold:trading_book",
+      type = "shapeless",
+      recipe = {"default:book", "gold:gold"}
+   })
+
 minetest.register_alias("gold", "gold:gold")
 
 minetest.register_node(
