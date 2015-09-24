@@ -193,6 +193,29 @@ form_bench = form_bench .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
 form_bench = form_bench .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
 default.ui.register_page("jewels_bench", form_bench)
 
+minetest.register_node(
+   "jewels:jewel_ore",
+   {
+      description = "Jewel Ore",
+      groups = {cracky = 1, stone = 1, not_in_craftingguide = 1},
+      tiles = {"default_tree_birch_top.png", "default_tree_birch_top.png", "default_tree_birch.png^jewels_ore.png"},
+      drop = "jewels:jewel",
+      groups = {snappy=1, choppy=1, tree=1},
+      sounds = default.node_sound_wood_defaults(),
+   })
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "jewels:jewel_ore",
+      wherein        = "default:tree_birch",
+      clust_scarcity = 10*10*10,
+      clust_num_ores = 3,
+      clust_size     = 6,
+      height_min     = 0,
+      height_max     = 31000,
+   })
+
 dofile(minetest.get_modpath("jewels").."/jewels.lua")
 
 default.log("mod:jewels", "loaded")
