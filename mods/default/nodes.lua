@@ -817,23 +817,20 @@ minetest.register_node(
    "default:sign",
    {
       description = "Sign",
-      drawtype = "signlike",
+      drawtype = "nodebox",
       tiles = {"default_sign.png"},
-      inventory_image = "default_sign.png",
-      wield_image = "default_sign.png",
+      inventory_image = "default_sign_inventory.png",
+      wield_image = "default_sign_inventory.png",
       paramtype = "light",
       paramtype2 = "wallmounted",
       sunlight_propagates = true,
       is_ground_content = false,
       walkable = false,
-      selection_box = {
+      node_box = {
 	 type = "wallmounted",
-	 wall_top = {-0.5+(4/16), 0.5, -0.5+(1/16), 0.5-(4/16), 0.5-(1/16), 0.5-(1/16)},
-	 wall_bottom = {-0.5+(4/16), -0.5, -0.5+(1/16), 0.5-(4/16), -0.5+(1/16), 0.5-(1/16)},
+	 wall_top = {-0.5+(1/16), 0.5, -0.5+(4/16), 0.5-(1/16), 0.5-(1/16), 0.5-(4/16)},
+	 wall_bottom = {-0.5+(1/16), -0.5, -0.5+(4/16), 0.5-(1/16), -0.5+(1/16), 0.5-(4/16)},
 	 wall_side = {-0.5, -0.5+(4/16), -0.5+(1/16), -0.5+(1/16), 0.5-(4/16), 0.5-(1/16)},
-	 --wall_top = <default>
-	 --wall_bottom = <default>
-	 --wall_side = <default>
       },
       groups = {choppy=2,dig_immediate=2,attached_node=1},
       legacy_wallmounted = true,
