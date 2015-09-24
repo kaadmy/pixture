@@ -209,7 +209,7 @@ minetest.register_ore(
       ore_type       = "scatter",
       ore            = "jewels:jewel_ore",
       wherein        = "default:tree_birch",
-      clust_scarcity = 10*10*10,
+      clust_scarcity = 11*11*11,
       clust_num_ores = 3,
       clust_size     = 6,
       height_min     = 0,

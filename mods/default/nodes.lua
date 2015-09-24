@@ -111,6 +111,29 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:dirt_with_grass_footsteps",
+   {
+      description = "Dirt with Grass Footsteps",
+      tiles ={"default_grass_footstep.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
+      groups = {crumbly=3, soil=1, fall_damage_add_percent=-5, not_in_craftingguide = 1},
+      drop = {
+	 max_items = 3,
+	 items = {
+	    {items = {"default:dirt"}, rarity = 1},
+	    {items = {"default:grass 10"}, rarity = 30},
+	    {items = {"default:grass 3"}, rarity = 9},
+	    {items = {"default:grass 2"}, rarity = 6},
+	    {items = {"default:grass 1"}, rarity = 3},
+	 }
+      },
+      is_ground_content = true,
+      sounds = default.node_sound_dirt_defaults(
+	 {
+	    footstep = {name="default_soft_footstep", gain=0.4},
+	 }),
+   })
+
+minetest.register_node(
    "default:dirt_path",
    {
       description = "Dirt Path",
@@ -171,6 +194,15 @@ minetest.register_node(
       groups = {crumbly = 2, cracky = 3},
       drop = "default:sand 2",
       is_ground_content = true,
+      sounds = default.node_sound_stone_defaults(),
+   })
+
+minetest.register_node(
+   "default:compressed_sandstone",
+   {
+      description = "Compressed Sandstone",
+      tiles ={"default_compressed_sandstone_top.png", "default_compressed_sandstone_top.png", "default_compressed_sandstone.png"},
+      groups = {cracky = 2},
       sounds = default.node_sound_stone_defaults(),
    })
 

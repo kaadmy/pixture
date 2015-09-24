@@ -49,7 +49,7 @@ local function step(dtime)
 
       if grass_pos ~= nil and math.random(1, 500) == 1 then
 	 if grass_pos.x == player_pos.x and grass_pos.z == player_pos.z then
-	    minetest.set_node(grass_pos, {name = "default:dirt"})
+	    minetest.set_node(grass_pos, {name = "default:dirt_with_grass_footsteps"})
 	 end
       end
    end

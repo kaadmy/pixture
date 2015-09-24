@@ -163,9 +163,9 @@ minetest.register_abm( -- leaf decay
 	    end
    })
 
-minetest.register_abm( -- dirt becomes dirt with grass if uncovered
+minetest.register_abm( -- dirt and grass footsteps becomes dirt with grass if uncovered
    {
-      nodenames = {"default:dirt"},
+      nodenames = {"default:dirt", "default:dirt_with_grass_footsteps"},
       interval = 2,
       chance = 40,
       action = function(pos, node)

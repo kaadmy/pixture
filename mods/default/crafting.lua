@@ -381,13 +381,27 @@ minetest.register_craft(
       }
    })
 
-minetest.register_craft(   
+minetest.register_craft(
    {
       output = "default:sandstone 2",
       recipe = {
 	 {"default:sand", "default:sand"},
 	 {"default:sand", "default:sand"},
       }
+   })
+
+minetest.register_craft(
+   {
+      output = "default:sandstone 2",
+      type = "shapeless",
+      recipe = {"default:compressed_sandstone"},
+   })
+
+minetest.register_craft(
+   {
+      output = "default:compressed_sandstone",
+      type = "shapeless",
+      recipe = {"default:sandstone", "default:sandstone"},
    })
 
 minetest.register_craft(
