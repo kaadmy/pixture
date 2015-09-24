@@ -58,7 +58,6 @@ minetest.register_node(
 	      "default_furnace_sides.png", "default_furnace_sides.png", "default_furnace_front.png"},
       paramtype2 = "facedir",
       groups = {cracky = 2},
-      legacy_facedir_simple = true,
       is_ground_content = false,
       sounds = default.node_sound_stone_defaults(),
       on_construct = function(pos)
@@ -95,7 +94,6 @@ minetest.register_node(
       light_source = 8,
       drop = "default:furnace",
       groups = {cracky = 2},
-      legacy_facedir_simple = true,
       is_ground_content = false,
       sounds = default.node_sound_stone_defaults(),
       on_construct = function(pos)

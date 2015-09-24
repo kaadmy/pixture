@@ -830,15 +830,24 @@ minetest.register_tool(
 		  if pointed_thing.type ~= "node" then return end
 
 		  local pos = pointed_thing.under
+		  local node = minetest.get_node(pointed_thing.under)
+		  local nodename = node.name
 
-		  if minetest.get_node(pointed_thing.under).name == "default:torch_weak" then
-		     local n = minetest.get_node(pointed_thing.under)
+		  if nodename == "default:torch_weak" then
+		     local n = minetest.get_node(pos)
 		     minetest.set_node(pos, {name = "default:torch", param = n.param, param2 = n.param2})
 		     itemstack:add_wear(800)
-		  elseif minetest.get_node(pointed_thing.under).name == "default:torch_dead" then
-		     local n = minetest.get_node(pointed_thing.under)
+		  elseif nodename == "default:torch_dead" then
+		     local n = minetest.get_node(pos)
 		     minetest.set_node(pos, {name = "default:torch_weak", param = n.param, param2 = n.param2})
-		     itemstack:add_wear(1300)
+		     itemstack:add_wear(800)
+		  elseif nodename == "tnt:tnt" then
+		     local y = minetest.registered_nodes["tnt:tnt"]
+		     if y ~= nil then
+			y.on_punch(pos, node, user)
+
+			itemstack:add_wear(800)
+		     end
 		  end
 
 		  return itemstack

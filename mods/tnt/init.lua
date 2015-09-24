@@ -111,6 +111,9 @@ end
 local function entity_physics(pos, radius)
    -- Make the damage radius larger than the destruction radius
    radius = radius * 2
+
+   local no_water = (minetest.find_node_near(pos, 2, {"default:water_source"}) == nil)
+
    local objs = minetest.get_objects_inside_radius(pos, radius)
    for _, obj in pairs(objs) do
       local obj_pos = obj:getpos()
@@ -122,8 +125,10 @@ local function entity_physics(pos, radius)
 				       obj_vel, radius * 10))
       end
 
-      local damage = (4 / dist) * radius
-      obj:set_hp(obj:get_hp() - damage)
+      if no_water then
+	 local damage = (4 / dist) * radius
+	 obj:set_hp(obj:get_hp() - damage)
+      end
    end
 end
 
@@ -151,7 +156,7 @@ local function burn(pos)
    if name == "tnt:tnt" then
       minetest.sound_play("tnt_ignite", {pos=pos})
       minetest.set_node(pos, {name="tnt:tnt_burning"})
-      minetest.get_node_timer(pos):start(1)
+      minetest.get_node_timer(pos):start(2)
    end
 end
 
@@ -195,8 +200,7 @@ end
 
 local function boom(pos)
    minetest.sound_play("tnt_explode", {pos=pos, gain=1.5, max_hear_distance=2*64})
-   minetest.set_node(pos, {name="air"})
-   minetest.get_node_timer(pos):start(0.5)
+   minetest.remove_node(pos)
 
    local drops = explode(pos, radius)
    entity_physics(pos, radius)
@@ -215,16 +219,15 @@ minetest.register_node(
       on_punch = function(pos, node, puncher)
 		    local itemname = puncher:get_wielded_item():get_name()
 
-		    if itemname == "default:torch" or itemname == "default:torch_weak" or itemname == "default:flint_and_steel" then
-		       minetest.sound_play("tnt_ignite", {pos=pos})
-		       minetest.set_node(pos, {name="tnt:tnt_burning"})
-		       minetest.get_node_timer(pos):start(4)
+		    if itemname == "default:torch"
+		       or itemname == "default:torch_weak"
+		       or itemname == "default:flint_and_steel" then
+		       burn(pos)
 		    end
 		 end,
       on_blast = function(pos, intensity)
 		    burn(pos)
 		 end,
-      mesecons = {effector = {action_on = boom}},
    })
 
 minetest.register_node(
@@ -254,7 +257,7 @@ minetest.register_craft(
       output = "tnt:tnt",
       recipe = {
 	 {"",           "group:planks",    ""},
-	 {"group:planks", "default:torch", "group:planks"},
+	 {"group:planks", "default:flint_and_steel", "group:planks"},
 	 {"",           "group:planks",    ""}
       }
    })
