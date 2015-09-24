@@ -343,12 +343,35 @@ minetest.register_craft(
 
 minetest.register_craft(
    {
-      output = "default:torch 4",
+      output = "default:torch 2",
       recipe = {
 	 {"default:lump_coal"},
 	 {"default:fiber"},
 	 {"default:stick"},
       }
+   })
+
+minetest.register_craft(
+   {
+      output = "default:torch_weak 2",
+      recipe = {
+	 {"default:fiber"},
+	 {"default:stick"},
+      }
+   })
+
+minetest.register_craft(
+   {
+      output = "default:flint 2",
+      type = "shapeless",
+      recipe = {"default:gravel"},
+   })
+
+minetest.register_craft(
+   {
+      output = "default:flint_and_steel",
+      type = "shapeless",
+      recipe = {"default:ingot_steel", "default:flint"},
    })
 
 minetest.register_craft(
@@ -788,6 +811,38 @@ minetest.register_craftitem(
       description = "Sugar lump",
       inventory_image = "default_lump_sugar.png",
       on_use = minetest.item_eat({hp = 1, sat = 10})
+   })
+
+minetest.register_craftitem(
+   "default:flint",
+   {
+      description = "Flint Shard",
+      inventory_image = "default_flint.png",
+   })
+
+minetest.register_tool(
+   "default:flint_and_steel",
+   {
+      description = "Flint and Steel",
+      inventory_image = "default_flint_and_steel.png",
+      on_use = function(itemstack, user, pointed_thing)
+		  if pointed_thing == nil then return end
+		  if pointed_thing.type ~= "node" then return end
+
+		  local pos = pointed_thing.under
+
+		  if minetest.get_node(pointed_thing.under).name == "default:torch_weak" then
+		     local n = minetest.get_node(pointed_thing.under)
+		     minetest.set_node(pos, {name = "default:torch", param = n.param, param2 = n.param2})
+		     itemstack:add_wear(800)
+		  elseif minetest.get_node(pointed_thing.under).name == "default:torch_dead" then
+		     local n = minetest.get_node(pointed_thing.under)
+		     minetest.set_node(pos, {name = "default:torch_weak", param = n.param, param2 = n.param2})
+		     itemstack:add_wear(1300)
+		  end
+
+		  return itemstack
+	       end,
    })
 
 default.log("crafting", "loaded")

@@ -268,7 +268,7 @@ minetest.register_abm( -- papyrus grows
 
 minetest.register_abm( -- torch flame
    {
-      nodenames = {"default:torch"},
+      nodenames = {"default:torch", "default:torch_weak"},
       interval = 5,
       chance = 1,
       action = function(pos, node)
@@ -288,6 +288,16 @@ minetest.register_abm( -- torch flame
 			maxsize = 6,
 			texture = "spark.png"
 		     })
+	       end
+   })
+
+minetest.register_abm( -- weak torchs burn out and die after ~3 minutes
+   {
+      nodenames = {"default:torch_weak"},
+      interval = 3,
+      chance = 60,
+      action = function(pos, node)
+		  minetest.set_node(pos, {name = "default:torch_dead"})
 	       end
    })
 
