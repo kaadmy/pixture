@@ -36,10 +36,10 @@ function craftingguide.get_formspec(name)
       form = form .. "label[4.1,1.73;"..method.."]"
    end
    
-   form = form .. default.ui.fake_itemstack(6.25, 1.5, ItemStack(user.item), "guide_craftresult")
-
    local recipes = craftingguide.items[user.item]
    local recipe = recipes[user.itemno]
+
+   form = form .. default.ui.fake_itemstack(6.25, 1.5, ItemStack(recipe.output), "guide_craftresult")
 
 --   print(dump(recipe))
    for slot_index, itemname in pairs(recipe.items) do
