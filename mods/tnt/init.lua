@@ -213,7 +213,9 @@ minetest.register_node(
       groups = {dig_immediate=2, mesecon=2},
       sounds = default.node_sound_wood_defaults(),
       on_punch = function(pos, node, puncher)
-		    if puncher:get_wielded_item():get_name() == "default:torch" then
+		    local itemname = puncher:get_wielded_item():get_name()
+
+		    if itemname == "default:torch" or itemname == "default:torch_weak" or itemname == "default:flint_and_steel" then
 		       minetest.sound_play("tnt_ignite", {pos=pos})
 		       minetest.set_node(pos, {name="tnt:tnt_burning"})
 		       minetest.get_node_timer(pos):start(4)
