@@ -8,4 +8,5 @@ WARNING: This mod will not be compatible with existing mods, tons of stuff has b
 
 Sound license: CC0
 Texture license: WTFPL
-Source license: WTFPL(Some code from minetest_game's default mod)
+Model license: WTFPL
+Source license: WTFPL(Some code from minetest_game's default mod, which is LGPL2.1+)
