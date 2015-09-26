@@ -663,6 +663,68 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:river_water_flowing",
+   {
+      description = "River Water (flowing)",
+      inventory_image = minetest.inventorycube("default_water.png"),
+      drawtype = "flowingliquid",
+      tiles ={"default_water.png"},
+      special_tiles = {
+	 {
+	    image = "default_water_animated.png",
+	    backface_culling=false,
+	    animation={type = "vertical_frames", aspect_w= 16, aspect_h = 16, length = 0.8}
+	 },
+	 {
+	    image = "default_water_animated.png",
+	    backface_culling=false,
+	    animation={type = "vertical_frames", aspect_w= 16, aspect_h = 16, length = 0.8}
+	 },
+      },
+      alpha = default.RIVER_WATER_ALPHA,
+      paramtype = "light",
+      walkable = false,
+      pointable = false,
+      diggable = false,
+      buildable_to = true,
+      drowning = 2,
+      liquidtype = "flowing",
+      liquid_alternative_flowing = "default:river_water_flowing",
+      liquid_alternative_source = "default:river_water_source",
+      liquid_viscosity = default.RIVER_WATER_VISC,
+      post_effect_color = {a=60, r=40, g=70, b=100},
+      groups = {water=1, liquid=1},
+   })
+
+minetest.register_node(
+   "default:river_water_source",
+   {
+      description = "River Water",
+      inventory_image = minetest.inventorycube("default_water.png"),
+      drawtype = "liquid",
+      tiles ={"default_water.png"},
+      special_tiles = {
+	 {
+	    image = "default_river_water.png",
+	    backface_culling=false,
+	 },
+      },
+      alpha = default.RIVER_WATER_ALPHA,
+      paramtype = "light",
+      walkable = false,
+      pointable = false,
+      diggable = false,
+      buildable_to = true,
+      drowning = 2,
+      liquidtype = "source",
+      liquid_alternative_flowing = "default:river_water_flowing",
+      liquid_alternative_source = "default:river_water_source",
+      liquid_viscosity = default.RIVER_WATER_VISC,
+      post_effect_color = {a=60, r=40, g=70, b=100},
+      groups = {water=1, liquid=1},
+   })
+
+minetest.register_node(
    "default:torch_dead",
    {
       description = "Dead Torch",

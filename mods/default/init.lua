@@ -5,8 +5,12 @@
 
 default = {}
 
+default.RIVER_WATER_ALPHA = 160
+default.RIVER_WATER_VISC = 2
+
 default.WATER_ALPHA = 200
 default.WATER_VISC = 1
+
 default.LIGHT_MAX = 14
 
 function default.log(text, type)
