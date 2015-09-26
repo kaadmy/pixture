@@ -18,7 +18,7 @@ end
 
 -- Default player appearance
 default.player_register_model(
-   "character.x",
+   "character.b3d",
    {
       animation_speed=30,
       textures={"character.png"},
@@ -98,7 +98,7 @@ end
 minetest.register_on_joinplayer(
    function(player)
       default.player_attached[player:get_player_name()]=false
-      default.player_set_model(player, "character.x")
+      default.player_set_model(player, "character.b3d")
       player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
    end)
 
