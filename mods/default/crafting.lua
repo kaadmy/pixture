@@ -715,10 +715,44 @@ minetest.register_craftitem(
    })
 
 minetest.register_craftitem(
+   "default:bucket_river_water",
+   {
+      description = "River Water Bucket",
+      inventory_image = "default_bucket_river_water.png",
+      stack_max = 1,
+      wield_scale = {x=1,y=1,z=2},
+      liquids_pointable = true,
+      on_place = function(itemstack, user, pointed_thing)
+		    if pointed_thing.type ~= "node" then return end
+
+		    itemstack:take_item()
+
+		    local inv=user:get_inventory()
+		    
+		    if inv:room_for_item("main", {name="default:bucket"}) then
+		       inv:add_item("main", "default:bucket")
+		    else
+		       local pos = user:getpos()
+		       pos.y = math.floor(pos.y + 0.5)
+		       minetest.add_item(pos, "default:bucket")
+		    end			  
+
+		    local pos = pointed_thing.above
+		    if minetest.registered_nodes[minetest.get_node(pointed_thing.under).name].buildable_to then
+		       pos=pointed_thing.under
+		    end
+		    minetest.add_node(pos, {name = "default:river_water_source"})
+
+		    return itemstack
+		 end
+   })
+
+minetest.register_craftitem(
    "default:bucket",
    {
       description = "Empty Bucket",
       inventory_image = "default_bucket.png",
+      stack_max = 10,
       wield_scale = {x=1,y=1,z=2},
       liquids_pointable = true,
       on_use = function(itemstack, user, pointed_thing)
@@ -737,6 +771,20 @@ minetest.register_craftitem(
 			local pos = user:getpos()
 			pos.y = math.floor(pos.y + 0.5)
 			minetest.add_item(pos, "default:bucket_water")
+		     end			  
+		     
+		     minetest.remove_node(pointed_thing.under)
+		  elseif nodename == "default:river_water_source" then
+		     itemstack:take_item()
+		     
+		     local inv=user:get_inventory()
+		     
+		     if inv:room_for_item("main", {name="default:bucket_river_water"}) then
+			inv:add_item("main", "default:bucket_river_water")
+		     else
+			local pos = user:getpos()
+			pos.y = math.floor(pos.y + 0.5)
+			minetest.add_item(pos, "default:bucket_river_water")
 		     end			  
 		     
 		     minetest.remove_node(pointed_thing.under)
