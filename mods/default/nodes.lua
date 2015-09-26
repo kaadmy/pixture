@@ -422,6 +422,12 @@ minetest.register_node(
 	    {-0.5+(1/3), -0.5, -0.5, 0.5-(1/3), 0.5-(1/3), 0.5},
 	 },
       },
+      selection_box = {
+	 type = "fixed",
+	 fixed = {
+	    {-0.5+(1/8), -0.5, -0.5+(1/8), 0.5-(1/8), 0.5, 0.5-(1/8)},
+	 },
+      },
       tiles ={"default_cactus_top.png", "default_cactus_top.png", "default_cactus_sides.png"},
       --	damage_per_second = 1,
       groups = {snappy=2, choppy=2, fall_damage_add_percent=20},
