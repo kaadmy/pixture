@@ -707,7 +707,7 @@ minetest.register_node(
       tiles ={"default_water.png"},
       special_tiles = {
 	 {
-	    image = "default_river_water.png",
+	    image = "default_water.png",
 	    backface_culling=false,
 	 },
       },
