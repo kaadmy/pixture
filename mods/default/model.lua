@@ -140,25 +140,25 @@ minetest.register_globalstep(
 
 	    -- Determine if the player is sneaking, and reduce animation speed if so
 	    if controls.sneak then
-	       animation_speed_mod=animation_speed_mod / 2
+	       animation_speed_mod=animation_speed_mod * 0.7
 	    end
 
 	    -- Apply animations based on what the player is doing
-	    if player:get_hp() == 0 then
+	    if player:get_hp() == 0 then -- dead
 	       player_set_animation(player, "lay")
-	    elseif walking then
+	    elseif walking then -- walking
 	       if player_sneak[name] ~= controls.sneak then
 		  player_anim[name]=nil
 		  player_sneak[name]=controls.sneak
 	       end
-	       if controls.LMB then
+	       if controls.LMB then -- walking and mining
 		  player_set_animation(player, "walk_mine", animation_speed_mod)
-	       else
+	       else -- walking
 		  player_set_animation(player, "walk", animation_speed_mod)
 	       end
-	    elseif controls.LMB then
+	    elseif controls.LMB then -- mining
 	       player_set_animation(player, "mine")
-	    else
+	    else -- standing
 	       player_set_animation(player, "stand", animation_speed_mod)
 	    end
 	 end
