@@ -210,7 +210,7 @@ form_crafting = form_crafting .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
 form_crafting = form_crafting .. "list[current_player;craft;2.25,0.75;3,3;]"
 form_crafting = form_crafting .. "listring[current_player;craft]"
 
-form_crafting = form_crafting .. "image[5.25,1.75;1,1;ui_arrow.png^[transformR270]"
+form_crafting = form_crafting .. "image[5.25,1.75;1,1;ui_arrow_bg.png^[transformR270]"
 
 form_crafting = form_crafting .. "list[current_player;craftpreview;6.25,1.75;1,1;]"
 form_crafting = form_crafting .. default.ui.get_itemslot_bg(2.25, 0.75, 3, 3)

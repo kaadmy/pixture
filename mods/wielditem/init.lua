@@ -10,7 +10,7 @@ local function step(dtime)
    timer = timer + dtime
    if timer > update_time then
       for _, player in pairs(minetest.get_connected_players()) do
-	 
+
       end
       timer = 0
    end
