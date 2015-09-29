@@ -5,6 +5,8 @@
 
 music = {}
 
+music.default_track = minetest.setting_get("music_track") or "music_catsong"
+
 music.players = {} -- music players
 
 if minetest.setting_getbool("music_enable") then
@@ -31,10 +33,10 @@ if minetest.setting_getbool("music_enable") then
       if music.players[dp] == nil then
 	 music.players[dp] = {
 	    ["handle"] = minetest.sound_play(
-	       "music_catsong",
+	       music.default_track,
 	       {
 		  pos = pos,
-		  gain = 0.5,
+		  gain = 0.3,
 	       }),
 	    ["timer"] = 0,
 	    ["pos"] = pos,
@@ -43,10 +45,10 @@ if minetest.setting_getbool("music_enable") then
 	 music.players[dp]["timer"] = 0
 	 minetest.sound_stop(music.players[dp]["handle"])
 	 music.players[dp]["handle"] = minetest.sound_play(
-	    "music_catsong",
+	    music.default_track,
 	    {
 	       pos = pos,
-	       gain = 0.5,
+	       gain = 0.3,
 	    })
       end
    end
