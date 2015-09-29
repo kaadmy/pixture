@@ -83,33 +83,6 @@ function default.ui.fake_itemstack(x, y, itemstack, name)
    local itemname = itemstack:get_name()
    local itemamt = itemstack:get_count()
 
-   local itemimage = ""
-   if itemname ~= "" then
-      local inventory_image = get_itemdef_field(itemname, "inventory_image")
-      if inventory_image and inventory_image ~= "" then
-	 itemimage = inventory_image
-      else
-	 local tiles = get_itemdef_field(itemname, "tiles")
-
-	 local t1 = tiles[1]
-	 local t2 = tiles[1]
-	 local t3 = tiles[1]
-
-	 if #tiles == 3 then
-	    t1 = tiles[1]
-	    t2 = tiles[3]
-	    t3 = tiles[3]
-	 elseif #tiles == 6 then
-	    t1 = tiles[1]
-	    t2 = tiles[5]
-	    t3 = tiles[6]
-	 end
-
-	 itemimage=minetest.inventorycube(t1, t2, t3)
-      end
-   end
-   itemimage = minetest.formspec_escape(itemimage)
-
    local itemdesc = ""
    if minetest.registered_items[itemname].description ~= nil then
       itemdesc = minetest.registered_items[itemname].description
@@ -119,7 +92,9 @@ function default.ui.fake_itemstack(x, y, itemstack, name)
 
    local result = ""
    if itemname ~= "" then
-      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+--      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
+      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
       result = result .. "label["..(x+0.6)..","..(y+0.5)..";"..itemamt.."]"
       result = result .. "tooltip["..name..";"..itemdesc.."]"
    end
@@ -130,33 +105,6 @@ end
 function default.ui.fake_simple_itemstack(x, y, itemname, name)
    local name = name or "fake_simple_itemstack"
 
-   local itemimage = ""
-   if itemname ~= "" then
-      local inventory_image = get_itemdef_field(itemname, "inventory_image")
-      if inventory_image and inventory_image ~= "" then
-	 itemimage = inventory_image
-      else
-	 local tiles = get_itemdef_field(itemname, "tiles")
-
-	 local t1 = tiles[1]
-	 local t2 = tiles[1]
-	 local t3 = tiles[1]
-
-	 if #tiles == 3 then
-	    t1 = tiles[1]
-	    t2 = tiles[3]
-	    t3 = tiles[3]
-	 elseif #tiles == 6 then
-	    t1 = tiles[1]
-	    t2 = tiles[5]
-	    t3 = tiles[6]
-	 end
-
-	 itemimage=minetest.inventorycube(t1, t2, t3)
-      end
-   end
-   itemimage = minetest.formspec_escape(itemimage)
-
    local itemdesc = ""
    if minetest.registered_items[itemname].description ~= nil then
       itemdesc = minetest.registered_items[itemname].description
@@ -164,7 +112,9 @@ function default.ui.fake_simple_itemstack(x, y, itemname, name)
 
    local result = ""
    if itemname ~= "" then
-      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+--      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
+      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
       result = result .. "tooltip["..name..";"..itemdesc.."]"
    end
 
@@ -172,7 +122,7 @@ function default.ui.fake_simple_itemstack(x, y, itemname, name)
 end
 
 function default.ui.item_group(x, y, group, name)
-   local name = name or "fake_simple_itemstack"
+   local name = name or "fake_itemgroup"
 
    local itemname = ""
 
@@ -182,43 +132,16 @@ function default.ui.item_group(x, y, group, name)
       end
    end
 
-   local itemimage = ""
-   if itemname ~= "" then
-      local inventory_image = get_itemdef_field(itemname, "inventory_image")
-      if inventory_image and inventory_image ~= "" then
-	 itemimage = inventory_image
-      else
-	 local tiles = get_itemdef_field(itemname, "tiles")
-
-	 local t1 = tiles[1]
-	 local t2 = tiles[1]
-	 local t3 = tiles[1]
-
-	 if #tiles == 3 then
-	    t1 = tiles[1]
-	    t2 = tiles[3]
-	    t3 = tiles[3]
-	 elseif #tiles == 6 then
-	    t1 = tiles[1]
-	    t2 = tiles[5]
-	    t3 = tiles[6]
-	 end
-
-	 itemimage=minetest.inventorycube(t1, t2, t3)
-      end
+   local itemdesc = ""
+   if minetest.registered_items[itemname].description ~= nil then
+      itemdesc = minetest.registered_items[itemname].description
    end
 
    local result = ""
    if itemname ~= "" then
-   local itemdesc = ""
-      itemimage = minetest.formspec_escape(itemimage)
-
-      if minetest.registered_items[itemname].description ~= nil then
-	 itemdesc = minetest.registered_items[itemname].description
-      end
-
-      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
-      result = result .. "label["..(x+0.4)..","..(y+0.35)..";G]"
+--      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";G;false;false;ui_null.png]"
+      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
       result = result .. "tooltip["..name..";Group: "..group.."]"
    end
 
