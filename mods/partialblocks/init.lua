@@ -36,7 +36,7 @@ function partialblocks.register_material(name, desc, node)
       })
    minetest.register_craft( -- Craft to
       {
-	 output = "partialblocks:" .. name .. "_slab 6",
+	 output = "partialblocks:" .. name .. "_slab 3",
 	 recipe = {
 	    {node, node, node},
 	 },
@@ -44,10 +44,8 @@ function partialblocks.register_material(name, desc, node)
    minetest.register_craft( -- Craft back
       {
 	 output = node,
-	 recipe = {
-	    {"partialblocks:" .. name .. "_slab"},
-	    {"partialblocks:" .. name .. "_slab"},
-	 },
+	 type = "shapeless",
+	 recipe = {"partialblocks:" .. name .. "_slab"},
       })
 
    -- Stair
