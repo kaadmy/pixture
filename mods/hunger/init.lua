@@ -223,7 +223,6 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 		     hunger.hunger[name] = 0
 		     
 		     local pos_sound  = player:getpos()
-		     player:set_physics_override({speed = 0.8})
 		     minetest.chat_send_player(name, "You are hungry.")
 		  end
 	       end
