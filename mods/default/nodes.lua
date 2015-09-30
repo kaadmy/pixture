@@ -525,6 +525,46 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:fence_oak",
+   {
+      description = "Oak Fence",
+      drawtype = "fencelike",
+      tiles ={"default_wood_oak.png"},
+      inventory_image = "default_fence_oak.png",
+      wield_image = "default_fence_oak.png",
+      paramtype = "light",
+      collision_box = {
+	 type = "fixed",
+	 fixed = {-0.4, -0.5, -0.4, 0.4, 0.75, 0.4},
+      },
+      groups = {snappy = 1, choppy = 1, oddly_breakable_by_hand = 1},
+      sounds = default.node_sound_wood_defaults(),
+      after_dig_node = function(pos, node, metadata, digger)
+			  default.dig_up(pos, node, digger)
+		       end,
+   })
+
+minetest.register_node(
+   "default:fence_birch",
+   {
+      description = "Birch Fence",
+      drawtype = "fencelike",
+      tiles ={"default_wood_birch.png"},
+      inventory_image = "default_fence_birch.png",
+      wield_image = "default_fence_birch.png",
+      paramtype = "light",
+      collision_box = {
+	 type = "fixed",
+	 fixed = {-0.4, -0.5, -0.4, 0.4, 0.75, 0.4},
+      },
+      groups = {snappy = 1, choppy = 1, oddly_breakable_by_hand = 1},
+      sounds = default.node_sound_wood_defaults(),
+      after_dig_node = function(pos, node, metadata, digger)
+			  default.dig_up(pos, node, digger)
+		       end,
+   })
+
+minetest.register_node(
    "default:ladder",
    {
       description = "Ladder",
@@ -995,7 +1035,7 @@ minetest.register_node(
       sunlight_propagates = true,
       walkable = false,
       attached_node = true,
-      groups = {fleshy=3,dig_immediate=2},
+      groups = {fleshy = 3, dig_immediate = 2, leafdecay = 3, leafdecay_drop = 1},
       on_use = minetest.item_eat({hp = 2, sat = 10}),
       sounds = default.node_sound_defaults(),
    })
