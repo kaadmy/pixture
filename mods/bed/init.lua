@@ -4,7 +4,7 @@
 -- Tweaked by Kaadmy, for Pixture
 --
 
-local players_in_bed = 0
+local players_in_bed = {}
 
 minetest.register_node(
    "bed:bed_foot",
@@ -104,7 +104,7 @@ minetest.register_node(
 		     clicker:setpos(pos)
 		     clicker:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
 		     meta:set_string("player", "")
-		     players_in_bed = players_in_bed - 1
+		     players_in_bed[clicker:get_player_name()] = nil
 		     default.player_attached[clicker:get_player_name()] = false
 		     clicker:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
 		     default.player_set_animation(clicker, "stand", 30)
@@ -127,9 +127,14 @@ minetest.register_node(
 		     end
 		     
 		     meta:set_string("player", clicker:get_player_name())
-		     players_in_bed = players_in_bed + 1
+		     players_in_bed[clicker:get_player_name()] = true
 		  end
-	       end
+	       end,
+      can_dig = function(pos, player)
+		  local meta = minetest.get_meta(pos)
+
+		  return meta:get_string("player") == ""
+	       end,
    })
 
 minetest.register_node(
@@ -180,11 +185,18 @@ minetest.register_globalstep(
       end
       timer = 0
       
+      local sleeping_players = 0
+      for _, i in pairs(players_in_bed) do
+	 if i == true then
+	    sleeping_players = sleeping_players + 1
+	 end
+      end
+
       local players = #minetest.get_connected_players()
-      if players ~= 0 and players * 0.5 < players_in_bed then
+      if players ~= 0 and players * 0.5 < sleeping_players then
 	 if minetest.env:get_timeofday() < 0.2 or minetest.env:get_timeofday() > 0.8 then
 	    if not wait then
-	       minetest.chat_send_all("[zzz] " .. players_in_bed .. " of " .. players .. " players slept, skipping to day.")
+	       minetest.chat_send_all("[zzz] " .. sleeping_players .. " of " .. players .. " players slept, skipping to day.")
 	       minetest.after(2, function()
 				    minetest.env:set_timeofday(0.23)
 				    wait = false
@@ -210,6 +222,11 @@ minetest.register_on_respawnplayer(
 	 player:setpos(bed_player_spawns[name])
 	 return true
       end
+   end)
+
+minetest.register_on_leaveplayer(
+   function(player)
+      players_in_bed[player:get_player_name()] = nil
    end)
 
 default.log("mod:bed", "loaded")
