@@ -306,7 +306,7 @@ if minetest.setting_getbool("flowing_water_sounds") then
       {
 	 nodenames = {"group:flowing_water"},
 	 interval = 1,
-	 chance = 12,
+	 chance = 16,
 	 action = function(pos, node)
 		     minetest.sound_play(
 			"default_water",

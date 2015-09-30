@@ -12,7 +12,7 @@ local function step(dtime)
 	    "default_hurt",
 	    {
 	       pos = player_pos,
-	       max_hear_distance = 8,
+	       max_hear_distance = 4,
 	    })	 
       end
       player_health[name] = player:get_hp()
@@ -27,7 +27,7 @@ local function step(dtime)
 
       player_lastsound[name] = player_lastsound[name] + dtime
 
-      if nodename == "default:water_source" or nodename == "default:water_flowing" then
+      if nodename == "default:water_source" or nodename == "default:river_water_source" then
 	 if player_lastsound[name] > 3.3 then
 	    player_soundspec[name]=minetest.sound_play(
 	       "default_water",
