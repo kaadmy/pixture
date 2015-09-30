@@ -65,12 +65,41 @@ minetest.register_tool(
 	       end,
    })
 
+minetest.register_craftitem(
+   "locks:lock",
+   {
+      description = "Lock",
+
+      inventory_image = "locks_lock.png",
+      wield_image = "locks_lock.png",
+   })
+
+minetest.register_craft(
+   {
+      output = "locks:pick",
+      recipe = {
+	 {"", "", "default:ingot_steel"},
+	 {"", "default:stick", ""},
+	 {"default:stick", "", ""},
+      },
+   })
+
+minetest.register_craft(
+   {
+      output = "locks:lock",
+      recipe = {
+	 {"", "default:ingot_steel", ""},
+	 {"default:ingot_steel", "", "default:ingot_steel"},
+	 {"group:planks", "group:planks", "group:planks"},
+      },
+   })
+
 minetest.register_node(
    "locks:chest",
    {
       description = "Locked Chest",
       tiles ={"default_chest_top.png", "default_chest_top.png", "default_chest_sides.png",
-	      "default_chest_sides.png", "default_chest_sides.png", "default_chest_front.png^default_ingot_steel.png"},
+	      "default_chest_sides.png", "default_chest_sides.png", "locks_chest_front.png"},
       paramtype2 = "facedir",
       groups = {snappy = 2, choppy = 2, oddly_breakable_by_hand = 2},
       is_ground_content = false,
@@ -130,3 +159,11 @@ minetest.register_node(
 		end,
       on_blast = function() end,
    })
+
+minetest.register_craft(
+   {
+      output = "locks:chest",
+      type = "shapeless",
+      recipe = {"default:chest", "locks:lock"},
+   })
+
