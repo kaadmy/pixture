@@ -36,7 +36,7 @@ if minetest.setting_getbool("music_enable") then
 	       music.default_track,
 	       {
 		  pos = pos,
-		  gain = 0.3,
+		  gain = 0.8,
 	       }),
 	    ["timer"] = 0,
 	    ["pos"] = pos,
@@ -48,7 +48,7 @@ if minetest.setting_getbool("music_enable") then
 	    music.default_track,
 	    {
 	       pos = pos,
-	       gain = 0.3,
+	       gain = 0.8,
 	    })
       end
    end

@@ -671,7 +671,7 @@ minetest.register_node(
       liquid_alternative_source = "default:water_source",
       liquid_viscosity = default.WATER_VISC,
       post_effect_color = {a=90, r=40, g=40, b=100},
-      groups = {water=1, liquid=1},
+      groups = {water=1, flowing_water = 1, liquid=1},
    })
 
 minetest.register_node(
@@ -735,7 +735,7 @@ minetest.register_node(
       liquid_renewable = false,
       liquid_range = 2,
       post_effect_color = {a=40, r=40, g=70, b=100},
-      groups = {water=1, liquid=1},
+      groups = {water=1, flowing_water = 1, river_water = 1, liquid=1},
    })
 
 minetest.register_node(
@@ -765,7 +765,7 @@ minetest.register_node(
       liquid_renewable = false,
       liquid_range = 2,
       post_effect_color = {a=40, r=40, g=70, b=100},
-      groups = {water=1, liquid=1},
+      groups = {water = 1, river_water = 1, liquid = 1},
    })
 
 minetest.register_node(
