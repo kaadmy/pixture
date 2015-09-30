@@ -10,11 +10,30 @@ locks.picked_time = tonumber(minetest.setting_getbool("locks_picked_time")) or 1
 local all_unlocked = minetest.setting_getbool("locks_all_unlocked")
 
 function locks.is_locked(meta, player)
-   if meta:get_float("last_lock_pick") > locks.picked_time then
+   local t = minetest.get_gametime()
+   local lp = meta:get_float("last_lock_pick") or t + 1
+
+   if all_unlocked then
+      return false
    end
+
+   if (lp < t) then
+      return false
+   else
+      meta:set_float("last_lock_pick", 0)
+   end
+
+   return true
 end
 
-minetest.register_craftitem(
+function locks.is_owner(meta, player)
+   local name = player:get_player_name()
+   local owner = meta:get_string("lock_owner")
+
+   return (all_unlocked or (name == owner))
+end
+
+minetest.register_tool(
    "locks:pick",
    {
       description = "Lock Pick",
@@ -22,8 +41,27 @@ minetest.register_craftitem(
       inventory_image = "locks_pick.png",
       wield_image = "locks_pick.png",
 
-      on_use = function(itemstack, user, pointed_thing)
-		  
+      stack_max = 1,
+
+      on_use = function(itemstack, player, pointed_thing)
+		  if math.random(1, 5) <= 1 then
+		     local pos = pointed_thing.under	
+
+		     local meta = minetest.get_meta(pos)
+		     meta:set_float("last_lock_pick", minetest.get_gametime() + locks.picked_time)
+
+		     local own = meta:get_string("lock_owner")
+		     if own then
+			minetest.chat_send_player(
+			   own,
+			   player:get_player_name() .. " has broken into your locked chest!"
+			)
+		     end
+
+		  end
+
+		  itemstack:add_wear(8200) -- about 8 uses
+		  return itemstack
 	       end,
    })
 
@@ -34,22 +72,61 @@ minetest.register_node(
       tiles ={"default_chest_top.png", "default_chest_top.png", "default_chest_sides.png",
 	      "default_chest_sides.png", "default_chest_sides.png", "default_chest_front.png^default_ingot_steel.png"},
       paramtype2 = "facedir",
-      groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+      groups = {snappy = 2, choppy = 2, oddly_breakable_by_hand = 2},
       is_ground_content = false,
       sounds = default.node_sound_wood_defaults(),
-      after_place_node = function(pos, player)
-			local form = default.ui.get_page("default_chest")
-
-			local meta = minetest.get_meta(pos)
-			meta:set_string("formspec", form)
-			meta:set_string("infotext", "Locked Chest (Owned by " .. player:get_player_name() .. ")")
-
-			local inv = meta:get_inventory()
-			inv:set_size("main", 8*4)
+      on_construct = function(pos)
+			    local form = default.ui.get_page("default_chest")
+			    
+			    local meta = minetest.get_meta(pos)
+			    meta:set_string("formspec", form)
+			    meta:set_float("last_lock_pick", 0)
+			    
+			    local inv = meta:get_inventory()
+			    inv:set_size("main", 8 * 4)
 		     end,
+      after_place_node = function(pos, player)
+			    local name = player:get_player_name()
+
+			    local meta = minetest.get_meta(pos)
+			    meta:set_string("infotext", "Locked Chest (Owned by " .. name .. ")")
+			    meta:set_string("lock_owner", name)
+			 end,
+     on_rightclick = function(pos, node, player)
+			 local meta = minetest.get_meta(pos)
+			 if not locks.is_locked(meta, player) then
+			    minetest.show_formspec(
+			       player:get_player_name(),
+			       "default_chest",
+			       default.ui.get_page("default_chest")
+			    )
+			 end
+		      end,
+      allow_metadata_inventory_move = function(pos, from_l, from_i, to_l, to_i, cnt, player)
+					 local meta = minetest.get_meta(pos)
+					 if locks.is_locked(meta, player) then
+					    return 0
+					 end
+					 return stack:get_count()
+				      end,
+      allow_metadata_inventory_put = function(pos, listname, index, itemstack, player)
+					local meta = minetest.get_meta(pos)
+					if locks.is_locked(meta, player) then
+					   return 0
+					end
+					 return stack:get_count()
+				     end,
+      allow_metadata_inventory_take = function(pos, listname, index, itemstack, player)
+					 local meta = minetest.get_meta(pos)
+					 if locks.is_locked(meta, player) then
+					    return 0
+					 end
+					 return stack:get_count()
+				      end,
       can_dig = function(pos, player)
 		   local meta = minetest.get_meta(pos)
 		   local inv = meta:get_inventory()
 		   return inv:is_empty("main") and locks.is_owner(meta, player)
 		end,
+      on_blast = function() end,
    })
