@@ -9,28 +9,37 @@ locks.picked_time = tonumber(minetest.setting_get("locks_picked_time")) or 15 --
 
 local all_unlocked = minetest.setting_getbool("locks_all_unlocked")
 
-function locks.is_locked(meta, player)
-   local t = minetest.get_gametime()
-   local lp = meta:get_float("last_lock_pick") or t + 1
-
-   if all_unlocked then
-      return false
-   end
-
-   if (lp < t) then
-      return false
-   else
-      meta:set_float("last_lock_pick", 0)
-   end
-
-   return true
-end
-
 function locks.is_owner(meta, player)
    local name = player:get_player_name()
    local owner = meta:get_string("lock_owner")
 
    return (all_unlocked or (name == owner))
+end
+
+function locks.is_locked(meta, player)
+   if all_unlocked then
+      return false
+   end
+
+   if locks.is_owner(meta, player) then
+      return false
+   end
+
+
+   local t = minetest.get_gametime()
+
+   local lp = meta:get_float("last_lock_pick")
+   if lp == -1 then
+      lp = t + 1
+   end
+
+   if lp < t then
+      return false
+   else
+      meta:set_float("last_lock_pick", -1)
+   end
+
+   return true
 end
 
 minetest.register_tool(
@@ -57,7 +66,6 @@ minetest.register_tool(
 			   player:get_player_name() .. " has broken into your locked chest!"
 			)
 		     end
-
 		  end
 
 		  itemstack:add_wear(8200) -- about 8 uses
@@ -105,14 +113,11 @@ minetest.register_node(
       is_ground_content = false,
       sounds = default.node_sound_wood_defaults(),
       on_construct = function(pos)
-			    local form = default.ui.get_page("default_chest")
-			    
-			    local meta = minetest.get_meta(pos)
-			    meta:set_string("formspec", form)
-			    meta:set_float("last_lock_pick", 0)
-			    
-			    local inv = meta:get_inventory()
-			    inv:set_size("main", 8 * 4)
+			local meta = minetest.get_meta(pos)
+			meta:set_float("last_lock_pick", -1)
+			
+			local inv = meta:get_inventory()
+			inv:set_size("main", 8 * 4)
 		     end,
       after_place_node = function(pos, player)
 			    local name = player:get_player_name()
@@ -121,7 +126,7 @@ minetest.register_node(
 			    meta:set_string("infotext", "Locked Chest (Owned by " .. name .. ")")
 			    meta:set_string("lock_owner", name)
 			 end,
-     on_rightclick = function(pos, node, player)
+      on_rightclick = function(pos, node, player)
 			 local meta = minetest.get_meta(pos)
 			 if not locks.is_locked(meta, player) then
 			    minetest.show_formspec(
@@ -143,7 +148,7 @@ minetest.register_node(
 					if locks.is_locked(meta, player) then
 					   return 0
 					end
-					 return itemstack:get_count()
+					return itemstack:get_count()
 				     end,
       allow_metadata_inventory_take = function(pos, listname, index, itemstack, player)
 					 local meta = minetest.get_meta(pos)
