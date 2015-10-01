@@ -5,6 +5,7 @@
 
 armor = {}
 
+armor.player_skin = "character.png"
 armor.update_time = 1
 
 armor.materials = {
@@ -118,7 +119,7 @@ function armor.update(player)
    local groups = armor.get_groups(player)
    player:set_armor_groups({fleshy = groups.fleshy})
 
-   local image = armor.get_texture(player, "character.png")
+   local image = armor.get_texture(player, armor.player_skin)
    if image ~= default.player_get_textures(player)[1] then
       default.player_set_textures(player, {image})
    end
