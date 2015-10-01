@@ -3,10 +3,7 @@
 -- By Kaadmy, for Pixture
 --
 
-locks = {}
-
-locks.picked_time = tonumber(minetest.setting_get("locks_picked_time")) or 15 -- unlocked for 15 seconds
-
+local picked_time = tonumber(minetest.setting_get("locks_picked_time")) or 15 -- unlocked for 15 seconds
 local all_unlocked = minetest.setting_getbool("locks_all_unlocked")
 
 function locks.is_owner(meta, player)
@@ -25,15 +22,15 @@ function locks.is_locked(meta, player)
       return false
    end
 
-
    local t = minetest.get_gametime()
 
    local lp = meta:get_float("last_lock_pick")
-   if lp == -1 then
-      lp = t + 1
+
+   if lp == -1 or lp == nil then
+      lp = -1
    end
 
-   if lp < t then
+   if lp > t then
       return false
    else
       meta:set_float("last_lock_pick", -1)
@@ -57,7 +54,7 @@ minetest.register_tool(
 		     local pos = pointed_thing.under	
 
 		     local meta = minetest.get_meta(pos)
-		     meta:set_float("last_lock_pick", minetest.get_gametime() + locks.picked_time)
+		     meta:set_float("last_lock_pick", minetest.get_gametime() + picked_time)
 
 		     local own = meta:get_string("lock_owner")
 		     if own then
@@ -128,11 +125,23 @@ minetest.register_node(
 			 end,
       on_rightclick = function(pos, node, player)
 			 local meta = minetest.get_meta(pos)
+
 			 if not locks.is_locked(meta, player) then
+			    local np = pos.x .. "," .. pos.y .. "," .. pos.z
+			    local form = default.ui.get_page("core_2part")
+			    form = form .. "list[nodemeta:" .. np .. ";main;0.25,0.25;8,4;]"
+			    form = form .. "listring[nodemeta:" .. np .. ";main]"
+			    form = form .. default.ui.get_itemslot_bg(0.25, 0.25, 8, 4)
+
+			    form = form .. "list[current_player;main;0.25,4.75;8,4;]"
+			    form = form .. "listring[current_player;main]"
+			    form = form .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
+			    form = form .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
+
 			    minetest.show_formspec(
 			       player:get_player_name(),
 			       "default_chest",
-			       default.ui.get_page("default_chest")
+			       form
 			    )
 			 end
 		      end,
