@@ -5,7 +5,7 @@
 
 locks = {}
 
-locks.picked_time = tonumber(minetest.setting_getbool("locks_picked_time")) or 15 -- unlocked for 15 seconds
+locks.picked_time = tonumber(minetest.setting_get("locks_picked_time")) or 15 -- unlocked for 15 seconds
 
 local all_unlocked = minetest.setting_getbool("locks_all_unlocked")
 
