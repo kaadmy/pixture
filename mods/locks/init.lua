@@ -136,21 +136,21 @@ minetest.register_node(
 					 if locks.is_locked(meta, player) then
 					    return 0
 					 end
-					 return stack:get_count()
+					 return cnt
 				      end,
       allow_metadata_inventory_put = function(pos, listname, index, itemstack, player)
 					local meta = minetest.get_meta(pos)
 					if locks.is_locked(meta, player) then
 					   return 0
 					end
-					 return stack:get_count()
+					 return itemstack:get_count()
 				     end,
       allow_metadata_inventory_take = function(pos, listname, index, itemstack, player)
 					 local meta = minetest.get_meta(pos)
 					 if locks.is_locked(meta, player) then
 					    return 0
 					 end
-					 return stack:get_count()
+					 return itemstack:get_count()
 				      end,
       can_dig = function(pos, player)
 		   local meta = minetest.get_meta(pos)
