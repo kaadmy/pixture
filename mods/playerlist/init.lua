@@ -5,8 +5,6 @@
 
 playerlist = {}
 
-playerlist.step = tonumber(minetest.setting_get("playerlist_step")) or 3
-
 -- current players format:
 -- {<playername> = <last connect(if connected, or nil)>}
 playerlist.players = {}
@@ -55,23 +53,53 @@ minetest.register_on_leaveplayer(on_leaveplayer)
 minetest.register_chatcommand(
    "plist",
    {
+      params = "[all|recent]",
       description = "List players that are connected and have connected since the last server restart",
       func = function(name, param)
 		local time = minetest.get_gametime()
 
-		minetest.chat_send_player(name, "Player list:")
+		local str = ""
+
+		if param == "all" then
+		   minetest.chat_send_player(name, "Players:")
+		elseif param == "recent" then
+		   str = str .. "Recent players: "
+		else
+		   str = str .. "Connected players: "
+		end
 
 		local player_count = 0
 		for name, jointime in pairs(playerlist.players) do
-		   if minetest.get_player_by_name(name) ~= nil then
-		      player_count = player_count + 1
-		      minetest.chat_send_player(name, "  " .. name .. ": connected for " .. prettytime(time - jointime))
+		   local plyr = minetest.get_player_by_name(name)
+
+		   if param == "all" then
+		      if plyr ~= nil then
+			 player_count = player_count + 1
+			 minetest.chat_send_player(name, "  " .. name .. ": connected for " .. prettytime(time - jointime))
+		      else
+			 minetest.chat_send_player(name, "  " .. name .. ": last seen " .. prettytime(time - jointime) .. " ago")
+		      end
 		   else
-		      minetest.chat_send_player(name, "  " .. name .. ": last seen " .. prettytime(time - jointime) .. " ago")
+		      if param == "recent" then
+			 if plyr == nil then
+			    player_count = player_count + 1
+			    str = str .. name .. ", "
+			 end
+		      elseif plyr ~= nil then
+			 player_count = player_count + 1
+			 str = str .. name .. ", "
+		      end
 		   end
 		end
 
-		minetest.chat_send_player(name, player_count .. " players connected")
+		minetest.chat_send_player(name, str)
+
+		if param == "recent" then
+		   minetest.chat_send_player(name, player_count .. " recent players")
+		else
+		   minetest.chat_send_player(name, player_count .. " connected players")
+		end
 	     end
    })
+
 default.log("mod:playerlist", "loaded")

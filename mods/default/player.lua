@@ -81,7 +81,7 @@ minetest.register_chatcommand(
    "uberspeed",
    {
       params = "[on|off|cinematic]",
-      description = "Set Uberspeed, ",
+      description = "Set Uberspeed",
       privs = {weather = true},
       func = function(name, param)
 		local player=minetest.get_player_by_name(name)
