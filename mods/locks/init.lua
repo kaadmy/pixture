@@ -167,3 +167,4 @@ minetest.register_craft(
       recipe = {"default:chest", "locks:lock"},
    })
 
+default.log("mod:locks", "loaded")
