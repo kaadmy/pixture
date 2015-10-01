@@ -948,15 +948,16 @@ minetest.register_node(
 			--local n = minetest.get_node(pos)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", default.ui.get_page("core_field"))
-			--			"field[text;;${text}]")
 			meta:set_string("infotext", '""')
+			meta:set_string("text", "")
 		     end,
       on_receive_fields = function(pos, formname, fields, sender)
 			     --print("Sign at "..minetest.pos_to_string(pos).." got "..dump(fields))
 			     local meta = minetest.get_meta(pos)
-			     fields.text = fields.text or ""
-			     print((sender:get_player_name() or "").." wrote \""..fields.text..
-				"\" to sign at "..minetest.pos_to_string(pos))
+			     fields.text = fields.text or meta:get_string("text")
+			     minetest.log("action", (sender:get_player_name() or "")..
+				       " wrote \""..fields.text.."\" to sign at "..
+				       minetest.pos_to_string(pos))
 			     meta:set_string("text", fields.text)
 			     meta:set_string("infotext", '"'..fields.text..'"')
 			  end,
