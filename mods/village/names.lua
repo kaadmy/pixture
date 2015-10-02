@@ -33,6 +33,8 @@ function village.name.generate(pr)
 
    local name = prefix..middle..postfix
 
+   name = name:gsub("^%l", string.upper)
+
    village.name.used[name] = true
 
    return name

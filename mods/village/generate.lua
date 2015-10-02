@@ -6,6 +6,74 @@ local mp = minetest.get_modpath("village")
 
 village.villages = {}
 
+local village_file = minetest.get_worldpath() .. "/villages"
+
+function village.get_id(name, pos)
+   return name .. minetest.hash_node_position(pos)
+end
+
+function village.save_villages()
+   local f = io.open(village_file, "w")
+
+   for name, def in pairs(village.villages) do
+      f:write(name .. " " .. def.name .. " " .. minetest.hash_node_position(def.pos) .. "\n")
+   end
+
+   io.close(f)
+end
+
+function village.load_villages()
+   local f = io.open(village_file, "r")
+
+   if f then
+      repeat
+	 local l = f:read("*l")
+	 if l == nil then break end
+
+	 for name, fname, pos in string.gfind(l, "(.+) (%a+) (%d.+)") do
+	    village.villages[name] = {
+	       name = fname,
+	       pos = minetest.get_position_from_hash(pos),
+	    }
+	 end
+      until f:read(0) == nil
+
+      io.close(f)
+   else
+      village.save_villages()
+   end
+
+   village.load_waypoints()
+end
+
+function village.load_waypoints()
+   for name, def in pairs(village.villages) do
+      nav.remove_waypoint("village_" .. name)
+      nav.add_waypoint(
+	 def.pos,
+	 "village_" .. name,
+	 def.name .. " village",
+	 true,
+	 "village"
+      )
+   end
+end
+
+function village.get_nearest_village(pos)
+   local nearest = 100000 -- big number
+   local name = nil
+   
+   for name, def in pairs(village.villages) do
+      local dist = vector.distance(pos, def.pos)
+      if dist < nearest then
+	 nearest = dist
+	 name = name
+      end
+   end
+
+   return {dist = nearest, name = name}
+end
+
 village.chunkdefs = {}
 
 village.chunkdefs["livestock_pen"] = {
@@ -101,11 +169,18 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 
    if nofill ~= true then
       minetest.place_schematic(
-	 {x = pos.x, y = pos.y-8, z = pos.z},
-	 mp.."/schematics/village_filler.mts",
+	 {x = pos.x, y = pos.y, z = pos.z},
+	 mp.."/schematics/village_empty.mts",
 	 "0",
 	 {},
 	 true
+      )
+      minetest.place_schematic(
+	 {x = pos.x-6, y = pos.y-5, z = pos.z-6},
+	 mp.."/schematics/village_filler.mts",
+	 "0",
+	 {},
+	 false
       )
    end
 
@@ -227,16 +302,19 @@ function village.spawn_village(pos, pr)
 
    local depth = pr:next(village.min_size, village.max_size)
    
-   village.villages[name] = {
+   village.villages[village.get_id(name, pos)] = {
+      name = name,
       pos = pos,
    }
 
-   village.spawn_chunk(pos, "0", {}, pr, "well")
+   village.save_villages()
+   village.load_waypoints()
 
    local houses = {}
    local built = {}
    local roads = {}
 
+   village.spawn_chunk(pos, "0", {}, pr, "well")
    built[minetest.hash_node_position(pos)] = true
 
    village.spawn_road(pos, houses, built, roads, depth, pr)
@@ -311,3 +389,9 @@ function village.spawn_village(pos, pr)
       end
    end
 end
+
+minetest.after(
+   0,
+   function()
+      village.load_villages()   
+   end)

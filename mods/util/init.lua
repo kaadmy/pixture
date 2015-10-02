@@ -80,6 +80,8 @@ function util.remove_area(pos1, pos2)
 	 end
       end
    end
+
+   manip:write_to_map()
 end
 
 function util.areafunc(pos1, pos2, func)
@@ -109,23 +111,22 @@ function util.reconstruct(pos1, pos2)
    
    -- fix chests
    local nodes = minetest.find_nodes_in_area(pos1, pos2, "default:chest")
+   local node = minetest.registered_nodes["default:chest"]
    for _, pos in ipairs(nodes) do
-      local node = minetest.registered_nodes[minetest.get_node(pos).name]
-      
       node.on_construct(pos)
    end
-   local nodes = minetest.find_nodes_in_area(pos1, pos2, "music:player")
-   for _, pos in ipairs(nodes) do
-      local node = minetest.registered_nodes[minetest.get_node(pos).name]
-      
+
+   -- fix music players
+   nodes = minetest.find_nodes_in_area(pos1, pos2, "music:player")
+   node = minetest.registered_nodes["music:player"]
+   for _, pos in ipairs(nodes) do      
       node.on_construct(pos)
    end
 
    -- fix furnaces
-   local nodes = minetest.find_nodes_in_area(pos1, pos2, "default:furnace")
-   for _, pos in ipairs(nodes) do
-      local node = minetest.registered_nodes[minetest.get_node(pos).name]
-      
+   nodes = minetest.find_nodes_in_area(pos1, pos2, "default:furnace")
+   node = minetest.registered_nodes["default:furnace"]
+   for _, pos in ipairs(nodes) do      
       node.on_construct(pos)
    end
 end

@@ -44,9 +44,14 @@ minetest.register_abm(
 		  minetest.remove_node(pos)
 		  local pr = PseudoRandom(minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z)
 		  if node.name  == "village:grassland_village_mg" then
-		     if pr:next(1, 60) == 1 then
-			print("Spawning a (Mapgen)Grassland village at "..dump(pos))
-			minetest.after(3.0, function() village.spawn_village(pos, pr) end) -- a short delay to (hopefully)ensure that the surrounding terrain is generated
+		     if pr:next(1, 30) == 1 then
+			local nearest = village.get_nearest_village(pos)
+			if nearest.dist > village.min_spawn_dist then
+			   print("Spawning a (Mapgen)Grassland village at "..dump(pos))
+			   minetest.after(3.0, function() village.spawn_village(pos, pr) end) -- a short delay to (hopefully)ensure that the surrounding terrain is generated
+			else
+			   print("Cannot spawn village, too near another village")
+			end
 		     end
 		  else
 		     print("Spawning a Grassland village at "..dump(pos))

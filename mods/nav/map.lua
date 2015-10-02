@@ -10,7 +10,7 @@ default.ui.register_page("nav_nav", form_nav)
 local open_formspecs = {}
 
 local timer = 10
-local update_time = 0.25
+local update_time = 0.1
 
 function nav.add_waypoint(pos, name, label, isinfo, type)
    nav.waypoints[name] = {pos = pos, label = label, isinfo = isinfo or false, type = type}
@@ -64,17 +64,12 @@ function nav.show_map(player)
    for _, wptname in pairs(wpts) do
       local wpt = nav.waypoints[wptname]
 
-      local isinfo = wpt.isinfo
-      if wptname == "player_" .. name then
-	 isinfo = true
-      end
-
       form = form .. get_formspec_waypoint(
 	 3.5+(((wpt.pos.x-pos.x)/nav.map_radius)*3),
 	 6+(((pos.z-wpt.pos.z)/nav.map_radius)*3),
 	 wptname,
 	 wpt.label,
-	 isinfo)
+	 wpt.isinfo)
    end
 
    form = form .. "image[5.5,3;1,1;nav_map_compass.png]"
@@ -84,19 +79,6 @@ function nav.show_map(player)
 
    minetest.show_formspec(name, "nav_map", form)
 end
-
-minetest.register_craftitem(
-   "nav:map",
-   {
-      description = "Map",
-      inventory_image = "nav_inventory.png",
-      wield_image = "nav_inventory.png",
-      stack_max = 1,
-      on_use = function(itemstack, player, pointed_thing)
-		  open_formspecs[player:get_player_name()] = true
-		  nav.show_map(player)
-	       end,
-   })
 
 local function recieve_fields(player, form_name, fields)
    if form_name == "nav_map" then
@@ -112,7 +94,7 @@ local function on_joinplayer(player)
    minetest.after(
       1.0,
       function()
-	 nav.add_waypoint(player:getpos(), "player_"..name, name, false, "player")
+	 nav.add_waypoint(player:getpos(), "player_"..name, name, true, "player")
       end)
 end
 
@@ -147,6 +129,19 @@ local function step(dtime)
       timer = 0
    end
 end
+
+minetest.register_craftitem(
+   "nav:map",
+   {
+      description = "Map",
+      inventory_image = "nav_inventory.png",
+      wield_image = "nav_inventory.png",
+      stack_max = 1,
+      on_use = function(itemstack, player, pointed_thing)
+		  open_formspecs[player:get_player_name()] = true
+		  nav.show_map(player)
+	       end,
+   })
 
 minetest.register_craft(
    {

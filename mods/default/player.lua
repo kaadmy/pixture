@@ -1,6 +1,7 @@
 local player_soundspec = {}
 local player_lastsound = {}
 local player_health = {}
+local player_lastpos = {}
 
 local enable_flowing_water_sound = minetest.setting_getbool("enable_flowing_water_sound")
 if enable_flowing_water_sound == nil then enable_flowing_water_sound = true end
@@ -16,8 +17,10 @@ local function step(dtime)
 	 or player_pos.y < -30000 or player_pos.y > 30000
 	 or player_pos.z < -30000 or player_pos.z > 30000 then
 	 minetest.chat_send_player(name, "Don't go past 30000m in any direction!")
-	 player.set_hp(0)
+	 player:setpos(player_lastpos[name])
       end
+
+      player_lastpos[name] = player:getpos()
 
       if player:get_hp() < player_health[name] then
 	 minetest.sound_play(
@@ -105,6 +108,8 @@ local function on_joinplayer(player)
 
    -- uncomment to disable the sneak glitch
    player:set_physics_override({sneak_glitch = false})
+
+   player_lastpos[name] = player:getpos()
 end
 
 local function on_leaveplayer(player)
@@ -113,6 +118,7 @@ local function on_leaveplayer(player)
    player_soundspec[name] = nil
    player_lastsound[name] = nil
    player_health[name] = nil
+   player_lastpos[name] = nil
 end
 
 minetest.register_privilege("uberspeed", "Can use /uberspeed command")
