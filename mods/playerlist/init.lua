@@ -55,13 +55,13 @@ minetest.register_chatcommand(
    {
       params = "[all|recent]",
       description = "List players that are connected and have connected since the last server restart",
-      func = function(name, param)
+      func = function(player_name, param)
 		local time = minetest.get_gametime()
 
 		local str = ""
 
 		if param == "all" then
-		   minetest.chat_send_player(name, "Players:")
+		   minetest.chat_send_player(player_name, "Players:")
 		elseif param == "recent" then
 		   str = str .. "Recent players: "
 		else
@@ -75,9 +75,9 @@ minetest.register_chatcommand(
 		   if param == "all" then
 		      if plyr ~= nil then
 			 player_count = player_count + 1
-			 minetest.chat_send_player(name, "  " .. name .. ": connected for " .. prettytime(time - jointime))
+			 minetest.chat_send_player(player_name, "  " .. name .. ": connected for " .. prettytime(time - jointime))
 		      else
-			 minetest.chat_send_player(name, "  " .. name .. ": last seen " .. prettytime(time - jointime) .. " ago")
+			 minetest.chat_send_player(player_name, "  " .. name .. ": last seen " .. prettytime(time - jointime) .. " ago")
 		      end
 		   else
 		      if param == "recent" then
@@ -92,12 +92,12 @@ minetest.register_chatcommand(
 		   end
 		end
 
-		minetest.chat_send_player(name, str)
+		minetest.chat_send_player(player_name, str)
 
 		if param == "recent" then
-		   minetest.chat_send_player(name, player_count .. " recent players")
+		   minetest.chat_send_player(player_name, player_count .. " recent players")
 		else
-		   minetest.chat_send_player(name, player_count .. " connected players")
+		   minetest.chat_send_player(player_name, player_count .. " connected players")
 		end
 	     end
    })
