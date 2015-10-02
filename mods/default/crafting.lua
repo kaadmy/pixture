@@ -326,7 +326,27 @@ minetest.register_craft(
       output = "default:fence 4",
       recipe = {
 	 {"default:stick", "", "default:stick"},
-	 {"default:fiber", "group:planks", "default:fiber"},
+	 {"default:fiber", "default:planks", "default:fiber"},
+	 {"default:stick", "", "default:stick"},
+      }
+   })
+
+minetest.register_craft(
+   {
+      output = "default:fence_oak 4",
+      recipe = {
+	 {"default:stick", "", "default:stick"},
+	 {"default:fiber", "default:planks_oak", "default:fiber"},
+	 {"default:stick", "", "default:stick"},
+      }
+   })
+
+minetest.register_craft(
+   {
+      output = "default:fence_birch 4",
+      recipe = {
+	 {"default:stick", "", "default:stick"},
+	 {"default:fiber", "default:planks_birch", "default:fiber"},
 	 {"default:stick", "", "default:stick"},
       }
    })
