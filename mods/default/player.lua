@@ -3,8 +3,11 @@ local player_lastsound = {}
 local player_health = {}
 
 local enable_flowing_water_sound = minetest.setting_getbool("enable_flowing_water_sound")
+if enable_flowing_water_sound == nil then enable_flowing_water_sound = true end
 
 local function step(dtime)
+   local player_positions = {}
+
    for _, player in ipairs(minetest.get_connected_players()) do
       local player_pos=player:getpos()
       local name=player:get_player_name()
@@ -53,13 +56,24 @@ local function step(dtime)
 	 end
       elseif flowing_water_pos then
 	 if player_lastsound[name] > 3.3 then
-	    player_soundspec[name]=minetest.sound_play(
-	       "default_water",
-	       {
-		  pos = flowing_water_pos,
-		  max_hear_distance = 16,
-	       })
-	    player_lastsound[name] = 0
+
+	    local c = true
+	    for _, p in pairs(player_positions) do
+	       if (p.x * player_pos.x) + (p.y * player_pos.y) + (p.z * player_pos.z) < 256 then
+		  -- 256 is 16*16 for distance checking
+		  c = false
+	       end
+	    end
+	    
+	    if c then
+	       player_soundspec[name]=minetest.sound_play(
+		  "default_water",
+		  {
+		     pos = flowing_water_pos,
+		     max_hear_distance = 16,
+		  })
+	       player_lastsound[name] = 0
+	    end
 	 end	 
       else
 	 if player_soundspec[name] ~= nil then
@@ -76,6 +90,8 @@ local function step(dtime)
 	    minetest.set_node(grass_pos, {name = "default:dirt_with_grass_footsteps"})
 	 end
       end
+
+      table.insert(player_positions, player_pos)
    end
 end
 
