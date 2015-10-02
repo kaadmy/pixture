@@ -12,7 +12,7 @@ function locks.is_owner(meta, player)
    local name = player:get_player_name()
    local owner = meta:get_string("lock_owner")
 
-   return (all_unlocked or (name == owner))
+   return name == owner
 end
 
 function locks.is_locked(meta, player)
