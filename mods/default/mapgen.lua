@@ -1,7 +1,7 @@
 -- minetest/default/mapgen.lua
 
 --
--- Aliases for map generator outputs
+-- Aliases for map generator outputs(Might not be needed with v7, but JIC)
 --
 
 minetest.register_alias("mapgen_stone", "default:stone")
@@ -34,10 +34,10 @@ minetest.register_ore(
       ore_type       = "scatter",
       ore            = "default:stone_with_coal",
       wherein        = "default:stone",
-      clust_scarcity = 8*8*8,
+      clust_scarcity = 10*10*10,
       clust_num_ores = 6,
       clust_size     = 4,
-      height_min     = -128,
+      height_min     = -31000,
       height_max     = 32,
    })
 
@@ -47,10 +47,22 @@ minetest.register_ore(
       ore            = "default:stone_with_coal",
       wherein        = "default:stone",
       clust_scarcity = 8*8*8,
+      clust_num_ores = 8,
+      clust_size     = 6,
+      height_min     = -31000,
+      height_max     = -32,
+   })
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_coal",
+      wherein        = "default:stone",
+      clust_scarcity = 9*9*9,
       clust_num_ores = 20,
       clust_size     = 10,
-      height_min     = -128,
-      height_max     = -32,
+      height_min     = -31000,
+      height_max     = -64,
    })
 
 minetest.register_ore(
@@ -61,7 +73,7 @@ minetest.register_ore(
       clust_scarcity = 8*8*8,
       clust_num_ores = 6,
       clust_size     = 4,
-      height_min     = -128,
+      height_min     = -31000,
       height_max     = 0,
    })
 
@@ -73,7 +85,7 @@ minetest.register_ore(
       clust_scarcity = 8*8*8,
       clust_num_ores = 20,
       clust_size     = 10,
-      height_min     = -128,
+      height_min     = -31000,
       height_max     = -32,
    })
 
@@ -82,133 +94,12 @@ minetest.register_ore(
       ore_type       = "blob",
       ore            = "default:block_steel",
       wherein        = "default:stone",
-      clust_scarcity = 8*8*8,
+      clust_scarcity = 12*12*12,
       clust_num_ores = 10,
       clust_size     = 10,
-      height_min     = -128,
-      height_max     = -64,
+      height_min     = -31000,
+      height_max     = -128,
    })
-
-function default.make_papyrus(pos, size)
-   for y=0,size-1 do
-      local p = {x=pos.x, y=pos.y+y, z=pos.z}
-      local nn = minetest.get_node(p).name
-      if minetest.registered_nodes[nn] and
-	 minetest.registered_nodes[nn].buildable_to then
-	 minetest.set_node(p, {name="default:papyrus"})
-      else
-	 return
-      end
-   end
-end
-
-function default.make_cactus(pos, size)
-   for y=0,size-1 do
-      local p = {x=pos.x, y=pos.y+y, z=pos.z}
-      local nn = minetest.get_node(p).name
-      if minetest.registered_nodes[nn] and
-	 minetest.registered_nodes[nn].buildable_to then
-	 minetest.set_node(p, {name="default:cactus"})
-      else
-	 return
-      end
-   end
-end
-
-function default.mgv6_ongen(minp, maxp, seed)
-   -- Generate cactuses
-   local perlin1 = minetest.get_perlin(230, 3, 0.6, 100)
-   -- Assume X and Z lengths are equal
-   local divlen = 16
-   local divs = (maxp.x-minp.x)/divlen+1;
-   for divx=0,divs-1 do
-      for divz=0,divs-1 do
-	 local x0 = minp.x + math.floor((divx+0)*divlen)
-	 local z0 = minp.z + math.floor((divz+0)*divlen)
-	 local x1 = minp.x + math.floor((divx+1)*divlen)
-	 local z1 = minp.z + math.floor((divz+1)*divlen)
-	 -- Determine cactus amount from perlin noise
-	 local cactus_amount = math.floor(perlin1:get2d({x=x0, y=z0}) * 6 - 3)
-	 -- Find random positions for cactus based on this random
-	 local pr = PseudoRandom(seed+1)
-	 for i=0,cactus_amount do
-	    local x = pr:next(x0, x1)
-	    local z = pr:next(z0, z1)
-	    -- Find ground level (0...15)
-	    local ground_y = nil
-	    for y=30,0,-1 do
-	       if minetest.get_node({x=x,y=y,z=z}).name ~= "air" then
-		  ground_y = y
-		  break
-	       end
-	    end
-	    if (ground_y and ground_y > 10) and minetest.get_node({x=x,y=ground_y,z=z}).name == "default:sand" then
-	       default.make_cactus({x=x,y=ground_y+1,z=z}, pr:next(2, 3))
-	    end
-	 end
-      end
-   end
-
-   local pr = PseudoRandom(seed+541)
-   for x=minp.x,maxp.x do
-      for z=minp.z,maxp.z do
-	 local perlin1=((minetest.get_perlin(5123, 3, 0.6, 1):get2d({x=x*0.03, y=z*0.03}) * 0.5) + 0.5)*60
-	 if pr:next(0, 15) > perlin1 then
-	    local ground_y = nil
-
-	    for y=2,0,-1 do
-	       if minetest.get_node({x=x,y=y,z=z}).name ~= "air" then
-		  ground_y = y
-		  break
-	       end
-	    end
-
-	    local pos={x=x, y=ground_y, z=z}
-
-	    if (ground_y and ground_y < 20) and minetest.get_node(pos).name == "default:sand" then
-	       if minetest.find_node_near(pos, 3, {"group:water"}) then
-		  default.make_papyrus({x=pos.x, y=pos.y+1, z=pos.z}, pr:next(1, 3))
-	       end
-	    end
-	 end
-
-	 local perlin2=((minetest.get_perlin(8175, 12, 0.8, 0.7):get2d({x=x*0.025, y=z*0.025}) * 0.5) + 0.5)*1000
-	 if pr:next(0, 15) > perlin2 then
-	    local ground_y = nil
-	    for y=30,0,-1 do
-	       if minetest.get_node({x=x,y=y,z=z}).name ~= "air" then
-		  ground_y = y
-		  break
-	       end
-	    end
-	    if ground_y ~= nil then
-	       local p = {x = x, y = ground_y+1, z = z}
-	       local nn=minetest.get_node(p).name
-	       if minetest.registered_nodes[nn] and
-		  minetest.registered_nodes[nn].buildable_to then
-		  nn = minetest.get_node({x=x,y=ground_y,z=z}).name
-		  if nn == "default:dirt_with_grass" then
-		     if pr:next(0, 100) < 1 then
-			minetest.set_node(p, {name = "farming:wheat_4"})
-		     else
-			minetest.set_node(p, {name = "default:grass"})
-		     end
-		  elseif nn == "default:sand" and pr:next(0, 300) < 1 then
-		     minetest.set_node(p, {name = "farming:cotton_4"})
-		  end
-	       end
-	    end
-	 end
-      end
-   end
-end
-
-local mg_params = minetest.get_mapgen_params()
-
-if mg_params.mgname == "v6" then
-   default.log("please use v5 or v7 mapgen instead; v6 mapgen may not work and is not supported.", "info")
-   --   minetest.register_on_generated(default.mgv6_ongen)
-end
 
 --
 -- Biome setup
@@ -268,14 +159,26 @@ minetest.register_biome(
 
 minetest.register_biome(
    {
+      name = "Savanna",
+      node_top = "default:dirt_with_dry_grass",	         	depth_top = 1,
+      node_filler = "default:dirt",		depth_filler = 2,
+      node_underwater = "default:dirt",
+      node_shore_top = "default:sand",
+      node_shore_filler = "default:sand",		height_shore = 0,
+      y_min = -32000,					y_max = 32000,
+      heat_point = 60,				humidity_point = 25,
+   })
+
+minetest.register_biome(
+   {
       name = "Desert",
       node_top = "default:sand",	         	depth_top = 3,
       node_filler = "default:sandstone",		depth_filler = 8,
       node_underwater = "default:dirt",
       node_shore_top = "default:sand",
       node_shore_filler = "default:sand",		height_shore = 0,
-      y_min = -32000,					y_max = 32000,
-      heat_point = 80,				humidity_point = 10,
+      y_min = 0,					y_max = 32000,
+      heat_point = 70,				humidity_point = 20,
    })
 
 -- Decorations
@@ -390,6 +293,18 @@ minetest.register_decoration(
       decoration = {"default:grass"},
       y_min = 0,
       y_max = 32000,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_dry_grass",
+      sidelen = 16,
+      fill_ratio = 0.07,
+      biomes = {"Savanna"},
+      decoration = {"default:dry_grass"},
+      y_min = 0,
+      y_max = 50,
    })
 
 minetest.register_decoration(

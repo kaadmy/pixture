@@ -88,6 +88,26 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:dirt_with_dry_grass",
+   {
+      description = "Dirt with Dry Grass",
+      tiles ={"default_dry_grass.png", "default_dirt.png", "default_dirt.png^default_dry_grass_side.png"},
+      groups = {crumbly=3, soil=1, fall_damage_add_percent=-5, not_in_craftingguide = 1},
+      drop = {
+	 max_items = 3,
+	 items = {
+	    {items = {"default:dirt"}, rarity = 1},
+	    {items = {"default:grass 2"}, rarity = 6},
+	 }
+      },
+      is_ground_content = true,
+      sounds = default.node_sound_dirt_defaults(
+	 {
+	    footstep = {name="default_soft_footstep", gain=0.3},
+	 }),
+   })
+
+minetest.register_node(
    "default:dirt_with_grass",
    {
       description = "Dirt with Grass",
@@ -961,6 +981,28 @@ minetest.register_node(
 			     meta:set_string("text", fields.text)
 			     meta:set_string("infotext", '"'..fields.text..'"')
 			  end,
+   })
+
+minetest.register_node(
+   "default:dry_grass",
+   {
+      description = "Dry Grass Clump",
+      drawtype = "plantlike",
+      selection_box = {
+	 type = "fixed",
+	 fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
+      },
+      visual_scale = 1.15,
+      tiles ={"default_dry_grass_clump.png"},
+      inventory_image = "default_dry_grass_clump_inventory.png",
+      wield_image = "default_dry_grass_clump_inventory.png",
+      paramtype = "light",
+      waving = 1,
+      walkable = false,
+      buildable_to = true,
+      is_ground_content = true,
+      groups = {snappy=2,dig_immediate=3,attached_node=1},
+      sounds = default.node_sound_leaves_defaults(),
    })
 
 minetest.register_node(
