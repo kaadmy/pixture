@@ -459,6 +459,61 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:rope",
+   {
+      description = "Rope",
+      drawtype = "nodebox",
+      tiles ={"default_rope.png"},
+      inventory_image = "default_rope_inventory.png",
+      wield_image = "default_rope_inventory.png",
+      paramtype = "light",
+      walkable = false,
+      climbable = true,
+      sunlight_propagates = true,
+      node_box = {
+	 type = "fixed",
+	 fixed = {-1/16, -0.5, -1/16, 1/16, 0.5, 1/16},
+      },
+      groups = {snappy=3},
+      sounds = default.node_sound_leaves_defaults(),
+      after_dig_node = function(pos, node, metadata, digger)
+			  default.dig_down(pos, node, digger)
+		       end,
+   })
+
+minetest.register_node(
+   "default:papyrus",
+   {
+      description = "Papyrus",
+      drawtype = "nodebox",
+      tiles ={"default_papyrus.png"},
+      inventory_image = "default_papyrus_inventory.png",
+      wield_image = "default_papyrus_inventory.png",
+      paramtype = "light",
+      walkable = false,
+      climbable = true,
+      selection_box = {
+	 type = "fixed",
+	 fixed = {-0.5+(2/16), -0.5, -0.5+(2/16), 0.5-(2/16), 0.5, 0.5-(2/16)}
+      },
+      node_box = {
+	 type = "fixed",
+	 fixed = {
+	    {-0.5+(2/16), -0.5, -0.5+(2/16), -0.5+(4/16), 0.5, -0.5+(4/16)},
+	    {0.5-(2/16), -0.5, -0.5+(2/16), 0.5-(4/16), 0.5, -0.5+(4/16)},
+	    {-0.5+(2/16), -0.5, 0.5-(2/16), -0.5+(4/16), 0.5, 0.5-(4/16)},
+	    {0.5-(2/16), -0.5, 0.5-(2/16), 0.5-(4/16), 0.5, 0.5-(4/16)},
+	    {-1/16, -0.5, -1/16, 1/16, 0.5, 1/16},
+	 }
+      },
+      groups = {snappy=3},
+      sounds = default.node_sound_leaves_defaults(),
+      after_dig_node = function(pos, node, metadata, digger)
+			  default.dig_up(pos, node, digger)
+		       end,
+   })
+
+minetest.register_node(
    "default:papyrus",
    {
       description = "Papyrus",

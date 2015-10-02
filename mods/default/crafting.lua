@@ -176,6 +176,16 @@ minetest.register_craft(
 
 minetest.register_craft(
    {
+      output = "default:rope",
+      recipe = {
+	 {"default:dry_grass"},
+	 {"default:dry_grass"},
+	 {"default:dry_grass"},
+      }
+   })
+
+minetest.register_craft(
+   {
       output = "default:fiber",
       type = "shapeless",
       recipe = {
