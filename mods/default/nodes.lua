@@ -97,7 +97,9 @@ minetest.register_node(
 	 max_items = 3,
 	 items = {
 	    {items = {"default:dirt"}, rarity = 1},
-	    {items = {"default:grass 2"}, rarity = 6},
+	    {items = {"default:dry_grass 4"}, rarity = 12},
+	    {items = {"default:dry_grass 2"}, rarity = 6},
+	    {items = {"default:dry_grass 1"}, rarity = 2},
 	 }
       },
       is_ground_content = true,
