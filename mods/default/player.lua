@@ -2,6 +2,8 @@ local player_soundspec = {}
 local player_lastsound = {}
 local player_health = {}
 
+local enable_flowing_water_sound = minetest.setting_getbool("enable_flowing_water_sound")
+
 local function step(dtime)
    for _, player in ipairs(minetest.get_connected_players()) do
       local player_pos=player:getpos()
@@ -34,6 +36,11 @@ local function step(dtime)
 
       player_lastsound[name] = player_lastsound[name] + dtime
 
+      local flowing_water_pos = nil
+      if enable_flowing_water_sound then
+	 flowing_water_pos = minetest.find_node_near(player_pos, 16, "group:flowing_water")
+      end
+
       if nodename == "default:water_source" or nodename == "default:river_water_source" then
 	 if player_lastsound[name] > 3.3 then
 	    player_soundspec[name]=minetest.sound_play(
@@ -44,6 +51,16 @@ local function step(dtime)
 	       })
 	    player_lastsound[name] = 0
 	 end
+      elseif flowing_water_pos then
+	 if player_lastsound[name] > 3.3 then
+	    player_soundspec[name]=minetest.sound_play(
+	       "default_water",
+	       {
+		  pos = flowing_water_pos,
+		  max_hear_distance = 16,
+	       })
+	    player_lastsound[name] = 0
+	 end	 
       else
 	 if player_soundspec[name] ~= nil then
 	    minetest.sound_stop(player_soundspec[name])
@@ -70,7 +87,7 @@ local function on_joinplayer(player)
 -- uncomment to enable player-on-player collisions
 --   player:set_properties({physical = true})
 
--- uncomment to disable the sneak glitch
+   -- uncomment to disable the sneak glitch
    player:set_physics_override({sneak_glitch = false})
 end
 

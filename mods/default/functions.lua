@@ -310,21 +310,21 @@ minetest.register_abm( -- weak torchs burn out and die after ~3 minutes
 	       end
    })
 
-if minetest.setting_getbool("flowing_water_sounds") then
-   minetest.register_abm( -- river water makes gurgling noises
-      {
-	 nodenames = {"group:flowing_water"},
-	 interval = 1,
-	 chance = 16,
-	 action = function(pos, node)
-		     minetest.sound_play(
-			"default_water",
-			{
-			   pos = pos,
-			   gain = 0.2,
-			})
-		  end
-      })
-end
+-- if minetest.setting_getbool("flowing_water_sounds") then
+--    minetest.register_abm( -- river water makes gurgling noises
+--       {
+--    	 nodenames = {"group:flowing_water"},
+--    	 interval = 1,
+--    	 chance = 16,
+--    	 action = function(pos, node)
+--    		     minetest.sound_play(
+--    			"default_water",
+--    			{
+--    			   pos = pos,
+--    			   gain = 0.2,
+--    			})
+--    		  end
+--       })
+-- end
 
 default.log("functions", "loaded")
