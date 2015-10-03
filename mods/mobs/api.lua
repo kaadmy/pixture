@@ -702,6 +702,8 @@ function mobs:register_mob(name, def)
 			    return
 			 end
 		      end
+		   else
+		      self:set_animation("stand")
 		   end
 
 		   if self.state == "stand" then
