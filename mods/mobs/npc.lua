@@ -89,11 +89,15 @@ for _, npc_type in pairs(npc_types) do
 				  clicker:set_wielded_item(item)
 			       end
 			       
-			       -- right clicking trades, sneak+rightclick if owner changes order
+			       -- right clicking with trading book trades, else changes order if tame
 			       -- trading is done in the gold mod
 			    else
 			       -- if owner switch between follow and stand
-			       if clicker:get_player_control().sneak then
+			       if not self.npc_trade then
+				  self.npc_trade = util.choice_element(gold.trades[self.npc_type], gold.pr)
+			       end
+
+			       if not gold.trade(self.npc_trade, self.npc_type, clicker) then
 				  if self.owner and self.owner == clicker:get_player_name() then
 				     if self.order == "follow" then
 					self.order = "stand"
@@ -101,16 +105,6 @@ for _, npc_type in pairs(npc_types) do
 					self.order = "follow"
 				     end
 				  end
-			       else
---				  if not self.npc_type then
---				     self.npc_type = util.choice_element(npc_types, gold.pr)
---				  end
-
-				  if not self.npc_trade then
-				     self.npc_trade = util.choice_element(gold.trades[self.npc_type], gold.pr)
-				  end
-
-				  gold.trade(self.npc_trade, self.npc_type, clicker)
 			       end
 			    end
 

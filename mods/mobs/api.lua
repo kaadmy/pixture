@@ -682,291 +682,109 @@ function mobs:register_mob(name, def)
 			    self.object:setyaw(yaw)
 
 			    -- anyone but standing npc's can move along
-			    if dist > 2
-			       and self.order ~= "stand" then
-			       if (self.jump
-				   and self.get_velocity(self) <= 0.5
-				and self.object:getvelocity().y == 0)
-			       or (self.object:getvelocity().y == 0
-				and self.jump_chance > 0) then
-			       self.direction = {
-				  x = math.sin(yaw) * -1,
-				  y = -20,
-				  z = math.cos(yaw)
-			       }
-			       do_jump(self)
+			    if dist > 2 and self.order ~= "stand" then
+			       if (self.jump and self.get_velocity(self) <= 0.5 and self.object:getvelocity().y == 0) or (self.object:getvelocity().y == 0 and self.jump_chance > 0) then
+				  self.direction = {
+				     x = math.sin(yaw) * -1,
+				     y = -20,
+				     z = math.cos(yaw)
+				  }
+				  do_jump(self)
+			       end
+			       self.set_velocity(self, self.walk_velocity)
+			       if self.walk_chance ~= 0 then
+				  self:set_animation("walk")
+			       end
+			    else
+			       self.set_velocity(self, 0)
+			       self:set_animation("stand")
 			    end
-			    self.set_velocity(self, self.walk_velocity)
-			    if self.walk_chance ~= 0 then
-			       self:set_animation("walk")
-			    end
-			 else
-			    self.set_velocity(self, 0)
-			    self:set_animation("stand")
+			    return
 			 end
-			 return
 		      end
 		   end
-		end
 
-		if self.state == "stand" then
-		   -- randomly turn
-		   if math.random(1, 4) == 1 then
-		      -- if there is a player nearby look at them
-		      local lp = nil
-		      local s = self.object:getpos()
+		   if self.state == "stand" then
+		      -- randomly turn
+		      if math.random(1, 4) == 1 then
+			 -- if there is a player nearby look at them
+			 local lp = nil
+			 local s = self.object:getpos()
 
-		      if self.type == "npc" then
-			 local o = minetest.get_objects_inside_radius(self.object:getpos(), 3)
-			 
-			 local yaw = 0
-			 for _,o in ipairs(o) do
-			    if o:is_player() then
-			       lp = o:getpos()
-			       break
+			 if self.type == "npc" then
+			    local o = minetest.get_objects_inside_radius(self.object:getpos(), 3)
+			    
+			    local yaw = 0
+			    for _,o in ipairs(o) do
+			       if o:is_player() then
+				  lp = o:getpos()
+				  break
+			       end
 			    end
 			 end
+
+			 if lp ~= nil then
+			    local vec = {x = lp.x - s.x, y = lp.y - s.y, z = lp.z - s.z}
+			    yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
+			    if lp.x > s.x then
+			       yaw = yaw + math.pi
+			    end
+			 else 
+			    yaw = self.object:getyaw() + ((math.random(0, 360) - 180) / 180 * math.pi)
+			 end
+			 self.object:setyaw(yaw)
 		      end
 
-		      if lp ~= nil then
+		      self.set_velocity(self, 0)
+		      self.set_animation(self, "stand")
+
+		      -- npc's ordered to stand stay standing
+		      if self.type == "npc"
+			 and self.order == "stand" then
+			 self.set_velocity(self, 0)
+			 self.state = "stand"
+			 self:set_animation("stand")
+		      else
+			 if self.walk_chance ~= 0 and math.random(1, 100) <= self.walk_chance then
+			    self.set_velocity(self, self.walk_velocity)
+			    self.state = "walk"
+			    self.set_animation(self, "walk")
+			 end
+
+			 -- jumping mobs only
+			 --					if self.jump and math.random(1, 100) <= self.jump_chance then
+			 --						self.direction = {x = 0, y = 0, z = 0}
+			 --						do_jump(self)
+			 --						self.set_velocity(self, self.walk_velocity)
+			 --					end
+		      end
+
+		   elseif self.state == "walk" then
+		      local s = self.object:getpos()
+		      local lp = minetest.find_node_near(s, 1, {"group:water"})
+
+		      -- water swimmers cannot move out of water
+		      if self.fly and self.fly_in == "default:water_source" and not lp then
+			 print ("out of water")
+			 self.set_velocity(self, 0)
+			 self.state = "flop" -- change to undefined state so nothing more happens
+			 self:set_animation("stand")
+			 return
+		      end
+		      -- if water nearby then turn away
+		      if lp then
 			 local vec = {x = lp.x - s.x, y = lp.y - s.y, z = lp.z - s.z}
-			 yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
+			 yaw = math.atan(vec.z / vec.x) + 3 * math.pi / 2 - self.rotate
 			 if lp.x > s.x then
 			    yaw = yaw + math.pi
 			 end
-		      else 
-			 yaw = self.object:getyaw() + ((math.random(0, 360) - 180) / 180 * math.pi)
+			 self.object:setyaw(yaw)
+
+			 -- otherwise randomly turn
+		      elseif math.random(1, 100) <= 30 then
+			 self.object:setyaw(self.object:getyaw() + ((math.random(0, 360) - 180) / 180 * math.pi))
 		      end
-		      self.object:setyaw(yaw)
-		   end
-
-		   self.set_velocity(self, 0)
-		   self.set_animation(self, "stand")
-
-		   -- npc's ordered to stand stay standing
-		   if self.type == "npc"
-		      and self.order == "stand" then
-		      self.set_velocity(self, 0)
-		      self.state = "stand"
-		      self:set_animation("stand")
-		   else
-		      if self.walk_chance ~= 0 and math.random(1, 100) <= self.walk_chance then
-			 self.set_velocity(self, self.walk_velocity)
-			 self.state = "walk"
-			 self.set_animation(self, "walk")
-		      end
-
-		      -- jumping mobs only
-		      --					if self.jump and math.random(1, 100) <= self.jump_chance then
-		      --						self.direction = {x = 0, y = 0, z = 0}
-		      --						do_jump(self)
-		      --						self.set_velocity(self, self.walk_velocity)
-		      --					end
-		   end
-
-		elseif self.state == "walk" then
-		   local s = self.object:getpos()
-		   local lp = minetest.find_node_near(s, 1, {"group:water"})
-
-		   -- water swimmers cannot move out of water
-		   if self.fly and self.fly_in == "default:water_source" and not lp then
-		      print ("out of water")
-		      self.set_velocity(self, 0)
-		      self.state = "flop" -- change to undefined state so nothing more happens
-		      self:set_animation("stand")
-		      return
-		   end
-		   -- if water nearby then turn away
-		   if lp then
-		      local vec = {x = lp.x - s.x, y = lp.y - s.y, z = lp.z - s.z}
-		      yaw = math.atan(vec.z / vec.x) + 3 * math.pi / 2 - self.rotate
-		      if lp.x > s.x then
-			 yaw = yaw + math.pi
-		      end
-		      self.object:setyaw(yaw)
-
-		      -- otherwise randomly turn
-		   elseif math.random(1, 100) <= 30 then
-		      self.object:setyaw(self.object:getyaw() + ((math.random(0, 360) - 180) / 180 * math.pi))
-		   end
-		   if self.jump and self.get_velocity(self) <= 0.5 and self.object:getvelocity().y == 0 then
-		      self.direction = {
-			 x = math.sin(yaw) * -1,
-			 y = -20,
-			 z = math.cos(yaw)
-		      }
-		      do_jump(self)
-		   end
-
-		   self:set_animation("walk")
-		   self.set_velocity(self, self.walk_velocity)
-		   if math.random(1, 100) <= 30 then
-		      self.set_velocity(self, 0)
-		      self.state = "stand"
-		      self:set_animation("stand")
-		   end
-
-		   -- exploding mobs
-		elseif self.state == "attack" and self.attack_type == "explode" then 
-		   if not self.attack.player
-		      or not self.attack.player:is_player() then
-		      self.state = "stand"
-		      self:set_animation("stand")
-		      self.timer = 0
-		      self.blinktimer = 0
-		      return
-		   end
-		   local s = self.object:getpos()
-		   local p = self.attack.player:getpos()
-		   local dist = ((p.x - s.x) ^ 2 + (p.y - s.y) ^ 2 + (p.z - s.z) ^ 2) ^ 0.5
-		   if dist > self.view_range or self.attack.player:get_hp() <= 0 then
-		      self.state = "stand"
-		      self.v_start = false
-		      self.set_velocity(self, 0)
-		      self.timer = 0
-		      self.blinktimer = 0
-		      self.attack = {player = nil, dist = nil}
-		      self:set_animation("stand")
-		      return
-		   else
-		      self:set_animation("walk")
-		      self.attack.dist = dist
-		   end
-		   
-		   local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
-		   yaw = math.atan(vec.z / vec.x) + math.pi / 2 - self.rotate
-		   if p.x > s.x then
-		      yaw = yaw+math.pi
-		   end
-		   self.object:setyaw(yaw)
-		   if self.attack.dist > 3 then
-		      if not self.v_start then
-			 self.v_start = true
-			 self.set_velocity(self, self.run_velocity)
-			 self.timer = 0
-			 self.blinktimer = 0
-		      else
-			 self.timer = 0
-			 self.blinktimer = 0
-			 if self.get_velocity(self) <= 0.5 and self.object:getvelocity().y == 0 then
-			    local v = self.object:getvelocity()
-			    v.y = 5
-			    self.object:setvelocity(v)
-			 end
-			 self.set_velocity(self, self.run_velocity)
-		      end
-		      self:set_animation("run")
-		   else
-		      self.set_velocity(self, 0)
-		      self.timer = self.timer + dtime
-		      self.blinktimer = (self.blinktimer or 0) + dtime
-		      if self.blinktimer > 0.2 then
-			 self.blinktimer = 0
-			 if self.blinkstatus then
-			    self.object:settexturemod("")
-			 else
-			    self.object:settexturemod("^[brighten")
-			 end
-			 self.blinkstatus = not self.blinkstatus
-		      end
-		      if self.timer > 3 then
-			 local pos = vector.round(self.object:getpos())
-			 entity_physics(pos, 3) -- hurt player/mobs caught in blast area
-			 if minetest.find_node_near(pos, 1, {"group:water"}) or minetest.is_protected(pos, "") then
-			    self.object:remove()
-			    if self.sounds.explode ~= "" then
-			       minetest.sound_play(self.sounds.explode, {
-						      pos = pos,
-						      gain = 1.0,
-						      max_hear_distance = 16
-						   })
-			    end
-			    effect(pos, 15, "tnt_smoke.png", 5)
-			    return
-			 end
-			 self.object:remove()
-			 pos.y = pos.y - 1
-			 mobs:explosion(pos, self.explode_radius, 0, 1, self.sounds.explode)
-		      end
-		   end
-		   -- end of exploding mobs
-
-		elseif self.state == "attack"
-		   and self.attack_type == "dogfight" then
-		   if not self.attack.player or not self.attack.player:getpos() then
-		      print("stop attacking")
-		      self.state = "stand"
-		      self:set_animation("stand")
-		      return
-		   end
-		   local s = self.object:getpos()
-		   local p = self.attack.player:getpos()
-		   local dist = ((p.x - s.x) ^ 2 + (p.y - s.y) ^ 2 + (p.z - s.z) ^ 2) ^ 0.5
-
-		   -- fly bit modified from BlockMens creatures mod
-		   if self.fly
-		      and dist > 2 then
-
-		      local nod = minetest.get_node_or_nil(s)
-		      local p1 = s
-		      local me_y = math.floor(p1.y)
-		      local p2 = p
-		      local p_y = math.floor(p2.y + 1)
-		      local v = self.object:getvelocity()
-		      if nod
-			 and nod.name == self.fly_in then
-			 if me_y < p_y then
-			    self.object:setvelocity({
-						       x = v.x,
-						       y = 1 * self.walk_velocity,
-						       z = v.z
-						    })
-			 elseif me_y > p_y then
-			    self.object:setvelocity({
-						       x = v.x,
-						       y = -1 * self.walk_velocity,
-						       z = v.z
-						    })
-			 end
-		      else
-			 if me_y < p_y then
-			    self.object:setvelocity({
-						       x = v.x,
-						       y = 0.01,
-						       z = v.z
-						    })
-			 elseif me_y > p_y then
-			    self.object:setvelocity({
-						       x = v.x,
-						       y = -0.01,
-						       z = v.z
-						    })
-			 end
-		      end
-
-		   end
-		   -- end fly bit
-
-		   if dist > self.view_range or self.attack.player:get_hp() <= 0 then
-		      self.state = "stand"
-		      self.set_velocity(self, 0)
-		      self.attack = {player = nil, dist = nil}
-		      self:set_animation("stand")
-		      return
-		   else
-		      self.attack.dist = dist
-		   end
-		   
-		   local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
-		   yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
-		   if p.x > s.x then
-		      yaw = yaw + math.pi
-		   end
-		   self.object:setyaw(yaw)
-		   -- attack distance is 2 + half of mob width so the bigger mobs can attack (like slimes)
-		   if self.attack.dist > ((-self.collisionbox[1] + self.collisionbox[4]) / 2) + 2 then
-		      -- jump attack
-		      if (self.jump and self.get_velocity(self) <= 0.5 and self.object:getvelocity().y == 0) or (self.object:getvelocity().y == 0 and self.jump_chance > 0) then
+		      if self.jump and self.get_velocity(self) <= 0.5 and self.object:getvelocity().y == 0 then
 			 self.direction = {
 			    x = math.sin(yaw) * -1,
 			    y = -20,
@@ -974,97 +792,274 @@ function mobs:register_mob(name, def)
 			 }
 			 do_jump(self)
 		      end
-		      self.set_velocity(self, self.run_velocity)
-		      self:set_animation("run")
-		   else
-		      self.set_velocity(self, 0)
-		      self:set_animation("punch")
-		      if self.timer > 1 then
+
+		      self:set_animation("walk")
+		      self.set_velocity(self, self.walk_velocity)
+		      if math.random(1, 100) <= 30 then
+			 self.set_velocity(self, 0)
+			 self.state = "stand"
+			 self:set_animation("stand")
+		      end
+
+		      -- exploding mobs
+		   elseif self.state == "attack" and self.attack_type == "explode" then 
+		      if not self.attack.player
+			 or not self.attack.player:is_player() then
+			 self.state = "stand"
+			 self:set_animation("stand")
 			 self.timer = 0
-			 local p2 = p
-			 local s2 = s
-			 p2.y = p2.y + 1.5
-			 s2.y = s2.y + 1.5
-			 if minetest.line_of_sight(p2, s2) == true then
-			    if self.sounds.attack then
-			       minetest.sound_play(
-				  self.sounds.attack,
-				  {
-				     object = self.object,
-				     max_hear_distance = self.sounds.distance
-				  })
+			 self.blinktimer = 0
+			 return
+		      end
+		      local s = self.object:getpos()
+		      local p = self.attack.player:getpos()
+		      local dist = ((p.x - s.x) ^ 2 + (p.y - s.y) ^ 2 + (p.z - s.z) ^ 2) ^ 0.5
+		      if dist > self.view_range or self.attack.player:get_hp() <= 0 then
+			 self.state = "stand"
+			 self.v_start = false
+			 self.set_velocity(self, 0)
+			 self.timer = 0
+			 self.blinktimer = 0
+			 self.attack = {player = nil, dist = nil}
+			 self:set_animation("stand")
+			 return
+		      else
+			 self:set_animation("walk")
+			 self.attack.dist = dist
+		      end
+		      
+		      local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
+		      yaw = math.atan(vec.z / vec.x) + math.pi / 2 - self.rotate
+		      if p.x > s.x then
+			 yaw = yaw+math.pi
+		      end
+		      self.object:setyaw(yaw)
+		      if self.attack.dist > 3 then
+			 if not self.v_start then
+			    self.v_start = true
+			    self.set_velocity(self, self.run_velocity)
+			    self.timer = 0
+			    self.blinktimer = 0
+			 else
+			    self.timer = 0
+			    self.blinktimer = 0
+			    if self.get_velocity(self) <= 0.5 and self.object:getvelocity().y == 0 then
+			       local v = self.object:getvelocity()
+			       v.y = 5
+			       self.object:setvelocity(v)
 			    end
-			    self.attack.player:punch(
-			       self.object,
-			       1.0,
-			       {
-				  full_punch_interval=1.0,
-				  damage_groups = {fleshy=self.damage}
-			       }, vec)
-			    if self.attack.player:get_hp() <= 0 then
-			       self.state = "stand"
-			       self:set_animation("stand")
+			    self.set_velocity(self, self.run_velocity)
+			 end
+			 self:set_animation("run")
+		      else
+			 self.set_velocity(self, 0)
+			 self.timer = self.timer + dtime
+			 self.blinktimer = (self.blinktimer or 0) + dtime
+			 if self.blinktimer > 0.2 then
+			    self.blinktimer = 0
+			    if self.blinkstatus then
+			       self.object:settexturemod("")
+			    else
+			       self.object:settexturemod("^[brighten")
+			    end
+			    self.blinkstatus = not self.blinkstatus
+			 end
+			 if self.timer > 3 then
+			    local pos = vector.round(self.object:getpos())
+			    entity_physics(pos, 3) -- hurt player/mobs caught in blast area
+			    if minetest.find_node_near(pos, 1, {"group:water"}) or minetest.is_protected(pos, "") then
+			       self.object:remove()
+			       if self.sounds.explode ~= "" then
+				  minetest.sound_play(self.sounds.explode, {
+							 pos = pos,
+							 gain = 1.0,
+							 max_hear_distance = 16
+						      })
+			       end
+			       effect(pos, 15, "tnt_smoke.png", 5)
+			       return
+			    end
+			    self.object:remove()
+			    pos.y = pos.y - 1
+			    mobs:explosion(pos, self.explode_radius, 0, 1, self.sounds.explode)
+			 end
+		      end
+		      -- end of exploding mobs
+
+		   elseif self.state == "attack"
+		      and self.attack_type == "dogfight" then
+		      if not self.attack.player or not self.attack.player:getpos() then
+			 print("stop attacking")
+			 self.state = "stand"
+			 self:set_animation("stand")
+			 return
+		      end
+		      local s = self.object:getpos()
+		      local p = self.attack.player:getpos()
+		      local dist = ((p.x - s.x) ^ 2 + (p.y - s.y) ^ 2 + (p.z - s.z) ^ 2) ^ 0.5
+
+		      -- fly bit modified from BlockMens creatures mod
+		      if self.fly
+			 and dist > 2 then
+
+			 local nod = minetest.get_node_or_nil(s)
+			 local p1 = s
+			 local me_y = math.floor(p1.y)
+			 local p2 = p
+			 local p_y = math.floor(p2.y + 1)
+			 local v = self.object:getvelocity()
+			 if nod
+			    and nod.name == self.fly_in then
+			    if me_y < p_y then
+			       self.object:setvelocity({
+							  x = v.x,
+							  y = 1 * self.walk_velocity,
+							  z = v.z
+						       })
+			    elseif me_y > p_y then
+			       self.object:setvelocity({
+							  x = v.x,
+							  y = -1 * self.walk_velocity,
+							  z = v.z
+						       })
+			    end
+			 else
+			    if me_y < p_y then
+			       self.object:setvelocity({
+							  x = v.x,
+							  y = 0.01,
+							  z = v.z
+						       })
+			    elseif me_y > p_y then
+			       self.object:setvelocity({
+							  x = v.x,
+							  y = -0.01,
+							  z = v.z
+						       })
+			    end
+			 end
+
+		      end
+		      -- end fly bit
+
+		      if dist > self.view_range or self.attack.player:get_hp() <= 0 then
+			 self.state = "stand"
+			 self.set_velocity(self, 0)
+			 self.attack = {player = nil, dist = nil}
+			 self:set_animation("stand")
+			 return
+		      else
+			 self.attack.dist = dist
+		      end
+		      
+		      local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
+		      yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
+		      if p.x > s.x then
+			 yaw = yaw + math.pi
+		      end
+		      self.object:setyaw(yaw)
+		      -- attack distance is 2 + half of mob width so the bigger mobs can attack (like slimes)
+		      if self.attack.dist > ((-self.collisionbox[1] + self.collisionbox[4]) / 2) + 2 then
+			 -- jump attack
+			 if (self.jump and self.get_velocity(self) <= 0.5 and self.object:getvelocity().y == 0) or (self.object:getvelocity().y == 0 and self.jump_chance > 0) then
+			    self.direction = {
+			       x = math.sin(yaw) * -1,
+			       y = -20,
+			       z = math.cos(yaw)
+			    }
+			    do_jump(self)
+			 end
+			 self.set_velocity(self, self.run_velocity)
+			 self:set_animation("run")
+		      else
+			 self.set_velocity(self, 0)
+			 self:set_animation("punch")
+			 if self.timer > 1 then
+			    self.timer = 0
+			    local p2 = p
+			    local s2 = s
+			    p2.y = p2.y + 1.5
+			    s2.y = s2.y + 1.5
+			    if minetest.line_of_sight(p2, s2) == true then
+			       if self.sounds.attack then
+				  minetest.sound_play(
+				     self.sounds.attack,
+				     {
+					object = self.object,
+					max_hear_distance = self.sounds.distance
+				     })
+			       end
+			       self.attack.player:punch(
+				  self.object,
+				  1.0,
+				  {
+				     full_punch_interval=1.0,
+				     damage_groups = {fleshy=self.damage}
+				  }, vec)
+			       if self.attack.player:get_hp() <= 0 then
+				  self.state = "stand"
+				  self:set_animation("stand")
+			       end
 			    end
 			 end
 		      end
-		   end
 
-		elseif self.state == "attack"
-		   and self.attack_type == "shoot" then
+		   elseif self.state == "attack"
+		      and self.attack_type == "shoot" then
 
-		   local s = self.object:getpos()
-		   local p = self.attack.player:getpos()
-		   if not p then
-		      self.state = "stand"
-		      return
-		   end
-		   p.y = p.y - .5
-		   s.y = s.y + .5
-		   local dist = ((p.x - s.x) ^ 2 + (p.y - s.y) ^ 2 + (p.z - s.z) ^ 2) ^ 0.5
-		   if dist > self.view_range or self.attack.player:get_hp() <= 0 then
-		      self.state = "stand"
-		      self.set_velocity(self, 0)
-		      self:set_animation("stand")
-		      return
-		   else
-		      self.attack.dist = dist
-		   end
-		   
-		   local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
-		   yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
-		   if p.x > s.x then
-		      yaw = yaw + math.pi
-		   end
-		   self.object:setyaw(yaw)
-		   self.set_velocity(self, 0)
-		   
-		   if self.shoot_interval and self.timer > self.shoot_interval and math.random(1, 100) <= 60 then
-		      self.timer = 0
-
-		      self:set_animation("punch")
-
-		      if self.sounds.attack then
-			 minetest.sound_play(
-			    self.sounds.attack,
-			    {
-			       object = self.object,
-			       max_hear_distance = self.sounds.distance
-			    })
+		      local s = self.object:getpos()
+		      local p = self.attack.player:getpos()
+		      if not p then
+			 self.state = "stand"
+			 return
 		      end
+		      p.y = p.y - .5
+		      s.y = s.y + .5
+		      local dist = ((p.x - s.x) ^ 2 + (p.y - s.y) ^ 2 + (p.z - s.z) ^ 2) ^ 0.5
+		      if dist > self.view_range or self.attack.player:get_hp() <= 0 then
+			 self.state = "stand"
+			 self.set_velocity(self, 0)
+			 self:set_animation("stand")
+			 return
+		      else
+			 self.attack.dist = dist
+		      end
+		      
+		      local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
+		      yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
+		      if p.x > s.x then
+			 yaw = yaw + math.pi
+		      end
+		      self.object:setyaw(yaw)
+		      self.set_velocity(self, 0)
+		      
+		      if self.shoot_interval and self.timer > self.shoot_interval and math.random(1, 100) <= 60 then
+			 self.timer = 0
 
-		      local p = self.object:getpos()
-		      p.y = p.y + (self.collisionbox[2] + self.collisionbox[5]) / 2
-		      local obj = minetest.add_entity(p, self.arrow)
-		      local amount = (vec.x ^ 2 + vec.y ^ 2 + vec.z ^ 2) ^ 0.5
-		      local v = obj:get_luaentity().velocity
-		      vec.y = vec.y + self.shoot_offset -- this makes shoot aim accurate
-		      vec.x = vec.x *v / amount
-		      vec.y = vec.y *v / amount
-		      vec.z = vec.z *v / amount
-		      obj:setvelocity(vec)
+			 self:set_animation("punch")
+
+			 if self.sounds.attack then
+			    minetest.sound_play(
+			       self.sounds.attack,
+			       {
+				  object = self.object,
+				  max_hear_distance = self.sounds.distance
+			       })
+			 end
+
+			 local p = self.object:getpos()
+			 p.y = p.y + (self.collisionbox[2] + self.collisionbox[5]) / 2
+			 local obj = minetest.add_entity(p, self.arrow)
+			 local amount = (vec.x ^ 2 + vec.y ^ 2 + vec.z ^ 2) ^ 0.5
+			 local v = obj:get_luaentity().velocity
+			 vec.y = vec.y + self.shoot_offset -- this makes shoot aim accurate
+			 vec.x = vec.x *v / amount
+			 vec.y = vec.y *v / amount
+			 vec.z = vec.z *v / amount
+			 obj:setvelocity(vec)
+		      end
 		   end
-		end
-	     end,
+		end,
 
 	 on_activate = function(self, staticdata, dtime_s)
 
@@ -1401,7 +1396,7 @@ function mobs:explosion(pos, radius, fire, smoke, sound)
 		  if fire > 0
 		     and (minetest.registered_nodes[n].groups.flammable
 			  or math.random(1, 100) <= 30) then
---		     minetest.set_node(p, {name = "fire:basic_flame"}) fire mod is disabled
+		     --		     minetest.set_node(p, {name = "fire:basic_flame"}) fire mod is disabled
 		  else
 		     minetest.remove_node(p)
 		  end

@@ -200,6 +200,8 @@ function gold.trade(trade, trade_type, player)
 
    item:set_metadata(minetest.serialize(meta))
    player:set_wielded_item(item)
+
+   return true
 end
 
 minetest.register_on_player_receive_fields(
