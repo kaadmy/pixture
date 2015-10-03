@@ -125,7 +125,7 @@ minetest.register_biome(
       depth_filler = 6,
       depth_top = 1,
 
-      y_min = 2,
+      y_min = 10,
       y_max = 50,
 
       heat_point = 30,
@@ -168,6 +168,23 @@ minetest.register_biome(
 
 minetest.register_biome(
    {
+      name = "Chaparral",
+
+      node_top = "default:dirt_with_dry_grass",
+      node_filler = "default:dirt",
+
+      depth_filler = 0,
+      depth_top = 1,
+
+      y_min = 56,
+      y_max = 32000,
+
+      heat_point = 60,
+      humidity_point = 30,
+   })
+
+minetest.register_biome(
+   {
       name = "Savanna",
 
       node_top = "default:dirt_with_dry_grass",
@@ -176,11 +193,11 @@ minetest.register_biome(
       depth_filler = 2,
       depth_top = 1,
 
-      y_min = 0,
-      y_max = 32000,
+      y_min = 1,
+      y_max = 55,
 
       heat_point = 60,
-      humidity_point = 30,
+      humidity_point = 25,
    })
 
 minetest.register_biome(
@@ -193,7 +210,7 @@ minetest.register_biome(
       depth_filler = 8,
       depth_top = 3,
 
-      y_min = 0,
+      y_min = 1,
       y_max = 32000,
 
       heat_point = 70,
@@ -229,7 +246,7 @@ minetest.register_biome(
       depth_top = 1,
 
       y_min = -32000,
-      y_max = -1,
+      y_max = 0,
 
       heat_point = 60,
       humidity_point = 30,
@@ -346,7 +363,7 @@ minetest.register_decoration(
       place_on = "default:dirt_with_dry_grass",
       sidelen = 16,
       fill_ratio = 0.07,
-      biomes = {"Desert", "Savanna"},
+      biomes = {"Desert", "Savanna", "Chaparral"},
       decoration = {"default:dry_grass"},
       y_min = 10,
       y_max = 500,
@@ -430,6 +447,38 @@ minetest.register_decoration(
       y_min = 10,
       y_max = 500,
       rotation = "random",
+   })
+
+-- Shrubs
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_dry_grass"},
+      sidelen = 16,
+      fill_ratio = 0.005,
+      biomes = {"Savanna", "Chaparral"},
+      flags = "place_center_x, place_center_z",
+      replacements = {["default:leaves"] = "default:dry_leaves"},
+      schematic = minetest.get_modpath("default").."/schematics/default_shrub.mts",
+      y_min = 3,
+      y_max = 32000,
+      rotation = "0",
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_dry_grass"},
+      sidelen = 16,
+      fill_ratio = 0.06,
+      biomes = {"Chaparral"},
+      flags = "place_center_x, place_center_z",
+      replacements = {["default:leaves"] = "default:dry_leaves"},
+      schematic = minetest.get_modpath("default").."/schematics/default_bush.mts",
+      y_min = -32000,
+      y_max = 32000,
+      rotation = "0",
    })
 
 default.log("mapgen", "loaded")

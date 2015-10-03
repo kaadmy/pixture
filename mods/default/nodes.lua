@@ -431,6 +431,32 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:dry_leaves",
+   {
+      description = "Dry Leaves",
+      drawtype = "allfaces_optional",
+      visual_scale = 1.3,
+      tiles ={"default_dry_leaves.png"},
+      paramtype = "light",
+      waving = 1,
+      is_ground_content = false,
+      groups = {snappy=3, leafdecay=3, fall_damage_add_percent=-20, leaves = 1},
+      drop = {
+	 max_items = 1,
+	 items = {
+	    {
+	       items = {"default:dry_leaves"},
+	    },
+	    {
+	       items = {"default:dry_grass"},
+	       rarity = 6,
+	    }
+	 }
+      },
+      sounds = default.node_sound_leaves_defaults(),
+   })
+
+minetest.register_node(
    "default:cactus",
    {
       description = "Cactus",
