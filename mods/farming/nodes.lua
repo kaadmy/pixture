@@ -4,7 +4,8 @@ minetest.register_node(
       description = "Wheat Seed",
       drawtype = "plantlike",
       tiles = {"farming_wheat_1.png"},
-      inventory_image = "farming_wheat_4.png",
+      inventory_image = "farming_wheat_seed.png",
+      wield_image = "farming_wheat_seed.png",
       paramtype = "light",
       waving = 1,
       walkable = false,
@@ -104,7 +105,8 @@ minetest.register_node(
       description = "Cotton Seed",
       drawtype = "plantlike",
       tiles = {"farming_cotton_1.png"},
-      inventory_image = "farming_cotton_4.png",
+      inventory_image = "farming_cotton_seed.png",
+      wield_image = "farming_cotton_seed.png",
       paramtype = "light",
       waving = 1,
       walkable = false,
@@ -207,5 +209,8 @@ minetest.register_node(
       groups = {snappy=2, oddly_breakable_by_hand=3, fall_damage_add_percent=-15, fuzzy = 1},
       sounds = default.node_sound_leaves_defaults(),
    })
+
+minetest.register_alias("farming:cotton_seed", "farming:cotton_1")
+minetest.register_alias("farming:wheat_seed", "farming:wheat_1")
 
 default.log("nodes", "loaded")
