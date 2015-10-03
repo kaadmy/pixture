@@ -88,6 +88,17 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:swamp_dirt",
+   {
+      description = "Swamp Dirt",
+      tiles ={"default_swamp_dirt.png"},
+      stack_max = 240,
+      groups = {crumbly=3, soil=1, fall_damage_add_percent=-10},
+      is_ground_content = true,
+      sounds = default.node_sound_dirt_defaults(),
+   })
+
+minetest.register_node(
    "default:dirt_with_dry_grass",
    {
       description = "Dirt with Dry Grass",
@@ -106,6 +117,28 @@ minetest.register_node(
       sounds = default.node_sound_dirt_defaults(
 	 {
 	    footstep = {name="default_soft_footstep", gain=0.3},
+	 }),
+   })
+
+minetest.register_node(
+   "default:dirt_with_swamp_grass",
+   {
+      description = "Dirt with Swamp Grass",
+      tiles ={"default_swamp_grass.png", "default_swamp_dirt.png", "default_swamp_dirt.png^default_swamp_grass_side.png"},
+      groups = {crumbly=3, soil=1, fall_damage_add_percent=-5, not_in_craftingguide = 1},
+      drop = {
+	 max_items = 3,
+	 items = {
+	    {items = {"default:dirt"}, rarity = 1},
+	    {items = {"default:swamp_grass 6"}, rarity = 14},
+	    {items = {"default:swamp_grass 3"}, rarity = 7},
+	    {items = {"default:swamp_grass 2"}, rarity = 3},
+	 }
+      },
+      is_ground_content = true,
+      sounds = default.node_sound_dirt_defaults(
+	 {
+	    footstep = {name="default_soft_footstep", gain=0.5},
 	 }),
    })
 
@@ -836,7 +869,7 @@ minetest.register_node(
       liquid_alternative_source = "default:river_water_source",
       liquid_viscosity = default.RIVER_WATER_VISC,
       liquid_renewable = false,
-      liquid_range = 2,
+      liquid_range = 1,
       post_effect_color = {a=40, r=40, g=70, b=100},
       groups = {water=1, flowing_water = 1, river_water = 1, liquid=1},
    })
@@ -866,9 +899,75 @@ minetest.register_node(
       liquid_alternative_source = "default:river_water_source",
       liquid_viscosity = default.RIVER_WATER_VISC,
       liquid_renewable = false,
-      liquid_range = 2,
+      liquid_range = 1,
       post_effect_color = {a=40, r=40, g=70, b=100},
       groups = {water = 1, river_water = 1, liquid = 1},
+   })
+
+minetest.register_node(
+   "default:swamp_water_flowing",
+   {
+      description = "Swamp Water (flowing)",
+      inventory_image = minetest.inventorycube("default_swamp_water.png"),
+      drawtype = "flowingliquid",
+      tiles ={"default_swamp_water.png"},
+      special_tiles = {
+	 {
+	    image = "default_swamp_water_animated.png",
+	    backface_culling=false,
+	    animation={type = "vertical_frames", aspect_w= 16, aspect_h = 16, length = 1.8}
+	 },
+	 {
+	    image = "default_swamp_water_animated.png",
+	    backface_culling=false,
+	    animation={type = "vertical_frames", aspect_w= 16, aspect_h = 16, length = 1.8}
+	 },
+      },
+      alpha = default.SWAMP_WATER_ALPHA,
+      paramtype = "light",
+      walkable = false,
+      pointable = false,
+      diggable = false,
+      buildable_to = true,
+      drowning = 3,
+      liquidtype = "flowing",
+      liquid_alternative_flowing = "default:swamp_water_flowing",
+      liquid_alternative_source = "default:swamp_water_source",
+      liquid_viscosity = default.SWAMP_WATER_VISC,
+      liquid_renewable = false,
+      liquid_range = 2,
+      post_effect_color = {a=220, r=50, g=40, b=70},
+      groups = {water=1, flowing_water = 1, swamp_water = 1, liquid=1},
+   })
+
+minetest.register_node(
+   "default:swamp_water_source",
+   {
+      description = "Swamp Water",
+      inventory_image = minetest.inventorycube("default_swamp.png"),
+      drawtype = "liquid",
+      tiles ={"default_swamp_water.png"},
+      special_tiles = {
+	 {
+	    image = "default_swamp_water.png",
+	    backface_culling=false,
+	 },
+      },
+      alpha = default.SWAMP_WATER_ALPHA,
+      paramtype = "light",
+      walkable = false,
+      pointable = false,
+      diggable = false,
+      buildable_to = true,
+      drowning = 3,
+      liquidtype = "source",
+      liquid_alternative_flowing = "default:swamp_water_flowing",
+      liquid_alternative_source = "default:swamp_water_source",
+      liquid_viscosity = default.SWAMP_WATER_VISC,
+      liquid_renewable = false,
+      liquid_range = 2,
+      post_effect_color = {a=220, r=50, g=40, b=70},
+      groups = {water = 1, swamp_water = 1, liquid = 1},
    })
 
 minetest.register_node(
@@ -1064,6 +1163,28 @@ minetest.register_node(
 			     meta:set_string("text", fields.text)
 			     meta:set_string("infotext", '"'..fields.text..'"')
 			  end,
+   })
+
+minetest.register_node(
+   "default:swamp_grass",
+   {
+      description = "Swamp Grass Clump",
+      drawtype = "plantlike",
+      selection_box = {
+	 type = "fixed",
+	 fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
+      },
+      visual_scale = 1.15,
+      tiles ={"default_swamp_grass_clump.png"},
+      inventory_image = "default_swamp_grass_clump_inventory.png",
+      wield_image = "default_swamp_grass_clump_inventory.png",
+      paramtype = "light",
+      waving = 1,
+      walkable = false,
+      buildable_to = true,
+      is_ground_content = true,
+      groups = {snappy=2,dig_immediate=3,attached_node=1},
+      sounds = default.node_sound_leaves_defaults(),
    })
 
 minetest.register_node(

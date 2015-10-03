@@ -5,6 +5,9 @@
 
 default = {}
 
+default.SWAMP_WATER_ALPHA = 220
+default.SWAMP_WATER_VISC = 4
+
 default.RIVER_WATER_ALPHA = 160
 default.RIVER_WATER_VISC = 2
 

@@ -26,94 +26,46 @@ minetest.register_alias("mapgen_stair_cobble", "default:reinforced_frame")
 minetest.register_alias("mapgen_lava_source", "default:water_source")
 
 --
--- Ore generation
---
-
--- Coal
-
-minetest.register_ore(
-   {
-      ore_type       = "scatter",
-      ore            = "default:stone_with_coal",
-      wherein        = "default:stone",
-      clust_scarcity = 10*10*10,
-      clust_num_ores = 6,
-      clust_size     = 4,
-      height_min     = -31000,
-      height_max     = 32,
-   })
-
-minetest.register_ore(
-   {
-      ore_type       = "scatter",
-      ore            = "default:stone_with_coal",
-      wherein        = "default:stone",
-      clust_scarcity = 8*8*8,
-      clust_num_ores = 8,
-      clust_size     = 6,
-      height_min     = -31000,
-      height_max     = -32,
-   })
-
-minetest.register_ore(
-   {
-      ore_type       = "scatter",
-      ore            = "default:stone_with_coal",
-      wherein        = "default:stone",
-      clust_scarcity = 9*9*9,
-      clust_num_ores = 20,
-      clust_size     = 10,
-      height_min     = -31000,
-      height_max     = -64,
-   })
-
--- Iron
-
-minetest.register_ore(
-   {
-      ore_type       = "scatter",
-      ore            = "default:stone_with_iron",
-      wherein        = "default:stone",
-      clust_scarcity = 8*8*8,
-      clust_num_ores = 6,
-      clust_size     = 4,
-      height_min     = -31000,
-      height_max     = 0,
-   })
-
-minetest.register_ore(
-   {
-      ore_type       = "scatter",
-      ore            = "default:stone_with_iron",
-      wherein        = "default:stone",
-      clust_scarcity = 8*8*8,
-      clust_num_ores = 20,
-      clust_size     = 10,
-      height_min     = -31000,
-      height_max     = -32,
-   })
-
--- Steel blocks
-
-minetest.register_ore(
-   {
-      ore_type       = "blob",
-      ore            = "default:block_steel",
-      wherein        = "default:stone",
-      clust_scarcity = 12*12*12,
-      clust_num_ores = 10,
-      clust_size     = 10,
-      height_min     = -31000,
-      height_max     = -128,
-   })
-
---
 -- Biome setup
 --
 
 minetest.clear_registered_biomes()
 
 -- Aboveground biomes
+
+minetest.register_biome(
+   {
+      name = "Marsh",
+
+      node_top = "default:dirt_with_grass",
+      node_filler = "default:dirt",
+
+      depth_filler = 0,
+      depth_top = 1,
+
+      y_min = 2,
+      y_max = 6,
+
+      heat_point = 35,
+      humidity_point = 55,
+   })
+
+minetest.register_biome(
+   {
+      name = "Swamp",
+
+      node_top = "default:dirt_with_swamp_grass",
+      node_filler = "default:swamp_dirt",
+
+      depth_filler = 7,
+      depth_top = 1,
+
+      y_min = 2,
+      y_max = 10,
+
+      heat_point = 30,
+      humidity_point = 42,
+   })
 
 minetest.register_biome(
    {
@@ -218,6 +170,25 @@ minetest.register_biome(
    })
 
 -- Oceans
+
+minetest.register_biome(
+   {
+      name = "Swamp Ocean",
+
+      node_water = "default:swamp_water_source",
+      node_top = "default:swamp_dirt",
+      node_filler = "default:swamp_dirt",
+
+      depth_filler = 0,
+      depth_top = 9,
+
+      y_min = -3,
+      y_max = 1,
+
+      heat_point = 30,
+      humidity_point = 50,
+   })
+
 minetest.register_biome(
    {
       name = "Grassland Ocean",
@@ -360,6 +331,18 @@ minetest.register_decoration(
 minetest.register_decoration(
    {
       deco_type = "simple",
+      place_on = "default:dirt_with_swamp_grass",
+      sidelen = 16,
+      fill_ratio = 0.04,
+      biomes = {"Swamp"},
+      decoration = {"default:swamp_grass"},
+      y_min = 2,
+      y_max = 40,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
       place_on = "default:dirt_with_dry_grass",
       sidelen = 16,
       fill_ratio = 0.07,
@@ -387,7 +370,7 @@ minetest.register_decoration(
       place_on = "default:dirt_with_grass",
       sidelen = 16,
       fill_ratio = 0.08,
-      biomes = {"Forest"},
+      biomes = {"Forest", "Marsh"},
       decoration = {"default:tall_grass"},
       y_min = 0,
       y_max = 32000,
@@ -479,6 +462,128 @@ minetest.register_decoration(
       y_min = -32000,
       y_max = 32000,
       rotation = "0",
+   })
+
+--
+-- Ore generation
+--
+
+-- Coal
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_coal",
+      wherein        = "default:stone",
+      clust_scarcity = 10*10*10,
+      clust_num_ores = 6,
+      clust_size     = 4,
+      height_min     = -31000,
+      height_max     = 32,
+   })
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_coal",
+      wherein        = "default:stone",
+      clust_scarcity = 8*8*8,
+      clust_num_ores = 8,
+      clust_size     = 6,
+      height_min     = -31000,
+      height_max     = -32,
+   })
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_coal",
+      wherein        = "default:stone",
+      clust_scarcity = 9*9*9,
+      clust_num_ores = 20,
+      clust_size     = 10,
+      height_min     = -31000,
+      height_max     = -64,
+   })
+
+-- Iron
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_iron",
+      wherein        = "default:stone",
+      clust_scarcity = 8*8*8,
+      clust_num_ores = 6,
+      clust_size     = 4,
+      height_min     = -31000,
+      height_max     = 0,
+   })
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_iron",
+      wherein        = "default:stone",
+      clust_scarcity = 8*8*8,
+      clust_num_ores = 20,
+      clust_size     = 10,
+      height_min     = -31000,
+      height_max     = -32,
+   })
+
+-- Steel blocks
+
+minetest.register_ore(
+   {
+      ore_type       = "blob",
+      ore            = "default:block_steel",
+      wherein        = "default:stone",
+      clust_scarcity = 12*12*12,
+      clust_num_ores = 10,
+      clust_size     = 10,
+      height_min     = -31000,
+      height_max     = -128,
+   })
+
+-- Water
+
+minetest.register_ore( -- Springs
+   {
+      ore_type       = "blob",
+      ore            = "default:water_source",
+      wherein        = "default:dirt_with_grass",
+      clust_scarcity = 18*18*18,
+      clust_num_ores = 1,
+      clust_size     = 1,
+      height_min     = 20,
+      height_max     = 31000,
+   })
+
+minetest.register_ore( -- Swamp
+   {
+      ore_type       = "blob",
+      ore            = "default:swamp_water_source",
+      wherein        = {"default:dirt_with_swamp_grass", "default:swamp_dirt"},
+      biomes         = {"Swamp", "Swamp Ocean"},
+      clust_scarcity = 10*10*10,
+      clust_num_ores = 10,
+      clust_size     = 4,
+      height_min     = -31000,
+      height_max     = 31000,
+   })
+
+minetest.register_ore( -- Marsh
+   {
+      ore_type       = "blob",
+      ore            = "default:swamp_water_source",
+      wherein        = {"default:dirt_with_grass", "default:dirt"},
+      biomes         = {"Marsh"},
+      clust_scarcity = 6*6*6,
+      clust_num_ores = 10,
+      clust_size     = 6,
+      height_min     = -31000,
+      height_max     = 31000,
    })
 
 default.log("mapgen", "loaded")
