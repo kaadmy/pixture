@@ -123,7 +123,7 @@ minetest.register_biome(
       name = "Chaparral",
 
       node_top = "default:dirt_with_dry_grass",
-      node_filler = "default:dirt",
+      node_filler = "default:dry_dirt",
 
       depth_filler = 0,
       depth_top = 1,
@@ -140,7 +140,7 @@ minetest.register_biome(
       name = "Savanna",
 
       node_top = "default:dirt_with_dry_grass",
-      node_filler = "default:dirt",
+      node_filler = "default:dry_dirt",
 
       depth_filler = 2,
       depth_top = 1,
@@ -166,6 +166,23 @@ minetest.register_biome(
       y_max = 32000,
 
       heat_point = 70,
+      humidity_point = 20,
+   })
+
+minetest.register_biome(
+   {
+      name = "Wasteland",
+
+      node_top = "default:dry_dirt",
+      node_filler = "default:sandstone",
+
+      depth_filler = 3,
+      depth_top = 1,
+
+      y_min = -32000,
+      y_max = 32000,
+
+      heat_point = 80,
       humidity_point = 20,
    })
 
@@ -462,6 +479,36 @@ minetest.register_decoration(
       y_min = -32000,
       y_max = 32000,
       rotation = "0",
+   })
+
+-- Rocks
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:sandstone"},
+      sidelen = 16,
+      fill_ratio = 0.006,
+      biomes = {"Wasteland"},
+      flags = "place_center_x, place_center_z",
+      schematic = minetest.get_modpath("default").."/schematics/default_small_rock.mts",
+      y_min = -32000,
+      y_max = 32000,
+      rotation = "random",
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:sandstone"},
+      sidelen = 16,
+      fill_ratio = 0.004,
+      biomes = {"Wasteland"},
+      flags = "place_center_x, place_center_z",
+      schematic = minetest.get_modpath("default").."/schematics/default_large_rock.mts",
+      y_min = -32000,
+      y_max = 32000,
+      rotation = "random",
    })
 
 --
