@@ -129,7 +129,7 @@ minetest.register_node(
       drop = {
 	 max_items = 3,
 	 items = {
-	    {items = {"default:dirt"}, rarity = 1},
+	    {items = {"default:swamp_dirt"}, rarity = 1},
 	    {items = {"default:swamp_grass 6"}, rarity = 14},
 	    {items = {"default:swamp_grass 3"}, rarity = 7},
 	    {items = {"default:swamp_grass 2"}, rarity = 3},

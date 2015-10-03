@@ -44,7 +44,7 @@ minetest.register_biome(
       depth_top = 1,
 
       y_min = 2,
-      y_max = 6,
+      y_max = 8,
 
       heat_point = 35,
       humidity_point = 55,
@@ -61,7 +61,7 @@ minetest.register_biome(
       depth_top = 1,
 
       y_min = 2,
-      y_max = 10,
+      y_max = 8,
 
       heat_point = 30,
       humidity_point = 42,
