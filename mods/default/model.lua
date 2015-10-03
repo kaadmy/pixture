@@ -69,7 +69,11 @@ function default.player_set_model(player, model_name)
 end
 
 function default.player_get_textures(player)
-   return player:get_properties().textures
+   if player.get_properties ~= nil then
+      return player:get_properties().textures
+   else
+      return {"character.png"} -- less efficient but will work
+   end
 end
 
 function default.player_set_textures(player, textures)
