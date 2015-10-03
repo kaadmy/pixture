@@ -1,6 +1,6 @@
 -- Map handling
 
-nav.map_radius = 64
+nav.map_radius = 128
 
 nav.waypoints = {}
 
