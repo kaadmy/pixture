@@ -43,7 +43,7 @@ mobs:register_mob(
 	 walk_start = 61,
 	 walk_end = 80,
 	 punch_start = 90,
-	 punch_end = 110,
+	 punch_end = 101,
       },
       on_rightclick = function(self, clicker)
 			 mobs:feed_tame(self, clicker, 8, true)

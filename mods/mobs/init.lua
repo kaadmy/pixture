@@ -12,6 +12,7 @@ dofile(path.."/api.lua")
 -- Animals
 dofile(path.."/sheep.lua") -- PilzAdam
 dofile(path.."/boar.lua") -- KrupnoPavel
+dofile(path.."/skunk.lua") -- Kaadmy
 dofile(path.."/mineturtle.lua") -- Kaadmy
 
 -- NPC
