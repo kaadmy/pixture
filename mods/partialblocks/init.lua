@@ -5,7 +5,7 @@
 
 partialblocks = {}
 
-function partialblocks.register_material(name, desc, node)
+function partialblocks.register_material(name, desc, node, can_burn)
    local nodedef = minetest.registered_nodes[node]
 
    if nodedef == nil then
@@ -48,6 +48,15 @@ function partialblocks.register_material(name, desc, node)
 	 recipe = {"partialblocks:" .. name .. "_slab"},
       })
 
+   if can_burn then
+      minetest.register_craft( -- Fuel
+	 {
+	    type = "fuel",
+	    recipe = "partialblocks:" .. name .. "_slab",
+	    burntime = 7,
+	 })
+   end
+
    -- Stair
    minetest.register_node(
       "partialblocks:" .. name .. "_stair",
@@ -85,15 +94,24 @@ function partialblocks.register_material(name, desc, node)
 	 type = "shapeless",
 	 recipe = {"partialblocks:" .. name .. "_stair"},
       })
+
+   if can_burn then
+      minetest.register_craft( -- Fuel
+	 {
+	    type = "fuel",
+	    recipe = "partialblocks:" .. name .. "_stair",
+	    burntime = 7,
+	 })
+   end
 end
 
 -- Register some default node partials
-partialblocks.register_material("cobble", "Cobble", "default:cobble")
-partialblocks.register_material("stone", "Stone", "default:stone")
-partialblocks.register_material("brick", "Brick", "default:brick")
+partialblocks.register_material("cobble", "Cobble", "default:cobble", false)
+partialblocks.register_material("stone", "Stone", "default:stone", false)
+partialblocks.register_material("brick", "Brick", "default:brick", false)
 
-partialblocks.register_material("wood", "Wood", "default:planks")
-partialblocks.register_material("oak", "Oak", "default:planks_oak")
-partialblocks.register_material("birch", "Birch", "default:planks_birch")
+partialblocks.register_material("wood", "Wood", "default:planks", true)
+partialblocks.register_material("oak", "Oak", "default:planks_oak", true)
+partialblocks.register_material("birch", "Birch", "default:planks_birch", true)
 
 default.log("mod:partialblocks", "loaded")
