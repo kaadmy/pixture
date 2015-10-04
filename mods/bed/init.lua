@@ -22,17 +22,17 @@ minetest.register_node(
       node_box = {
 	 type = "fixed",
 	 fixed = {
-	    {-0.5, -0.5, -0.5, 0.5, 2/16, 0.5},
+	    {-0.5, -0.5, -0.5, 0.5, 2/16, 0.5}
 	 }
       },
       selection_box = {
 	 type = "fixed",
 	 fixed = {
-	    {-0.5, -0.5, -0.5, 0.5, 2/16, 1.5},
+	    {-0.5, -0.5, -0.5, 0.5, 2/16, 1.5}
 	 }
       },
       after_place_node = function(pos, placer, itemstack)
-			    local node = minetest.env:get_node(pos)
+			    local node = minetest.get_node(pos)
 			    local p = {x = pos.x, y = pos.y, z = pos.z}
 			    local param2 = node.param2
 			    node.name = "bed:bed_head"
@@ -45,16 +45,16 @@ minetest.register_node(
 			    elseif param2 == 3 then
 			       pos.x = pos.x - 1
 			    end
-			    if minetest.registered_nodes[minetest.env:get_node(pos).name].buildable_to then
-			       minetest.env:set_node(pos, node)
+			    if minetest.registered_nodes[minetest.get_node(pos).name].buildable_to then
+			       minetest.set_node(pos, node)
 			    else
-			       minetest.env:remove_node(p)
+			       minetest.remove_node(p)
 			       return true
 			    end
 			 end,
       
       on_destruct = function(pos)
-		       local node = minetest.env:get_node(pos)
+		       local node = minetest.get_node(pos)
 		       local param2 = node.param2
 		       if param2 == 0 then
 			  pos.z = pos.z+1
@@ -65,10 +65,11 @@ minetest.register_node(
 		       elseif param2 == 3 then
 			  pos.x = pos.x-1
 		       end
-		       if (minetest.env:get_node({x = pos.x, y = pos.y, z = pos.z}).name == "bed:bed_head") then
-			  if (minetest.env:get_node({x = pos.x, y = pos.y, z = pos.z}).param2 == param2) then
-			     minetest.env:remove_node(pos)
-			  end	
+
+		       local head_node = minetest.get_node(pos)
+		       if head_node.name == "bed:bed_head"
+		       and head_node.param2 == param2 then
+			  minetest.remove_node(pos)
 		       end
 		    end,
       
@@ -77,7 +78,7 @@ minetest.register_node(
 			or not minetest.is_singleplayer()
 		     and not minetest.setting_getbool("bed_enabled") then return end
 		  
-		  local meta = minetest.env:get_meta(pos)
+		  local meta = minetest.get_meta(pos)
 		  local param2 = node.param2
 		  if param2 == 0 then
 		     pos.z = pos.z + 0.5
@@ -194,11 +195,11 @@ minetest.register_globalstep(
 
       local players = #minetest.get_connected_players()
       if players ~= 0 and players * 0.5 < sleeping_players then
-	 if minetest.env:get_timeofday() < 0.2 or minetest.env:get_timeofday() > 0.8 then
+	 if minetest.get_timeofday() < 0.2 or minetest.get_timeofday() > 0.8 then
 	    if not wait then
 	       minetest.chat_send_all("[zzz] " .. sleeping_players .. " of " .. players .. " players slept, skipping to day.")
 	       minetest.after(2, function()
-				    minetest.env:set_timeofday(0.23)
+				    minetest.set_timeofday(0.23)
 				    wait = false
 				 end)
 	       wait = true
