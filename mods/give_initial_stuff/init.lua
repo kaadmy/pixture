@@ -3,14 +3,14 @@
 -- By Kaadmy, for Pixture
 --
 
+local giveme = minetest.setting_getbool("give_initial_stuff")
+
 local function give_initial_stuff(player)
-   minetest.chat_send_player(player:get_player_name(), "Welcome to Pixture!")
-   
-   if minetest.setting_getbool("give_initial_stuff") then
+   if giveme then
       local inv=player:get_inventory()
 
       inv:add_item("main", "default:pick_stone")
-      inv:add_item("main", "default:torch 10")
+      inv:add_item("main", "default:torch_weak 10")
    end
 end
 

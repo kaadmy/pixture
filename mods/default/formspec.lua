@@ -251,9 +251,10 @@ minetest.register_on_player_receive_fields(
 
 minetest.register_on_joinplayer(
    function(player)
-      local function cb(player)
-	 minetest.chat_send_player(player:get_player_name(), "Have fun!")
+      local function welcome()
+	 minetest.chat_send_player(player:get_player_name(), "Welcome to Pixture! Type /help for a list of commands.")
       end
-      minetest.after(1.0, cb, player)
+      minetest.after(1.0, welcome)
+   
       player:set_inventory_formspec(default.ui.get_page("core_crafting"))
    end)
