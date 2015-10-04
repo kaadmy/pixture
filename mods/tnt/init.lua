@@ -219,9 +219,7 @@ minetest.register_node(
       on_punch = function(pos, node, puncher)
 		    local itemname = puncher:get_wielded_item():get_name()
 
-		    if itemname == "default:torch"
-		       or itemname == "default:torch_weak"
-		       or itemname == "default:flint_and_steel" then
+		    if itemname == "default:flint_and_steel" then
 		       burn(pos)
 		    end
 		 end,

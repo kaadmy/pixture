@@ -4,7 +4,7 @@ By PilzAdam and ShadowNinja
 Tweaked by Kaadmy, for Pixture
 
 Adds explodable TNT
-Place a block of TNT, then click on it with a torch
+Place a block of TNT, then click on it with flint and steel
 
-Source license: CC0(original WTFPL)
-Sound license: CC0(original WTFPL)
+Source license: WTFPL
+Asset license: WTFPL
