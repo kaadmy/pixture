@@ -49,5 +49,5 @@ mobs:register_mob(
 		      end,
    })
 
-mobs:register_spawn("mobs:skunk", {"default:dirt_with_grass"}, 20, 10, 15000, 1, 31000)
+mobs:register_spawn("mobs:skunk", {"default:dirt_with_swamp_grass", "default:dirt_with_dry_grass"}, 20, 7, 12000, 2, 50)
 mobs:register_egg("mobs:skunk", "Skunk", "mobs_skunk_inventory.png")
