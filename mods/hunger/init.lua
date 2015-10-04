@@ -234,7 +234,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	    if player_health_step[name] == nil then player_health_step[name] = 0 end
 
 	    player_health_step[name] = player_health_step[name] + 1
-	    if player_health_step[name] >= 5 and player:get_hp() < 20 and hunger.hunger[name] >= 16 then
+	    if hp > 0 and hp < 20 and player_health_step[name] >= 5 and hunger.hunger[name] >= 16 then
 	       player_health_step[name] = 0
 	       player:set_hp(hp+1)
 	    end

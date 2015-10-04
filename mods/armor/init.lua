@@ -21,6 +21,8 @@ armor.slots = {"helmet", "chestplate", "boots"}
 local form_armor = default.ui.get_page("core_2part")
 default.ui.register_page("core_armor", form_armor)
 
+local enable_drop = minetest.setting_getbool("drop_items_on_die") or false
+
 local armor_timer = 10
 
 function armor.is_armor(itemname)
@@ -147,7 +149,7 @@ local function on_die(player)
 	 z = pos.z + math.random(-0.2, 0.2)
       }
 
-      drop = minetest.add_item(rpos, item)
+      local drop = minetest.add_item(rpos, item)
       
       if drop then
 	 drop:setvelocity(
@@ -157,6 +159,9 @@ local function on_die(player)
 	       z = math.random(-0.3, 0.3),
 	    })
       end
+
+      item:clear()
+      inv:set_stack("armor_" .. slot, 1, item)
    end
 end
 
@@ -251,7 +256,9 @@ end
 
 minetest.register_on_newplayer(on_newplayer)
 minetest.register_on_joinplayer(on_joinplayer)
-minetest.register_on_dieplayer(on_die)
+if enable_drop then
+   minetest.register_on_dieplayer(on_die)
+end
 minetest.register_globalstep(step)
 
 local form_armor = default.ui.get_page("core_2part")
