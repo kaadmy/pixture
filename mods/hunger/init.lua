@@ -14,7 +14,7 @@ hunger.saturation = {} -- how saturated with food the player is
 local player_step = {}
 local player_health_step = {}
 local player_bar = {}
-local base_interval = tonumber(minetest.setting_get("hunger_step")) or 2.0 -- seconds per hunger update, 1.5 is slightly fast
+local base_interval = tonumber(minetest.setting_get("hunger_step")) or 3.0 -- seconds per hunger update, 2.0 is slightly fast
 local file = minetest.get_worldpath() .. "/hunger"
 
 function hunger.save_hunger()
@@ -179,12 +179,8 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	       moving = moving + 1
 	    end
 
-	    if controls.jump then
-	       moving = moving + 1
-	    end
-
-	    if controls.aux1 then
-	       moving = moving + 2
+	    if controls.aux1 then -- sprinting
+	       moving = moving + 3
 	    end
 
 	    if moving < 0 then moving = 0 end
@@ -193,8 +189,9 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 end
 	 
 	 timer = timer + dtime
-	 
+
 	 if timer < base_interval then return end
+
 	 timer = 0
 	 for _,player in ipairs(minetest.get_connected_players()) do
 	    local name = player:get_player_name()
