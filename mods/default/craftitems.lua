@@ -71,9 +71,16 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "default:lump_sugar",
    {
-      description = "Sugar lump",
+      description = "Sugar Lump",
       inventory_image = "default_lump_sugar.png",
       on_use = minetest.item_eat({hp = 1, sat = 10})
+   })
+
+minetest.register_craftitem(
+   "default:pearl",
+   {
+      description = "Pearl",
+      inventory_image = "default_pearl.png",
    })
 
 minetest.register_craftitem(

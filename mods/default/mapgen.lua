@@ -207,6 +207,23 @@ minetest.register_biome(
 
 minetest.register_biome(
    {
+      name = "Gravel Beach",
+
+      node_top = "default:gravel",
+      node_filler = "default:sand",
+
+      depth_filler = 2,
+      depth_top = 1,
+
+      y_min = -5,
+      y_max = 1,
+
+      heat_point = 59,
+      humidity_point = 31,
+   })
+
+minetest.register_biome(
+   {
       name = "Savanna Ocean",
 
       node_top = "default:dirt",
@@ -468,7 +485,7 @@ minetest.register_decoration(
 minetest.register_decoration(
    {
       deco_type = "schematic",
-      place_on = {"default:sandstone"},
+      place_on = {"default:dry_dirt"},
       sidelen = 16,
       fill_ratio = 0.006,
       biomes = {"Wasteland"},
@@ -482,7 +499,7 @@ minetest.register_decoration(
 minetest.register_decoration(
    {
       deco_type = "schematic",
-      place_on = {"default:sandstone"},
+      place_on = {"default:dry_dirt"},
       sidelen = 16,
       fill_ratio = 0.004,
       biomes = {"Wasteland"},
@@ -492,6 +509,21 @@ minetest.register_decoration(
       y_max = 32000,
       rotation = "random",
    })
+
+-- Clams
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = {"default:sand", "default:gravel"},
+      sidelen = 16,
+      fill_ratio = 0.04,
+      biomes = {"Grassland Ocean", "Gravel Beach"},
+      decoration = {"default:clam"},
+      y_min = -32000,
+      y_max = 1,
+   })
+
 
 --
 -- Ore generation

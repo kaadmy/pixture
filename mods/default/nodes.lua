@@ -1283,18 +1283,40 @@ minetest.register_node(
 	    {-1/8, 0.25, -1/8, 1/8, 0.5, 1/8},
 	 },
       },
-      selection_box = {
+      sunlight_propagates = true,
+      walkable = false,
+      groups = {fleshy = 3, dig_immediate = 2, leafdecay = 3, leafdecay_drop = 1, attached_node = 1},
+      on_use = minetest.item_eat({hp = 2, sat = 10}),
+      sounds = default.node_sound_defaults(),
+   })
+
+minetest.register_node(
+   "default:clam",
+   {
+      description = "Clam",
+      drawtype = "nodebox",
+      tiles ={"default_clam.png"},
+      inventory_image = "default_clam_inventory.png",
+      wield_image = "default_clam_inventory.png",
+      paramtype = "light",
+      node_box = {
 	 type = "fixed",
 	 fixed = {
-	    {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
-	    {-1/8, 0.25, -1/8, 1/8, 0.5, 1/8},
+	    {-3/16, -0.5, -3/16, 3/16, -6/16, 3/16},
 	 },
       },
       sunlight_propagates = true,
       walkable = false,
-      attached_node = true,
-      groups = {fleshy = 3, dig_immediate = 2, leafdecay = 3, leafdecay_drop = 1},
-      on_use = minetest.item_eat({hp = 2, sat = 10}),
+      drop = {
+	 max_items = 3,
+	 items = {
+	    {items = {"default:clam"}, rarity = 1},
+	    {items = {"default:pearl"}, rarity = 60},
+	    {items = {"default:pearl"}, rarity = 20},
+	 }
+      },
+      groups = {fleshy = 3, oddly_breakable_by_hand = 2, choppy = 3, attached_node = 1},
+      on_use = minetest.item_eat({hp = 4, sat = 40}),
       sounds = default.node_sound_defaults(),
    })
 
