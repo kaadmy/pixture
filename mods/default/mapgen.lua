@@ -44,7 +44,7 @@ minetest.register_biome(
       depth_top = 1,
 
       y_min = 2,
-      y_max = 8,
+      y_max = 6,
 
       heat_point = 35,
       humidity_point = 55,
@@ -61,7 +61,7 @@ minetest.register_biome(
       depth_top = 1,
 
       y_min = 2,
-      y_max = 8,
+      y_max = 7,
 
       heat_point = 30,
       humidity_point = 42,
@@ -190,24 +190,6 @@ minetest.register_biome(
 
 minetest.register_biome(
    {
-      name = "Swamp Ocean",
-
-      node_water = "default:swamp_water_source",
-      node_top = "default:swamp_dirt",
-      node_filler = "default:swamp_dirt",
-
-      depth_filler = 0,
-      depth_top = 9,
-
-      y_min = -3,
-      y_max = 1,
-
-      heat_point = 30,
-      humidity_point = 50,
-   })
-
-minetest.register_biome(
-   {
       name = "Grassland Ocean",
 
       node_top = "default:sand",
@@ -305,7 +287,7 @@ minetest.register_decoration(
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
       sidelen = 16,
-      fill_ratio = 0.028,
+      fill_ratio = 0.023,
       biomes = {"Deep Forest"},
       flags = "place_center_x, place_center_z",
       schematic = minetest.get_modpath("default").."/schematics/default_gigatree.mts",
@@ -612,7 +594,7 @@ minetest.register_ore( -- Swamp
       ore_type       = "blob",
       ore            = "default:swamp_water_source",
       wherein        = {"default:dirt_with_swamp_grass", "default:swamp_dirt"},
-      biomes         = {"Swamp", "Swamp Ocean"},
+      biomes         = {"Swamp"},
       clust_scarcity = 10*10*10,
       clust_num_ores = 10,
       clust_size     = 4,
