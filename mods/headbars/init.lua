@@ -48,7 +48,7 @@ minetest.register_entity(
       on_step = function(self, dtime)
 		   local ent = self.wielder
 
-		   if ent == nil then
+		   if ent == nil or (minetest.get_player_by_name(ent:get_player_name(0)) == nil) then
 		      self.object:remove()
 		      return
 		   end
