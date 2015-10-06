@@ -400,8 +400,10 @@ minetest.register_craft(
 minetest.register_craft(
    {
       output = "default:flint_and_steel",
-      type = "shapeless",
-      recipe = {"default:ingot_steel", "default:flint"},
+      recipe = {
+	 {"default:ingot_steel", ""},
+	 {"default:fiber", "default:flint"},
+      },
    })
 
 minetest.register_craft(
