@@ -511,6 +511,22 @@ minetest.register_craft(
 minetest.register_craft(
    {
       type = "cooking",
+      output = "default:torch_weak",
+      recipe = "default:torch_dead",
+      cooktime = 1,
+   })
+
+minetest.register_craft(
+   {
+      type = "cooking",
+      output = "default:torch",
+      recipe = "default:torch_weak",
+      cooktime = 4,
+   })
+
+minetest.register_craft(
+   {
+      type = "cooking",
       output = "default:glass",
       recipe = "default:sand",
       cooktime = 3,

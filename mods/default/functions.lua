@@ -306,7 +306,7 @@ minetest.register_abm( -- weak torchs burn out and die after ~3 minutes
       interval = 3,
       chance = 60,
       action = function(pos, node)
-		  minetest.set_node(pos, {name = "default:torch_dead"})
+		  minetest.set_node(pos, {name = "default:torch_dead", param = node.param, param2 = node.param2})
 	       end
    })
 
