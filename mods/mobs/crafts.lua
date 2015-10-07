@@ -35,38 +35,21 @@ minetest.register_craft(
       cooktime = 5,
    })
 
--- shears (right click to shear animal)
-minetest.register_tool(
-   "mobs:shears",
-   {
-      description = "Steel Shears (right-click to shear)",
-      inventory_image = "mobs_shears.png",
-   })
-
-minetest.register_craft(
-   {
-      output = 'mobs:shears',
-      recipe = {
-	 {'default:ingot_steel', ''},
-	 {'group:stick', 'default:ingot_steel'},
-      }
-   })
-
 -- net (right click to capture animal)
 minetest.register_tool(
    "mobs:net",
    {
-      description = "Net (right-click to capture)",
+      description = "Net (Right-click to capture)",
       inventory_image = "mobs_net.png",
    })
 
 minetest.register_craft(
    {
-      output = 'mobs:net',
+      output = "mobs:net",
       recipe = {
-	 {'', '', 'default:fiber'},
-	 {'', 'default:fiber', 'default:fiber'},
-	 {'group:stick', '', ''},
+	 {"", "", "default:fiber"},
+	 {"", "default:fiber", "default:fiber"},
+	 {"group:stick", "", ""},
       }
    })
 
@@ -74,16 +57,16 @@ minetest.register_craft(
 minetest.register_tool(
    "mobs:lasso",
    {
-      description = "Lasso (right-click to capture)",
+      description = "Lasso (Right-click to capture)",
       inventory_image = "mobs_lasso.png",
    })
 
 minetest.register_craft(
    {
-      output = 'mobs:lasso',
+      output = "mobs:lasso",
       recipe = {
-	 {'', 'default:fiber', ''},
-	 {'default:fiber', '', 'default:fiber'},
-	 {'group:stick', 'default:fiber', ''},
+	 {"", "default:rope", ""},
+	 {"default:rope", "", "default:rope"},
+	 {"group:stick", "default:rope", ""},
       }
    })

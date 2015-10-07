@@ -165,6 +165,15 @@ minetest.register_craft(
       }
    })
 
+minetest.register_craft(
+   {
+      output = "default:shears",
+      recipe = {
+	 {"default:ingot_steel", ""},
+	 {"group:stick", "default:ingot_steel"},
+      }
+   })
+
 -- Nodes/Items
 
 minetest.register_craft(

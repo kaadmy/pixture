@@ -79,7 +79,7 @@ mobs:register_mob(
 			 local itemname = item:get_name()
 
 			 --are we giving a haircut>
-			 if itemname == "mobs:shears" then
+			 if itemname == "default:shears" then
 			    if self.gotten == false and self.child == false then
 			       self.gotten = true -- shaved
 			       local pos = self.object:getpos()
@@ -103,8 +103,6 @@ mobs:register_mob(
 			    end
 			    return
 			 end
-
-			 local name = clicker:get_player_name()
 
 			 --are we capturing?
 			 mobs:capture_mob(self, clicker, 0, 5, 60, false, nil)

@@ -122,6 +122,13 @@ minetest.register_tool(
 	       end,
    })
 
+minetest.register_tool(
+   "default:shears",
+   {
+      description = "Steel Shears (Right-click to shear)",
+      inventory_image = "default_shears.png",
+   })
+
 minetest.register_craftitem(
    "default:bucket_water",
    {
