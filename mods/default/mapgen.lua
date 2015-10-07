@@ -517,10 +517,10 @@ minetest.register_decoration(
       deco_type = "simple",
       place_on = {"default:sand", "default:gravel"},
       sidelen = 16,
-      fill_ratio = 0.04,
+      fill_ratio = 0.02,
       biomes = {"Grassland Ocean", "Gravel Beach"},
       decoration = {"default:clam"},
-      y_min = -32000,
+      y_min = 0,
       y_max = 1,
    })
 

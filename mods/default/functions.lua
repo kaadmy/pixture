@@ -222,6 +222,26 @@ minetest.register_abm( -- grass expands
 	       end
    })
 
+minetest.register_abm( -- clams grow
+   {
+      nodenames = {"default:clam"},
+      interval = 20,
+      chance = 160,
+      action = function(pos, node)
+		  local rx = math.random(0, 2) - 1
+		  local rz = math.random(0, 2) - 1
+
+		  local edgepos = {x = pos.x+rx, y = pos.y, z = pos.z+rz}
+		  local downpos = {x = pos.x+rx, y = pos.y-1, z = pos.z+rz}
+		  local edgenode = minetest.get_node(edgepos)
+		  local downnode = minetest.get_node(downpos)
+		  
+		  if edgenode.name == "air" and downnode.name ~= "air" and downnode.buildable_to == false and walkable == true then
+		     minetest.set_node(edgepos, {name = "default:clam"})
+		  end
+	       end
+   })
+
 minetest.register_abm( -- cactus grows
    {
       nodenames = {"default:cactus"},
