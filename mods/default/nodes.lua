@@ -181,7 +181,7 @@ minetest.register_node(
    {
       description = "Dirt with Grass Footsteps",
       tiles ={"default_grass_footstep.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
-      groups = {crumbly=3, soil=1, fall_damage_add_percent=-5, not_in_craftingguide = 1},
+      groups = {crumbly=3, soil=1, plantable_soil = 1, fall_damage_add_percent=-5, not_in_craftingguide = 1},
       drop = {
 	 max_items = 3,
 	 items = {
