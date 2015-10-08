@@ -270,7 +270,7 @@ minetest.register_abm( -- cactus grows
 minetest.register_abm( -- papyrus grows
    {
       nodenames = {"default:papyrus"},
-      neighbors = {"default:sand", "default:dirt_with_grass", "default_dirt"},
+      neighbors = {"group:plantable_sandy"},
       interval = 20,
       chance = 10,
       action = function(pos, node)
