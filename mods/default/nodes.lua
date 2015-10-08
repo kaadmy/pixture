@@ -309,7 +309,7 @@ minetest.register_node(
    {
       description = "Oak Tree",
       tiles = {"default_tree_oak_top.png", "default_tree_oak_top.png", "default_tree_oak.png"},
-      groups = {snappy=1, choppy=1, tree=1, oddly_breakable_by_hand=1},
+      groups = {choppy=1, tree=1, oddly_breakable_by_hand=1},
       sounds = default.node_sound_wood_defaults(),
    })
 
@@ -390,7 +390,7 @@ minetest.register_node(
    {
       description = "Birch Tree",
       tiles = {"default_tree_birch_top.png", "default_tree_birch_top.png", "default_tree_birch.png"},
-      groups = {snappy=2, choppy=2, tree=1, oddly_breakable_by_hand=1},
+      groups = {choppy=2, tree=1, oddly_breakable_by_hand=1},
       sounds = default.node_sound_wood_defaults(),
    })
 
@@ -444,7 +444,7 @@ minetest.register_node(
    {
       description = "Tree",
       tiles = {"default_tree_top.png", "default_tree_top.png", "default_tree.png"},
-      groups = {snappy=2,choppy=2,tree=1,oddly_breakable_by_hand=1},
+      groups = {choppy=2,tree=1,oddly_breakable_by_hand=1},
       sounds = default.node_sound_wood_defaults(),
    })
 
