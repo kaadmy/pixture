@@ -95,7 +95,7 @@ minetest.register_node(
 
       can_dig = function(pos)
 		  return minetest.get_meta(pos):get_string("player") == ""
- -	       end
+	       end
    })
 
 minetest.register_node(
