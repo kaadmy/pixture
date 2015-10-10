@@ -11,149 +11,107 @@ minetest.register_node(
    {
       description = "Bed",
       drawtype = "nodebox",
-      tiles = {"bed_foot.png", "default_wood.png", "bed_side.png"},
-      inventory_image = "bed_bed_inventory.png",
-      wield_image = "bed_bed_inventory.png",
-      sunlight_propagates = true,
       paramtype = "light",
       paramtype2 = "facedir",
+      sunlight_propagates = true,
+      wield_image = "bed_bed_inventory.png",
+      inventory_image = "bed_bed_inventory.png",
+      tiles = {"bed_foot.png", "default_wood.png", "bed_side.png"},
       groups = {snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
       sounds = default.node_sound_wood_defaults(),
       node_box = {
 	 type = "fixed",
-	 fixed = {
-	    {-0.5, -0.5, -0.5, 0.5, 2/16, 0.5}
-	 }
+	 fixed = {-0.5, -0.5, -0.5, 0.5, 2/16, 0.5}
       },
       selection_box = {
 	 type = "fixed",
-	 fixed = {
-	    {-0.5, -0.5, -0.5, 0.5, 2/16, 1.5}
-	 }
+	 fixed = {-0.5, -0.5, -0.5, 0.5, 2/16, 1.5}
       },
-      after_place_node = function(pos, placer, itemstack)
+
+      after_place_node = function(pos)
 			    local node = minetest.get_node(pos)
-			    local p = {x = pos.x, y = pos.y, z = pos.z}
-			    local param2 = node.param2
+			    local dir = minetest.facedir_to_dir(node.param2)
+			    local head_pos = vector.add(pos, dir)
 			    node.name = "bed:bed_head"
-			    if param2 == 0 then
-			       pos.z = pos.z + 1
-			    elseif param2 == 1 then
-			       pos.x = pos.x + 1
-			    elseif param2 == 2 then
-			       pos.z = pos.z - 1
-			    elseif param2 == 3 then
-			       pos.x = pos.x - 1
-			    end
-			    if minetest.registered_nodes[minetest.get_node(pos).name].buildable_to then
-			       minetest.set_node(pos, node)
+			    if minetest.registered_nodes[minetest.get_node(head_pos).name].buildable_to then
+			       minetest.set_node(head_pos, node)
 			    else
-			       minetest.remove_node(p)
-			       return true
+			       minetest.remove_node(pos)
 			    end
 			 end,
-      
+
       on_destruct = function(pos)
 		       local node = minetest.get_node(pos)
-		       local param2 = node.param2
-		       if param2 == 0 then
-			  pos.z = pos.z+1
-		       elseif param2 == 1 then
-			  pos.x = pos.x+1
-		       elseif param2 == 2 then
-			  pos.z = pos.z-1
-		       elseif param2 == 3 then
-			  pos.x = pos.x-1
-		       end
-
-		       local head_node = minetest.get_node(pos)
-		       if head_node.name == "bed:bed_head"
-		       and head_node.param2 == param2 then
-			  minetest.remove_node(pos)
+		       local dir = minetest.facedir_to_dir(node.param2)
+		       local head_pos = vector.add(pos, dir)
+		       if minetest.get_node(head_pos).name == "bed:bed_head" then
+			  minetest.remove_node(ead_pos)
 		       end
 		    end,
-      
-      on_rightclick =function(pos, node, clicker)
-			if not clicker:is_player()
-			or not minetest.is_singleplayer()
-		     and not minetest.setting_getbool("bed_enabled") then return end
-		  
-		  local meta = minetest.get_meta(pos)
-		  local param2 = node.param2
-		  if param2 == 0 then
-		     pos.z = pos.z + 0.5
-		  elseif param2 == 1 then
-		     pos.x = pos.x + 0.5
-		  elseif param2 == 2 then
-		     pos.z = pos.z - 0.5
-		  elseif param2 == 3 then
-		     pos.x = pos.x - 0.5
+
+      on_rightclick = function(pos, node, clicker)
+		  if not clicker:is_player() or not minetest.setting_getbool("bed_enabled") then
+		     return
 		  end
-		  
+
+		  local name = clicker:get_player_name()
+		  local meta = minetest.get_meta(pos)
+		  local put_pos = vector.add(pos, vector.divide(minetest.facedir_to_dir(node.param2), 2))
+
 		  if clicker:get_player_name() == meta:get_string("player") then
-		     if param2 == 0 then
-			pos.x = pos.x - 1
-		     elseif param2 == 1 then
-			pos.z = pos.z + 1
-		     elseif param2 == 2 then
-			pos.x = pos.x + 1
-		     elseif param2 == 3 then
-			pos.z = pos.z - 1
-		     end
-		     clicker:set_physics_override({speed = 1.0, jump = 1.0, sneak = true})
-		     pos.y = pos.y - 0.5
-		     clicker:setpos(pos)
-		     clicker:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
-		     meta:set_string("player", "")
-		     players_in_bed[clicker:get_player_name()] = nil
-		     default.player_attached[clicker:get_player_name()] = false
+		     put_pos.y = put_pos.y - 0.5
+
+		     clicker:setpos(put_pos)
+		     clicker:set_physics_override(1, 1, 1)
+		     clicker:set_eye_offset(vector.new(0, 0, 0), vector.new(0, 0, 0))
 		     clicker:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
 		     default.player_set_animation(clicker, "stand", 30)
+
+		     players_in_bed[name] = nil
+		     default.player_attached[name] = false
+
+		     meta:set_string("player", "")
 		  elseif meta:get_string("player") == "" then
-		     default.player_attached[clicker:get_player_name()] = true
+		     put_pos.y = put_pos.y + 0.6
+
+		     clicker:setpos(put_pos)
+		     clicker:set_physics_override(0, 0, 0)
+		     clicker:set_eye_offset(vector.new(0, -13, 0), vector.new(0, -13, 0))
 		     clicker:set_local_animation({x=162, y=166}, {x=162, y=166}, {x=162, y=166}, {x=162, y=168}, 30)
 		     default.player_set_animation(clicker, "lay", 30)
-		     clicker:set_physics_override({speed = 0.0, jump = 0.0, sneak = false})
-		     pos.y = pos.y + 0.5625
-		     clicker:setpos(pos)
-		     clicker:set_eye_offset({x = 0, y = -13, z = 0}, {x = 0, y = -13, z = 0})
-		     if param2 == 0 then
-			clicker:set_look_yaw(math.pi)
-		     elseif param2 == 1 then
-			clicker:set_look_yaw(0.5 * math.pi)
-		     elseif param2 == 2 then
+
+		     if node.param2 == 2 then
 			clicker:set_look_yaw(0)
-		     elseif param2 == 3 then
-			clicker:set_look_yaw(1.5 * math.pi)
+		     else
+			clicker:set_look_yaw(node.param2 / 2 * math.pi)
 		     end
-		     
-		     meta:set_string("player", clicker:get_player_name())
-		     players_in_bed[clicker:get_player_name()] = true
+
+		     players_in_bed[name] = true
+		     default.player_attached[name] = true
+
+		     meta:set_string("player", name)
 		  end
 	       end,
-      can_dig = function(pos, player)
-		  local meta = minetest.get_meta(pos)
 
-		  return meta:get_string("player") == ""
-	       end,
+      can_dig = function(pos)
+		  return minetest.get_meta(pos):get_string("player") == ""
+ -	       end
    })
 
 minetest.register_node(
    "bed:bed_head",
    {
       drawtype = "nodebox",
-      tiles = {"bed_head.png", "default_wood.png", "bed_side.png"},
       paramtype = "light",
       paramtype2 = "facedir",
+      pointable = false,
+      tiles = {"bed_head.png", "default_wood.png", "bed_side.png"},
       groups = {snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
       sounds = default.node_sound_wood_defaults(),
       node_box = {
 	 type = "fixed",
-	 fixed = {
-	    {-0.5, -0.5, -0.5, 0.5, 2/16, 0.5},
-	 }
-      },
-      selection_box = {type = "fixed", fixed = {{0, 0, 0, 0, 0, 0},}},
+	 fixed = {-0.5, -0.5, -0.5, 0.5, 2/16, 0.5}
+      }
    })
 
 minetest.register_alias("bed:bed", "bed:bed_foot")
@@ -163,7 +121,7 @@ minetest.register_craft(
       output = "bed:bed",
       recipe = {
 	 {"group:fuzzy", "group:fuzzy", "group:fuzzy"},
-	 {"group:planks", "group:planks", "group:planks"},
+	 {"group:planks", "group:planks", "group:planks"}
       }
    })
 
@@ -185,32 +143,33 @@ minetest.register_globalstep(
 	 return
       end
       timer = 0
-      
+
       local sleeping_players = 0
       for _, i in pairs(players_in_bed) do
-	 if i == true then
+	 if i then
 	    sleeping_players = sleeping_players + 1
 	 end
       end
 
       local players = #minetest.get_connected_players()
-      if players ~= 0 and players * 0.5 < sleeping_players then
+      if players > 0 and players * 0.5 < sleeping_players then
 	 if minetest.get_timeofday() < 0.2 or minetest.get_timeofday() > 0.8 then
 	    if not wait then
-	       minetest.chat_send_all("[zzz] " .. sleeping_players .. " of " .. players .. " players slept, skipping to day.")
+	       minetest.chat_send_all("[zzz] "..sleeping_players.." of "..players.." players slept, skipping to day.")
+
+	       wait = true
 	       minetest.after(2, function()
 				    minetest.set_timeofday(0.23)
 				    wait = false
 				 end)
-	       wait = true
-	       for _,player in ipairs(minetest.get_connected_players()) do
+
+	       for _, player in ipairs(minetest.get_connected_players()) do
 		  bed_player_spawns[player:get_player_name()] = player:getpos()
 	       end
+
 	       local file = io.open(minetest.get_worldpath().."/bed.txt", "w")
-	       if file then
-		  file:write(minetest.serialize(bed_player_spawns))
-		  file:close()
-	       end
+	       file:write(minetest.serialize(bed_player_spawns))
+	       file:close()
 	    end
 	 end
       end
@@ -221,7 +180,6 @@ minetest.register_on_respawnplayer(
       local name = player:get_player_name()
       if bed_player_spawns[name] then
 	 player:setpos(bed_player_spawns[name])
-	 return true
       end
    end)
 
