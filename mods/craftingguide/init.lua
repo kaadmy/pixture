@@ -22,7 +22,7 @@ function craftingguide.get_formspec(name)
    form = form .. "label[0.41,1.74;"..user.itemno.."/"..#craftingguide.items[user.item].."]" -- itemno
    form = form .. "label[3.9,8.15;"..page.."/"..max_pages.."]" -- page
    form = form .. "label[4.4,2.5;"..user.item.."]" -- itemname
-   
+
    local method = craftingguide.items[user.item][user.itemno].type
    if method == "normal" or method == "crafting" then
       form = form .. "image[4.25,1.5;1,1;craftingguide_method_crafting.png]"
@@ -113,8 +113,8 @@ local function receive_fields(player, form_name, fields)
 	 local itemname = string.match(fieldname, "guide_item_(.*)")
 
 	 if itemname ~= nil then
+	    itemno = 1
 	    craftingguide.users[name].item = itemname
-	    craftingguide.users[name].itemno = 1
 	 end
       end
 
