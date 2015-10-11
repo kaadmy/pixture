@@ -45,57 +45,57 @@ minetest.register_node(
 		       local dir = minetest.facedir_to_dir(node.param2)
 		       local head_pos = vector.add(pos, dir)
 		       if minetest.get_node(head_pos).name == "bed:bed_head" then
-			  minetest.remove_node(ead_pos)
+			  minetest.remove_node(head_pos)
 		       end
 		    end,
 
       on_rightclick = function(pos, node, clicker)
-		  if not clicker:is_player() or not minetest.setting_getbool("bed_enabled") then
-		     return
-		  end
+			 if not clicker:is_player() or not minetest.setting_getbool("bed_enabled") then
+			    return
+			 end
 
-		  local name = clicker:get_player_name()
-		  local meta = minetest.get_meta(pos)
-		  local put_pos = vector.add(pos, vector.divide(minetest.facedir_to_dir(node.param2), 2))
+			 local name = clicker:get_player_name()
+			 local meta = minetest.get_meta(pos)
+			 local put_pos = vector.add(pos, vector.divide(minetest.facedir_to_dir(node.param2), 2))
 
-		  if clicker:get_player_name() == meta:get_string("player") then
-		     put_pos.y = put_pos.y - 0.5
+			 if clicker:get_player_name() == meta:get_string("player") then
+			    put_pos.y = put_pos.y - 0.5
 
-		     clicker:setpos(put_pos)
-		     clicker:set_physics_override(1, 1, 1)
-		     clicker:set_eye_offset(vector.new(0, 0, 0), vector.new(0, 0, 0))
-		     clicker:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
-		     default.player_set_animation(clicker, "stand", 30)
+			    clicker:setpos(put_pos)
+			    clicker:set_physics_override(1, 1, 1)
+			    clicker:set_eye_offset(vector.new(0, 0, 0), vector.new(0, 0, 0))
+			    clicker:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
+			    default.player_set_animation(clicker, "stand", 30)
 
-		     players_in_bed[name] = nil
-		     default.player_attached[name] = false
+			    players_in_bed[name] = nil
+			    default.player_attached[name] = false
 
-		     meta:set_string("player", "")
-		  elseif meta:get_string("player") == "" then
-		     put_pos.y = put_pos.y + 0.6
+			    meta:set_string("player", "")
+			 elseif meta:get_string("player") == "" then
+			    put_pos.y = put_pos.y + 0.6
 
-		     clicker:setpos(put_pos)
-		     clicker:set_physics_override(0, 0, 0)
-		     clicker:set_eye_offset(vector.new(0, -13, 0), vector.new(0, -13, 0))
-		     clicker:set_local_animation({x=162, y=166}, {x=162, y=166}, {x=162, y=166}, {x=162, y=168}, 30)
-		     default.player_set_animation(clicker, "lay", 30)
+			    clicker:setpos(put_pos)
+			    clicker:set_physics_override(0, 0, 0)
+			    clicker:set_eye_offset(vector.new(0, -13, 0), vector.new(0, -13, 0))
+			    clicker:set_local_animation({x=162, y=166}, {x=162, y=166}, {x=162, y=166}, {x=162, y=168}, 30)
+			    default.player_set_animation(clicker, "lay", 30)
 
-		     if node.param2 == 2 then
-			clicker:set_look_yaw(0)
-		     else
-			clicker:set_look_yaw(node.param2 / 2 * math.pi)
-		     end
+			    if node.param2 == 2 then
+			       clicker:set_look_yaw(0)
+			    else
+			       clicker:set_look_yaw(node.param2 / 2 * math.pi)
+			    end
 
-		     players_in_bed[name] = true
-		     default.player_attached[name] = true
+			    players_in_bed[name] = true
+			    default.player_attached[name] = true
 
-		     meta:set_string("player", name)
-		  end
-	       end,
+			    meta:set_string("player", name)
+			 end
+		      end,
 
       can_dig = function(pos)
-		  return minetest.get_meta(pos):get_string("player") == ""
-	       end
+		   return minetest.get_meta(pos):get_string("player") == ""
+		end
    })
 
 minetest.register_node(
