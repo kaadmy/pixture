@@ -119,8 +119,10 @@ function step(dtime)
 	 local itemstack = inv:get_stack("main", i)
 	 local item = minetest.registered_items[itemstack:get_name()]
 	 
-	 if item.groups.nav_compass then
-	    inv:set_stack("main", i, ItemStack("nav:compass_"..dir))
+	 if item ~= nil then
+	    if item.groups.nav_compass then
+	       inv:set_stack("main", i, ItemStack("nav:compass_"..dir))
+	    end
 	 end
       end
    end
