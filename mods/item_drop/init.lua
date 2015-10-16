@@ -15,7 +15,7 @@ minetest.register_globalstep(
 	    local pos = player:getpos()
 	    local inv = player:get_inventory()
 	    
-	    for _,object in ipairs(minetest.get_objects_inside_radius(pos, 1.25)) do
+	    for _,object in ipairs(minetest.get_objects_inside_radius(pos, 1.35)) do
 	       if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and valid(object) then
 		  if inv and inv:room_for_item("main", ItemStack(object:get_luaentity().itemstring)) then
 		     local pos1 = pos
