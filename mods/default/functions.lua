@@ -295,6 +295,7 @@ minetest.register_abm( -- papyrus grows
 	       end,
    })
 
+--[[ TORCH FLAME IS VERY, VERY SLOW, THERE ARE NOW ANIMATIONS INSTEAD
 minetest.register_abm( -- torch flame
    {
       nodenames = {"default:torch", "default:torch_weak"},
@@ -319,6 +320,7 @@ minetest.register_abm( -- torch flame
 		     })
 	       end
    })
+--]]
 
 minetest.register_abm( -- weak torchs burn out and die after ~3 minutes
    {

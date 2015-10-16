@@ -1039,7 +1039,7 @@ minetest.register_node(
       drawtype = "nodebox",
       tiles ={
 	 {
-	    name = "default_torch_3d_ends.png",
+	    name = "default_torch_3d_ends_animated.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1057,7 +1057,7 @@ minetest.register_node(
 	    },
 	 },
 	 {
-	    name = "default_torch_3d.png",
+	    name = "default_torch_3d_animated.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1091,7 +1091,7 @@ minetest.register_node(
       drawtype = "nodebox",
       tiles ={
 	 {
-	    name = "default_torch_3d_ends.png",
+	    name = "default_torch_3d_ends_animated.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1109,7 +1109,7 @@ minetest.register_node(
 	    },
 	 },
 	 {
-	    name = "default_torch_3d.png",
+	    name = "default_torch_3d_animated.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,

@@ -188,7 +188,7 @@ minetest.register_abm(
 	       end
    })
 
-minetest.register_abm(
+--[[minetest.register_abm(
    {
       nodenames = {"air"},
       interval = 2,
@@ -223,7 +223,7 @@ minetest.register_abm(
 		     end
 		  end
 	       end,
-   })
+   })--]]
 
 minetest.register_node(
    "weather:snow",
