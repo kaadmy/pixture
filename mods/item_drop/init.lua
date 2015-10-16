@@ -15,60 +15,46 @@ minetest.register_globalstep(
 	    local pos = player:getpos()
 	    local inv = player:get_inventory()
 	    
-	    for _,object in ipairs(minetest.get_objects_inside_radius(pos, 0.5)) do
-	       if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and valid(object) then
-		  if inv and inv:room_for_item("main", ItemStack(object:get_luaentity().itemstring)) then
-		     inv:add_item("main", ItemStack(object:get_luaentity().itemstring))
-		     if object:get_luaentity().itemstring ~= "" then
-			minetest.sound_play("item_drop_pickup", {pos = pos, gain = 0.1, max_hear_distance = 8})
-		     end
-		     object:get_luaentity().itemstring = ""
-		     object:remove()
-		  end
-	       end
-	    end
-
 	    for _,object in ipairs(minetest.get_objects_inside_radius(pos, 1.25)) do
 	       if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and valid(object) then
 		  if inv and inv:room_for_item("main", ItemStack(object:get_luaentity().itemstring)) then
 		     local pos1 = pos
 		     pos1.y = pos1.y+0.2
 		     local pos2 = object:getpos()
-		     local vec = vector.normalize({x=pos1.x-pos2.x, y=pos1.y-pos2.y, z=pos1.z-pos2.z})
-		     vec.x = vec.x*3
-		     vec.y = vec.y*3
-		     vec.z = vec.z*3
-		     object:setvelocity(vec)
-		     object:get_luaentity().physical_state = false
-		     object:get_luaentity().object:set_properties(
-			{
-			   physical = false
-			})
-
-		     minetest.after(
-			1,
-			function(args)
+			local vec = {x=pos1.x-pos2.x, y=pos1.y-pos2.y, z=pos1.z-pos2.z}
+			local len = vector.length(vec)
+			if len > 0.5 then
+				vec = vector.divide(vec, len) -- it's a normalize but we have len yet (vector.normalize(vec))
+			     vec.x = vec.x*3
+			     vec.y = vec.y*3
+			     vec.z = vec.z*3
+		     	object:setvelocity(vec)
+			     object:get_luaentity().physical_state = false
+			     object:get_luaentity().object:set_properties(
+				{
+				   physical = false
+				})
+			else
 			   local lua = object:get_luaentity()
 			   if object == nil or lua == nil or lua.itemstring == nil then
 			      return
 			   end
-			   if inv:room_for_item("main", ItemStack(object:get_luaentity().itemstring)) then
-			      inv:add_item("main", ItemStack(object:get_luaentity().itemstring))
-			      if object:get_luaentity().itemstring ~= "" then
+			   if inv:room_for_item("main", ItemStack(lua.itemstring)) then
+			      inv:add_item("main", ItemStack(lua.itemstring))
+			      if lua.itemstring ~= "" then
 				 minetest.sound_play("item_drop_pickup", {pos = pos, gain = 0.3, max_hear_distance = 16})
 			      end
-			      object:get_luaentity().itemstring = ""
+			      lua.itemstring = ""
 			      object:remove()
 			   else
 			      object:setvelocity({x = 0, y = 0, z = 0})
-			      object:get_luaentity().physical_state = true
-			      object:get_luaentity().object:set_properties(
+			      lua.physical_state = true
+			      lua.object:set_properties(
 				 {
 				    physical = true
 				 })
 			   end
-			end, {player, object})
-
+			end
 		  end
 	       end
 	    end
