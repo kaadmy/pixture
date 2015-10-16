@@ -661,8 +661,8 @@ minetest.register_ore(
       clust_scarcity = 10*10*10,
       clust_num_ores = 6,
       clust_size     = 4,
-      height_min     = -31000,
-      height_max     = 32,
+      y_min     = -31000,
+      y_max     = 32,
    })
 
 minetest.register_ore(
@@ -673,8 +673,8 @@ minetest.register_ore(
       clust_scarcity = 8*8*8,
       clust_num_ores = 8,
       clust_size     = 6,
-      height_min     = -31000,
-      height_max     = -32,
+      y_min     = -31000,
+      y_max     = -32,
    })
 
 minetest.register_ore(
@@ -685,8 +685,8 @@ minetest.register_ore(
       clust_scarcity = 9*9*9,
       clust_num_ores = 20,
       clust_size     = 10,
-      height_min     = -31000,
-      height_max     = -64,
+      y_min     = -31000,
+      y_max     = -64,
    })
 
 -- Iron
@@ -699,8 +699,8 @@ minetest.register_ore(
       clust_scarcity = 8*8*8,
       clust_num_ores = 6,
       clust_size     = 4,
-      height_min     = -31000,
-      height_max     = 0,
+      y_min     = -31000,
+      y_max     = 0,
    })
 
 minetest.register_ore(
@@ -711,8 +711,8 @@ minetest.register_ore(
       clust_scarcity = 8*8*8,
       clust_num_ores = 20,
       clust_size     = 10,
-      height_min     = -31000,
-      height_max     = -32,
+      y_min     = -31000,
+      y_max     = -32,
    })
 
 -- Steel blocks
@@ -725,8 +725,8 @@ minetest.register_ore(
       clust_scarcity = 12*12*12,
       clust_num_ores = 10,
       clust_size     = 10,
-      height_min     = -31000,
-      height_max     = -128,
+      y_min     = -31000,
+      y_max     = -128,
    })
 
 -- Water
@@ -740,8 +740,8 @@ minetest.register_ore( -- Springs
       clust_scarcity = 18*18*18,
       clust_num_ores = 1,
       clust_size     = 1,
-      height_min     = 20,
-      height_max     = 31000,
+      y_min     = 20,
+      y_max     = 31000,
    })
 
 minetest.register_ore( -- Pools
@@ -766,8 +766,8 @@ minetest.register_ore( -- Swamp
       clust_scarcity = 10*10*10,
       clust_num_ores = 10,
       clust_size     = 4,
-      height_min     = -31000,
-      height_max     = 31000,
+      y_min     = -31000,
+      y_max     = 31000,
    })
 
 minetest.register_ore( -- Marsh
@@ -779,8 +779,8 @@ minetest.register_ore( -- Marsh
       clust_scarcity = 6*6*6,
       clust_num_ores = 10,
       clust_size     = 6,
-      height_min     = -31000,
-      height_max     = 31000,
+      y_min     = -31000,
+      y_max     = 31000,
    })
 
 default.log("mapgen", "loaded")
