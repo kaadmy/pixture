@@ -167,3 +167,23 @@ function util.choice_element(tab, pr)
    end
 end
 
+-- util.split function taken from a StackOverflow answer.
+-- http://stackoverflow.com/questions/12709205/split-a-string-and-store-in-an-array-in-lua
+function util.split(str, tok)
+   -- Source: http://lua-users.org/wiki/MakingLuaLikePhp
+   -- Credit: http://richard.warburton.it/
+
+   if not tok then return {} end
+
+   local pos = 0
+   local arr = {}
+
+   for st, sp in function() return string.find(str, tok, pos, true) end do
+      table.insert(arr, string.sub(str, pos, st - 1))
+      pos = sp + 1
+   end
+
+   table.insert(arr, string.sub(str, pos))
+
+   return arr
+end

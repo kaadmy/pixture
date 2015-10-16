@@ -72,7 +72,7 @@ function default.player_get_textures(player)
    if player.get_properties ~= nil then
       return player:get_properties().textures
    else
-      return {"character.png"} -- less efficient but will work
+      return player_textures[player:get_player_name()]
    end
 end
 

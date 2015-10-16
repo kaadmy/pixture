@@ -44,6 +44,14 @@ function armor.is_slot(itemname, slot)
    return matchbool
 end
 
+function armor.get_base_skin(player)
+   if minetest.get_modpath("player_skins") ~= nil then
+      return player_skins.get_skin(player:get_player_name())
+   else
+      return armor.player_skin
+   end
+end
+
 function armor.get_texture(player, base)
    local inv = player:get_inventory()
 
@@ -121,7 +129,7 @@ function armor.update(player)
    local groups = armor.get_groups(player)
    player:set_armor_groups({fleshy = groups.fleshy})
 
-   local image = armor.get_texture(player, armor.player_skin)
+   local image = armor.get_texture(player, armor.get_base_skin(player))
    if image ~= default.player_get_textures(player)[1] then
       default.player_set_textures(player, {image})
    end
