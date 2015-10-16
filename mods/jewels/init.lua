@@ -212,8 +212,8 @@ minetest.register_ore(
       clust_scarcity = 11*11*11,
       clust_num_ores = 3,
       clust_size     = 6,
-      height_min     = 0,
-      height_max     = 31000,
+      y_min     = 0,
+      y_max     = 31000,
    })
 
 dofile(minetest.get_modpath("jewels").."/jewels.lua")
