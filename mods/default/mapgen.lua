@@ -103,6 +103,23 @@ minetest.register_biome(
 
 minetest.register_biome(
    {
+      name = "Wilderness",
+
+      node_top = "default:dirt_with_grass",
+      node_filler = "default:dirt",
+
+      depth_filler = 4,
+      depth_top = 1,
+
+      y_min = 3,
+      y_max = 32000,
+
+      heat_point = 45,
+      humidity_point = 38,
+   })
+
+minetest.register_biome(
+   {
       name = "Grassland",
 
       node_top = "default:dirt_with_grass",
@@ -312,6 +329,47 @@ minetest.register_decoration(
       y_max = 32000,
    })
 
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_grass"},
+      sidelen = 16,
+      fill_ratio = 0.004,
+      biomes = {"Wilderness"},
+      flags = "place_center_x, place_center_z",
+      replacements = {["default:apple"] = "air"},
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      y_min = -32000,
+      y_max = 32000,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_grass"},
+      sidelen = 16,
+      fill_ratio = 0.008,
+      biomes = {"Wilderness"},
+      flags = "place_center_x, place_center_z",
+      schematic = minetest.get_modpath("default").."/schematics/default_talltree.mts",
+      y_min = 0,
+      y_max = 10,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_grass"},
+      sidelen = 16,
+      fill_ratio = 0.004,
+      biomes = {"Wilderness"},
+      flags = "place_center_x, place_center_z",
+      replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      y_min = -32000,
+      y_max = 32000,
+   })
+
 -- Papyrus
 
 minetest.register_decoration(
@@ -322,7 +380,7 @@ minetest.register_decoration(
       num_spawn_by = 1,
       sidelen = 16,
       fill_ratio = 0.08,
-      biomes = {"Grassland Ocean", "Grassland", "Forest", "Deep Forest"},
+      biomes = {"Grassland Ocean", "Grassland", "Forest", "Deep Forest", "Wilderness"},
       decoration = {"default:papyrus"},
       height = 2,
       height_max = 3,
@@ -404,9 +462,59 @@ minetest.register_decoration(
       y_max = 32000,
    })
 
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.16,
+      biomes = {"Wilderness"},
+      decoration = {"default:grass"},
+      y_min = -32000,
+      y_max = 32000,
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.12,
+      biomes = {"Wilderness"},
+      decoration = {"default:tall_grass"},
+      y_min = -32000,
+      y_max = 32000,
+   })
+
+-- Ferns
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.06,
+      biomes = {"Wilderness"},
+      decoration = {"default:fern"},
+      y_min = -32000,
+      y_max = 32000,
+   })
+
 -- Farming
 
 if minetest.get_modpath("farming") ~= nil then
+   minetest.register_decoration(
+      {
+	 deco_type = "simple",
+	 place_on = "default:dirt_with_grass",
+	 sidelen = 16,
+	 fill_ratio = 0.008,
+	 biomes = {"Wilderness"},
+	 decoration = {"farming:wheat_4"},
+	 y_min = 0,
+	 y_max = 32000,
+      })
+
    minetest.register_decoration(
       {
 	 deco_type = "simple",
@@ -476,6 +584,20 @@ minetest.register_decoration(
       replacements = {["default:leaves"] = "default:dry_leaves"},
       schematic = minetest.get_modpath("default").."/schematics/default_bush.mts",
       y_min = -32000,
+      y_max = 32000,
+      rotation = "0",
+   })
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_grass"},
+      sidelen = 16,
+      fill_ratio = 0.004,
+      biomes = {"Wilderness"},
+      flags = "place_center_x, place_center_z",
+      schematic = minetest.get_modpath("default").."/schematics/default_shrub.mts",
+      y_min = 3,
       y_max = 32000,
       rotation = "0",
    })
@@ -614,11 +736,25 @@ minetest.register_ore( -- Springs
       ore_type       = "blob",
       ore            = "default:water_source",
       wherein        = "default:dirt_with_grass",
+      biomes         = {"Grassland"},
       clust_scarcity = 18*18*18,
       clust_num_ores = 1,
       clust_size     = 1,
       height_min     = 20,
       height_max     = 31000,
+   })
+
+minetest.register_ore( -- Pools
+   {
+      ore_type       = "blob",
+      ore            = "default:water_source",
+      wherein        = "default:dirt_with_grass",
+      biomes         = {"Wilderness"},
+      clust_scarcity = 30*30*30,
+      clust_num_ores = 20,
+      clust_size     = 6,
+      height_min     = 10,
+      height_max     = 40,
    })
 
 minetest.register_ore( -- Swamp

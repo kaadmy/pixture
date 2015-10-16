@@ -28,6 +28,9 @@ Mapgen:
         "beach":
             Usually spawns you on a small beach area with gravel beaches and cliffs nearby,
               and a village also spawns at the same place.
+	"wilderness":
+            At 590, 30, 350 and -100, 11, 200
+            Wilderness biome and a village
 
 Special credits:
     Extra-special credit to Kenney(kenney.nl) for the inspiration,

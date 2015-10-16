@@ -1177,6 +1177,28 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:fern",
+   {
+      description = "Fern",
+      drawtype = "plantlike",
+      selection_box = {
+	 type = "fixed",
+	 fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
+      },
+      visual_scale = 1.15,
+      tiles ={"default_fern.png"},
+      inventory_image = "default_fern_inventory.png",
+      wield_image = "default_fern_inventory.png",
+      paramtype = "light",
+      waving = 1,
+      walkable = false,
+      buildable_to = true,
+      is_ground_content = true,
+      groups = {snappy = 2, dig_immediate = 3, attached_node = 1},
+      sounds = default.node_sound_leaves_defaults(),
+   })
+
+minetest.register_node(
    "default:swamp_grass",
    {
       description = "Swamp Grass Clump",

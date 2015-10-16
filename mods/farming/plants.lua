@@ -1,7 +1,7 @@
 farming.register_plant(
    "wheat",
    {
-      grow_time = 1440,
+      grow_time = 720,
       grows_near = {"group:water"},
       growing_distance = 3,
       grows_on = {"group:plantable_soil"},
@@ -12,7 +12,7 @@ farming.register_plant(
 farming.register_plant(
    "cotton",
    {
-      grow_time = 2880,
+      grow_time = 1440,
       grows_near = {"group:water"},
       growing_distance = 4,
       grows_on = {"group:plantable_soil"},
