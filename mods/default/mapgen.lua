@@ -103,6 +103,23 @@ minetest.register_biome(
 
 minetest.register_biome(
    {
+      name = "Grove",
+
+      node_top = "default:dirt_with_grass",
+      node_filler = "default:dirt",
+
+      depth_filler = 4,
+      depth_top = 1,
+
+      y_min = 3,
+      y_max = 32000,
+
+      heat_point = 40,
+      humidity_point = 38,
+   })
+
+minetest.register_biome(
+   {
       name = "Wilderness",
 
       node_top = "default:dirt_with_grass",
@@ -115,7 +132,7 @@ minetest.register_biome(
       y_max = 32000,
 
       heat_point = 45,
-      humidity_point = 38,
+      humidity_point = 36,
    })
 
 minetest.register_biome(
@@ -348,12 +365,13 @@ minetest.register_decoration(
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
       sidelen = 16,
-      fill_ratio = 0.008,
+      fill_ratio = 0.004,
       biomes = {"Wilderness"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_talltree.mts",
-      y_min = 0,
-      y_max = 10,
+      replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      y_min = -32000,
+      y_max = 32000,
    })
 
 minetest.register_decoration(
@@ -362,11 +380,10 @@ minetest.register_decoration(
       place_on = {"default:dirt_with_grass"},
       sidelen = 16,
       fill_ratio = 0.004,
-      biomes = {"Wilderness"},
+      biomes = {"Grove"},
       flags = "place_center_x, place_center_z",
-      replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
-      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
-      y_min = -32000,
+      schematic = minetest.get_modpath("default").."/schematics/default_talltree.mts",
+      y_min = 0,
       y_max = 32000,
    })
 
@@ -486,6 +503,18 @@ minetest.register_decoration(
       y_max = 32000,
    })
 
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.08,
+      biomes = {"Grove"},
+      decoration = {"default:tall_grass"},
+      y_min = -32000,
+      y_max = 32000,
+   })
+
 -- Ferns
 
 minetest.register_decoration(
@@ -493,8 +522,8 @@ minetest.register_decoration(
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
       sidelen = 16,
-      fill_ratio = 0.008,
-      biomes = {"Wilderness"},
+      fill_ratio = 0.02,
+      biomes = {"Wilderness", "Grove"},
       decoration = {"default:fern"},
       y_min = -32000,
       y_max = 32000,
@@ -594,9 +623,9 @@ minetest.register_decoration(
       place_on = {"default:dirt_with_grass"},
       sidelen = 16,
       fill_ratio = 0.004,
-      biomes = {"Wilderness"},
+      biomes = {"Wilderness", "Grove"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_shrub.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_bush.mts",
       y_min = 3,
       y_max = 32000,
       rotation = "0",
