@@ -2,7 +2,7 @@
 -- Crafting
 --
 
--- Tools
+-- Pickaxes
 minetest.register_craft(
    {
       output = "default:pick_wood",
@@ -43,13 +43,15 @@ minetest.register_craft(
       }
    })
 
+-- Shovels
+
 minetest.register_craft(
    {
       output = "default:shovel_wood",
       recipe = {
-	 {"", "group:planks", ""},
-	 {"group:planks", "default:fiber", "group:planks"},
-	 {"", "default:stick", ""},
+	 {"", "group:planks", "group:planks"},
+	 {"", "default:fiber", "group:planks"},
+	 {"default:stick", "", ""},
       }
    })
 
@@ -59,9 +61,9 @@ minetest.register_craft(
 
       output = "default:shovel_stone",
       recipe = {
-	 {"", "group:stone", ""},
-	 {"group:stone", "default:fiber", "group:stone"},
-	 {"", "default:stick", ""},
+	 {"", "group:stone", "group:stone"},
+	 {"", "default:fiber", "group:stone"},
+	 {"default:stick", "", ""},
       }
    })
 
@@ -69,9 +71,9 @@ minetest.register_craft(
    {
       output = "default:shovel_steel",
       recipe = {
-	 {"", "default:ingot_steel", ""},
-	 {"default:ingot_steel", "default:fiber", "default:ingot_steel"},
-	 {"", "default:stick", ""},
+	 {"", "default:ingot_steel", "default:ingot_steel"},
+	 {"", "default:fiber", "default:ingot_steel"},
+	 {"default:stick", "", ""},
       }
    })
 
@@ -79,11 +81,13 @@ minetest.register_craft(
    {
       output = "default:shovel_carbonsteel",
       recipe = {
-	 {"", "default:ingot_carbonsteel", ""},
-	 {"default:ingot_carbonsteel", "default:fiber", "default:ingot_carbonsteel"},
-	 {"", "default:stick", ""},
+	 {"", "default:ingot_carbonsteel", "default:ingot_carbonsteel"},
+	 {"", "default:fiber", "default:ingot_carbonsteel"},
+	 {"default:stick", "", ""},
       }
    })
+
+-- Axes
 
 minetest.register_craft(
    {
@@ -125,13 +129,15 @@ minetest.register_craft(
       }
    })
 
+-- Spears
+
 minetest.register_craft(
    {
       output = "default:spear_wood",
       recipe = {
-	 {"group:planks"},
-	 {"default:fiber"},
-	 {"default:stick"},
+	 {"", "", "group:planks"},
+	 {"", "default:fiber", ""},
+	 {"default:stick", "", ""},
       }
    })
 
@@ -139,9 +145,9 @@ minetest.register_craft(
    {
       output = "default:spear_stone",
       recipe = {
-	 {"group:stone"},
-	 {"default:fiber"},
-	 {"default:stick"},
+	 {"", "", "group:stone"},
+	 {"", "default:fiber", ""},
+	 {"default:stick", "", ""},
       }
    })
 
@@ -149,9 +155,9 @@ minetest.register_craft(
    {
       output = "default:spear_steel",
       recipe = {
-	 {"default:ingot_steel"},
-	 {"default:fiber"},
-	 {"default:stick"},
+	 {"", "", "default:ingot_steel"},
+	 {"", "default:fiber", ""},
+	 {"default:stick", "", ""},
       }
    })
 
@@ -159,9 +165,9 @@ minetest.register_craft(
    {
       output = "default:spear_carbonsteel",
       recipe = {
-	 {"default:ingot_carbonsteel"},
-	 {"default:fiber"},
-	 {"default:stick"},
+	 {"", "", "default:ingot_carbonsteel"},
+	 {"", "default:fiber", ""},
+	 {"default:stick", "", ""},
       }
    })
 
