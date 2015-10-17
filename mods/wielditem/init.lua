@@ -17,3 +17,5 @@ local function step(dtime)
 end
 
 minetest.register_globalstep(step)
+
+default.log("mod:wielditem", "loaded")

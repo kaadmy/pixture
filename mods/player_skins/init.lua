@@ -132,3 +132,5 @@ minetest.register_chatcommand(
    })
 
 minetest.after(1.0, load_skins)
+
+default.log("mod:player_skins", "loaded")
