@@ -54,7 +54,7 @@ function farming.register_plant(name, plant)
 
 		     local underdef = minetest.registered_nodes[minetest.get_node({x = pos.x, y = pos.y-1, z = pos.z}).name]
 
-		     if under.groups and under.groups.plantable_fertilizer then
+		     if underdef.groups and underdef.groups.plantable_fertilizer then
 			print("Fertilizer!")
 			farming.grow_plant(pos, name, plant)
 		     end
