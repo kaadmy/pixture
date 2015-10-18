@@ -44,7 +44,8 @@ minetest.register_abm(
 		  minetest.remove_node(pos)
 		  local pr = PseudoRandom(minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z)
 		  if node.name  == "village:grassland_village_mg" then
-		     if pr:next(1, 30) == 1 then
+		     print((minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z) % 30)
+		     if ((minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z) % 30) == 1 then
 			local nearest = village.get_nearest_village(pos)
 			if nearest.dist > village.min_spawn_dist then
 			   print("Spawning a (Mapgen)Grassland village at "..dump(pos))
