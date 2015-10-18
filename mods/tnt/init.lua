@@ -214,7 +214,7 @@ minetest.register_node(
       description = "TNT",
       tiles = {"tnt_top.png", "tnt_bottom.png", "tnt_sides.png"},
       is_ground_content = false,
-      groups = {dig_immediate=2, mesecon=2},
+      groups = {dig_immediate = 2},
       sounds = default.node_sound_wood_defaults(),
       on_punch = function(pos, node, puncher)
 		    local itemname = puncher:get_wielded_item():get_name()
@@ -243,7 +243,8 @@ minetest.register_node(
 	 },
 	 "tnt_bottom.png", "tnt_sides.png"},
       light_source = 5,
-      drop = "",
+      drop = "tnt:tnt",
+      groups = {dig_immediate = 2},
       sounds = default.node_sound_wood_defaults(),
       on_timer = boom,
       -- unaffected by explosions
@@ -258,6 +259,13 @@ minetest.register_craft(
 	 {"group:planks", "default:flint_and_steel", "group:planks"},
 	 {"",           "group:planks",    ""}
       }
+   })
+
+minetest.register_craft(
+   {
+      type = "fuel",
+      recipe = "tnt:tnt",
+      burntime = 13,
    })
 
 default.log("mod:tnt", "loaded")
