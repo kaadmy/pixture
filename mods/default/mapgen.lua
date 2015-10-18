@@ -125,7 +125,7 @@ minetest.register_biome(
       node_top = "default:dirt_with_grass",
       node_filler = "default:dirt",
 
-      depth_filler = 4,
+      depth_filler = 6,
       depth_top = 1,
 
       y_min = 3,
@@ -142,7 +142,7 @@ minetest.register_biome(
       node_top = "default:dirt_with_grass",
       node_filler = "default:dirt",
 
-      depth_filler = 3,
+      depth_filler = 4,
       depth_top = 1,
 
       y_min = 3,
@@ -403,6 +403,20 @@ minetest.register_decoration(
       y_max = 3,
       y_min = 0,
       y_max = 31000,
+   })
+
+-- Flowers
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.04,
+      biomes = {"Grassland", "Wilderness"},
+      decoration = {"default:flower"},
+      y_min = -32000,
+      y_max = 32000,
    })
 
 -- Grasses

@@ -512,6 +512,16 @@ minetest.register_craft(
       }
    })
 
+minetest.register_craft(
+   {
+      output = "default:fertilizer 3",
+      recipe = {
+	 {"", "default:fiber", ""},
+	 {"default:fern", "default:fern", "default:fern"},
+	 {"default:fern", "default:fern", "default:fern"},
+      },
+   })
+
 --
 -- Tool repair
 --
@@ -610,6 +620,13 @@ minetest.register_craft(
 minetest.register_craft(
    {
       type = "fuel",
+      recipe = "default:fern",
+      burntime = 2,
+   })
+
+minetest.register_craft(
+   {
+      type = "fuel",
       recipe = "default:papyrus",
       burntime = 2,
    })
@@ -654,6 +671,13 @@ minetest.register_craft(
       type = "fuel",
       recipe = "group:sapling",
       burntime = 7,
+   })
+
+minetest.register_craft(
+   {
+      type = "fuel",
+      recipe = "default:fertilizer",
+      burntime = 8,
    })
 
 minetest.register_craft(

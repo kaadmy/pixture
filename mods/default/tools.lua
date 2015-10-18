@@ -333,4 +333,44 @@ minetest.register_tool(
       }
    })
 
+-- Other
+minetest.register_tool(
+   "default:shears",
+   {
+      description = "Steel Shears (Right-click to shear animals)",
+      inventory_image = "default_shears.png",
+   })
+
+minetest.register_tool(
+   "default:flint_and_steel",
+   {
+      description = "Flint and Steel",
+      inventory_image = "default_flint_and_steel.png",
+      on_use = function(itemstack, user, pointed_thing)
+		  if pointed_thing == nil then return end
+		  if pointed_thing.type ~= "node" then return end
+
+		  local pos = pointed_thing.under
+		  local node = minetest.get_node(pos)
+		  local nodename = node.name
+
+		  if nodename == "default:torch_weak" then
+		     minetest.set_node(pos, {name = "default:torch", param = node.param, param2 = node.param2})
+		     itemstack:add_wear(800)
+		  elseif nodename == "default:torch_dead" then
+		     minetest.set_node(pos, {name = "default:torch_weak", param = node.param, param2 = node.param2})
+		     itemstack:add_wear(800)
+		  elseif nodename == "tnt:tnt" then
+		     local y = minetest.registered_nodes["tnt:tnt"]
+		     if y ~= nil then
+			y.on_punch(pos, node, user)
+
+			itemstack:add_wear(800)
+		     end
+		  end
+
+		  return itemstack
+	       end,
+   })
+
 default.log("tools", "loaded")

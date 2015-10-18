@@ -110,6 +110,24 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:fertilized_dirt",
+   {
+      description = "Fertilized Dirt",
+      tiles ={"default_dirt.png^default_fertilizer.png", "default_dirt.png", "default_dirt.png"},
+      groups = {
+	 crumbly=3,
+	 soil=1,
+	 plantable_soil = 1,
+	 plantable_fertilizer = 1,
+	 fall_damage_add_percent=-5,
+	 not_in_craftingguide = 1,
+      },
+      drop = "default:dirt",
+      is_ground_content = true,
+      sounds = default.node_sound_dirt_defaults(),
+   })
+
+minetest.register_node(
    "default:dirt_with_dry_grass",
    {
       description = "Dirt with Dry Grass",
@@ -248,6 +266,25 @@ minetest.register_node(
       description = "Sand",
       tiles ={"default_sand.png"},
       groups = {crumbly = 3, falling_node = 1, sand = 1, plantable_sandy = 1, fall_damage_add_percent = -10},
+      is_ground_content = true,
+      sounds = default.node_sound_sand_defaults(),
+   })
+
+minetest.register_node(
+   "default:fertilized_sand",
+   {
+      description = "Fertilized Sand",
+      tiles = {"default_sand.png^default_fertilizer.png", "default_sand.png", "default_sand.png"},
+      groups = {
+	 crumbly = 3,
+	 falling_node = 1,
+	 sand = 1,
+	 plantable_sandy = 1,
+	 plantable_fertilizer = 1,
+	 fall_damage_add_percent = -10,
+	 not_in_craftingguide = 1,
+      },
+      drop = "default:sand",
       is_ground_content = true,
       sounds = default.node_sound_sand_defaults(),
    })
@@ -1191,6 +1228,26 @@ minetest.register_node(
       wield_image = "default_fern_inventory.png",
       paramtype = "light",
       waving = 1,
+      walkable = false,
+      buildable_to = true,
+      is_ground_content = true,
+      groups = {snappy = 2, dig_immediate = 3, attached_node = 1},
+      sounds = default.node_sound_leaves_defaults(),
+   })
+
+minetest.register_node(
+   "default:flower",
+   {
+      description = "Flower",
+      drawtype = "nodebox",
+      node_box = {
+	 type = "fixed",
+	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5 + (1 / 16), 0.5}
+      },
+      tiles = {"default_flowers.png"},
+      inventory_image = "default_flowers_inventory.png",
+      wield_image = "default_flowers_inventory.png",
+      paramtype = "light",
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
