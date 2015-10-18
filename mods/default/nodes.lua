@@ -1210,7 +1210,12 @@ minetest.register_node(
 				       minetest.pos_to_string(pos))
 			     meta:set_string("text", fields.text)
 			     meta:set_string("infotext", '"'..fields.text..'"')
+
+			     default.write_name(pos, meta:get_string("text"))
 			  end,
+      on_destruct = function(pos)
+		       default.write_name(pos, "")		       
+	       end
    })
 
 minetest.register_node(
@@ -1421,6 +1426,15 @@ minetest.register_node(
 		   local meta = minetest.get_meta(pos)
 		   local inv = meta:get_inventory()
 		   return inv:is_empty("main")
+		end,
+      write_name = function(pos, text)
+		   local meta = minetest.get_meta(pos)
+
+		   if text ~= "" then
+		      meta:set_string("infotext", text)
+		   else
+		      meta:set_string("infotext", "Chest")
+		   end
 		end,
    })
 

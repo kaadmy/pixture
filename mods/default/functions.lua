@@ -2,6 +2,31 @@
 -- Functions/ABMs
 --
 
+-- Chest naming via signs
+function default.write_name(pos, text)
+   -- check above, if allowed
+   if minetest.setting_getbool("signs_allow_name_above") then
+      local above = {x = pos.x, y = pos.y + 1, z = pos.z}
+      local abovedef = nil
+      if minetest.registered_nodes[minetest.get_node(above).name] then
+	 abovedef = minetest.registered_nodes[minetest.get_node(above).name]
+      end
+      if abovedef and abovedef.write_name ~= nil then
+	 abovedef.write_name(above, text)
+      end
+   end
+
+   -- then below
+   local below = {x = pos.x, y = pos.y - 1, z = pos.z}
+   local belowdef = nil
+   if minetest.registered_nodes[minetest.get_node(below).name] then
+      belowdef = minetest.registered_nodes[minetest.get_node(below).name]
+   end
+   if belowdef and belowdef.write_name ~= nil then
+      belowdef.write_name(below, text)
+   end
+end
+
 -- Saplings growing
 
 function default.grow_tree(pos, variety)
@@ -270,26 +295,25 @@ minetest.register_abm( -- cactus grows
 minetest.register_abm( -- papyrus grows
    {
       nodenames = {"default:papyrus"},
-      neighbors = {"group:plantable_sandy"},
+      neighbors = {"group:plantable_sandy", "group:plantable_soil"},
       interval = 20,
       chance = 10,
       action = function(pos, node)
 		  pos.y = pos.y-1
 		  local name = minetest.get_node(pos).name
-		  if name == "default:sand" or name == "default:dirt" or name == "default:dirt_with_grass" then
-		     if minetest.find_node_near(pos, 3, {"group:water"}) == nil then
-			return
-		     end
+
+		  if minetest.find_node_near(pos, 3, {"group:water"}) == nil then
+		     return
+		  end
+		  pos.y = pos.y+1
+		  local height = 0
+		  while minetest.get_node(pos).name == "default:papyrus" and height < 3 do
+		     height = height+1
 		     pos.y = pos.y+1
-		     local height = 0
-		     while minetest.get_node(pos).name == "default:papyrus" and height < 3 do
-			height = height+1
-			pos.y = pos.y+1
-		     end
-		     if height < 3 then
-			if minetest.get_node(pos).name == "air" then
-			   minetest.set_node(pos, {name="default:papyrus"})
-			end
+		  end
+		  if height < 3 then
+		     if minetest.get_node(pos).name == "air" then
+			minetest.set_node(pos, {name="default:papyrus"})
 		     end
 		  end
 	       end,
@@ -331,22 +355,5 @@ minetest.register_abm( -- weak torchs burn out and die after ~3 minutes
 		  minetest.set_node(pos, {name = "default:torch_dead", param = node.param, param2 = node.param2})
 	       end
    })
-
--- if minetest.setting_getbool("flowing_water_sounds") then
---    minetest.register_abm( -- river water makes gurgling noises
---       {
---    	 nodenames = {"group:flowing_water"},
---    	 interval = 1,
---    	 chance = 16,
---    	 action = function(pos, node)
---    		     minetest.sound_play(
---    			"default_water",
---    			{
---    			   pos = pos,
---    			   gain = 0.2,
---    			})
---    		  end
---       })
--- end
 
 default.log("functions", "loaded")

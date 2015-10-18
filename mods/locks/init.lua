@@ -173,6 +173,15 @@ minetest.register_node(
 		   local inv = meta:get_inventory()
 		   return inv:is_empty("main") and locks.is_owner(meta, player)
 		end,
+      write_name = function(pos, text)
+		   local meta = minetest.get_meta(pos)
+
+		   if text ~= "" then
+		      meta:set_string("infotext", text .. " (Owned by " .. meta:get_string("lock_owner") .. ")")
+		   else
+		      meta:set_string("infotext", "Locked Chest (Owned by " .. meta:get_string("lock_owner") .. ")")
+		   end
+		end,
       on_blast = function() end,
    })
 
