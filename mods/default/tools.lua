@@ -343,7 +343,7 @@ minetest.register_tool(
       wield_scale = {x = 2.0, y = 2.0, z = 1.0},
       tool_capabilities = {
 	 full_punch_interval = 4.0,
-	 damage_groups = {fleshy = 14}
+	 damage_groups = {fleshy = 12}
       }
    })
 

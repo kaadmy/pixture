@@ -180,6 +180,19 @@ minetest.register_craft(
       }
    })
 
+-- Broadsword
+
+minetest.register_craft(
+   {
+      output = "default:broadsword",
+      recipe = {
+	 {"", "", "default:ingot_steel"},
+	 {"default:fiber", "default:ingot_steel", ""},
+	 {"default:stick", "default:fiber", ""},
+      }
+   })
+
+
 -- Nodes/Items
 
 minetest.register_craft(
