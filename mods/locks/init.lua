@@ -131,7 +131,7 @@ minetest.register_node(
 			 if not locks.is_locked(meta, player) then
 			    if locks.is_owner(meta, player) then
 			       -- also unlock when owner opens for "sharing" locked stuff
-			       meta:set_float("last_lock_pick", minetest.get_gametime() + picked_time)
+			       meta:set_float("last_lock_pick", minetest.get_gametime() + 5)
 			    end
 
 			    local np = pos.x .. "," .. pos.y .. "," .. pos.z
