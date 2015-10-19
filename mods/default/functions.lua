@@ -206,7 +206,7 @@ minetest.register_abm( -- dirt and grass footsteps becomes dirt with grass if un
 		  local above = {x=pos.x, y=pos.y+1, z=pos.z}
 		  local name = minetest.get_node(above).name
 		  local nodedef = minetest.registered_nodes[name]
-		  if nodedef and (nodedef.sunlight_propagates or nodedef.paramtype == "light") and nodedef.liquidtype == "none" and (minetest.get_node_light(above) or 0) >= 11 then
+		  if nodedef and (nodedef.sunlight_propagates or nodedef.paramtype == "light") and nodedef.liquidtype == "none" and (minetest.get_node_light(above) or 0) >= 8 then
 		     minetest.set_node(pos, {name = "default:dirt_with_grass"})
 	       end
 	    end
