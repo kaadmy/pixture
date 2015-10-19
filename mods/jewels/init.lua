@@ -17,6 +17,7 @@ function jewels.register_jewel(toolname, new_toolname, def)
    local data = {
       name = new_toolname, -- the new name of the tool
       overlay = def.overlay or "jewels_jeweled_handle.png", -- overlay image
+      description = def.description or nil,
       stats = {
 	 digspeed = def.stats.digspeed, -- negative digs faster
 	 maxlevel = def.stats.maxlevel, -- positive digs higher levels
@@ -48,6 +49,10 @@ function jewels.register_jewel(toolname, new_toolname, def)
    local desc = new_tooldef.description or ""
 
    desc = "Jeweled " .. desc
+
+   if data.description ~= nil then
+      desc = data.description
+   end
 
    new_tooldef.inventory_image = new_tool_invimage
    new_tooldef.wield_image = new_tool_wieldimage

@@ -333,6 +333,20 @@ minetest.register_tool(
       }
    })
 
+-- Broadsword
+minetest.register_tool(
+   "default:broadsword",
+   {
+      description = "Broadsword",
+      inventory_image = "default_broadsword.png",
+      wield_image = "default_broadsword.png",
+      wield_scale = {x = 2.0, y = 2.0, z = 1.0},
+      tool_capabilities = {
+	 full_punch_interval = 4.0,
+	 damage_groups = {fleshy = 14}
+      }
+   })
+
 -- Other
 minetest.register_tool(
    "default:shears",
