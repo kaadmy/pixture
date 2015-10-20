@@ -61,7 +61,7 @@ local function detach_wielditem(player)
    local name = player:get_player_name()
 
    wielditem[name]:remove()
---   wielditem[name] = nil
+   wielditem[name] = nil
 end
 
 minetest.register_on_joinplayer(attach_wielditem)

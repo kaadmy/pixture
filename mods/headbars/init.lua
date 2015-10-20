@@ -71,8 +71,8 @@ function headbars.attach_hpbar(to)
 
    if bar == nil then return end
 
-   local attach_pos = {x = 0, y = 0, z = 0}
-   attach_pos = {x = 0, y = 9, z = 0}
+--   local attach_pos = {x = 0, y = 0, z = 0}
+   local attach_pos = {x = 0, y = 9, z = 0}
 
    bar:set_attach(to, "", attach_pos, {x = 0, y = 0, z = 0})
    bar = bar:get_luaentity()
