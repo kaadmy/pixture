@@ -3,6 +3,9 @@
 -- Minetest 0.4 mod: player
 -- See README.txt for licensing and other information.
 
+-- Variable for animation speed; 30-35 is good
+local player_animation_speed = 33
+
 -- Player animation blending
 -- Note: This is currently broken due to a bug in Irrlicht, leave at 0
 local animation_blend=0
@@ -20,7 +23,7 @@ end
 default.player_register_model(
    "character.b3d",
    {
-      animation_speed=30,
+      animation_speed=player_animation_speed,
       textures={"character.png"},
       animations={
 	 -- Standard animations.
@@ -103,7 +106,7 @@ minetest.register_on_joinplayer(
    function(player)
       default.player_attached[player:get_player_name()]=false
       default.player_set_model(player, "character.b3d")
-      player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
+      player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, player_animation_speed)
    end)
 
 minetest.register_on_leaveplayer(
@@ -135,7 +138,7 @@ minetest.register_globalstep(
 
 	 if model and not player_attached[name] then
 	    local walking=false
-	    local animation_speed_mod=model.animation_speed or 30
+	    local animation_speed_mod=model.animation_speed or player_animation_steed
 
 	    -- Determine if the player is walking
 	    if controls.up or controls.down or controls.left or controls.right then
