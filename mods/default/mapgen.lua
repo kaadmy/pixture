@@ -131,8 +131,8 @@ minetest.register_biome(
       y_min = 3,
       y_max = 32000,
 
-      heat_point = 45,
-      humidity_point = 36,
+      heat_point = 46,
+      humidity_point = 35,
    })
 
 minetest.register_biome(
@@ -149,7 +149,7 @@ minetest.register_biome(
       y_max = 20,
 
       heat_point = 50,
-      humidity_point = 35,
+      humidity_point = 33,
    })
 
 minetest.register_biome(
@@ -166,7 +166,7 @@ minetest.register_biome(
       y_max = 32000,
 
       heat_point = 50,
-      humidity_point = 35,
+      humidity_point = 33,
    })
 
 minetest.register_biome(
@@ -315,7 +315,7 @@ minetest.register_decoration(
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
       sidelen = 16,
-      fill_ratio = 0.006,
+      fill_ratio = 0.007,
       biomes = {"Orchard"},
       flags = "place_center_x, place_center_z",
       schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
@@ -429,7 +429,7 @@ minetest.register_decoration(
       place_on = "default:dirt_with_grass",
       sidelen = 16,
       fill_ratio = 0.04,
-      biomes = {"Grassland", "Wilderness"},
+      biomes = {"Grassland", "Wilderness", "Orchard"},
       decoration = {"default:flower"},
       y_min = -32000,
       y_max = 32000,
@@ -443,9 +443,9 @@ minetest.register_decoration(
       place_on = "default:dirt_with_grass",
       sidelen = 16,
       fill_ratio = 0.18,
-      biomes = {"Grassland"},
+      biomes = {"Grassland", "Orchard"},
       decoration = {"default:grass"},
-      y_min = 0,
+      y_min = 10,
       y_max = 32000,
    })
 
@@ -491,7 +491,7 @@ minetest.register_decoration(
       place_on = "default:dirt_with_grass",
       sidelen = 16,
       fill_ratio = 0.08,
-      biomes = {"Forest", "Marsh"},
+      biomes = {"Forest", "Marsh", "Grove"},
       decoration = {"default:tall_grass"},
       y_min = 0,
       y_max = 32000,
@@ -528,18 +528,6 @@ minetest.register_decoration(
       sidelen = 16,
       fill_ratio = 0.12,
       biomes = {"Wilderness"},
-      decoration = {"default:tall_grass"},
-      y_min = -32000,
-      y_max = 32000,
-   })
-
-minetest.register_decoration(
-   {
-      deco_type = "simple",
-      place_on = "default:dirt_with_grass",
-      sidelen = 16,
-      fill_ratio = 0.08,
-      biomes = {"Grove"},
       decoration = {"default:tall_grass"},
       y_min = -32000,
       y_max = 32000,
