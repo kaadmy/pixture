@@ -80,5 +80,4 @@ function headbars.attach_hpbar(to)
 end
 
 minetest.register_on_joinplayer(headbars.attach_hpbar)
-
 default.log("mod:headbars", "loaded")
