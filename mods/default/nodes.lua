@@ -693,7 +693,7 @@ minetest.register_node(
    {
       description = "Wooden Fence",
       drawtype = "fencelike",
-      tiles ={"default_wood.png"},
+      tiles ={"default_wood.png^default_fence_overlay.png"},
       inventory_image = "default_fence.png",
       wield_image = "default_fence.png",
       paramtype = "light",
@@ -713,7 +713,7 @@ minetest.register_node(
    {
       description = "Oak Fence",
       drawtype = "fencelike",
-      tiles ={"default_wood_oak.png"},
+      tiles ={"default_wood_oak.png^default_fence_overlay.png"},
       inventory_image = "default_fence_oak.png",
       wield_image = "default_fence_oak.png",
       paramtype = "light",
@@ -733,7 +733,7 @@ minetest.register_node(
    {
       description = "Birch Fence",
       drawtype = "fencelike",
-      tiles ={"default_wood_birch.png"},
+      tiles ={"default_wood_birch.png^default_fence_overlay.png"},
       inventory_image = "default_fence_birch.png",
       wield_image = "default_fence_birch.png",
       paramtype = "light",
