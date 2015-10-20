@@ -1,11 +1,15 @@
 -- Compass handling
 
+local wield_image_0 = "nav_compass_inventory_0.png"
+local wield_image_1 = "nav_compass_inventory_1.png"
+
 minetest.register_craftitem(
    "nav:compass_0",
    {
-      description = "Compass(East)",
+      description = "Compass(E)",
 
-      inventory_image = "nav_compass_0.png^[transformR90",
+      inventory_image = "nav_compass_inventory_0.png^[transformR90",
+      wield_image = wield_image_0 .. "^[transformR90",
 
       groups = {nav_compass = 1},
       stack_max = 1,
@@ -14,9 +18,10 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_1",
    {
-      description = "Compass(North-East)",
+      description = "Compass(NE)",
 
-      inventory_image = "nav_compass_1.png^[transformR90",
+      inventory_image = "nav_compass_inventory_1.png^[transformR90",
+      wield_image = wield_image_1 .. "^[transformR90",
 
       groups = {nav_compass = 1},
       stack_max = 1,
@@ -25,9 +30,10 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_2",
    {
-      description = "Compass(North)",
+      description = "Compass(N)",
 
-      inventory_image = "nav_compass_0.png",
+      inventory_image = "nav_compass_inventory_0.png",
+      wield_image = wield_image_0,
 
       groups = {nav_compass = 1},
       stack_max = 1,
@@ -36,9 +42,10 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_3",
    {
-      description = "Compass(North-West)",
+      description = "Compass(NW)",
 
-      inventory_image = "nav_compass_1.png",
+      inventory_image = "nav_compass_inventory_1.png",
+      wield_image = wield_image_1,
 
       groups = {nav_compass = 1},
       stack_max = 1,
@@ -47,9 +54,10 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_4",
    {
-      description = "Compass(West)",
+      description = "Compass(W)",
 
-      inventory_image = "nav_compass_0.png^[transformR270",
+      inventory_image = "nav_compass_inventory_0.png^[transformR270",
+      wield_image = wield_image_0 .. "^[transformR270",
 
       groups = {nav_compass = 1},
       stack_max = 1,
@@ -58,9 +66,10 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_5",
    {
-      description = "Compass(South-West)",
+      description = "Compass(SW)",
 
-      inventory_image = "nav_compass_1.png^[transformR270",
+      inventory_image = "nav_compass_inventory_1.png^[transformR270",
+      wield_image = wield_image_1 .. "^[transformR270",
 
       groups = {nav_compass = 1},
       stack_max = 1,
@@ -69,9 +78,10 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_6",
    {
-      description = "Compass(South)",
+      description = "Compass(S)",
 
-      inventory_image = "nav_compass_0.png^[transformR180",
+      inventory_image = "nav_compass_inventory_0.png^[transformR180",
+      wield_image = wield_image_0 .. "^[transformR180",
 
       groups = {nav_compass = 1},
       stack_max = 1,
@@ -80,9 +90,10 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_7",
    {
-      description = "Compass(South-East)",
+      description = "Compass(SE)",
 
-      inventory_image = "nav_compass_1.png^[transformR180",
+      inventory_image = "nav_compass_inventory_1.png^[transformR180",
+      wield_image = wield_image_1 .. "^[transformR180",
 
       groups = {nav_compass = 1},
       stack_max = 1,
