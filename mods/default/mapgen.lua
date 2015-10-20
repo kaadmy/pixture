@@ -146,6 +146,23 @@ minetest.register_biome(
       depth_top = 1,
 
       y_min = 3,
+      y_max = 20,
+
+      heat_point = 50,
+      humidity_point = 35,
+   })
+
+minetest.register_biome(
+   {
+      name = "Orchard",
+
+      node_top = "default:dirt_with_grass",
+      node_filler = "default:dirt",
+
+      depth_filler = 4,
+      depth_top = 1,
+
+      y_min = 21,
       y_max = 32000,
 
       heat_point = 50,
@@ -298,8 +315,8 @@ minetest.register_decoration(
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
       sidelen = 16,
-      fill_ratio = 0.005,
-      biomes = {"Grassland"},
+      fill_ratio = 0.006,
+      biomes = {"Orchard"},
       flags = "place_center_x, place_center_z",
       schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
       y_min = 10,
@@ -402,7 +419,6 @@ minetest.register_decoration(
       height = 2,
       y_max = 3,
       y_min = 0,
-      y_max = 31000,
    })
 
 -- Flowers
@@ -525,6 +541,21 @@ minetest.register_decoration(
       fill_ratio = 0.08,
       biomes = {"Grove"},
       decoration = {"default:tall_grass"},
+      y_min = -32000,
+      y_max = 32000,
+   })
+
+-- Thistle
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dirt_with_grass",
+      sidelen = 16,
+      fill_ratio = 0.024,
+      biomes = {"Wilderness"},
+      decoration = {"default:thistle"},
+      height = 2,
       y_min = -32000,
       y_max = 32000,
    })

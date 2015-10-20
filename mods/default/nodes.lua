@@ -1253,6 +1253,7 @@ minetest.register_node(
       inventory_image = "default_flowers_inventory.png",
       wield_image = "default_flowers_inventory.png",
       paramtype = "light",
+      sunlight_propagates = true,
       walkable = false,
       buildable_to = true,
       is_ground_content = true,
@@ -1339,7 +1340,6 @@ minetest.register_node(
       tiles ={"default_grass_clump_tall.png"},
       inventory_image = "default_grass_clump_inventory.png",
       wield_image = "default_grass_clump_inventory.png",
-      wield_image = "default_grass_clump_tall.png",
       drop = "default:grass",
       paramtype = "light",
       waving = 1,
@@ -1348,6 +1348,29 @@ minetest.register_node(
       is_ground_content = true,
       groups = {snappy=2,dig_immediate=3,attached_node=1},
       sounds = default.node_sound_leaves_defaults(),
+   })
+
+minetest.register_node(
+   "default:thistle",
+   {
+      description = "Thistle",
+      drawtype = "plantlike",
+      selection_box = {
+	 type = "fixed",
+	 fixed = {-6/16, -0.5, -6/16, 6/16, 0.5, 6/16}
+      },
+      tiles ={"default_thistle.png"},
+      inventory_image = "default_thistle_inventory.png",
+      wield_image = "default_thistle_inventory.png",
+      paramtype = "light",
+      walkable = false,
+      is_ground_content = true,
+      damage_per_second = 1,
+      groups = {snappy = 3, dig_immediate = 3, falling_node = 1},
+      sounds = default.node_sound_leaves_defaults(),
+      after_dig_node = function(pos, node, metadata, digger)
+			  default.dig_up(pos, node, digger)
+		       end,
    })
 
 minetest.register_node(
