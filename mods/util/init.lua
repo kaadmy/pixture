@@ -40,12 +40,14 @@ function util.fixlight(pos1, pos2)
    return #nodes
 end
 if minetest.setting_getbool("fixlight_command_enable") then
+   minetest.register_privilege("fixlight", "Can use /fixlight command")
+
    minetest.register_chatcommand(
       "fixlight",
       {
 	 params = "[radius 1-20]",
 	 description = "Fix light in a radius around you",
-	 privs = {interact = true},
+	 privs = {fixlight = true},
 	 func = function(name, param)
 		   local rad = tonumber(param)
 
