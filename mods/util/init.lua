@@ -37,6 +37,8 @@ function util.fixlight(pos1, pos2)
       dig_node(pos)
    end
 
+   manip:write_to_map()
+
    return #nodes
 end
 if minetest.setting_getbool("fixlight_command_enable") then
