@@ -5,6 +5,8 @@
 
 headbars = {}
 
+local damage_enable = minetest.setting_getbool("damage_enable")
+
 local enable_headbars = minetest.setting_getbool("headbars_enable")
 if enable_headbars == nil then enable_headbars = true end
 
@@ -64,6 +66,7 @@ minetest.register_entity(
    })
 
 function headbars.attach_hpbar(to)
+   if not damage_enable then return end
    if not enable_headbars then return end
 
    local pos = to:getpos()
