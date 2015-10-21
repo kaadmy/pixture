@@ -53,7 +53,7 @@ local function attach_wielditem(player)
    local pos = player:getpos()
 
    wielditem[name] = minetest.add_entity(pos, "wielditem:wielditem")
-   wielditem[name]:set_attach(player, "right_arm", {x = -1.5, y = 5.7, z = 2.5}, {x = 80, y = -40, z = 90})
+   wielditem[name]:set_attach(player, "right_arm", {x = -1.5, y = 5.7, z = 2.5}, {x = 90, y = -45, z = 270})
    wielditem[name]:get_luaentity().wielder = player
 end
 
