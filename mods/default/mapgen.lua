@@ -216,7 +216,7 @@ minetest.register_biome(
       y_min = 1,
       y_max = 32000,
 
-      heat_point = 70,
+      heat_point = 75,
       humidity_point = 20,
    })
 
