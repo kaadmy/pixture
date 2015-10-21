@@ -681,7 +681,7 @@ minetest.register_node(
    {
       description = "Glass",
       drawtype = "glasslike_framed_optional",
-      tiles ={"default_glass_frame.png", "default_glass.png^default_glass_frame.png"},
+      tiles ={"default_glass_frame.png", "default_glass.png"},
       paramtype = "light",
       sunlight_propagates = true,
       groups = {snappy=2,cracky=3,oddly_breakable_by_hand=2},
