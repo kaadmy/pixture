@@ -5,7 +5,7 @@
 
 headbars = {}
 
-local damage_enable = minetest.setting_getbool("damage_enable")
+local damage_enable = minetest.setting_getbool("enable_damage")
 
 local enable_headbars = minetest.setting_getbool("headbars_enable")
 if enable_headbars == nil then enable_headbars = true end
