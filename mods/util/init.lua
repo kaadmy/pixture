@@ -74,13 +74,15 @@ if minetest.setting_getbool("fixlight_command_enable") then
       })
 end
 
-function util.nodefunc(pos1, pos2, name, func)
+function util.nodefunc(pos1, pos2, name, func, nomanip)
    -- function based off fixlight
    -- call a function for every node of a single type
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
-   local manip = minetest.get_voxel_manip()
-   manip:read_from_map(pos1, pos2)
+   if not nomanip then
+      local manip = minetest.get_voxel_manip()
+      manip:read_from_map(pos1, pos2)
+   end
    
    local nodes = minetest.find_nodes_in_area(pos1, pos2, name)
    for _, pos in ipairs(nodes) do
@@ -99,13 +101,15 @@ function util.getvoxelmanip(pos1, pos2)
    return manip
 end
 
-function util.remove_area(pos1, pos2)
+function util.remove_area(pos1, pos2, nomanip)
    -- function based off fixlight
    -- call a function for every node of a single type
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
-   local manip = minetest.get_voxel_manip()
-   manip:read_from_map(pos1, pos2)
+   if not nomanip then
+      local manip = minetest.get_voxel_manip()
+      manip:read_from_map(pos1, pos2)
+   end
    
    for i = pos1.x, pos2.x-1 do
       for j = pos1.y, pos2.y-1 do
@@ -118,13 +122,15 @@ function util.remove_area(pos1, pos2)
    manip:write_to_map()
 end
 
-function util.areafunc(pos1, pos2, func)
+function util.areafunc(pos1, pos2, func, nomanip)
    -- function based off fixlight
    -- call a function for every node of a single type
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
-   local manip = minetest.get_voxel_manip()
-   manip:read_from_map(pos1, pos2)
+   if not nomanip then
+      local manip = minetest.get_voxel_manip()
+      manip:read_from_map(pos1, pos2)
+   end
    
    for i = pos1.x, pos2.x-1 do
       for j = pos1.y, pos2.y-1 do
@@ -135,13 +141,15 @@ function util.areafunc(pos1, pos2, func)
    end
 end
 
-function util.reconstruct(pos1, pos2)
+function util.reconstruct(pos1, pos2, nomanip)
    -- function based off fixlight
    -- force a re-construction of the nodes in an area, for fixing missing metadata in schematics
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
-   local manip = minetest.get_voxel_manip()
-   manip:read_from_map(pos1, pos2)
+   if not nomanip then
+      local manip = minetest.get_voxel_manip()
+      manip:read_from_map(pos1, pos2)
+   end
    
    -- fix chests
    local nodes = minetest.find_nodes_in_area(pos1, pos2, "default:chest")

@@ -142,39 +142,90 @@ village.chunktypes = {
    "orchard",
 }
 
-function village.get_area_height(minp, maxp)
-   local minp, maxp = util.sort_pos(minp, maxp)
+function village.lift_ground(pos, scanheight)
+   -- assume ground is lower than pos.y
 
-   local avg = 0
-   local amt = 0
-   
-   for y = minp.y, maxp.y-1 do
-      for x = minp.x, maxp.x-1 do
-	 for z = minp.z, maxp.z-1 do
-	    if minetest.get_node({x = x, y = y, z = z}).name == "air" or minetest.get_node({x = x, y = y, z = z}).name == "ignore" then
-	       avg = avg + y
-	       amt = amt + 1
+   local topnode = nil
+   local topdepth = 0
+
+   local fillernode = nil
+   local fillerdepth = 0
+
+   local stonenode = nil
+
+   for y = pos.y, pos.y - scanheight, -1 do
+      local p = {x = pos.x, y = y, z = pos.z}
+
+      local nn = minetest.get_node(p).name
+      local an = minetest.get_node({x = p.x, y = p.y + 1, z = p.z}).name
+
+      if nn ~= "air" then
+	 local nd = minetest.registered_nodes[nn]
+	 if not nd.buildable_to then -- avoid grass, fluids, etc.
+	    if topnode == nil and nn ~= an then
+	       topnode = nn
+	    elseif fillernode == nil and nn ~= an then
+	       fillernode = nn
+	    else
+	       stonenode = nn
 	    end
-	 end 
+	 end
+
+	 if fillernode and not stonenode then
+	    fillerdepth = fillerdepth + 1
+	 elseif topnode and not fillernode then
+	    topdepth = topdepth + 1
+	 end
       end
    end
 
-   avg = avg / amt
+   if topnode == nil then
+      topnode = "default:dirt_with_grass"
+      topdepth = 1
+   end
+   if fillernode == nil then
+      fillernode = "default:dirt"
+      fillerdepth = 3
+   end
+   if stonenode == nil then
+      stonenode = fillernode
+   end
 
-   return avg
+   for y = pos.y - scanheight, pos.y do
+      local p = {x = pos.x, y = y, z = pos.z}
+
+      local th = pos.y - y
+
+      if th <= fillerdepth - topdepth then
+	 minetest.set_node(p, {name = fillernode})
+      elseif th <= topdepth then
+	 minetest.set_node(p, {name = topnode})
+      else
+	 minetest.set_node(p, {name = stonenode})
+      end
+   end
 end
 
 function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
-   util.getvoxelmanip(pos, {x = pos.x+12, y = pos.y+16, z = pos.z+12})
-
+   util.getvoxelmanip(pos, {x = pos.x+12, y = pos.y+12, z = pos.z+12})
+   
    if nofill ~= true then
+      util.nodefunc(
+	 {x = pos.x-6, y = pos.y-7, z = pos.z-6},
+	 {x = pos.x+17, y = pos.y-6, z = pos.z+17},
+	 "air",
+	 function(pos)
+	    village.lift_ground(pos, 15) -- distance to lift ground; larger numbers will be slower
+	 end, true)
+
       minetest.place_schematic(
-	 {x = pos.x, y = pos.y, z = pos.z},
+	 pos,
 	 mp.."/schematics/village_empty.mts",
 	 "0",
 	 {},
 	 true
       )
+
       minetest.place_schematic(
 	 {x = pos.x-6, y = pos.y-5, z = pos.z-6},
 	 mp.."/schematics/village_filler.mts",
@@ -192,24 +243,24 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
       true
    )
 
-   util.reconstruct(pos, {x = pos.x+12, y = pos.y+16, z = pos.z+12})
-   util.fixlight(pos, {x = pos.x+12, y = pos.y+16, z = pos.z+12})
+   util.reconstruct(pos, {x = pos.x+12, y = pos.y+12, z = pos.z+12})
+   util.fixlight(pos, {x = pos.x+12, y = pos.y+12, z = pos.z+12})
    util.nodefunc(
       pos,
-      {x = pos.x+12, y = pos.y+16, z = pos.z+12},
+      {x = pos.x+12, y = pos.y+12, z = pos.z+12},
       "default:chest",
       function(pos)
 	 goodies.fill(pos, chunktype, pr, "main", 3)
-      end)
+      end, true)
    util.nodefunc(
       pos,
-      {x = pos.x+12, y = pos.y+16, z = pos.z+12},
+      {x = pos.x+12, y = pos.y+12, z = pos.z+12},
       "music:player",
       function(pos)
 	 if pr:next(1, 2) > 1 then
 	    minetest.remove_node(pos)
 	 end
-      end)
+      end, true)
 
    local chunkdef = village.chunkdefs[chunktype]
    if chunkdef ~= nil then
@@ -217,7 +268,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 	 if chunkdef.entity_chance ~= nil and pr:next(1, chunkdef.entity_chance) == 1 then
 	    util.nodefunc(
 	       pos,
-	       {x = pos.x+12, y = pos.y+16, z = pos.z+12},
+	       {x = pos.x+12, y = pos.y+12, z = pos.z+12},
 	       "village:entity_spawner",
 	       function(pos)
 		  minetest.remove_node(pos)
@@ -229,12 +280,12 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 
 	 util.nodefunc(
 	    pos,
-	    {x = pos.x+12, y = pos.y+16, z = pos.z+12},
+	    {x = pos.x+12, y = pos.y+12, z = pos.z+12},
 	    "village:entity_spawner",
 	    function(pos)
 	       table.insert(ent_spawns, pos)
 	       minetest.remove_node(pos)
-	    end)
+	    end, true)
 
 	 if #ent_spawns > 0 then
 	    for ent, amt in pairs(chunkdef.entities) do
@@ -253,13 +304,13 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
    if chunktype == "forge" then
       util.nodefunc(
 	 pos,
-	 {x = pos.x+12, y = pos.y+16, z = pos.z+12},
+	 {x = pos.x+12, y = pos.y+12, z = pos.z+12},
 	 "default:furnace",
 	 function(pos)
 	    goodies.fill(pos, "FURNACE_SRC", pr, "src", 1)
 	    goodies.fill(pos, "FURNACE_DST", pr, "dst", 1)
 	    goodies.fill(pos, "FURNACE_FUEL", pr, "fuel", 1)
-	 end)
+	 end, true)
    end
 end
 
@@ -282,15 +333,17 @@ function village.spawn_road(pos, houses, built, roads, depth, pr)
 	 nextpos.x = nextpos.x + 12
       end
 
-      if built[minetest.hash_node_position(nextpos)] == nil then
-	 built[minetest.hash_node_position(nextpos)] = true
+      local hnp = minetest.hash_node_position(nextpos)
+
+      if built[hnp] == nil then
+	 built[hnp] = true
 	 if depth <= 0 or pr:next(1, 8) < 6 then
-	    houses[minetest.hash_node_position(nextpos)] = {pos = nextpos, front = pos}
+	    houses[hnp] = {pos = nextpos, front = pos}
 	    
 	    local structure = util.choice_element(village.chunktypes, pr)
 	    village.spawn_chunk(nextpos, orient, {}, pr, structure)
 	 else
-	    roads[minetest.hash_node_position(nextpos)] = {pos = nextpos}
+	    roads[hnp] = {pos = nextpos}
 	    village.spawn_road(nextpos, houses, built, roads, depth - 1, pr)
 	 end
       end
@@ -314,23 +367,29 @@ function village.spawn_village(pos, pr)
    local built = {}
    local roads = {}
 
+   local spawnpos = pos
+
    village.spawn_chunk(pos, "0", {}, pr, "well")
    built[minetest.hash_node_position(pos)] = true
 
+   local t1 = os.clock()
    village.spawn_road(pos, houses, built, roads, depth, pr)
+   print(string.format("Took %.2fms to spawn village", (os.clock() - t1) * 1000))
 
    local function connects(pos, nextpos)
-      if houses[minetest.hash_node_position(nextpos)] ~= nil then
-	 if vector.equals(houses[minetest.hash_node_position(nextpos)].front, pos) then
+      local hnp = minetest.hash_node_position(nextpos)
+
+      if houses[hnp] ~= nil then
+	 if vector.equals(houses[hnp].front, pos) then
 	    return true
 	 end
       end
 
-      if roads[minetest.hash_node_position(nextpos)] ~= nil then
+      if roads[hnp] ~= nil then
 	 return true
       end
 
-      if vector.equals(pos, nextpos) then
+      if vector.equals(pos, nextpos) or vector.equals(nextpos, spawnpos) then
 	 return true
       end
    end
