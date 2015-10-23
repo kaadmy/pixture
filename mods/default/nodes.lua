@@ -241,7 +241,7 @@ minetest.register_node(
       paramtype = "light",
       node_box = {
 	 type = "fixed",
-	 fixed = {-0.5, -0.5 - (2/16), -0.5, 0.5, 2/16, 0.5}
+	 fixed = {-0.5, -0.5 - (2/16), -0.5, 0.5, -2/16, 0.5}
       },
       tiles ={"default_dirt.png"},
       groups = {crumbly=3, fall_damage_add_percent=-10},
