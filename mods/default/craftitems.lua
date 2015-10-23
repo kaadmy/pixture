@@ -31,6 +31,7 @@ minetest.register_craftitem(
       description = "Book",
       inventory_image = "default_book.png",
       wield_scale = {x=1,y=1,z=2},
+      stack_max = 1,
    })
 
 minetest.register_craftitem(
