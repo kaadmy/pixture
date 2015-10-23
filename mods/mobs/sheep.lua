@@ -5,10 +5,10 @@ mobs:register_mob(
    {
       type = "animal",
       passive = true,
-      hp_min = 6,
+      hp_min = 10,
       hp_max = 14,
       armor = 200,
-      collisionbox = {-0.4, -1, -0.4, 0.4, 0.1, 0.4},
+      collisionbox = {-0.7, -1, -0.7, 0.7, 0.1, 0.7},
       visual = "mesh",
       mesh = "mobs_sheep.x",
       visual_size = {x = 1, y = 1},

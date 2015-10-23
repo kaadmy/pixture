@@ -9,10 +9,10 @@ mobs:register_mob(
       passive = false,
       attack_type = "dogfight",
       damage = 2,
-      hp_min = 15,
+      hp_min = 16,
       hp_max = 20,
       armor = 200,
-      collisionbox = {-0.4, -1, -0.4, 0.4, 0.1, 0.4},
+      collisionbox = {-0.7, -1, -0.7, 0.7, 0.1, 0.7},
       visual = "mesh",
       mesh = "mobs_boar.x",
       textures = {
