@@ -279,7 +279,7 @@ minetest.register_craft(
 
 minetest.register_craft(
    {
-      output = "default:dirt_path 4",
+      output = "default:dirt_path 8",
       recipe = {
 	 {"default:dirt", "default:dirt", "default:dirt"},
 	 {"default:gravel", "default:gravel", "default:gravel"},
@@ -289,11 +289,18 @@ minetest.register_craft(
 
 minetest.register_craft(
    {
-      output = "default:heated_dirt_path 8",
+      output = "default:path_slab 3",
       recipe = {
-	 {"default:ingot_steel", "default:dirt_path", "default:ingot_steel"},
 	 {"default:dirt_path", "default:dirt_path", "default:dirt_path"},
-	 {"default:gravel", "default:gravel", "default:gravel"},
+      }
+   })
+
+minetest.register_craft(
+   {
+      output = "default:heated_dirt_path",
+      recipe = {
+	 {"default:dirt_path"},
+	 {"default:ingot_steel"},
       }
    })
 

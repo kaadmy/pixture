@@ -234,6 +234,22 @@ minetest.register_node(
    })
 
 minetest.register_node(
+   "default:path_slab",
+   {
+      description = "Dirt Path Slab",
+      drawtype = "nodebox",
+      paramtype = "light",
+      node_box = {
+	 type = "fixed",
+	 fixed = {-0.5, -0.5 - (2/16), -0.5, 0.5, 2/16, 0.5}
+      },
+      tiles ={"default_dirt.png"},
+      groups = {crumbly=3, fall_damage_add_percent=-10},
+      is_ground_content = true,
+      sounds = default.node_sound_dirt_defaults(),
+   })
+
+minetest.register_node(
    "default:heated_dirt_path",
    {
       description = "Heated Dirt Path",
