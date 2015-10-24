@@ -73,6 +73,17 @@ function hunger.update_bar(player)
 end
 
 if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunger_enable") then
+   player_effects.register_effect(
+      "hunger_eating",
+      {
+	 title = "Eating",
+	 description = "If you are eating food",
+	 durtion = 2,
+	 physics = {
+	    speed = 0.6,
+	 }
+      })
+
    -- Prevent players from starving while afk (<--joke)
    minetest.register_on_dignode(
       function(pos, oldnode, player)
@@ -150,6 +161,9 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 local headpos  = player:getpos()
 	 headpos.y = headpos.y + 1
 	 minetest.sound_play("hunger_eat", {pos = headpos, max_hear_distance = 8})
+
+	 player_effects.apply_effect(player, "hunger_eating")
+
 	 hunger.update_bar(player)
 	 hunger.save_hunger()
 

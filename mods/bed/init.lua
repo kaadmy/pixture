@@ -62,7 +62,7 @@ minetest.register_node(
 			    put_pos.y = put_pos.y - 0.5
 
 			    clicker:setpos(put_pos)
-			    clicker:set_physics_override(1, 1, 1)
+			    player_effects.remove_effect(clicker, "inbed")
 			    clicker:set_eye_offset(vector.new(0, 0, 0), vector.new(0, 0, 0))
 			    clicker:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
 			    default.player_set_animation(clicker, "stand", 30)
@@ -75,7 +75,7 @@ minetest.register_node(
 			    put_pos.y = put_pos.y + 0.6
 
 			    clicker:setpos(put_pos)
-			    clicker:set_physics_override(0, 0, 0)
+			    player_effects.apply_effect(clicker, "inbed")
 			    clicker:set_eye_offset(vector.new(0, -13, 0), vector.new(0, -13, 0))
 			    clicker:set_local_animation({x=162, y=166}, {x=162, y=166}, {x=162, y=166}, {x=162, y=168}, 30)
 			    default.player_set_animation(clicker, "lay", 30)
@@ -174,6 +174,19 @@ minetest.register_globalstep(
 	 end
       end
    end)
+
+player_effects.register_effect(
+   "inbed",
+   {
+      title = "In bed",
+      description = "If you're in a bed",
+      duration = -1,
+      physics = {
+	 speed = 0,
+	 jump = 0,
+	 gravity = 0,
+      }
+   })
 
 minetest.register_on_respawnplayer(
    function(player)

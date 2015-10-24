@@ -121,29 +121,6 @@ local function on_leaveplayer(player)
    player_lastpos[name] = nil
 end
 
-minetest.register_privilege("uberspeed", "Can use /uberspeed command")
-
-minetest.register_chatcommand(
-   "uberspeed",
-   {
-      params = "[on|off|cinematic]",
-      description = "Set Uberspeed",
-      privs = {uberspeed = true},
-      func = function(name, param)
-		local player=minetest.get_player_by_name(name)
-
-		if param == "on" then
-		   player:set_physics_override({speed = 8})
-		elseif param == "off" then
-		   player:set_physics_override({speed = 1})
-		elseif param == "cinematic" then
-		   player:set_physics_override({speed = 2})
-		else
-		   minetest.chat_send_player(name, "Bad param for /uberspeed; type /help uberspeed")
-		end
-	     end
-   })
-
 minetest.register_on_joinplayer(on_joinplayer)
 minetest.register_on_leaveplayer(on_leaveplayer)
 minetest.register_globalstep(step)

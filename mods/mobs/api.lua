@@ -9,6 +9,13 @@ local enable_blood = minetest.setting_getbool("mobs_enable_blood") or false
 mobs.protected = tonumber(minetest.setting_get("mobs_spawn_protected")) or 0
 mobs.remove = minetest.setting_getbool("remove_far_mobs") or false
 
+local function is_too_near_spawn(pos)
+   local sp = minetest.settting_getbool("static_spawn_point") or {x = 0, y = 0, z = 0}
+   local rad = minetest.settting_getbool("static_spawn_radius") or 256
+
+   return (vector.distance(pos, sp) < rad)
+end
+
 function mobs:register_mob(name, def)
    minetest.register_entity(
       name,
@@ -119,6 +126,8 @@ function mobs:register_mob(name, def)
 			end
 		     end,
 	 do_attack = function(self, player, dist)
+			if is_too_near_spawn(self:getpos()) then return end
+
 			if self.state ~= "attack" then
 			   if math.random(0,100) < 90
 			   and self.sounds.war_cry then

@@ -37,19 +37,38 @@ function player_effects.register_effect(name, def)
       title = def.title or name, -- good-looking name of the effect
       description = def.description or "The " .. name .. " effect", -- description of what the effect does
       duration = def.duration or 1, -- how long the effect lasts, <0 is infinite and has to be disabled manually
-      additive = def.additive or false, -- if the same effect can be applied multiple times for a longer duration
       physics = def.physics or {} -- physics overrides for the player
    }
 
    player_effects.registered_effects[name] = rd
 end
 
-function player_effects.apply_effect(player, ename)
-   local effect = player_effects.registered_effects[ename]
+function player_effects.get_registered_effect(ename)
+   local e = player_effects.registered_effects[ename]
+   
+   if not e then
+      default.log("[mod:player_effects] Cannot find registered player effect " .. ename, "error")
 
-   if player_effects.effects[player:get_player_name()][ename] == nil then
-      local phys = player:get_physics_override()
-      
+      return nil
+   end
+
+   return e
+end
+
+function player_effects.apply_effect(player, ename)
+   local effect = player_effects.get_registered_effect(ename)
+
+   if effect.duration >= 0 then
+      player_effects.effects[player:get_player_name()][ename] = minetest.get_gametime() + effect.duration
+   else
+      player_effects.effects[player:get_player_name()][ename] = -1
+   end
+
+   local phys = {speed = 1, jump = 1, gravity = 1}
+
+   for en, _ in pairs(player_effects.effects[player:get_player_name()]) do
+      local effect = player_effects.get_registered_effect(en)
+
       if effect.physics.speed ~= nil then
 	 phys.speed = phys.speed * effect.physics.speed
       end
@@ -61,15 +80,9 @@ function player_effects.apply_effect(player, ename)
       if effect.physics.gravity ~= nil then
 	 phys.gravity = phys.gravity * effect.physics.gravity
       end
-
-      player:set_physics_override(phys)
    end
 
-   if effect.duration >= 0 then
-      player_effects.effects[player:get_player_name()][ename] = minetest.get_gametime() + effect.duration
-   else
-      player_effects.effects[player:get_player_name()][ename] = -1
-   end
+   player:set_physics_override(phys)
 
    save_effects()
 end
@@ -77,19 +90,24 @@ end
 function player_effects.remove_effect(player, ename)
    if player_effects.effects[player:get_player_name()][ename] == nil then return end
 
-   local phys = player:get_physics_override()
-   local effect = player_effects.registered_effects[ename]
-   
-   if effect.physics.speed ~= nil then
-      phys.speed = phys.speed / effect.physics.speed
-   end
+   local phys = {speed = 1, jump = 1, gravity = 1}
 
-   if effect.physics.jump ~= nil then
-      phys.jump = phys.jump / effect.physics.jump
-   end
+   for en, _ in pairs(player_effects.effects[player:get_player_name()]) do
+      if en ~= ename then
+	 local effect = player_effects.get_registered_effect(en)
 
-   if effect.physics.gravity ~= nil then
-      phys.gravity = phys.gravity / effect.physics.gravity
+	 if effect.physics.speed ~= nil then
+	    phys.speed = phys.speed * effect.physics.speed
+	 end
+
+	 if effect.physics.jump ~= nil then
+	    phys.jump = phys.jump * effect.physics.jump
+	 end
+
+	 if effect.physics.gravity ~= nil then
+	    phys.gravity = phys.gravity * effect.physics.gravity
+	 end
+      end
    end
 
    player:set_physics_override(phys)
@@ -99,11 +117,43 @@ function player_effects.remove_effect(player, ename)
    save_effects()
 end
 
+function player_effects.refresh_effects(player)
+   local function check(ename)
+      local phys = {speed = 1, jump = 1, gravity = 1}
+
+      for en, _ in pairs(player_effects.effects[player:get_player_name()]) do
+	 if en ~= ename then
+	    local effect = player_effects.get_registered_effect(en)
+
+	    if effect.physics.speed ~= nil then
+	       phys.speed = phys.speed * effect.physics.speed
+	    end
+
+	    if effect.physics.jump ~= nil then
+	       phys.jump = phys.jump * effect.physics.jump
+	    end
+
+	    if effect.physics.gravity ~= nil then
+	       phys.gravity = phys.gravity * effect.physics.gravity
+	    end
+	 end
+      end
+
+      player:set_physics_override(phys)
+   end
+
+   for ename, endtime in pairs(player_effects.effects[player:get_player_name()]) do
+      check(ename)
+   end
+
+   save_effects()
+end
+
 function player_effects.clear_effects(player)
    -- call this if you want to clear all effects, it's faster and more efficient
    player:set_physics_override({speed = 1, jump = 1, gravity = 1})
 
-   player_effects.effects[player:get_player_name()] = nil
+   player_effects.effects[player:get_player_name()] = {}
 
    save_effects()
 end
@@ -119,7 +169,6 @@ local function step(dtime)
 	 for ename, endtime in pairs(player_effects.effects[name]) do
 	    if endtime > 0 then
 	       local timeleft = endtime - gt
-	       print(timeleft)
 	       if timeleft <= 0 then
 		  player_effects.remove_effect(player, ename)
 	       end
@@ -139,9 +188,9 @@ local function on_joinplayer(player)
       player_effects.effects[name] = {}
    end
 
-   save_effects()
+   player_effects.refresh_effects(player)
 
-   player_effects.apply_effect(player, "lowgravity")
+   save_effects()
 end
 
 local function on_leaveplayer(player)
@@ -179,6 +228,49 @@ minetest.register_chatcommand(
 		   minetest.chat_send_player(name, s)
 		else
 		   minetest.chat_send_player(name, "You currently have no effects")
+		end
+	     end
+   })
+
+player_effects.register_effect(
+   "uberspeed",
+   {
+      title = "Uberspeed",
+      description = "If you can go really fast",
+      duration = -1,
+      physics = {
+	 speed = 8,
+      }
+   })
+player_effects.register_effect(
+   "uberspeed_cinematic",
+   {
+      title = "Cinematic",
+      description = "Cinematic fast movement",
+      duration = -1,
+      physics = {
+	 speed = 2,
+      }
+   })
+minetest.register_privilege("uberspeed", "Can use /uberspeed command")
+minetest.register_chatcommand(
+   "uberspeed",
+   {
+      params = "[on|off|cinematic]",
+      description = "Set Uberspeed",
+      privs = {uberspeed = true},
+      func = function(name, param)
+		local player=minetest.get_player_by_name(name)
+
+		if param == "on" then
+		   player_effects.apply_effect(player, "uberspeed")
+		elseif param == "cinematic" then
+		   player_effects.apply_effect(player, "uberspeed_cinematic")
+		elseif param == "off" then
+		   player_effects.remove_effect(player, "uberspeed")
+		   player_effects.remove_effect(player, "uberspeed_cinematic")
+		else
+		   minetest.chat_send_player(name, "Bad param for /uberspeed; type /help uberspeed")
 		end
 	     end
    })
