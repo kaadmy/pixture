@@ -90,7 +90,7 @@ local function on_craft(itemstack, player, craftgrid, craftinv)
 	 if def.craftitem == itemstack:get_name() then
 	    achievements.trigger_achievement(player, aname)
 	 else
-	    local group = string.match(def.placenode, "group:(.*)")
+	    local group = string.match(def.craftitem, "group:(.*)")
 
 	    if group and minetest.get_item_group(itemstack:get_name(), group) then
 	       achievements.trigger_achievement(player, aname)
