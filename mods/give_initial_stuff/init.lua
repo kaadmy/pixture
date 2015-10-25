@@ -15,3 +15,5 @@ local function give_initial_stuff(player)
 end
 
 minetest.register_on_newplayer(give_initial_stuff)
+
+default.log("mod:give_initial_stuff", "loaded")

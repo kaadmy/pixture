@@ -171,3 +171,5 @@ form_craftingguide = form_craftingguide .. default.ui.get_itemslot_bg(6.25, 1.5,
 form_craftingguide = form_craftingguide .. "image[5.25,1.5;1,1;"..minetest.formspec_escape("ui_arrow.png^[transformR270").."]"
 
 default.ui.register_page("core_craftingguide", form_craftingguide)
+
+default.log("mod:craftingguide", "loaded")
