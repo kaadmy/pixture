@@ -8,7 +8,7 @@ mobs:register_mob(
       hp_min = 10,
       hp_max = 14,
       armor = 200,
-      collisionbox = {-0.7, -1, -0.7, 0.7, 0.1, 0.7},
+      collisionbox = {-0.5, -1, -0.5, 0.5, 0.1, 0.5},
       visual = "mesh",
       mesh = "mobs_sheep.x",
       visual_size = {x = 1, y = 1},

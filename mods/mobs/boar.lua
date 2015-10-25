@@ -12,7 +12,7 @@ mobs:register_mob(
       hp_min = 16,
       hp_max = 20,
       armor = 200,
-      collisionbox = {-0.7, -1, -0.7, 0.7, 0.1, 0.7},
+      collisionbox = {-0.5, -1, -0.5, 0.5, 0.1, 0.5},
       visual = "mesh",
       mesh = "mobs_boar.x",
       textures = {
