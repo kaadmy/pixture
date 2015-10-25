@@ -126,7 +126,7 @@ function mobs:register_mob(name, def)
 			end
 		     end,
 	 do_attack = function(self, player, dist)
-			if is_too_near_spawn(self:getpos()) then return end
+			if is_too_near_spawn(self.object:getpos()) then return end
 
 			if self.state ~= "attack" then
 			   if math.random(0,100) < 90
