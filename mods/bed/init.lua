@@ -201,4 +201,15 @@ minetest.register_on_leaveplayer(
       players_in_bed[player:get_player_name()] = nil
    end)
 
+-- Achievements
+
+achievements.register_achievement(
+   "bedtime",
+   {
+      title = "Bed Time",
+      description = "Craft a bed",
+      times = 1,
+      craftitem = "bed:bed",
+   })
+
 default.log("mod:bed", "loaded")

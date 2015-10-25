@@ -291,3 +291,25 @@ form_armor = form_armor .. "listring[current_player;armor_helmet]"
 form_armor = form_armor .. default.ui.get_itemslot_bg(2.25, 0.75, 1, 1)
 
 default.ui.register_page("core_armor", form_armor)
+
+-- Achievements
+
+achievements.register_achievement(
+   "armored",
+   {
+      title = "Armored",
+      description = "Craft a piece of armor",
+      times = 1,
+      craftitem = "group:is_armor",
+   })
+
+achievements.register_achievement(
+   "warrior",
+   {
+      title = "Warrior",
+      description = "Craft 10 piece of armor",
+      times = 10,
+      craftitem = "group:is_armor",
+   })
+
+default.log("mod:armor", "loaded")

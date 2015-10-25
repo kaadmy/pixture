@@ -268,4 +268,15 @@ minetest.register_craft(
       burntime = 13,
    })
 
+-- Achievements
+
+achievements.register_achievement(
+   "boom",
+   {
+      title = "Boom!",
+      description = "Craft TNT",
+      times = 1,
+      craftitem = "tnt:tnt",
+   })
+
 default.log("mod:tnt", "loaded")

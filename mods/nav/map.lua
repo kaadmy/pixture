@@ -158,3 +158,14 @@ minetest.register_on_joinplayer(on_joinplayer)
 minetest.register_on_leaveplayer(on_leaveplayer)
 minetest.register_globalstep(step)
 minetest.register_on_player_receive_fields(recieve_fields)
+
+-- Achievements
+
+achievements.register_achievement(
+   "navigator",
+   {
+      title = "Navigator",
+      description = "Craft a map",
+      times = 1,
+      craftitem = "nav:map",
+   })

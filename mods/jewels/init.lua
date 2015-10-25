@@ -167,6 +167,9 @@ minetest.register_node(
 			  inv:set_stack("main", 1, ItemStack(jewels.get_jeweled(itemname)))
 
 			  itemstack:take_item()
+
+			  achievements.trigger_achievement(player, "jeweler")
+			  achievements.trigger_achievement(player, "master_jeweler")
 		       end		       
 		    end
 
@@ -222,5 +225,23 @@ minetest.register_ore(
    })
 
 dofile(minetest.get_modpath("jewels").."/jewels.lua")
+
+-- Achievements
+
+achievements.register_achievement(
+   "jeweler",
+   {
+      title = "Jeweler",
+      description = "Jewel a tool",
+      times = 1,
+   })
+
+achievements.register_achievement(
+   "master_jeweler",
+   {
+      title = "Master Jeweler",
+      description = "Jewel 10 tools",
+      times = 10,
+   })
 
 default.log("mod:jewels", "loaded")

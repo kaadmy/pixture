@@ -45,3 +45,16 @@ minetest.register_on_player_receive_fields(
       itemstack:set_metadata(minetest.serialize(data))
       player:set_wielded_item(itemstack)
    end)
+
+-- Achievements
+
+achievements.register_achievement(
+   "scribe",
+   {
+      title = "Scribe",
+      description = "Craft a book",
+      times = 1,
+      placenode = "default:book",
+   })
+
+default.log("mod:book", "loaded")

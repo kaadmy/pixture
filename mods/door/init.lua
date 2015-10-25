@@ -314,4 +314,15 @@ minetest.register_craft(
       }
    })
 
+-- Achievements
+
+achievements.register_achievement(
+   "adoorable",
+   {
+      title = "Adoorable",
+      description = "Craft a door",
+      times = 1,
+      craftitem = "group:door",
+   })
+
 default.log("mod:door", "loaded")

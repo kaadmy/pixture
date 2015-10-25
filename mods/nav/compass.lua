@@ -140,3 +140,14 @@ function step(dtime)
 end
 
 minetest.register_globalstep(step)
+
+-- Achievements
+
+achievements.register_achievement(
+   "true_navigator",
+   {
+      title = "True Navigator",
+      description = "Craft a compass",
+      times = 1,
+      craftitem = "nav:compass_3",
+   })

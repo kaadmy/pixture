@@ -118,33 +118,27 @@ function player_effects.remove_effect(player, ename)
 end
 
 function player_effects.refresh_effects(player)
-   local function check(ename)
-      local phys = {speed = 1, jump = 1, gravity = 1}
+   local phys = {speed = 1, jump = 1, gravity = 1}
 
-      for en, _ in pairs(player_effects.effects[player:get_player_name()]) do
-	 if en ~= ename then
-	    local effect = player_effects.get_registered_effect(en)
+   for en, _ in pairs(player_effects.effects[player:get_player_name()]) do
+      if en ~= ename then
+	 local effect = player_effects.get_registered_effect(en)
 
-	    if effect.physics.speed ~= nil then
-	       phys.speed = phys.speed * effect.physics.speed
-	    end
+	 if effect.physics.speed ~= nil then
+	    phys.speed = phys.speed * effect.physics.speed
+	 end
 
-	    if effect.physics.jump ~= nil then
-	       phys.jump = phys.jump * effect.physics.jump
-	    end
+	 if effect.physics.jump ~= nil then
+	    phys.jump = phys.jump * effect.physics.jump
+	 end
 
-	    if effect.physics.gravity ~= nil then
-	       phys.gravity = phys.gravity * effect.physics.gravity
-	    end
+	 if effect.physics.gravity ~= nil then
+	    phys.gravity = phys.gravity * effect.physics.gravity
 	 end
       end
-
-      player:set_physics_override(phys)
    end
 
-   for ename, endtime in pairs(player_effects.effects[player:get_player_name()]) do
-      check(ename)
-   end
+   player:set_physics_override(phys)
 
    save_effects()
 end

@@ -138,8 +138,8 @@ minetest.register_on_dignode(on_dig)
 minetest.register_on_placenode(on_place)
 
 local form = default.ui.get_page("core")
-form = form .. "tableoptions[background=#88888840]"
-form = form .. "tablecolumns[text,align=left;text,align=left]"
+form = form .. "tableoptions[background=#DDDDDD30]"
+form = form .. "tablecolumns[text,align=left,width=11;text,align=left,width=28;text,align=left,width=5]"
 default.ui.register_page("core_achievements", form)
 
 function achievements.get_formspec(name, row)
@@ -147,45 +147,56 @@ function achievements.get_formspec(name, row)
 
    local achievement_list = ""
 
+   local amt_gotten = 0
+   local amt_progress = 0
+
    for _, aname in ipairs(achievements.registered_achievements_list) do
       local def = achievements.registered_achievements[aname]
 
-      local amt = ""
+      local progress = ""
       if achievements.achievements[name][aname] then
 	 if achievements.achievements[name][aname] == -1 then
-	    amt = " (Gotten)"
+	    progress = "Gotten"
+	    amt_gotten = amt_gotten + 1
 	 else
-	    amt = " (" .. achievements.achievements[name][aname] .. "/" .. def.times .. ")"
+	    progress = achievements.achievements[name][aname] .. "/" .. def.times
+	    amt_progress = amt_progress + 1
 	 end
+      else
+	 progress = "Missing"
       end
 
-      if achievement_list == "" then
-	 achievement_list = achievement_list .. minetest.formspec_escape(def.title .. amt) .. "," .. minetest.formspec_escape(def.description)
-      else
-	 achievement_list = achievement_list .. "," .. minetest.formspec_escape(def.title .. amt) .. "," .. minetest.formspec_escape(def.description)
+      if achievement_list ~= "" then
+	 achievement_list = achievement_list .. ","
       end
+
+      achievement_list = achievement_list .. minetest.formspec_escape(def.title) .. ","
+      achievement_list = achievement_list .. minetest.formspec_escape(def.description) .. ","
+      achievement_list = achievement_list .. progress
    end
 
    local form = default.ui.get_page("core_achievements")
 
-   form = form .. "table[0.25,3;7.75,5.5;achievement_list;" .. achievement_list .. ";" .. row .. "]"
+   form = form .. "table[0.25,2.5;7.75,5.5;achievement_list;" .. achievement_list .. ";" .. row .. "]"
 
    local aname = achievements.registered_achievements_list[row]
    local def = achievements.registered_achievements[aname]
    
-   local amt = ""
+   local progress = ""
    if achievements.achievements[name][aname] then
       if achievements.achievements[name][aname] == -1 then
-	 amt = "Gotten"
+	 progress = "Gotten"
       else
-	 amt = achievements.achievements[name][aname] .. "/" .. def.times
+	 progress = achievements.achievements[name][aname] .. "/" .. def.times
       end
    else
-      amt = "Missing"
+      progress = "Missing"
    end
 
+   form = form .. "label[0.25,8.15;" .. minetest.formspec_escape(amt_gotten .. " of " .. #achievements.registered_achievements_list .. " achievements gotten, " .. amt_progress .. " in progress") .. "]"
+
    form = form .. "label[0.25,0.25;" .. minetest.formspec_escape(def.title) .. "]"
-   form = form .. "label[7.25,0.25;" .. minetest.formspec_escape(amt) .. "]"
+   form = form .. "label[7.25,0.25;" .. minetest.formspec_escape(progress) .. "]"
 
    form = form .. "label[0.5,0.75;" .. minetest.formspec_escape(def.description) .. "]"
 
@@ -215,7 +226,12 @@ end
 minetest.register_on_player_receive_fields(receive_fields)
 
 
--- below is the default achievements
+--
+-- Below is the default achievements
+--
+
+-- Joining
+
 achievements.register_achievement(
    "firstjoin",
    {
@@ -232,6 +248,8 @@ achievements.register_achievement(
       times = 100,
    })
 
+-- Dying
+
 achievements.register_achievement(
    "killathon",
    {
@@ -240,31 +258,122 @@ achievements.register_achievement(
       times = 10,
    })
 
+-- Crafting a broadsword
+
+achievements.register_achievement(
+   "off_to_battle",
+   {
+      title = "Off to Battle",
+      description = "Craft a Broadsword",
+      times = 1,
+      craftitem = "default:broadsword",
+   })
+
+-- Placing planks
+
+achievements.register_achievement(
+   "plunks",
+   {
+      title = "Plunks",
+      description = "Place 10 planks",
+      times = 10,
+      placenode = "group:planks",
+   })
+
+achievements.register_achievement(
+   "carpenter",
+   {
+      title = "Carpenter",
+      description = "Place 100 planks",
+      times = 100,
+      placenode = "group:planks",
+   })
+
+achievements.register_achievement(
+   "master_carpenter",
+   {
+      title = "Master Carpenter",
+      description = "Place 500 planks",
+      times = 500,
+      placenode = "group:planks",
+   })
+
+-- Digging stone
+
+achievements.register_achievement(
+   "mineority",
+   {
+      title = "Mineority",
+      description = "Mine 20 stone",
+      times = 20,
+      dignode = "group:stone",
+   })
+
+achievements.register_achievement(
+   "rockin'",
+   {
+      title = "Rockin'",
+      description = "Mine 200 stone",
+      times = 200,
+      dignode = "group:stone",
+   })
+
+achievements.register_achievement(
+   "rocksolid",
+   {
+      title = "Rock Solid",
+      description = "Mine 1000 stone",
+      times = 1000,
+      dignode = "group:stone",
+   })
+
+-- Digging wood
+
 achievements.register_achievement(
    "timber",
    {
-      title = "Timber!",
+      title = "Timber",
       description = "Dig 10 tree trunks.",
       times = 10,
       dignode = "group:tree",
    })
 
 achievements.register_achievement(
+   "timberer",
+   {
+      title = "Timberer",
+      description = "Dig 100 tree trunks.",
+      times = 100,
+      dignode = "group:tree",
+   })
+
+achievements.register_achievement(
+   "timbererest",
+   {
+      title = "Timbererest",
+      description = "Dig 500 tree trunks.",
+      times = 500,
+      dignode = "group:tree",
+   })
+
+-- Planting flowers
+
+achievements.register_achievement(
    "gardener",
    {
       title = "Gardener",
-      description = "Place 10 flowers.",
+      description = "Plant 10 flowers.",
       times = 10,
       placenode = "default:flower",
    })
 
 achievements.register_achievement(
-   "your_pick",
+   "master_gardener",
    {
-      title = "Your pick",
-      description = "Craft yourself a new wooden pickaxe.",
-      times = 1,
-      craftitem = "default:pick_wood",
+      title = "Master Gardener",
+      description = "Plant 100 flowers.",
+      times = 100,
+      placenode = "default:flower",
    })
 
 local function on_dieplayer(player)

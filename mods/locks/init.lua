@@ -197,4 +197,24 @@ minetest.register_craft(
       recipe = {"default:chest", "locks:lock"},
    })
 
+-- Achievements
+
+achievements.register_achievement(
+   "locksmith",
+   {
+      title = "Locksmith",
+      description = "Craft a lock",
+      times = 1,
+      craftitem = "locks:lock",
+   })
+
+achievements.register_achievement(
+   "burglar",
+   {
+      title = "Burglar",
+      description = "Craft a lock pick",
+      times = 1,
+      craftitem = "locks:pick",
+   })
+
 default.log("mod:locks", "loaded")
