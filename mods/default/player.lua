@@ -3,6 +3,8 @@ local player_lastsound = {}
 local player_health = {}
 local player_lastpos = {}
 
+local particlespawners = {}
+
 local enable_flowing_water_sound = minetest.setting_getbool("enable_flowing_water_sound")
 if enable_flowing_water_sound == nil then enable_flowing_water_sound = true end
 
@@ -57,9 +59,28 @@ local function step(dtime)
 	       })
 	    player_lastsound[name] = 0
 	 end
+
+	 particlespawners[name] = minetest.add_particlespawner(
+	    {
+	       amount = 5,
+	       time = 0.1,
+	       minpos = {x = player_pos.x - 0.2, y = player_pos.y - 0.3, z = player_pos.z - 0.3},
+	       maxpos = {x = player_pos.x + 0.3, y = player_pos.y + 0.3, z = player_pos.z + 0.3},
+		  minvel = {x = -0.5, y = 0, z = -0.5},
+		  maxvel = {x = 0.5, y = 0, z = 0.5},
+		  minacc = {x = -0.5, y = 4, z = -0.5},
+		  maxacc = {x = 0.5, y = 1, z = 0.5},
+		  minexptime = 0.3,
+		  maxexptime = 0.8,
+		  minsize = 0.7,
+		  maxsize = 2.4,
+		  texture = "bubble.png"
+	       })
+	 
+	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
       elseif flowing_water_pos then
 	 if player_lastsound[name] > 3.3 then
-
+	    
 	    local c = true
 	    for _, p in pairs(player_positions) do
 	       if (p.x * player_pos.x) + (p.y * player_pos.y) + (p.z * player_pos.z) < 256 then

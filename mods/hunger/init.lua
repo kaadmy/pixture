@@ -11,6 +11,7 @@ hunger.active = {} -- how a player has been active recently
 hunger.moving = {} -- how much the player is moving
 hunger.saturation = {} -- how saturated with food the player is
 
+local particlespawners = {}
 local player_step = {}
 local player_health_step = {}
 local player_bar = {}
@@ -161,6 +162,25 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 local headpos  = player:getpos()
 	 headpos.y = headpos.y + 1
 	 minetest.sound_play("hunger_eat", {pos = headpos, max_hear_distance = 8})
+
+	 particlespawners[name] = minetest.add_particlespawner(
+	    {
+	       amount = 10,
+	       time = 0.1,
+	       minpos = {x = headpos.x - 0.3, y = headpos.y - 0.3, z = headpos.z - 0.3},
+	       maxpos = {x = headpos.x + 0.3, y = headpos.y + 0.3, z = headpos.z + 0.3},
+	       minvel = {x = -1, y = -1, z = -1},
+	       maxvel = {x = 1, y = 0, z = 1},
+	       minacc = {x = 0, y = 6, z = 0},
+	       maxacc = {x = 0, y = 1, z = 0},
+	       minexptime = 0.5,
+	       maxexptime = 1,
+	       minsize = 0.5,
+	       maxsize = 2,
+	       texture = "magicpuff.png"
+	    })
+
+	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
 
 	 player_effects.apply_effect(player, "hunger_eating")
 
