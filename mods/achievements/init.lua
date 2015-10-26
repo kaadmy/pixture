@@ -92,7 +92,7 @@ local function on_craft(itemstack, player, craftgrid, craftinv)
 	 else
 	    local group = string.match(def.craftitem, "group:(.*)")
 
-	    if group and minetest.get_item_group(itemstack:get_name(), group) then
+	    if group and minetest.get_item_group(itemstack:get_name(), group) ~= 0 then
 	       achievements.trigger_achievement(player, aname)
 	    end
 	 end
@@ -108,7 +108,7 @@ local function on_dig(pos, oldnode, player)
 	 else
 	    local group = string.match(def.dignode, "group:(.*)")
 
-	    if group and minetest.get_item_group(def.dignode, group) then
+	    if group and minetest.get_item_group(def.dignode, group) ~= 0 then
 	       achievements.trigger_achievement(player, aname)
 	    end
 	 end
@@ -124,7 +124,7 @@ local function on_place(pos, newnode, player, oldnode, itemstack, pointed_thing)
 	 else
 	    local group = string.match(def.placenode, "group:(.*)")
 
-	    if group and minetest.get_item_group(newnode.name, group) then
+	    if group and minetest.get_item_group(newnode.name, group) ~= 0 then
 	       achievements.trigger_achievement(player, aname)
 	    end
 	 end

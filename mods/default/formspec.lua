@@ -84,7 +84,7 @@ function default.ui.fake_itemstack(x, y, itemstack, name)
    local itemamt = itemstack:get_count()
 
    local itemdesc = ""
-   if minetest.registered_items[itemname].description ~= nil then
+   if minetest.registered_items[itemname] and minetest.registered_items[itemname].description ~= nil then
       itemdesc = minetest.registered_items[itemname].description
    end
 
@@ -106,7 +106,7 @@ function default.ui.fake_simple_itemstack(x, y, itemname, name)
    local name = name or "fake_simple_itemstack"
 
    local itemdesc = ""
-   if minetest.registered_items[itemname].description ~= nil then
+   if minetest.registered_items[itemname] and minetest.registered_items[itemname].description ~= nil then
       itemdesc = minetest.registered_items[itemname].description
    end
 
@@ -133,7 +133,7 @@ function default.ui.item_group(x, y, group, name)
    end
 
    local itemdesc = ""
-   if minetest.registered_items[itemname].description ~= nil then
+   if minetest.registered_items[itemname] and minetest.registered_items[itemname].description ~= nil then
       itemdesc = minetest.registered_items[itemname].description
    end
 
