@@ -71,11 +71,11 @@ if enable_saving then
 	 local name = player:get_player_name()
 
 	 if messages[name] == nil then
-	    minetest.chat_send_player(name, "No saved PMs")
+	    minetest.chat_send_player(name, "No saved PMs. Send PMs with the /pm command.")
 	    return false
 	 end
 
-	 minetest.chat_send_player(name, "You have " .. #messages[name] .. " saved PMs.")
+	 minetest.chat_send_player(name, "You have " .. #messages[name] .. " saved PMs. Type /pms to view.")
 	 return true
       end)
 end
