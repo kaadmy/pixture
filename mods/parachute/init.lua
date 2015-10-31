@@ -16,8 +16,10 @@ end
 
 minetest.register_craftitem(
    "parachute:parachute", {
+      description = "Parachute",
       inventory_image = "parachute_inventory.png",
       wield_image = "parachute_inventory.png",
+      stack_max = 1,
       on_use = function(itemstack, player, pointed_thing)
 		  local pos = player:getpos()
 
