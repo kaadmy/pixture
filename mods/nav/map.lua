@@ -10,7 +10,7 @@ default.ui.register_page("nav_nav", form_nav)
 local open_formspecs = {}
 
 local timer = 10
-local update_time = 0.1
+local update_time = 0.2
 
 function nav.add_waypoint(pos, name, label, isinfo, type)
    nav.waypoints[name] = {pos = pos, label = label, isinfo = isinfo or false, type = type}
@@ -50,6 +50,8 @@ end
 
 function nav.show_map(player)
    local name = player:get_player_name()
+   if not open_formspecs[name] then return end
+
    local pos = player:getpos()
 
    local form = default.ui.get_page("nav_nav")
@@ -115,9 +117,7 @@ local function step(dtime)
 
 	 players[name] = player
 
-	 if open_formspecs[name] == true then
-	    nav.show_map(player)
-	 end
+	 nav.show_map(player)
       end
 
       for wptname, wpt in pairs(nav.waypoints) do
