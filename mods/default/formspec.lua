@@ -197,8 +197,8 @@ form_core_field = form_core_field .. "size[8.5,5]"
 form_core_field = form_core_field .. default.ui.core.colors
 form_core_field = form_core_field .. default.ui.core.bg
 form_core_field = form_core_field .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]"
-form_core_field = form_core_field .. "field[1,1.75;7,0;text;;${text}]"
 form_core_field = form_core_field .. default.ui.button_exit(2.75, 3, 3, 1, "", "Write", false)
+form_core_field = form_core_field .. "field[1,1.75;7,0;text;;${text}]"
 default.ui.register_page("core_field", form_core_field)
 
 local form_crafting = default.ui.get_page("core_2part")
