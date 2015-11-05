@@ -25,6 +25,10 @@ minetest.register_craftitem(
 
 		  local on = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 
+		  if default.player_attached[player:get_player_name()] then
+		     return
+		  end
+
 		  if on.name == "air" then
 		     -- Spawn parachute
 		     pos.y = pos.y + 3
@@ -38,6 +42,8 @@ minetest.register_craftitem(
 		     ent:setyaw(player:get_look_yaw() - (math.pi / 2))
 		     ent = ent:get_luaentity()
 		     ent.attached = player
+
+		     default.player_attached[player:get_player_name()] = true
 
 		     itemstack:take_item()
 		     return itemstack
@@ -100,6 +106,8 @@ minetest.register_entity(
 		   local pos = self.object:getpos()
 		   local under = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 		   if under.name ~= "air" then
+		      default.player_attached[self.attached:get_player_name()] = false
+
 		      self.object:set_detach()
 		      self.object:remove()
 		   end
