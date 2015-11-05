@@ -10,12 +10,12 @@ mobs.protected = tonumber(minetest.setting_get("mobs_spawn_protected")) or 0
 mobs.remove = minetest.setting_getbool("remove_far_mobs") or false
 
 local function is_too_near_spawn(pos)
-   if minetest.is_singleplayer() or minetest.setting_getbool("mobs_safe_spawn") then
+   if minetest.is_singleplayer() or not minetest.setting_getbool("mobs_safe_spawn") then
       return false
    end
 
-   local sp = minetest.setting_getbool("static_spawn_point") or {x = 0, y = 0, z = 0}
-   local rad = minetest.setting_getbool("static_spawn_radius") or 256
+   local sp = minetest.setting_get_pos("static_spawnpoint") or {x = 0, y = 0, z = 0}
+   local rad = minetest.setting_get("static_spawn_radius") or 256
 
    return (vector.distance(pos, sp) < rad)
 end
