@@ -319,6 +319,26 @@ minetest.register_abm( -- papyrus grows
 	       end,
    })
 
+minetest.register_abm( -- papyrus grows
+   {
+      nodenames = {"default:papyrus"},
+      neighbors = {"group:plantable_soil"},
+      interval = 20,
+      chance = 30,
+      action = function(pos, node)
+		  local height = 0
+		  while minetest.get_node(pos).name == "default:thistle" and height < 3 do
+		     height = height+1
+		     pos.y = pos.y+1
+		  end
+		  if height < 3 then
+		     if minetest.get_node(pos).name == "air" then
+			minetest.set_node(pos, {name="default:thistle"})
+		     end
+		  end
+	       end,
+   })
+
 --[[ TORCH FLAME IS VERY, VERY SLOW, THERE ARE NOW ANIMATIONS INSTEAD
 minetest.register_abm( -- torch flame
    {
