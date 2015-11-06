@@ -321,7 +321,7 @@ minetest.register_abm( -- papyrus grows
 
 minetest.register_abm( -- papyrus grows
    {
-      nodenames = {"default:papyrus"},
+      nodenames = {"default:thistle"},
       neighbors = {"group:plantable_soil"},
       interval = 20,
       chance = 30,
