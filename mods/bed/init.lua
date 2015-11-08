@@ -71,7 +71,7 @@ minetest.register_node(
 			    default.player_attached[name] = false
 
 			    meta:set_string("player", "")
-			 elseif meta:get_string("player") == "" then
+			 elseif meta:get_string("player") == "" and not default.player_attached[name] and players_in_bed[name] == nil then
 			    put_pos.y = put_pos.y + 0.6
 
 			    clicker:setpos(put_pos)
