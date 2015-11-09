@@ -99,7 +99,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_alias("nav:compass", "nav:compass_3")
+minetest.register_alias("nav:compass", "nav:compass_2")
 
 minetest.register_craft(
    {
@@ -149,5 +149,5 @@ achievements.register_achievement(
       title = "True Navigator",
       description = "Craft a compass",
       times = 1,
-      craftitem = "nav:compass_3",
+      craftitem = "nav:compass_2",
    })

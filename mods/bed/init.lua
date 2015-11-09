@@ -209,7 +209,7 @@ achievements.register_achievement(
       title = "Bed Time",
       description = "Craft a bed",
       times = 1,
-      craftitem = "bed:bed",
+      craftitem = "bed:bed_foot",
    })
 
 default.log("mod:bed", "loaded")
