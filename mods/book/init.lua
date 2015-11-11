@@ -54,7 +54,7 @@ achievements.register_achievement(
       title = "Scribe",
       description = "Craft a book",
       times = 1,
-      placenode = "default:book",
+      craftitem = "default:book",
    })
 
 default.log("mod:book", "loaded")
