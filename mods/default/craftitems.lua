@@ -1,4 +1,3 @@
-
 --
 -- Crafting items
 --
@@ -102,6 +101,9 @@ minetest.register_craftitem(
       on_place = function(itemstack, user, pointed_thing)
 		    if pointed_thing.type ~= "node" then return end
 
+		    local pos_protected = minetest.get_pointed_thing_position(pointed_thing, true)
+		    if minetest.is_protected(pos_protected, user) then return end
+
 		    itemstack:take_item()
 
 		    local inv=user:get_inventory()
@@ -135,6 +137,9 @@ minetest.register_craftitem(
       on_place = function(itemstack, user, pointed_thing)
 		    if pointed_thing.type ~= "node" then return end
 
+		    local pos_protected = minetest.get_pointed_thing_position(pointed_thing, true)
+		    if minetest.is_protected(pos_protected, user) then return end
+
 		    itemstack:take_item()
 
 		    local inv=user:get_inventory()
@@ -167,6 +172,9 @@ minetest.register_craftitem(
       liquids_pointable = true,
       on_place = function(itemstack, user, pointed_thing)
 		    if pointed_thing.type ~= "node" then return end
+
+		    local pos_protected = minetest.get_pointed_thing_position(pointed_thing, true)
+		    if minetest.is_protected(pos_protected, user) then return end
 
 		    itemstack:take_item()
 
