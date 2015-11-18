@@ -65,6 +65,9 @@ minetest.register_entity(
       automatic_face_movement_dir = -90,
       attached = nil,
       on_step = function(self, dtime)
+		   local pos = self.object:getpos()
+		   local under = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
+
 		   if self.attached ~= nil then
 		      local vel = self.object:getvelocity()
 
@@ -101,10 +104,12 @@ minetest.register_entity(
 		      accel.y = accel.y + a(vel.y) * 0.25
 
 		      self.object:setacceleration(accel)
+
+		      if under.name ~= "air" then
+			 default.player_attached[self.attached:get_player_name()] = false
+		      end
 		   end
 
-		   local pos = self.object:getpos()
-		   local under = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 		   if under.name ~= "air" then
 		      default.player_attached[self.attached:get_player_name()] = false
 
