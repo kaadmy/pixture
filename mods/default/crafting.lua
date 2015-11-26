@@ -590,6 +590,22 @@ minetest.register_craft(
 minetest.register_craft(
    {
       type = "cooking",
+      output = "default:lump_coal",
+      recipe = "default:tree_oak",
+      cooktime = 5,
+   })
+
+minetest.register_craft(
+   {
+      type = "cooking",
+      output = "default:lump_coal",
+      recipe = "default:tree_birch",
+      cooktime = 5,
+   })
+
+minetest.register_craft(
+   {
+      type = "cooking",
       output = "default:stone",
       recipe = "default:cobble",
       cooktime = 6,
