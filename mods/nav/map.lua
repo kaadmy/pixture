@@ -127,7 +127,7 @@ local function step(dtime)
       for wptname, wpt in pairs(nav.waypoints) do
 	 if wpt.type == "player" then
 	    if players[wpt.label] ~= nil and minetest.get_player_by_name(wpt.label) ~= nil then
-	       nav.relocate_waypoint(wptname, players[wpt.label:]getpos())
+	       nav.relocate_waypoint(wptname, players[wpt.label]:getpos())
 	    end
 	 end
       end
