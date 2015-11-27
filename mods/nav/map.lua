@@ -20,6 +20,10 @@ function nav.remove_waypoint(name)
    nav.waypoints[name] = nil
 end
 
+function nav.relocate_waypoint(name, pos)
+   nav.waypoints[name].pos = pos
+end
+
 function nav.get_waypoints_in_square(pos, radius)
    local wpts = {}
 
@@ -122,7 +126,9 @@ local function step(dtime)
 
       for wptname, wpt in pairs(nav.waypoints) do
 	 if wpt.type == "player" then
-	    wpt.pos = players[wpt.label]:getpos()
+	    if players[wpt.label] ~= nil and minetest.get_player_by_name(wpt.label) ~= nil then
+	       nav.relocate_waypoint(wptname, players[wpt.label:]getpos())
+	    end
 	 end
       end
 
