@@ -53,7 +53,10 @@ local function get_formspec_waypoint(x, y, name, label, isinfo)
 end
 
 function nav.show_map(player)
+   if player == nil then return end
+
    local name = player:get_player_name()
+
    if not open_formspecs[name] then return end
 
    local pos = player:getpos()
@@ -117,11 +120,13 @@ local function step(dtime)
       local players = {}
 
       for _, player in pairs(minetest.get_connected_players()) do
-	 local name = player:get_player_name()
-
-	 players[name] = player
-
-	 nav.show_map(player)
+	 if player ~= nil then
+	    local name = player:get_player_name()
+	    
+	    players[name] = player
+	    
+	    nav.show_map(player)
+	 end
       end
 
       for wptname, wpt in pairs(nav.waypoints) do
