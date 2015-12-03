@@ -97,6 +97,15 @@ local function recieve_fields(player, form_name, fields)
    end
 end
 
+if not (minetest.is_singleplayer() or not minetest.setting_get_pos("static_spawnpoint")) then
+   minetest.after(
+      1.0,
+      function()
+	 nav.add_waypoint(minetest.setting_get_pos("static_spawnpoint"),
+			  "spawn", "Spawn", true, "spawn")
+      end)
+end
+
 local function on_joinplayer(player)
    local name = player:get_player_name()
 

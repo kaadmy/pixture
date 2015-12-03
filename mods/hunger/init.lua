@@ -44,7 +44,7 @@ local function load_hunger()
 	 hunger.hunger[name] = hnger
 	 hunger.saturation[name] = sat
 
-	 minetest.log("action", name.." has "..hnger.." hunger and is saturated to "..sat.."%")
+--	 minetest.log("action", name.." has "..hnger.." hunger and is saturated to "..sat.."%")
       until input:read(0) == nil
       io.close(input)
    else
