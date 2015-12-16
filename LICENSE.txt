@@ -1,3 +1,6 @@
+These licenses don't apply to all assets yet; I'll try to make them use the
+    same license in the future.
+
 Source code license(WTFPL)
 ==========================
 
