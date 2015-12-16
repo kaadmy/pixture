@@ -5,9 +5,6 @@ local player_lastpos = {}
 
 local particlespawners = {}
 
-local enable_flowing_water_sound = minetest.setting_getbool("enable_flowing_water_sound")
-if enable_flowing_water_sound == nil then enable_flowing_water_sound = true end
-
 local function step(dtime)
    local player_positions = {}
 
@@ -44,11 +41,6 @@ local function step(dtime)
 
       player_lastsound[name] = player_lastsound[name] + dtime
 
-      local flowing_water_pos = nil
-      if enable_flowing_water_sound then
-	 flowing_water_pos = minetest.find_node_near(player_pos, 16, "group:flowing_water")
-      end
-
       if nodename == "default:water_source" or nodename == "default:river_water_source" then
 	 if player_lastsound[name] > 3.3 then
 	    player_soundspec[name]=minetest.sound_play(
@@ -78,27 +70,6 @@ local function step(dtime)
 	       })
 	 
 	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
-      elseif flowing_water_pos then
-	 if player_lastsound[name] > 3.3 then
-	    
-	    local c = true
-	    for _, p in pairs(player_positions) do
-	       if (p.x * player_pos.x) + (p.y * player_pos.y) + (p.z * player_pos.z) < 256 then
-		  -- 256 is 16*16 for distance checking
-		  c = false
-	       end
-	    end
-	    
-	    if c then
-	       player_soundspec[name]=minetest.sound_play(
-		  "default_water",
-		  {
-		     pos = flowing_water_pos,
-		     max_hear_distance = 16,
-		  })
-	       player_lastsound[name] = 0
-	    end
-	 end	 
       else
 	 if player_soundspec[name] ~= nil then
 	    minetest.sound_stop(player_soundspec[name])

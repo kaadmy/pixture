@@ -1258,7 +1258,7 @@ minetest.register_node(
       waving = 1,
       walkable = false,
       buildable_to = true,
-      groups = {snappy = 2, dig_immediate = 3, attached_node = 1},
+      groups = {snappy = 2, dig_immediate = 3, attached_node = 1, grass = 1},
       sounds = default.node_sound_leaves_defaults(),
    })
 
@@ -1299,7 +1299,7 @@ minetest.register_node(
       waving = 1,
       walkable = false,
       buildable_to = true,
-      groups = {snappy=2,dig_immediate=3,attached_node=1},
+      groups = {snappy = 2, dig_immediate = 3, attached_node = 1, grass = 1},
       sounds = default.node_sound_leaves_defaults(),
    })
 
@@ -1320,7 +1320,7 @@ minetest.register_node(
       waving = 1,
       walkable = false,
       buildable_to = true,
-      groups = {snappy=2,dig_immediate=3,attached_node=1},
+      groups = {snappy = 2, dig_immediate = 3, attached_node = 1, grass = 1},
       sounds = default.node_sound_leaves_defaults(),
    })
 
@@ -1341,7 +1341,7 @@ minetest.register_node(
       waving = 1,
       walkable = false,
       buildable_to = true,
-      groups = {snappy=2,dig_immediate=3,attached_node=1},
+      groups = {snappy = 2, dig_immediate = 3, attached_node = 1, grass = 1},
       sounds = default.node_sound_leaves_defaults(),
    })
 
@@ -1363,7 +1363,7 @@ minetest.register_node(
       waving = 1,
       walkable = false,
       buildable_to = true,
-      groups = {snappy=2,dig_immediate=3,attached_node=1},
+      groups = {snappy = 2, dig_immediate = 3, attached_node = 1, grass = 1},
       sounds = default.node_sound_leaves_defaults(),
    })
 

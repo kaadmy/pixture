@@ -21,30 +21,7 @@ local function play_sound()
       minetest.sound_stop(weather_soundspec)
    end
 
-   local timeofday=minetest.get_timeofday()
-
-   if timeofday == nil then
-      timeofday=1
-   end
-
-   timeofday=timeofday*2
-
-   if weather.weather == "clear" then
-      if (timeofday > 0.4 and timeofday < 0.5) or (timeofday > 1.5 and timeofday < 1.6) then
-	 -- dusk and dawn
-	 weather_soundspec=minetest.sound_play({name="weather_night", gain=0.5})
-	 minetest.after(12, play_sound)
-
-	 return
-      elseif (timeofday < 0.4 or timeofday > 1.6) then
-	 -- night
-	 weather_soundspec=minetest.sound_play({name="weather_night", gain=0.3})
-	 minetest.after(12, play_sound)
-
-	 return
-      end
-      -- daytime
-   elseif weather.weather == "storm" then
+   if weather.weather == "storm" then
       weather_soundspec=minetest.sound_play({name="weather_storm"})
 
       minetest.after(18, play_sound)
