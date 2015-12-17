@@ -1,3 +1,11 @@
+--
+-- TNT mod
+-- By PilzAdam and ShadowNinja
+-- Tweaked by Kaadmy, for Pixture
+--
+
+tnt = {}
+
 -- Default to enabled in singleplayer and disabled in multiplayer
 local singleplayer = minetest.is_singleplayer()
 local setting = minetest.setting_getbool("tnt_enable")
@@ -139,8 +147,8 @@ local function add_effects(pos, radius)
 	 time = 1,
 	 minpos = vector.subtract(pos, radius / 2),
 	 maxpos = vector.add(pos, radius / 2),
-	 minvel = {x=-20, y=-20, z=-20},
-	 maxvel = {x=20,  y=20,  z=20},
+	 minvel = {x = -20, y = -20, z = -20},
+	 maxvel = {x = 20,  y = 20,  z = 20},
 	 minacc = vector.new(),
 	 maxacc = vector.new(),
 	 minexptime = 0.2,
@@ -151,11 +159,11 @@ local function add_effects(pos, radius)
       })
 end
 
-local function burn(pos)
+function tnt.burn(pos)
    local name = minetest.get_node(pos).name
    if name == "tnt:tnt" then
-      minetest.sound_play("tnt_ignite", {pos=pos})
-      minetest.set_node(pos, {name="tnt:tnt_burning"})
+      minetest.sound_play("tnt_ignite", {pos = pos})
+      minetest.set_node(pos, {name = "tnt:tnt_burning"})
       minetest.get_node_timer(pos):start(2)
    end
 end
@@ -179,27 +187,26 @@ local function explode(pos, radius)
       for y = -radius, radius do
 	 local vi = a:index(pos.x + (-radius), pos.y + y, pos.z + z)
 	 for x = -radius, radius do
-	    if (x * x) + (y * y) + (z * z) <=
-      (radius * radius) + pr:next(-radius, radius) then
-      local cid = data[vi]
-      p.x = pos.x + x
-      p.y = pos.y + y
-      p.z = pos.z + z
-      if cid ~= c_air then
-	 destroy(drops, p, cid)
+	    if (x * x) + (y * y) + (z * z) <= (radius * radius) + pr:next(-radius, radius) then
+	       local cid = data[vi]
+	       p.x = pos.x + x
+	       p.y = pos.y + y
+	       p.z = pos.z + z
+	       if cid ~= c_air then
+		  destroy(drops, p, cid)
+	       end
+	    end
+	    vi = vi + 1
+	 end
       end
    end
-   vi = vi + 1
-end
-end
-end
 
-return drops
+   return drops
 end
 
 
-local function boom(pos)
-   minetest.sound_play("tnt_explode", {pos=pos, gain=1.5, max_hear_distance=2*64})
+function tnt.boom(pos)
+   minetest.sound_play("tnt_explode", {pos = pos, gain = 1.5, max_hear_distance = 128})
    minetest.remove_node(pos)
 
    local drops = explode(pos, radius)
@@ -220,11 +227,11 @@ minetest.register_node(
 		    local itemname = puncher:get_wielded_item():get_name()
 
 		    if itemname == "default:flint_and_steel" then
-		       burn(pos)
+		      tnt.burn(pos)
 		    end
 		 end,
       on_blast = function(pos, intensity)
-		    burn(pos)
+		    tnt.burn(pos)
 		 end,
    })
 
@@ -246,7 +253,7 @@ minetest.register_node(
       drop = "tnt:tnt",
       groups = {dig_immediate = 2},
       sounds = default.node_sound_wood_defaults(),
-      on_timer = boom,
+      on_timer = tnt.boom,
       -- unaffected by explosions
       on_blast = function() end,
    })

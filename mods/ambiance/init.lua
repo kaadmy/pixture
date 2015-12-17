@@ -70,7 +70,6 @@ local function step(dtime)
       local pos = player:getpos()
       local name = player:get_player_name()
 
-
       for soundname, sound in pairs(ambiance.sounds) do
 	 if lastsound[name][soundname] then
 	    lastsound[name][soundname] = lastsound[name][soundname] + dtime
