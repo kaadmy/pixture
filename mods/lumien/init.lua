@@ -66,6 +66,23 @@ minetest.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
+minetest.register_craft(
+   {
+      output = "lumien:crystal_off 9",
+      recipe = {"lumien:block"},
+      type = "shapeless",
+   })
+
+minetest.register_craft(
+   {
+      output = "lumien:block",
+      recipe = {
+	 {"lumien:crystal_off", "lumien:crystal_off", "lumien:crystal_off"},
+	 {"lumien:crystal_off", "lumien:crystal_off", "lumien:crystal_off"},
+	 {"lumien:crystal_off", "lumien:crystal_off", "lumien:crystal_off"}
+      },
+   })
+
 minetest.register_ore(
    {
       ore_type       = "scatter",
