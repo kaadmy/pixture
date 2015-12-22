@@ -12,6 +12,8 @@
 By Kaadmy
 Inspiration by Kenney(kenney.nl)
 
+Pixture is Copyright (C) 2015 Kaadmy
+
 Note: Do not use mapgen v6, it is not supported and will fail. Use v5 or v7 instead.
 
 Mapgen:
