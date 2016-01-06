@@ -4,5 +4,5 @@ By Kaadmy, for Pixture
 
 Adds partial blocks, like slabs, stairs and such.
 
-Asset license: WTFPL
-Source license: WTFPL
+Asset license: CC BY-SA 4.0
+Source license: LGPLv2.1

@@ -39,8 +39,8 @@ Special credits:
       most of the graphics design. (All images are of my own creation but based
       off Kenney's), and the overall feeling.
     Sounds in the default mod are all by Kenney(CC0)
-    All textures/models by Kaadmy(WTFPL)
+    All textures/models by Kaadmy(CC BY-SA 4.0)
 
-Asset license: all WTFPL, CC0, or GPL(The GPL ones I want replaced with public domain ones),
+Asset license: all CC BY-SA 4.0, CC0, or GPL(The GPL ones I want replaced with CC),
   see per-mod READMEs.
-Source license: all WTFPL or LGPLv2.1(hunger), see per-mod READMEs.
+Source license: all LGPLv2.1+ or MIT, see per-mod READMEs.

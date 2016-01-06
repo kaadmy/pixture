@@ -1,7 +1,7 @@
 Testing mod
 ===========
-By Kaadmy
+By Kaadmy, for Pixture
 
 Adds some testing stuff
 
-Source license: WTFPL
+Source license: LGPLv2.1

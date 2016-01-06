@@ -5,5 +5,5 @@ Tweaked by Kaadmy, for Pixture
 
 Right-click doors to open/close them
 
-Asset license: WTFPL
-Source license: WTFPL
+Asset license: CC BY-SA 4.0
+Source license: LGPLv2.1

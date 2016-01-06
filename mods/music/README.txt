@@ -7,5 +7,5 @@ Music license:
     music_wonderful_nightmare.ogg: SpiderDave(CC0)
     music_greyarms.ogg: Tozan(CC0)
 
-Texture license: WTFPL
-Source License: WTFPL
+Texture license: CC BY-SA 4.0
+Source License: LGPLv2.1

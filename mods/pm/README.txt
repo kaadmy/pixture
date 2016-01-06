@@ -5,4 +5,4 @@ By Kaadmy, for Pixture
 Send private messages that save until the player rejoins
 Private messages are cleared on server restart
 
-Source license: WTFPL
+Source license: LGPLv2.1

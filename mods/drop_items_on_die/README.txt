@@ -4,4 +4,4 @@ By Kaadmy, for Pixture
 
 Players drop their inventory when they die
 
-Source license: WTFPL
+Source license: LGPLv2.1

@@ -4,4 +4,4 @@ By Kaadmy, for Pixture
 
 Puts a health bar above players
 
-Source license: WTFPL
+Source license: LGPLv2.1

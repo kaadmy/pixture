@@ -4,4 +4,4 @@ By Kaadmy, for Pixture
 
 Adds functions to handle multiple physics overrides at the same time
 
-Source license: WTFPL
+Source license: LGPLv2.1

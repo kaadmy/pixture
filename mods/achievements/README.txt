@@ -4,4 +4,4 @@ By Kaadmy, for Pixture
 
 Adds achievements attainable by interaction
 
-Source license: WTFPL
+Source license: LGPLv2.1

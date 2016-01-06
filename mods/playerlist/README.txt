@@ -5,6 +5,6 @@ By Kaadmy, for Pixture
 Adds player lists(recent/current).
 
 Use the chatcommand "/plist" to show current players
-Use the chatcommand "/precent" to show players that have connected in the last hour
+Change command parameters (recent/all) to show different stats
 
-Source license: WTFPL
+Source license: LGPLv2.1

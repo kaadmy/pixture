@@ -4,5 +4,5 @@ By Kaadmy, for Pixture
 
 Adds locked stuff, like locked chests.
 
-Source license: WTFPL
-Asset license: WTFPL
+Asset license: CC BY-SA 4.0
+Source license: LGPLv2.1

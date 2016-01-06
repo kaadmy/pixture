@@ -2,8 +2,8 @@ Weather mod
 ===========
 By Kaadmy, for Pixture
 
-Texture license: WTFPL
+Texture license: CC BY-SA 4.0
 Sound license:
-    weather_storm.ogg: GPLv2(Replace this, I want CC0/WTFPL-only assets)
-    weather_snowstorm.ogg: GPLv2(Replace this, I want CC0/WTFPL-only assets)
-Source license: WTFPL
+    weather_storm.ogg: GPLv2(Replace this)
+    weather_snowstorm.ogg: GPLv2(Replace this)
+Source license: LGPLv2.1
