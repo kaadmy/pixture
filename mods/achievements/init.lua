@@ -103,12 +103,13 @@ end
 local function on_dig(pos, oldnode, player)
    for aname, def in pairs(achievements.registered_achievements) do
       if def.dignode ~= nil then
+
 	 if def.dignode == oldnode.name then
 	    achievements.trigger_achievement(player, aname)
 	 else
 	    local group = string.match(def.dignode, "group:(.*)")
 
-	    if group and minetest.get_item_group(def.dignode, group) ~= 0 then
+	    if group and minetest.get_item_group(oldnode.name, group) ~= 0 then
 	       achievements.trigger_achievement(player, aname)
 	    end
 	 end
