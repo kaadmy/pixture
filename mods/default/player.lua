@@ -27,21 +27,19 @@ local function step(dtime)
 	    {
 	       pos = player_pos,
 	       max_hear_distance = 4,
-	    })	 
+	    })
       end
       player_health[name] = player:get_hp()
 
       player_pos.x=math.floor(player_pos.x+0.5)
       player_pos.y=math.ceil(player_pos.y-0.3)
       player_pos.z=math.floor(player_pos.z+0.5)
-      
-      local nodename=minetest.get_node(player_pos).name
 
       if player_lastsound[name] == nil then player_lastsound[name] = 100 end
 
       player_lastsound[name] = player_lastsound[name] + dtime
 
-      if nodename == "default:water_source" or nodename == "default:river_water_source" then
+      if minetest.get_node_group(minetest.get_node(player_pos).name, 'water') > 0 then
 	 if player_lastsound[name] > 3.3 then
 	    player_soundspec[name]=minetest.sound_play(
 	       "default_water",
@@ -68,7 +66,7 @@ local function step(dtime)
 		  maxsize = 2.4,
 		  texture = "bubble.png"
 	       })
-	 
+
 	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
       else
 	 if player_soundspec[name] ~= nil then
@@ -77,7 +75,7 @@ local function step(dtime)
 	    player_lastsound[name] = 100
 	 end
       end
-      
+
       local grass_pos=minetest.find_node_near(player_pos, 1, {"default:dirt_with_grass"})
 
       if grass_pos ~= nil and math.random(1, 500) == 1 then
