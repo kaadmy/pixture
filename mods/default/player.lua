@@ -10,6 +10,7 @@ local function step(dtime)
 
    for _, player in ipairs(minetest.get_connected_players()) do
       local player_pos=player:getpos()
+      local head_pos = player_pos
       local name=player:get_player_name()
 
       if player_pos.x < -30000 or player_pos.x > 30000
@@ -31,6 +32,10 @@ local function step(dtime)
       end
       player_health[name] = player:get_hp()
 
+      head_pos.x=math.floor(head_pos.x+0.5)
+      head_pos.y=math.ceil(head_pos.y+1.0)
+      head_pos.z=math.floor(head_pos.z+0.5)
+
       player_pos.x=math.floor(player_pos.x+0.5)
       player_pos.y=math.ceil(player_pos.y-0.3)
       player_pos.z=math.floor(player_pos.z+0.5)
@@ -39,23 +44,13 @@ local function step(dtime)
 
       player_lastsound[name] = player_lastsound[name] + dtime
 
-      if minetest.get_node_group(minetest.get_node(player_pos).name, 'water') > 0 then
-	 if player_lastsound[name] > 3.3 then
-	    player_soundspec[name]=minetest.sound_play(
-	       "default_water",
-	       {
-		  pos = player_pos,
-		  max_hear_distance = 16,
-	       })
-	    player_lastsound[name] = 0
-	 end
-
+      if minetest.get_node_group(minetest.get_node(head_pos).name, 'water') > 0 then
 	 particlespawners[name] = minetest.add_particlespawner(
 	    {
-	       amount = 5,
+	       amount = 2,
 	       time = 0.1,
-	       minpos = {x = player_pos.x - 0.2, y = player_pos.y - 0.3, z = player_pos.z - 0.3},
-	       maxpos = {x = player_pos.x + 0.3, y = player_pos.y + 0.3, z = player_pos.z + 0.3},
+	       minpos = {x = head_pos.x - 0.2, y = head_pos.y - 0.3, z = head_pos.z - 0.3},
+	       maxpos = {x = head_pos.x + 0.3, y = head_pos.y + 0.3, z = head_pos.z + 0.3},
 		  minvel = {x = -0.5, y = 0, z = -0.5},
 		  maxvel = {x = 0.5, y = 0, z = 0.5},
 		  minacc = {x = -0.5, y = 4, z = -0.5},
@@ -68,6 +63,18 @@ local function step(dtime)
 	       })
 
 	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
+      end
+
+      if minetest.get_node_group(minetest.get_node(player_pos).name, 'water') > 0 then
+	 if player_lastsound[name] > 3.3 then
+	    player_soundspec[name]=minetest.sound_play(
+	       "default_water",
+	       {
+		  pos = player_pos,
+		  max_hear_distance = 16,
+	       })
+	    player_lastsound[name] = 0
+	 end
       else
 	 if player_soundspec[name] ~= nil then
 	    minetest.sound_stop(player_soundspec[name])
