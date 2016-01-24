@@ -44,7 +44,7 @@ local function step(dtime)
 
       player_lastsound[name] = player_lastsound[name] + dtime
 
-      if minetest.get_node_group(minetest.get_node(head_pos).name, 'water') > 0 then
+      if minetest.get_item_group(minetest.get_node(head_pos).name, 'water') > 0 then
 	 particlespawners[name] = minetest.add_particlespawner(
 	    {
 	       amount = 2,
@@ -65,7 +65,7 @@ local function step(dtime)
 	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
       end
 
-      if minetest.get_node_group(minetest.get_node(player_pos).name, 'water') > 0 then
+      if minetest.get_item_group(minetest.get_node(player_pos).name, 'water') > 0 then
 	 if player_lastsound[name] > 3.3 then
 	    player_soundspec[name]=minetest.sound_play(
 	       "default_water",
