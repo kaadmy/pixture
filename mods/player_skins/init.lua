@@ -6,6 +6,7 @@
 player_skins = {}
 
 player_skins.skin_names = {"male", "female"}
+
 if minetest.setting_get("player_skins_names") then
    player_skins.skin_names = util.split(minetest.setting_get("player_skins_names"), ",")
 end
@@ -112,6 +113,47 @@ local function get_chatparams()
 
    return s .. "]"
 end
+
+function player_skins.get_formspec(playername)
+   local form = default.ui.get_page("core")
+
+   form = form .. "image[4,0;0.5,10.05;ui_vertical_divider.png]"
+
+   for i, name in ipairs(player_skins.skin_names) do
+      x = 0.25
+      y = i - 0.5
+
+      if i > 8 then
+	 x = 4.5
+	 y = y - 8
+      end
+
+      form = form .. default.ui.button(x, y, 2, 1, "skin_select_" .. name, player_skins.skin_names[i])
+      form = form .. "image[" .. (x + 2.25) .. "," .. y.. ";1,1;player_skins_icon_" .. name .. ".png]"      
+      if player_skins.skins[playername] == name then
+	 form = form .. "image[" .. (x + 3.25) .. "," .. (y + 0.25).. ";0.5,0.5;ui_checkmark.png]"
+      end
+   end
+
+   return form
+end
+
+default.ui.register_page("core_player_skins", form)
+
+minetest.register_on_player_receive_fields(
+   function(player, form_name, fields)
+      local name = player:get_player_name()
+
+      for fieldname, val in pairs(fields) do
+	 local skinname = string.match(fieldname, "skin_select_(.*)")
+
+	 if skinname ~= nil then
+	    player_skins.set_skin(name, skinname)
+
+	    minetest.show_formspec(name, "core_player_skins", player_skins.get_formspec(name))
+	 end
+      end
+   end)
 
 minetest.register_privilege("player_skin", "Can change player skin")
 minetest.register_chatcommand(

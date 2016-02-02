@@ -180,6 +180,9 @@ end
 if minetest.get_modpath("achievements") ~= nil then
    form_core = form_core .. default.ui.tab(-0.9, 2.84, "tab_achievements", "ui_icon_achievements.png", "Achievements")
 end
+if minetest.get_modpath("player_skins") ~= nil then
+   form_core = form_core .. default.ui.tab(-0.9, 3.62, "tab_player_skins", "ui_icon_player_skins.png", "Player Skins")
+end
 form_core = form_core .. "background[0,0;8.5,9;ui_formspec_bg_tall.png]"
 default.ui.register_page("core", form_core)
 default.ui.register_page("core_2part", form_core .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]")
@@ -241,6 +244,8 @@ function default.ui.receive_fields(player, form_name, fields)
       minetest.show_formspec(name, "core_armor", default.ui.get_page("core_armor"))
    elseif minetest.get_modpath("achievements") ~= nil and fields.tab_achievements then
       minetest.show_formspec(name, "core_achievements", achievements.get_formspec(name))
+   elseif minetest.get_modpath("player_skins") ~= nil and fields.tab_player_skins then
+      minetest.show_formspec(name, "core_player_skins", player_skins.get_formspec(name))
    end
 end
 
