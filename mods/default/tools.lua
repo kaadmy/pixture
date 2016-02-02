@@ -85,6 +85,29 @@ else
       })
 end
 
+-- "Creative" Tool
+
+minetest.register_tool(
+   "default:creative_tool",
+   {
+      inventory_image = "default_creative_tool.png",
+      tool_capabilities = {
+	 full_punch_interval = 0.5,
+	 max_drop_level = 0,
+	 groupcaps = {
+	    fleshy = {times={[1]=creative_digtime, [2]=creative_digtime, [3]=creative_digtime}, uses=0, maxlevel=1},
+	    crumbly = {times={[1]=creative_digtime, [2]=creative_digtime, [3]=creative_digtime}, uses=0, maxlevel=1},
+	    choppy = {times={[1]=creative_digtime, [2]=creative_digtime, [3]=creative_digtime}, uses=0, maxlevel=1},
+	    cracky = {times={[1]=creative_digtime, [2]=creative_digtime, [3]=creative_digtime}, uses=0, maxlevel=1},
+	    snappy = {times={[1]=creative_digtime, [2]=creative_digtime, [3]=creative_digtime}, uses=0, maxlevel=1},
+	    oddly_breakable_by_hand = {times={[1]=creative_digtime,[2]=creative_digtime,[3]=creative_digtime}, uses=0, maxlevel=3},
+	 },
+	 range = 20.8,
+	 damage_groups = {fleshy = 1}
+      }
+   })
+
+
 -- Pickaxes
 
 minetest.register_tool(

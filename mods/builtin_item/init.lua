@@ -32,6 +32,11 @@ minetest.register_entity(
 		    if itemtable then
 		       itemname = stack:to_table().name
 		    end
+
+		    if itemname ~= nil and itemname == "default:creative_tool" then
+		       self.object:remove()
+		    end
+
 		    local item_texture = nil
 		    local item_type = ""
 		    if minetest.registered_items[itemname] then
