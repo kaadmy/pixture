@@ -120,8 +120,8 @@ function player_skins.get_formspec(playername)
    form = form .. "image[4,0;0.5,10.05;ui_vertical_divider.png]"
 
    for i, name in ipairs(player_skins.skin_names) do
-      x = 0.25
-      y = i - 0.5
+      local x = 0.25
+      local y = i - 0.5
 
       if i > 8 then
 	 x = 4.5
