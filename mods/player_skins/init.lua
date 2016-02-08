@@ -138,8 +138,6 @@ function player_skins.get_formspec(playername)
    return form
 end
 
-default.ui.register_page("core_player_skins", form)
-
 minetest.register_on_player_receive_fields(
    function(player, form_name, fields)
       local name = player:get_player_name()
