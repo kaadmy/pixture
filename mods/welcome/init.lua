@@ -53,13 +53,15 @@ end
 minetest.register_on_player_receive_fields(
    function(player, form_name, fields)
       local name = player:get_player_name()
+      local privs = minetest.get_player_privs(name)
 
-      if minetest.check_player_privs(name, {interact = true}) or fields.rules then
-	 return true
+      if privs.interact or fields.rules then
+	 return
       end
 
       if fields.accept_rules then
-	 minetest.set_player_privs(name, {interact = true})
+	 privs.interact = true
+	 minetest.set_player_privs(name, privs)
 	 minetest.chat_send_player(name, "You now have interact, follow the rules and have fun!")
       else
 	 minetest.chat_send_player(name, "If you want to interact, please read and accept the rules. Type /welcome to show rules.")
