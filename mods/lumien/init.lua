@@ -3,6 +3,9 @@
 -- By Kaadmy, for Pixture
 --
 
+local lumien_on_radius = 2
+local lumien_off_radius = 4
+
 minetest.register_node(
    "lumien:crystal_on",
    {
@@ -112,7 +115,7 @@ minetest.register_abm(
 		  )
 
 		  local ok = true
-		  for _,object in ipairs(minetest.get_objects_inside_radius(pos, 4)) do
+		  for _,object in ipairs(minetest.get_objects_inside_radius(pos, lumien_off_radius)) do
 		     if object:is_player() then
 			ok = false
 		     end
@@ -135,8 +138,8 @@ local function step(dtime)
       local pos = player:getpos()
 
       util.nodefunc(
-	 {x = pos.x-1, y = pos.y-1, z = pos.z-1},
-	 {x = pos.x+1, y = pos.y+1, z = pos.z+1},
+	 {x = pos.x-lumien_on_radius, y = pos.y-lumien_on_radius, z = pos.z-lumien_on_radius},
+	 {x = pos.x+lumien_on_radius, y = pos.y+lumien_on_radius, z = pos.z+lumien_on_radius},
 	 "lumien:crystal_off",
 	 function(pos)
 	    local node = minetest.get_node(pos)

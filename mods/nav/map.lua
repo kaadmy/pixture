@@ -5,7 +5,7 @@ nav.map_radius = 256
 nav.waypoints = {}
 
 local form_nav = default.ui.get_page("core")
-default.ui.register_page("nav_nav", form_nav)
+default.ui.register_page("nav:nav", form_nav)
 
 local open_formspecs = {}
 
@@ -61,11 +61,11 @@ function nav.show_map(player)
 
    local pos = player:getpos()
 
-   local form = default.ui.get_page("nav_nav")
+   local form = default.ui.get_page("nav:nav")
 
    form = form .. "field[-1,-1;0,0;nav_map_tracker;;]"
 
-   form = form .. "label[0.25,0.25;"..minetest.formspec_escape(name).." ("..math.floor(pos.x+0.5)..", "..math.floor(pos.y)..", "..math.floor(pos.z+0.5)..")]"
+   form = form .. "label[0.25,0.25;"..minetest.formspec_escape(name).." (x: "..math.floor(pos.x+0.5)..", y: "..math.floor(pos.y)..", z: "..math.floor(pos.z+0.5)..")]"
 
    form = form .. "image[0.5,3;6,6;nav_background.png]"
 
@@ -86,18 +86,18 @@ function nav.show_map(player)
    form = form .. "label[6.25,6.6;"..nav.map_radius.."m]"
    form = form .. "image[5.5,5.5;3,3;"..minetest.formspec_escape("nav_legend.png^[transformFX").."]"
 
-   minetest.show_formspec(name, "nav_map", form)
+   minetest.show_formspec(name, "nav:map", form)
 end
 
 local function recieve_fields(player, form_name, fields)
-   if form_name == "nav_map" then
+   if form_name == "nav:map" then
       if fields.quit or fields.nav_map_tracker then
 	 open_formspecs[player:get_player_name()] = false
       end
    end
 end
 
-if not (minetest.is_singleplayer() or not minetest.setting_get_pos("static_spawnpoint")) then
+if minetest.setting_get_pos("static_spawnpoint") and (not minetest.is_singleplayer()) then
    minetest.after(
       1.0,
       function()
