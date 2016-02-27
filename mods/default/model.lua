@@ -143,7 +143,7 @@ minetest.register_globalstep(
 
 	 if model and not player_attached[name] then
 	    local walking = false
-	    local animation_speed_mod = model.animation_speed or player_animation_steed
+	    local animation_speed_mod = model.animation_speed or player_animation_speed
 
 	    -- Determine if the player is walking
 	    if controls.up or controls.down or controls.left or controls.right then

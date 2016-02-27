@@ -24,7 +24,7 @@ mobs:register_mob(
       },
       walk_velocity = 1,
       walk_chance = 150,
-      jump = true,
+      jump = false,
       jump_height = 5,
       drops = {
 	 {name = "mobs:meat_raw",

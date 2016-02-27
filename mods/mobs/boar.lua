@@ -26,7 +26,7 @@ mobs:register_mob(
       },
       walk_velocity = 2,
       run_velocity = 3,
-      jump = true,
+      jump = false,
       follow = "default:apple",
       view_range = 10,
       drops = {
