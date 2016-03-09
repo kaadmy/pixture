@@ -54,7 +54,8 @@ local ambiance_volume = tonumber(minetest.setting_get("ambiance_volume")) or 1.0
 local soundspec = {}
 local lastsound = {}
 
-local function ambient_node_near(sound, pos)   local nodepos = minetest.find_node_near(pos, sound.dist, sound.nodename)
+local function ambient_node_near(sound, pos)
+   local nodepos = minetest.find_node_near(pos, sound.dist, sound.nodename)
 
    if nodepos ~= nil and math.random(1, sound.chance) == 1 then
       return nodepos
@@ -94,7 +95,7 @@ local function step(dtime)
 	    else
 	       local ok = true
 	       for _, p in pairs(player_positions) do
-		  if (p.x * pos.x) + (p.y * pos.y) + (p.z * pos.z) < sound.dist*sound.dist then
+		  if (p.x * pos.x) + (p.y * pos.y) + (p.z * pos.z) < sound.dist * sound.dist then
 		     ok = false
 		  end
 	       end
@@ -105,6 +106,7 @@ local function step(dtime)
 		     {
 			pos = sourcepos,
 			max_hear_distance = sound.dist,
+			gain = ambiance_volume,
 		     })
 		  
 		  lastsound[name][soundname] = 0
