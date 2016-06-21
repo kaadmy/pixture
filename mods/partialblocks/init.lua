@@ -114,4 +114,11 @@ partialblocks.register_material("wood", "Wood", "default:planks", true)
 partialblocks.register_material("oak", "Oak", "default:planks_oak", true)
 partialblocks.register_material("birch", "Birch", "default:planks_birch", true)
 
+partialblocks.register_material("steel", "Steel", "default:block_steel", false)
+partialblocks.register_material("compressed_sandstone", "Compressed Sandstone", "default:compressed_sandstone", false)
+partialblocks.register_material("reinforced_cobble", "Reinforced Cobble", "default:reinforced_cobble", false)
+partialblocks.register_material("frame", "Frame", "default:frame", false)
+partialblocks.register_material("reinforced_frame", "Reinforced Frame", "default:reinforced_frame", false)
+partialblocks.register_material("coal", "Coal", "default:block_coal", false)
+
 default.log("mod:partialblocks", "loaded")
