@@ -72,44 +72,46 @@ local function step(dtime)
       local name = player:get_player_name()
 
       for soundname, sound in pairs(ambiance.sounds) do
-	 if lastsound[name][soundname] then
-	    lastsound[name][soundname] = lastsound[name][soundname] + dtime
-	 else
-	    lastsound[name][soundname] = 0
-	 end
-
-	 if lastsound[name][soundname] > sound.length then
-	    local sourcepos = ambient_node_near(sound, pos)
-
-	    if sound.can_play and sourcepos ~= nil and (not sound.can_play(sourcepos)) then
-	       sourcepos = nil
-	    end
-	    
-	    if sourcepos == nil then
-	       if soundspec[name][soundname] then
-		  minetest.sound_stop(soundspec[name][soundname])
-
-		  soundspec[name][soundname] = nil
-		  lastsound[name][soundname] = 0
-	       end
+	 if not minetest.setting_getbool("ambiance_disable_" .. soundname) then
+	    if lastsound[name][soundname] then
+	       lastsound[name][soundname] = lastsound[name][soundname] + dtime
 	    else
-	       local ok = true
-	       for _, p in pairs(player_positions) do
-		  if (p.x * pos.x) + (p.y * pos.y) + (p.z * pos.z) < sound.dist * sound.dist then
-		     ok = false
-		  end
-	       end
+	       lastsound[name][soundname] = 0
+	    end
 
-	       if ok then
-		  soundspec[name][soundname] = minetest.sound_play(
-		     sound.file,
-		     {
-			pos = sourcepos,
-			max_hear_distance = sound.dist,
-			gain = ambiance_volume,
-		     })
-		  
-		  lastsound[name][soundname] = 0
+	    if lastsound[name][soundname] > sound.length then
+	       local sourcepos = ambient_node_near(sound, pos)
+
+	       if sound.can_play and sourcepos ~= nil and (not sound.can_play(sourcepos)) then
+		  sourcepos = nil
+	       end
+	       
+	       if sourcepos == nil then
+		  if soundspec[name][soundname] then
+		     minetest.sound_stop(soundspec[name][soundname])
+
+		     soundspec[name][soundname] = nil
+		     lastsound[name][soundname] = 0
+		  end
+	       else
+		  local ok = true
+		  for _, p in pairs(player_positions) do
+		     if (p.x * pos.x) + (p.y * pos.y) + (p.z * pos.z) < sound.dist * sound.dist then
+			ok = false
+		     end
+		  end
+
+		  if ok then
+		     soundspec[name][soundname] = minetest.sound_play(
+			sound.file,
+			{
+			   pos = sourcepos,
+			   max_hear_distance = sound.dist,
+			   gain = ambiance_volume,
+			})
+		     
+		     lastsound[name][soundname] = 0
+		  end
 	       end
 	    end
 	 end
