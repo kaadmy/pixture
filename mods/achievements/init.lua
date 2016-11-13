@@ -231,34 +231,6 @@ minetest.register_on_player_receive_fields(receive_fields)
 -- Below is the default achievements
 --
 
--- Joining
-
-achievements.register_achievement(
-   "firstjoin",
-   {
-      title = "First join",
-      description = "Join a game for the first time.",
-      times = 1,
-   })
-
-achievements.register_achievement(
-   "like_clockwork",
-   {
-      title = "Like clockwork",
-      description = "Join the same game 100 times.",
-      times = 100,
-   })
-
--- Dying
-
-achievements.register_achievement(
-   "killathon",
-   {
-      title = "Killathon",
-      description = "Die 10 times.",
-      times = 10,
-   })
-
 -- Crafting a broadsword
 
 achievements.register_achievement(
@@ -376,13 +348,5 @@ achievements.register_achievement(
       times = 100,
       placenode = "default:flower",
    })
-
-local function on_dieplayer(player)
-   achievements.trigger_achievement(player, "killathon")
-end
-
-minetest.register_on_dieplayer(on_dieplayer)
-
-minetest.register_on_newplayer(function(player) achievements.trigger_achievement(player, "firstjoin") end)
 
 default.log("mod:achievements", "loaded")
