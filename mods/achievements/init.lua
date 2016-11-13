@@ -79,11 +79,6 @@ function achievements.trigger_achievement(player, aname, times)
    save_achievements()
 end
 
-local function on_joinplayer(player)
-   load_achievements()
-   achievements.trigger_achievement(player, "like_clockwork")
-end
-
 local function on_craft(itemstack, player, craftgrid, craftinv)
    for aname, def in pairs(achievements.registered_achievements) do
       if def.craftitem ~= nil then
@@ -133,7 +128,6 @@ local function on_place(pos, newnode, player, oldnode, itemstack, pointed_thing)
    end
 end
 
-minetest.register_on_joinplayer(on_joinplayer)
 minetest.register_on_craft(on_craft)
 minetest.register_on_dignode(on_dig)
 minetest.register_on_placenode(on_place)
