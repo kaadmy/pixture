@@ -79,6 +79,20 @@ function achievements.trigger_achievement(player, aname, times)
    save_achievements()
 end
 
+-- Load achievements table
+
+local function on_load()
+   load_achievements()
+end
+
+-- New player
+
+local function on_newplayer(player)
+   achievements.achievements[player:get_player_name()] = {}
+end
+
+-- Interaction callbacks
+
 local function on_craft(itemstack, player, craftgrid, craftinv)
    for aname, def in pairs(achievements.registered_achievements) do
       if def.craftitem ~= nil then
@@ -128,9 +142,17 @@ local function on_place(pos, newnode, player, oldnode, itemstack, pointed_thing)
    end
 end
 
+-- Add callback functions
+
+minetest.after(0, on_load)
+
+minetest.register_on_newplayer(on_newplayer)
+
 minetest.register_on_craft(on_craft)
 minetest.register_on_dignode(on_dig)
 minetest.register_on_placenode(on_place)
+
+-- Formspecs
 
 local form = default.ui.get_page("core")
 form = form .. "tableoptions[background=#DDDDDD30]"
@@ -219,7 +241,6 @@ local function receive_fields(player, form_name, fields)
 end
 
 minetest.register_on_player_receive_fields(receive_fields)
-
 
 --
 -- Below is the default achievements
