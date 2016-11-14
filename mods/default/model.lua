@@ -135,10 +135,12 @@ minetest.register_globalstep(
 	 local model = model_name and models[model_name]
 	 local controls = player:get_player_control()
 
-	 if controls.sneak then
-	    player:set_nametag_attributes({color = {a = 30, r = 255, g = 255, b = 255}})
-	 else
-	    player:set_nametag_attributes({color = {a = 255, r = 255, g = 255, b = 255}})
+	 if player_sneak[name] ~= controls.sneak then
+	    if controls.sneak then
+	       player:set_nametag_attributes({color = {a = 30, r = 255, g = 255, b = 255}})
+	    else
+	       player:set_nametag_attributes({color = {a = 255, r = 255, g = 255, b = 255}})
+	    end
 	 end
 
 	 if model and not player_attached[name] then
