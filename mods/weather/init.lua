@@ -107,6 +107,7 @@ minetest.register_globalstep(
 		     minsize = 2,
 		     maxsize = 3,
 		     collisiondetection = true,
+		     collision_removal = true,
 		     vertical = true,
 		     texture = "weather_rain.png",
 		     playername = player:get_player_name()
