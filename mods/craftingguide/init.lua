@@ -21,7 +21,7 @@ function craftingguide.get_formspec(name)
 
    form = form .. "label[0.41,1.74;"..user.itemno.."/"..#craftingguide.items[user.item].."]" -- itemno
    form = form .. "label[3.9,8.15;"..page.."/"..max_pages.."]" -- page
-   form = form .. "label[4.4,2.5;"..user.item.."]" -- itemname
+   form = form .. "label[4.4,2.5;"..minetest.formspec_escape(minetest.registered_items[user.item].description).."]" -- itemname
 
    local method = craftingguide.items[user.item][user.itemno].type
    if method == "normal" or method == "crafting" then
