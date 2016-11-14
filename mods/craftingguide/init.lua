@@ -96,10 +96,18 @@ local function receive_fields(player, form_name, fields)
 
       local max_pages = math.floor(#craftingguide.itemlist / page_size) + 1
 
-      if fields.guide_next_recipe and itemno < #recipes then
-	 itemno = itemno + 1
-      elseif fields.guide_prev_recipe and itemno > 1 then
-	 itemno = itemno - 1
+      if fields.guide_next_recipe then
+	 if itemno < #recipes then
+	    itemno = itemno + 1
+	 else
+	    itemno = 1
+	 end
+      elseif fields.guide_prev_recipe then
+	 if itemno < 1 then
+	    itemno = #recipes
+	 else
+	    itemno = itemno - 1
+	 end
       end
 	 
 
