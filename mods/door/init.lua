@@ -37,6 +37,8 @@ function door.register_door(name, def)
 	 description = def.description,
 	 inventory_image = def.inventory_image,
 
+	 groups = def.groups,
+
 	 on_place = function(itemstack, placer, pointed_thing)
 		       if not pointed_thing.type == "node" then
 			  return itemstack
