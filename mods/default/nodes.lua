@@ -1,6 +1,6 @@
 --
 -- Node definitions
---
+--wate
 
 minetest.register_node(
    "default:stone",
@@ -860,6 +860,7 @@ minetest.register_node(
 	    animation={type = "vertical_frames", aspect_w= 16, aspect_h = 16, length = 0.8}
 	 },
       },
+      drop= "",
       alpha = default.WATER_ALPHA,
       paramtype = "light",
       walkable = false,
@@ -889,6 +890,7 @@ minetest.register_node(
 	    backface_culling=false,
 	 },
       },
+      drop= "",
       alpha = default.WATER_ALPHA,
       paramtype = "light",
       walkable = false,
@@ -924,6 +926,7 @@ minetest.register_node(
 	    animation={type = "vertical_frames", aspect_w= 16, aspect_h = 16, length = 0.8}
 	 },
       },
+      drop= "",
       alpha = default.RIVER_WATER_ALPHA,
       paramtype = "light",
       walkable = false,
@@ -955,6 +958,7 @@ minetest.register_node(
 	    backface_culling=false,
 	 },
       },
+      drop= "",
       alpha = default.RIVER_WATER_ALPHA,
       paramtype = "light",
       walkable = false,
@@ -992,6 +996,7 @@ minetest.register_node(
 	    animation={type = "vertical_frames", aspect_w= 16, aspect_h = 16, length = 1.8}
 	 },
       },
+      drop= "",
       alpha = default.SWAMP_WATER_ALPHA,
       paramtype = "light",
       walkable = false,
@@ -1023,6 +1028,7 @@ minetest.register_node(
 	    backface_culling=false,
 	 },
       },
+      drop= "",
       alpha = default.SWAMP_WATER_ALPHA,
       paramtype = "light",
       walkable = false,
