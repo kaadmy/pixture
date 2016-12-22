@@ -35,7 +35,7 @@ function craftingguide.get_formspec(name)
       form = form .. "image[4.25,1.5;1,1;craftingguide_method_unknown.png]"
       form = form .. "label[4.1,1.73;"..method.."]"
    end
-   
+
    local recipes = craftingguide.items[user.item]
    local recipe = recipes[user.itemno]
 
@@ -76,7 +76,7 @@ function craftingguide.get_formspec(name)
 	 if inv_x >= 8 then
 	       inv_x = 0
 	    inv_y = inv_y + 1
-	 end	 
+	 end
       else
 	 break
       end
@@ -103,13 +103,13 @@ local function receive_fields(player, form_name, fields)
 	    itemno = 1
 	 end
       elseif fields.guide_prev_recipe then
-	 if itemno < 1 then
+	 if itemno <= 1 then
 	    itemno = #recipes
 	 else
 	    itemno = itemno - 1
 	 end
       end
-	 
+
 
       if fields.guide_next and page < max_pages then
 	 page = page + 1
@@ -141,14 +141,14 @@ end
 
 local function on_leaveplayer(player)
    local name = player:get_player_name()
-   
+
    craftingguide.users[name] = nil
 end
 
 local function load_recipes()
    for itemname, itemdef in pairs(minetest.registered_items) do
       local recipes = minetest.get_all_craft_recipes(itemname)
-      
+
       if recipes ~= nil and itemname ~= "" then
 --	 print(dump(recipes))
 	 craftingguide.items[itemname] = recipes
