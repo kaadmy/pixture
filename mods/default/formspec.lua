@@ -33,7 +33,7 @@ end
 
 function default.ui.button(x, y, w, h, name, label, noclip)
    local nc = "false"
-   
+
    if noclip then
       nc = "true"
    end
@@ -47,7 +47,7 @@ end
 
 function default.ui.button_exit(x, y, w, h, name, label, noclip)
    local nc = "false"
-   
+
    if noclip then
       nc = "true"
    end
@@ -92,7 +92,7 @@ function default.ui.fake_itemstack(x, y, itemstack, name)
 
    local result = ""
    if itemname ~= "" then
---      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+      --      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
       result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
       result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
       result = result .. "label["..(x+0.6)..","..(y+0.5)..";"..itemamt.."]"
@@ -112,7 +112,7 @@ function default.ui.fake_simple_itemstack(x, y, itemname, name)
 
    local result = ""
    if itemname ~= "" then
---      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+      --      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
       result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
       result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
       result = result .. "tooltip["..name..";"..itemdesc.."]"
@@ -139,7 +139,7 @@ function default.ui.item_group(x, y, group, name)
 
    local result = ""
    if itemname ~= "" then
---      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
+      --      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
       result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";G;false;false;ui_null.png]"
       result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
       result = result .. "tooltip["..name..";Group: "..group.."]"
@@ -153,7 +153,7 @@ default.ui.registered_pages = {
 
 function default.ui.get_page(name)
    local page= default.ui.registered_pages[name]
-   
+
    if page == nil then
       default.log("UI page '" .. name .. "' is not yet registered", "dev")
       page = ""
@@ -234,8 +234,8 @@ default.ui.register_page("core_bookshelf", form_bookshelf)
 function default.ui.receive_fields(player, form_name, fields)
    local name = player:get_player_name()
 
---   print("Received formspec fields from '"..name.."': "..dump(fields))
-   
+   --   print("Received formspec fields from '"..name.."': "..dump(fields))
+
    if fields.tab_crafting then
       minetest.show_formspec(name, "core_crafting", default.ui.get_page("core_crafting"))
    elseif minetest.get_modpath("craftingguide") ~= nil and fields.tab_craftingguide then
@@ -252,7 +252,7 @@ end
 minetest.register_on_player_receive_fields(
    function(player, form_name, fields)
       default.ui.receive_fields(player, form_name, fields)
-   end)
+end)
 
 minetest.register_on_joinplayer(
    function(player)
@@ -260,6 +260,6 @@ minetest.register_on_joinplayer(
 	 minetest.chat_send_player(player:get_player_name(), "Welcome to Pixture! Type /help for a list of commands.")
       end
       minetest.after(1.0, welcome)
-   
+
       player:set_inventory_formspec(default.ui.get_page("core_crafting"))
-   end)
+end)

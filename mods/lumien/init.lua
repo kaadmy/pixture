@@ -120,7 +120,7 @@ minetest.register_abm(
 			ok = false
 		     end
 		  end
-		  
+
 		  if ok then
 		     minetest.set_node(
 			pos,
@@ -158,5 +158,16 @@ local function step(dtime)
 end
 
 minetest.register_globalstep(step)
+
+-- Achievements
+
+achievements.register_achievement(
+   "enlightened",
+   {
+      title = "Enlightened",
+      description = "Place 9 lumien crystals.",
+      times = 9,
+      plcenode = "lumien:lumien_crystal_off",
+})
 
 default.log("mod:lumien", "loaded")

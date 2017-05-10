@@ -70,10 +70,10 @@ function achievements.trigger_achievement(player, aname, times)
    if achievements.achievements[name][aname] >= achievements.registered_achievements[aname].times then
       achievements.achievements[name][aname] = -1
       minetest.after(2.0, function()
-			     minetest.chat_send_all(
-				"*** " .. name .." has earned the achievement [" ..
-				   achievements.registered_achievements[aname].title .. "]")
-			  end)
+                        minetest.chat_send_all(
+                           "*** " .. name .." has earned the achievement [" ..
+                              achievements.registered_achievements[aname].title .. "]")
+      end)
    end
 
    save_achievements()
@@ -198,7 +198,7 @@ function achievements.get_formspec(name, row)
 
    local aname = achievements.registered_achievements_list[row]
    local def = achievements.registered_achievements[aname]
-   
+
    local progress = ""
    if achievements.achievements[name][aname] then
       if achievements.achievements[name][aname] == -1 then
@@ -243,10 +243,10 @@ end
 minetest.register_on_player_receive_fields(receive_fields)
 
 --
--- Below is the default achievements
+-- Below are the default achievements
 --
 
--- Crafting a broadsword
+-- Tools
 
 achievements.register_achievement(
    "off_to_battle",
@@ -255,7 +255,27 @@ achievements.register_achievement(
       description = "Craft a Broadsword",
       times = 1,
       craftitem = "default:broadsword",
-   })
+})
+
+achievements.register_achievement(
+   "hardened_miner",
+   {
+      title = "Hardened Miner",
+      description = "Craft 3 carbon steel pickaxes.",
+      times = 3,
+      craftitem = "default:pick_carbonsteel",
+})
+
+-- Dirt/soil
+
+achievements.register_achievement(
+   "drain_the_swamp",
+   {
+      title = "Drain the Swamp",
+      description = "Dig 30 swamp dirt.",
+      times = 30,
+      dignode = "default:swamp_dirt",
+})
 
 -- Placing planks
 
@@ -266,7 +286,7 @@ achievements.register_achievement(
       description = "Place 10 planks",
       times = 10,
       placenode = "group:planks",
-   })
+})
 
 achievements.register_achievement(
    "carpenter",
@@ -275,7 +295,7 @@ achievements.register_achievement(
       description = "Place 100 planks",
       times = 100,
       placenode = "group:planks",
-   })
+})
 
 achievements.register_achievement(
    "master_carpenter",
@@ -284,9 +304,9 @@ achievements.register_achievement(
       description = "Place 500 planks",
       times = 500,
       placenode = "group:planks",
-   })
+})
 
--- Digging stone
+-- Stone
 
 achievements.register_achievement(
    "mineority",
@@ -295,7 +315,7 @@ achievements.register_achievement(
       description = "Mine 20 stone",
       times = 20,
       dignode = "group:stone",
-   })
+})
 
 achievements.register_achievement(
    "rockin'",
@@ -304,7 +324,7 @@ achievements.register_achievement(
       description = "Mine 200 stone",
       times = 200,
       dignode = "group:stone",
-   })
+})
 
 achievements.register_achievement(
    "rocksolid",
@@ -313,7 +333,16 @@ achievements.register_achievement(
       description = "Mine 1000 stone",
       times = 1000,
       dignode = "group:stone",
-   })
+})
+
+achievements.register_achievement(
+   "cave_builder",
+   {
+      title = "Cave Builder",
+      description = "Place 60 stone.",
+      times = 60,
+      placenode = "default:stone",
+})
 
 -- Digging wood
 
@@ -324,7 +353,7 @@ achievements.register_achievement(
       description = "Dig 10 tree trunks.",
       times = 10,
       dignode = "group:tree",
-   })
+})
 
 achievements.register_achievement(
    "timberer",
@@ -333,7 +362,7 @@ achievements.register_achievement(
       description = "Dig 100 tree trunks.",
       times = 100,
       dignode = "group:tree",
-   })
+})
 
 achievements.register_achievement(
    "timbererest",
@@ -342,9 +371,21 @@ achievements.register_achievement(
       description = "Dig 500 tree trunks.",
       times = 500,
       dignode = "group:tree",
-   })
+})
 
--- Planting flowers
+-- Crafting bricks
+
+achievements.register_achievement(
+   "builder",
+   {
+      title = "Builder",
+      description = "Craft 180 bricks.",
+      times = 180,
+      craftitem = "default:brick",
+})
+
+
+-- Plants/farming
 
 achievements.register_achievement(
    "gardener",
@@ -353,7 +394,7 @@ achievements.register_achievement(
       description = "Plant 10 flowers.",
       times = 10,
       placenode = "default:flower",
-   })
+})
 
 achievements.register_achievement(
    "master_gardener",
@@ -362,6 +403,77 @@ achievements.register_achievement(
       description = "Plant 100 flowers.",
       times = 100,
       placenode = "default:flower",
-   })
+})
+
+achievements.register_achievement(
+   "welcome_to_the_mountains",
+   {
+      title = "Welcome to the Mountains",
+      description = "Collect dry grass.",
+      times = 1,
+      dignode = "default:dry_grass",
+})
+
+achievements.register_achievement(
+   "fertile",
+   {
+      title = "Fertile",
+      description = "Craft 100 bags of fertilizer.",
+      times = 100,
+      craftitem = "default:fertilizer",
+})
+
+-- Crafting reinforced blocks
+
+achievements.register_achievement(
+   "master_carpenter",
+   {
+      title = "Master Carpenter",
+      description = "Craft 200 reinforced frames.",
+      times = 200,
+      craftitem = "default:reinforced_frame",
+})
+
+achievements.register_achievement(
+   "master_stonemason",
+   {
+      title = "Master Stonemason",
+      description = "Craft 200 reinforced cobble.",
+      times = 200,
+      craftitem = "default:reinforced_cobble",
+})
+
+-- Crafting sand-related materials
+
+achievements.register_achievement(
+   "sandman",
+   {
+      title = "Sandman",
+      description = "Craft 60 compressed sandstone.",
+      times = 60,
+      craftitem = "default:compressed_sandstone",
+})
+
+-- Literature
+
+achievements.register_achievement(
+   "librarian",
+   {
+      title = "Librarian",
+      description = "Craft 10 bookshelves.",
+      times = 10,
+      craftitem = "default:bookshelf",
+})
+
+-- Misc.
+
+achievements.register_achievement(
+   "smelting_room",
+   {
+      title = "Smelting Room",
+      description = "Craft 20 furnaces.",
+      times = 200,
+      craftitem = "default:furnace",
+})
 
 default.log("mod:achievements", "loaded")

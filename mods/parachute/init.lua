@@ -21,39 +21,39 @@ minetest.register_craftitem(
       wield_image = "parachute_inventory.png",
       stack_max = 1,
       on_use = function(itemstack, player, pointed_thing)
-		  local pos = player:getpos()
+         local pos = player:getpos()
 
-		  local on = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
+         local on = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 
-		  if default.player_attached[player:get_player_name()] then
-		     return
-		  end
+         if default.player_attached[player:get_player_name()] then
+            return
+         end
 
-		  if on.name == "air" then
-		     -- Spawn parachute
-		     pos.y = pos.y + 3
+         if on.name == "air" then
+            -- Spawn parachute
+            pos.y = pos.y + 3
 
-		     local ent = minetest.add_entity(pos, "parachute:entity")
+            local ent = minetest.add_entity(pos, "parachute:entity")
 
-		     ent:setvelocity({x = 0, y = player:get_player_velocity().y, z = 0})
+            ent:setvelocity({x = 0, y = player:get_player_velocity().y, z = 0})
 
-		     player:set_attach(ent, "", {x = 0, y = -8, z = 0}, {x = 0, y = 0, z = 0})
+            player:set_attach(ent, "", {x = 0, y = -8, z = 0}, {x = 0, y = 0, z = 0})
 
-		     ent:setyaw(player:get_look_yaw() - (math.pi / 2))
-		     ent = ent:get_luaentity()
-		     ent.attached = player
+            ent:setyaw(player:get_look_yaw() - (math.pi / 2))
+            ent = ent:get_luaentity()
+            ent.attached = player
 
-		     default.player_attached[player:get_player_name()] = true
+            default.player_attached[player:get_player_name()] = true
 
-		     itemstack:take_item()
-		     return itemstack
-		  else
-		     minetest.chat_send_player(
-			player:get_player_name(),
-			"Cannot open parachute on ground!")
-		  end
-	       end
-   })
+            itemstack:take_item()
+            return itemstack
+         else
+            minetest.chat_send_player(
+               player:get_player_name(),
+               "Cannot open parachute on ground!")
+         end
+      end
+})
 
 minetest.register_entity(
    "parachute:entity",
@@ -65,59 +65,59 @@ minetest.register_entity(
       automatic_face_movement_dir = -90,
       attached = nil,
       on_step = function(self, dtime)
-		   local pos = self.object:getpos()
-		   local under = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
+         local pos = self.object:getpos()
+         local under = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 
-		   if self.attached ~= nil then
-		      local vel = self.object:getvelocity()
+         if self.attached ~= nil then
+            local vel = self.object:getvelocity()
 
-		      local accel = {x = 0, y = 0, z = 0}
+            local accel = {x = 0, y = 0, z = 0}
 
-		      local lookyaw = self.attached:get_look_yaw()
+            local lookyaw = self.attached:get_look_yaw()
 
-		      local s = math.sin((math.pi * 0.5) - lookyaw)
-		      local c = math.cos((math.pi * 0.5) - lookyaw)
+            local s = math.sin((math.pi * 0.5) - lookyaw)
+            local c = math.cos((math.pi * 0.5) - lookyaw)
 
-		      local sr = math.sin(((math.pi * 0.5) - lookyaw) + (math.pi / 2))
-		      local cr = math.cos(((math.pi * 0.5) - lookyaw) + (math.pi / 2))
+            local sr = math.sin(((math.pi * 0.5) - lookyaw) + (math.pi / 2))
+            local cr = math.cos(((math.pi * 0.5) - lookyaw) + (math.pi / 2))
 
-		      local controls = self.attached:get_player_control()
+            local controls = self.attached:get_player_control()
 
-		      local speed = 3.0
+            local speed = 3.0
 
-		      if controls.up then
-			 accel.x = s * speed
-			 accel.z = c * speed
-		      elseif controls.down then
-			 accel.x = s * -speed
-			 accel.z = c * -speed
-		      end
+            if controls.up then
+               accel.x = s * speed
+               accel.z = c * speed
+            elseif controls.down then
+               accel.x = s * -speed
+               accel.z = c * -speed
+            end
 
-		      if controls.right then
-			 accel.x = sr * speed
-			 accel.z = cr * speed
-		      elseif controls.left then
-			 accel.x = sr * -speed
-			 accel.z = cr * -speed
-		      end
+            if controls.right then
+               accel.x = sr * speed
+               accel.z = cr * speed
+            elseif controls.left then
+               accel.x = sr * -speed
+               accel.z = cr * -speed
+            end
 
-		      accel.y = accel.y + a(vel.y) * 0.25
+            accel.y = accel.y + a(vel.y) * 0.25
 
-		      self.object:setacceleration(accel)
+            self.object:setacceleration(accel)
 
-		      if under.name ~= "air" then
-			 default.player_attached[self.attached:get_player_name()] = false
-		      end
-		   end
+            if under.name ~= "air" then
+               default.player_attached[self.attached:get_player_name()] = false
+            end
+         end
 
-		   if under.name ~= "air" then
-		      default.player_attached[self.attached:get_player_name()] = false
+         if under.name ~= "air" then
+            default.player_attached[self.attached:get_player_name()] = false
 
-		      self.object:set_detach()
-		      self.object:remove()
-		   end
-		end
-   })
+            self.object:set_detach()
+            self.object:remove()
+         end
+      end
+})
 
 minetest.register_craft(
    {
@@ -127,6 +127,17 @@ minetest.register_craft(
 	 {"default:rope", "", "default:rope"},
 	 {"", "default:stick", ""}
       }
-   })
+})
+
+-- Achievements
+
+achievements.register_achievement(
+   "sky_diver",
+   {
+      title = "Sky Diver",
+      description = "Craft 5 parachutes.",
+      times = 5,
+      craftitem = "parachute:parachute",
+})
 
 default.log("mod:parachute", "loaded")

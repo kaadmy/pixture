@@ -22,7 +22,7 @@ if minetest.setting_getbool("music_enable") then
 	 music.players[dp] = nil
       end
    end
-   
+
    function music.start(pos)
       local dp = minetest.hash_node_position(pos)
 
@@ -37,7 +37,7 @@ if minetest.setting_getbool("music_enable") then
 	       {
 		  pos = pos,
 		  gain = 0.8,
-	       }),
+            }),
 	    ["timer"] = 0,
 	    ["pos"] = pos,
 	 }
@@ -49,7 +49,7 @@ if minetest.setting_getbool("music_enable") then
 	    {
 	       pos = pos,
 	       gain = 0.8,
-	    })
+         })
       end
    end
 
@@ -73,7 +73,7 @@ if minetest.setting_getbool("music_enable") then
 
    function music.toggle(pos)
       local dp = minetest.hash_node_position(pos)
-      
+
       if music.players[dp] == nil then
 	 music.start(pos)
       else
@@ -100,24 +100,24 @@ if minetest.setting_getbool("music_enable") then
 	 },
 
 	 on_construct = function(pos)
-			   music.start(pos)
-			end,
+            music.start(pos)
+         end,
 
 	 after_destruct = function(pos)
-			     music.stop(pos)
-			  end,
+            music.stop(pos)
+         end,
 
 	 on_rightclick = function(pos)
-			    music.toggle(pos)
-			 end,
+            music.toggle(pos)
+         end,
 
 	 groups = {oddly_breakable_by_hand = 3}
-      })
+   })
 
    function step(dtime)
       for dp, _ in pairs(music.players) do
 	 music.players[dp]["timer"] = music.players[dp]["timer"] + dtime
-	 
+
 	 music.update(music.players[dp]["pos"])
       end
    end
@@ -130,14 +130,14 @@ if minetest.setting_getbool("music_enable") then
 	 chance = 1,
 	 interval = 1,
 	 action = function(pos, node)
-		     if music.players[minetest.hash_node_position(pos)] == nil then
-			local meta = minetest.get_meta(pos)
-			if meta:get_int("music_player_enabled") == 1 then
-			   music.start(pos)
-			end
-		     end
-		  end
-      })
+            if music.players[minetest.hash_node_position(pos)] == nil then
+               local meta = minetest.get_meta(pos)
+               if meta:get_int("music_player_enabled") == 1 then
+                  music.start(pos)
+               end
+            end
+         end
+   })
 else
    minetest.register_node(
       "music:player",
@@ -158,13 +158,13 @@ else
 	 },
 
 	 on_construct = function(pos)
-			   local meta = minetest.get_meta(pos)
+            local meta = minetest.get_meta(pos)
 
-			   meta:set_string("infotext", "Music player(Disabled by server)")
-			end,
+            meta:set_string("infotext", "Music player(Disabled by server)")
+         end,
 
 	 groups = {oddly_breakable_by_hand = 3}
-      })
+   })
 end
 
 minetest.register_craft(
@@ -174,4 +174,17 @@ minetest.register_craft(
 	 {"group:planks", "group:planks", "group:planks"},
 	 {"group:planks", "default:ingot_steel", "group:planks"},
       }
-   })
+})
+
+-- Achievements
+
+achievements.register_achievement(
+   "musician",
+   {
+      title = "Musician",
+      description = "Craft a music player.",
+      times = 1,
+      craftitem = "music:player",
+})
+
+default.log("mod:music", "loaded")

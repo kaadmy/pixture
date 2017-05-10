@@ -161,11 +161,11 @@ function gold.trade(trade, trade_type, player)
    if item:get_name() ~= "gold:trading_book" then return end
 
    local inv = player:get_inventory()
-   
+
    if inv:get_size("gold_trade_wanted") ~= 2 then
       inv:set_size("gold_trade_wanted", 2)
    end
-   
+
    if inv:get_size("gold_trade_out") ~= 1 then
       inv:set_size("gold_trade_out", 1)
    end
@@ -173,10 +173,10 @@ function gold.trade(trade, trade_type, player)
    if inv:get_size("gold_trade_in") ~= 2 then
       inv:set_size("gold_trade_in", 2)
    end
-   
+
    inv:set_stack("gold_trade_wanted", 1, trade[1])
    inv:set_stack("gold_trade_wanted", 2, trade[2])
-   
+
    local meta = minetest.deserialize(item:get_metadata())
 
    if not meta then meta = {} end
@@ -218,14 +218,14 @@ minetest.register_on_player_receive_fields(
 
 	 local trade_in1 = inv:get_stack("gold_trade_in", 1):to_string()
 	 local trade_in2 = inv:get_stack("gold_trade_in", 2):to_string()
-	 
+
 	 local matches = trade_wanted1 == trade_in1 and trade_wanted2 == trade_in2
 
 	 local meta = minetest.deserialize(item:get_metadata())
-	 
+
 	 local trade = {"gold:gold", "gold:gold", "default:stick"}
 	 local trade_type = ""
-	 
+
 	 if meta then
 	    trade = meta.trade
 	    trade_type = meta.trade_type
@@ -235,11 +235,11 @@ minetest.register_on_player_receive_fields(
 	    if inv:room_for_item("gold_trade_out", trade[3]) then
 	       inv:add_item("gold_trade_out", trade[3])
 	       inv:set_stack("gold_trade_in", 1, "")
-	       inv:set_stack("gold_trade_in", 2, "")	       
+	       inv:set_stack("gold_trade_in", 2, "")
 	    end
 	 end
       end
-   end)
+end)
 
 minetest.register_craftitem(
    "gold:trading_book",
@@ -247,7 +247,7 @@ minetest.register_craftitem(
       description = "Trading Book",
       inventory_image = "default_book.png^gold_bookribbon.png",
       stack_max = 1,
-   })
+})
 
 minetest.register_craftitem(
    "gold:gold",
@@ -255,14 +255,14 @@ minetest.register_craftitem(
       description = "Gold",
       inventory_image = "gold_gold.png",
       stack_max = 120
-   })
+})
 
 minetest.register_craft(
    {
       output = "gold:trading_book",
       type = "shapeless",
       recipe = {"default:book", "gold:gold"}
-   })
+})
 
 minetest.register_alias("gold", "gold:gold")
 
@@ -275,7 +275,7 @@ minetest.register_node(
       drop = "gold:gold",
       is_ground_content = true,
       sounds = default.node_sound_stone_defaults(),
-   })
+})
 
 minetest.register_ore(
    {
@@ -287,4 +287,26 @@ minetest.register_ore(
       clust_size     = 10,
       y_min     = -256,
       y_max     = -32,
-   })
+})
+
+-- Achievements
+
+achievements.register_achievement(
+   "trader",
+   {
+      title = "Trader",
+      description = "Craft a trading book.",
+      times = 1,
+      craftitem = "gold:trading_book",
+})
+
+achievements.register_achievement(
+   "gold_rush",
+   {
+      title = "Gold Rush",
+      description = "Dig 60 gold ore.",
+      times = 60,
+      dignode = "gold:ore",
+})
+
+default.log("mod:gold", "loaded")
