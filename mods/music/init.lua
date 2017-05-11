@@ -6,6 +6,7 @@
 music = {}
 
 music.default_track = minetest.setting_get("music_track") or "music_catsong"
+music.track_length = tonumber(minetest.setting_get("music_track_length")) or 30.0
 music.volume = tonumber(minetest.setting_get("music_volume")) or 1.0
 
 music.players = {} -- music players
@@ -66,7 +67,7 @@ if minetest.setting_getbool("music_enable") then
 	    return
 	 end
 
-	 if music.players[dp]["timer"] > 28 then
+	 if music.players[dp]["timer"] > music.track_length then
 	    music.start(pos)
 	 end
       end

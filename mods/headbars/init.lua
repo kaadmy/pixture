@@ -5,16 +5,16 @@
 
 headbars = {}
 
-local damage_enable = minetest.setting_getbool("enable_damage")
+local enable_damage = minetest.setting_getbool("enable_damage")
 
 local enable_headbars = minetest.setting_getbool("headbars_enable")
 if enable_headbars == nil then enable_headbars = true end
 
-local headbars_scale = tonumber(minetest.setting_get("headbars_scale")) or 1
+local headbars_scale = tonumber(minetest.setting_get("headbars_scale")) or 1.0
 
 function headbars.get_sprite(icon, background, max, amt)
    local img = "[combine:" .. (max * 8) .. "x16:0,0=ui_null.png:0,0=ui_null.png"
-   
+
    if amt < max then
       for i = 0, max / 2 do
 	 img = img .. "^[combine:16x16:0,0=ui_null.png:" .. (i * 16) .. ",0=" .. background
@@ -48,25 +48,21 @@ minetest.register_entity(
       collisionbox = {0, 0, 0, 0, 0, 0},
 
       on_step = function(self, dtime)
-		   local ent = self.wielder
+         local ent = self.wielder
 
-		   if ent == nil or (minetest.get_player_by_name(ent:get_player_name(0)) == nil) then
-		      self.object:remove()
-		      return
-		   end
+         if ent == nil or (minetest.get_player_by_name(ent:get_player_name(0)) == nil) then
+            self.object:remove()
+            return
+         end
 
-		   local hp = ent:get_hp()
+         local hp = ent:get_hp()
 
-		   if ent:is_player() then
-		      self.object:set_properties({textures = {headbars.get_sprite("heart.png", "headbars_heart_bg.png", 20, hp)}})
-		   else
-		      self.object:set_properties({textures = {headbars.get_sprite("heart.png", "headbars_heart_bg.png", 20, hp)}})
-		   end
-		end,
-   })
+         self.object:set_properties({textures = {headbars.get_sprite("heart.png", "headbars_heart_bg.png", 20, hp)}})
+      end,
+})
 
 function headbars.attach_hpbar(to)
-   if not damage_enable then return end
+   if not enable_damage then return end
    if not enable_headbars then return end
 
    local pos = to:getpos()
@@ -74,7 +70,7 @@ function headbars.attach_hpbar(to)
 
    if bar == nil then return end
 
---   local attach_pos = {x = 0, y = 0, z = 0}
+   --   local attach_pos = {x = 0, y = 0, z = 0}
    local attach_pos = {x = 0, y = 9, z = 0}
 
    bar:set_attach(to, "", attach_pos, {x = 0, y = 0, z = 0})
