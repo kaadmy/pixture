@@ -16,7 +16,7 @@ local function step(dtime)
       if player_pos.x < -30000 or player_pos.x > 30000
 	 or player_pos.y < -30000 or player_pos.y > 30000
       or player_pos.z < -30000 or player_pos.z > 30000 then
-	 minetest.chat_send_player(name, "Don't go past 30000m in any direction!")
+	 minetest.chat_send_player(name, core.colorize("#f00", "Don't go past 30000m in any direction!"))
 	 player:setpos(player_lastpos[name])
       end
 

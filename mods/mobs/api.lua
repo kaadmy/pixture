@@ -425,7 +425,6 @@ function mobs:register_mob(name, def)
 						      and not nod.name:find("fence"))
 						  or self.walk_chance == 0 then
                                                      local v = self.object:getvelocity()
-                                                     print(dump(v))
 						  v.y = self.jump_height + 1
 						  v.x = v.x * 2.2
 						  v.z = v.z * 2.2
