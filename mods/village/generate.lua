@@ -62,7 +62,7 @@ end
 function village.get_nearest_village(pos)
    local nearest = 100000 -- big number
    local name = nil
-   
+
    for name, def in pairs(village.villages) do
       local dist = vector.distance(pos, def.pos)
       if dist < nearest then
@@ -208,7 +208,7 @@ end
 
 function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
    util.getvoxelmanip(pos, {x = pos.x+12, y = pos.y+12, z = pos.z+12})
-   
+
    if nofill ~= true then
       util.nodefunc(
 	 {x = pos.x-6, y = pos.y-7, z = pos.z-6},
@@ -245,6 +245,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 
    util.reconstruct(pos, {x = pos.x+12, y = pos.y+12, z = pos.z+12})
    util.fixlight(pos, {x = pos.x+12, y = pos.y+12, z = pos.z+12})
+
    util.nodefunc(
       pos,
       {x = pos.x+12, y = pos.y+12, z = pos.z+12},
@@ -252,6 +253,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
       function(pos)
 	 goodies.fill(pos, chunktype, pr, "main", 3)
       end, true)
+
    util.nodefunc(
       pos,
       {x = pos.x+12, y = pos.y+12, z = pos.z+12},
@@ -272,10 +274,10 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 	       "village:entity_spawner",
 	       function(pos)
 		  minetest.remove_node(pos)
-	       end)
+            end)
 	    return
 	 end
-	 
+
 	 local ent_spawns = {}
 
 	 util.nodefunc(
@@ -339,7 +341,7 @@ function village.spawn_road(pos, houses, built, roads, depth, pr)
 	 built[hnp] = true
 	 if depth <= 0 or pr:next(1, 8) < 6 then
 	    houses[hnp] = {pos = nextpos, front = pos}
-	    
+
 	    local structure = util.choice_element(village.chunktypes, pr)
 	    village.spawn_chunk(nextpos, orient, {}, pr, structure)
 	 else
@@ -354,7 +356,7 @@ function village.spawn_village(pos, pr)
    local name = village.name.generate(pr)
 
    local depth = pr:next(village.min_size, village.max_size)
-   
+
    village.villages[village.get_id(name, pos)] = {
       name = name,
       pos = pos,
@@ -444,7 +446,7 @@ function village.spawn_village(pos, pr)
 	    pr,
 	    "lamppost",
 	    true
-	  )
+         )
       end
    end
 end
@@ -452,5 +454,5 @@ end
 minetest.after(
    0,
    function()
-      village.load_villages()   
-   end)
+      village.load_villages()
+end)
