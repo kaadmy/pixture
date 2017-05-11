@@ -6,6 +6,7 @@
 music = {}
 
 music.default_track = minetest.setting_get("music_track") or "music_catsong"
+music.volume = tonumber(minetest.setting_get("music_volume")) or 1.0
 
 music.players = {} -- music players
 
@@ -14,7 +15,7 @@ if minetest.setting_getbool("music_enable") then
       local dp = minetest.hash_node_position(pos)
 
       local meta = minetest.get_meta(pos)
-      meta:set_string("infotext", "Music player(Off)")
+      meta:set_string("infotext", "Music player (Off)")
       meta:set_int("music_player_enabled", 0)
 
       if music.players[dp] ~= nil then
@@ -27,7 +28,7 @@ if minetest.setting_getbool("music_enable") then
       local dp = minetest.hash_node_position(pos)
 
       local meta = minetest.get_meta(pos)
-      meta:set_string("infotext", "Music player(On)")
+      meta:set_string("infotext", "Music player (On)")
       meta:set_int("music_player_enabled", 1)
 
       if music.players[dp] == nil then
@@ -36,7 +37,7 @@ if minetest.setting_getbool("music_enable") then
 	       music.default_track,
 	       {
 		  pos = pos,
-		  gain = 0.8,
+		  gain = music.volume,
             }),
 	    ["timer"] = 0,
 	    ["pos"] = pos,
@@ -48,7 +49,7 @@ if minetest.setting_getbool("music_enable") then
 	    music.default_track,
 	    {
 	       pos = pos,
-	       gain = 0.8,
+	       gain = music.volume,
          })
       end
    end
