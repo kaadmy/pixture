@@ -10,18 +10,92 @@ local tool_levels=nil
 if minetest.setting_getbool("creative_mode") == true then
    tool_levels = {
       wood = {
-	 [3] = creative_digtime,
-	 [2] = creative_digtime,
+         crumbly = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         choppy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         cracky = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         snappy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
       },
       stone = {
-	 [3] = creative_digtime,
-	 [2] = creative_digtime,
-	 [1] = creative_digtime,
+         crumbly = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         choppy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         cracky = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         snappy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
       },
       steel = {
-	 [3] = creative_digtime,
-	 [2] = creative_digtime,
-	 [1] = creative_digtime,
+         crumbly = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         choppy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         cracky = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         snappy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+      },
+      carbonsteel = {
+         crumbly = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         choppy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         cracky = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
+         snappy = {
+            [3] = creative_digtime,
+            [2] = creative_digtime,
+            [1] = creative_digtime,
+         },
       },
    }
 
@@ -30,7 +104,7 @@ if minetest.setting_getbool("creative_mode") == true then
       {
 	 type = "none",
 	 wield_image = "wieldhand.png",
-	 wield_scale = {x=1.5,y=3,z=3},
+	 wield_scale = {x=1.0,y=1.0,z=2.0},
 	 tool_capabilities = {
 	    full_punch_interval = 1.0,
 	    max_drop_level = 0,
@@ -49,18 +123,84 @@ if minetest.setting_getbool("creative_mode") == true then
 else
    tool_levels = {
       wood = {
-	 [3] = 2.0,
-	 [2] = 2.8,
+         crumbly = {
+            [3] = 1.6,
+            [2] = 2.0,
+         },
+         choppy = {
+            [3] = 2.6,
+            [2] = 3.0,
+         },
+         cracky = {
+            [3] = 3.8,
+            [2] = 4.2,
+         },
+         snappy = {
+            [3] = 0.5,
+            [2] = 1.0,
+         },
       },
       stone = {
-	 [3] = 1.0,
-	 [2] = 1.7,
-	 [1] = 2.1,
+         crumbly = {
+            [3] = 1.3,
+            [2] = 1.7,
+         },
+         choppy = {
+            [3] = 2.3,
+            [2] = 2.7,
+         },
+         cracky = {
+            [3] = 3.3,
+            [2] = 3.7,
+         },
+         snappy = {
+            [3] = 0.4,
+            [2] = 0.9,
+         },
       },
       steel = {
-	 [3] = 0.4,
-	 [2] = 0.9,
-	 [1] = 1.7,
+         crumbly = {
+            [3] = 1.0,
+            [2] = 1.4,
+            [1] = 2.5,
+         },
+         choppy = {
+            [3] = 2.0,
+            [2] = 2.4,
+            [1] = 3.9,
+         },
+         cracky = {
+            [3] = 2.8,
+            [2] = 3.2,
+            [1] = 4.5,
+         },
+         snappy = {
+            [3] = 0.3,
+            [2] = 0.8,
+            [1] = 1.3,
+         },
+      },
+      carbonsteel = {
+         crumbly = {
+            [3] = 0.7,
+            [2] = 2.1,
+            [1] = 3.5,
+         },
+         choppy = {
+            [3] = 1.7,
+            [2] = 2.1,
+            [1] = 3.6,
+         },
+         cracky = {
+            [3] = 2.3,
+            [2] = 2.7,
+            [1] = 3.8,
+         },
+         snappy = {
+            [3] = 0.2,
+            [2] = 0.7,
+            [1] = 1.2,
+         },
       },
    }
 
@@ -69,15 +209,17 @@ else
       {
 	 type = "none",
 	 wield_image = "wieldhand.png",
-	 wield_scale = {x=1.5,y=3,z=3},
+	 wield_scale = {x=1.0,y=1.0,z=2.0},
 	 tool_capabilities = {
 	    full_punch_interval = 1.0,
 	    max_drop_level = 0,
 	    groupcaps = {
 	       fleshy = {times={[2]=1.6, [3]=1.0}, uses=0, maxlevel=1},
-	       crumbly = {times={[2]=3.0, [3]=2.0}, uses=0, maxlevel=1},
-	       snappy = {times={[3]=0.8}, uses=0, maxlevel=1},
-	       oddly_breakable_by_hand = {times={[1]=7.0,[2]=5.5,[3]=4.0}, uses=0, maxlevel=3},
+	       crumbly = {times={[2]=3.2, [3]=2.1}, uses=0, maxlevel=1},
+	       choppy = {times={[2]=3.5, [3]=3.8}, uses=0, maxlevel=1},
+	       cracky = {times={[2]=8.5, [3]=7.0}, uses=0, maxlevel=1},
+	       snappy = {times={[1]=2.5, [2]=2.0, [3]=1.5}, uses=0, maxlevel=1},
+	       oddly_breakable_by_hand = {times={[1]=7.0,[2]=5.5,[3]=4.0}, uses=0, maxlevel=1},
 	    },
 	    range = 3.8,
 	    damage_groups = {fleshy = 1}
@@ -118,7 +260,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=0,
 	 groupcaps={
-	    cracky={times=tool_levels.wood, uses=10, maxlevel=1}
+	    cracky={times=tool_levels.wood.cracky, uses=10, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 2}
       },
@@ -132,7 +274,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=0,
 	 groupcaps={
-	    cracky={times=tool_levels.stone, uses=20, maxlevel=1}
+	    cracky={times=tool_levels.stone.cracky, uses=20, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 3}
       },
@@ -146,7 +288,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    cracky={times=tool_levels.steel, uses=25, maxlevel=2}
+	    cracky={times=tool_levels.steel.cracky, uses=25, maxlevel=2}
 	 },
 	 damage_groups = {fleshy = 4}
       },
@@ -160,7 +302,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    cracky={times=tool_levels.steel, uses=35, maxlevel=2}
+	    cracky={times=tool_levels.carbonsteel.cracky, uses=35, maxlevel=2}
 	 },
 	 damage_groups = {fleshy = 6}
       },
@@ -176,7 +318,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=0,
 	 groupcaps={
-	    crumbly={times=tool_levels.wood, uses=10, maxlevel=1}
+	    crumbly={times=tool_levels.wood.crumbly, uses=10, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 2}
       },
@@ -190,7 +332,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=0,
 	 groupcaps={
-	    crumbly={times=tool_levels.stone, uses=20, maxlevel=1}
+	    crumbly={times=tool_levels.stone.crumbly, uses=20, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 3}
       },
@@ -204,7 +346,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    crumbly={times=tool_levels.steel, uses=25, maxlevel=2}
+	    crumbly={times=tool_levels.steel.crumbly, uses=25, maxlevel=2}
 	 },
 	 damage_groups = {fleshy = 4}
       },
@@ -218,7 +360,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    crumbly={times=tool_levels.steel, uses=35, maxlevel=2}
+	    crumbly={times=tool_levels.carbonsteel.crumbly, uses=35, maxlevel=2}
 	 },
 	 damage_groups = {fleshy = 6}
       },
@@ -234,7 +376,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=0,
 	 groupcaps={
-	    choppy={times=tool_levels.wood, uses=10, maxlevel=1},
+	    choppy={times=tool_levels.wood.choppy, uses=10, maxlevel=1},
 	    fleshy={times={[2]=1.20, [3]=0.60}, uses=10, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 3}
@@ -249,7 +391,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=0,
 	 groupcaps={
-	    choppy={times=tool_levels.stone, uses=20, maxlevel=1},
+	    choppy={times=tool_levels.stone.choppy, uses=20, maxlevel=1},
 	    fleshy={times={[2]=1.10, [3]=0.40}, uses=20, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 4}
@@ -264,7 +406,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    choppy={times=tool_levels.steel, uses=25, maxlevel=2},
+	    choppy={times=tool_levels.steel.choppy, uses=25, maxlevel=2},
 	    fleshy={times={[2]=1.00, [3]=0.20}, uses=40, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 5}
@@ -279,7 +421,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    choppy={times=tool_levels.steel, uses=35, maxlevel=2},
+	    choppy={times=tool_levels.carbonsteel.choppy, uses=35, maxlevel=2},
 	    fleshy={times={[2]=1.00, [3]=0.20}, uses=40, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 7}
@@ -298,8 +440,7 @@ minetest.register_tool(
 	 max_drop_level=0,
 	 groupcaps={
 	    fleshy={times={[2]=1.10, [3]=0.60}, uses=10, maxlevel=1},
-	    snappy={times={[2]=1.00, [3]=0.50}, uses=10, maxlevel=1},
-	    choppy={times=tool_levels.wood, uses=20, maxlevel=0}
+	    snappy={times=tool_levels.wood.snappy, uses=10, maxlevel=1},
 	 },
 	 damage_groups = {fleshy = 4}
       }
@@ -315,8 +456,7 @@ minetest.register_tool(
 	 max_drop_level=0,
 	 groupcaps={
 	    fleshy={times={[2]=0.80, [3]=0.40}, uses=20, maxlevel=1},
-	    snappy={times={[2]=0.80, [3]=0.40}, uses=20, maxlevel=1},
-	    choppy={times=tool_levels.stone, uses=20, maxlevel=0}
+	    snappy={times=tool_levels.stone.snappy, uses=20, maxlevel=1},
 	 },
 	 damage_groups = {fleshy = 5}
       }
@@ -332,8 +472,7 @@ minetest.register_tool(
 	 max_drop_level=1,
 	 groupcaps={
 	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
-	    snappy={times={[2]=0.70, [3]=0.30}, uses=40, maxlevel=1},
-	    choppy={times=tool_levels.steel, uses=40, maxlevel=0}
+	    snappy={times=tool_levels.steel.snappy, uses=40, maxlevel=1},
 	 },
 	 damage_groups = {fleshy = 6}
       }
@@ -349,14 +488,14 @@ minetest.register_tool(
 	 max_drop_level=1,
 	 groupcaps={
 	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=25, maxlevel=2},
-	    snappy={times={[2]=0.70, [3]=0.30}, uses=55, maxlevel=1},
-	    choppy={times=tool_levels.steel, uses=55, maxlevel=0}
+	    snappy={times=tool_levels.carbonsteel.snappy, uses=55, maxlevel=1},
 	 },
 	 damage_groups = {fleshy = 10}
       }
    })
 
 -- Broadsword
+
 minetest.register_tool(
    "default:broadsword",
    {
@@ -371,6 +510,7 @@ minetest.register_tool(
    })
 
 -- Other
+
 minetest.register_tool(
    "default:shears",
    {

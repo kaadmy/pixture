@@ -1243,7 +1243,7 @@ minetest.register_node(
 			     default.write_name(pos, meta:get_string("text"))
 			  end,
       on_destruct = function(pos)
-		       default.write_name(pos, "")		       
+		       default.write_name(pos, "")
 	       end
    })
 

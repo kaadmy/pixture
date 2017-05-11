@@ -96,7 +96,7 @@ function mobs:register_mob(name, def)
 	 on_spawn = def.on_spawn or nil,
 	 check_fed = function(self, name, feed_count, breed) -- check if a mob is fed
 			self.food = (self.food or 0) + 1
-			
+
 			-- make children grow quicker
 			if self.child == true then
 			   self.hornytimer = self.hornytimer + 20
@@ -173,9 +173,9 @@ function mobs:register_mob(name, def)
 		     local d = { x = vx / ds, z = vz / ds }
 		     local p = { x = pos.x / ps, z = pos.z / ps }
 		     local an = ( d.x * p.x ) + ( d.z * p.z )
-		     
+
 		     a = math.deg( math.acos( an ) )
-		     
+
 		     if a > ( self.fov / 2 ) then
 			return false
 		     else
@@ -308,7 +308,7 @@ function mobs:register_mob(name, def)
 				  y = self.fall_speed,
 				  z = 0
 			       })
-			    
+
 			    -- fall damage
 			    if self.fall_damage == 1
 			       and self.object:getvelocity().y == 0 then
@@ -322,7 +322,7 @@ function mobs:register_mob(name, def)
 			    end
 			 end
 		      end
-		      
+
 		      -- knockback timer
 		      if self.pause_timer > 0 then
 			 self.pause_timer = self.pause_timer - dtime
@@ -331,7 +331,7 @@ function mobs:register_mob(name, def)
 			 end
 			 return
 		      end
-		      
+
 		      -- attack timer
 		      self.timer = self.timer + dtime
 		      if self.state ~= "attack" then
@@ -350,7 +350,7 @@ function mobs:register_mob(name, def)
 			       max_hear_distance = self.sounds.distance
 			    })
 		      end
-		      
+
 		      local do_env_damage = function(self)
 
 					       local pos = self.object:getpos()
@@ -390,7 +390,7 @@ function mobs:register_mob(name, def)
 					       end
 
 					    end
-		      
+
 		      local do_jump = function(self)
 					 if self.fly then
 					    return
@@ -417,14 +417,15 @@ function mobs:register_mob(name, def)
 						  })
 					       --print ("in front:", nod.name, pos.y)
 					       if nod and nod.name and
-						  (nod.name ~= "air" 
+						  (nod.name ~= "air"
 						   or self.walk_chance == 0) then
 						  local def = minetest.registered_items[nod.name]
 						  if (def
 						      and def.walkable
 						      and not nod.name:find("fence"))
 						  or self.walk_chance == 0 then
-						  local v = self.object:getvelocity()
+                                                     local v = self.object:getvelocity()
+                                                     print(dump(v))
 						  v.y = self.jump_height + 1
 						  v.x = v.x * 2.2
 						  v.z = v.z * 2.2
@@ -444,7 +445,7 @@ function mobs:register_mob(name, def)
 					 self.jumptimer = 0
 				      end
 				   end
-		      
+
 		      -- environmental damage timer
 		      self.env_damage_timer = self.env_damage_timer + dtime
 		      if self.state == "attack"
@@ -454,7 +455,7 @@ function mobs:register_mob(name, def)
 		      elseif self.state ~= "attack" then
 			 do_env_damage(self)
 		      end
-		      
+
 		      -- find someone to attack
 		      if self.type == "monster"
 			 and damage_enabled
@@ -480,7 +481,7 @@ function mobs:register_mob(name, def)
 				  type = obj.type
 			       end
 			    end
-			    
+
 			    if type == "player"
 			       or type == "npc" then
 			       s = self.object:getpos()
@@ -505,7 +506,7 @@ function mobs:register_mob(name, def)
 			 self.do_attack(self, min_player, min_dist)
 		      end
 		   end
-		   
+
 		   -- npc, find closest monster to attack
 		   local min_dist = self.view_range + 1
 		   local min_player = nil
@@ -728,7 +729,7 @@ function mobs:register_mob(name, def)
 
 			 if self.type == "npc" then
 			    local o = minetest.get_objects_inside_radius(self.object:getpos(), 3)
-			    
+
 			    local yaw = 0
 			    for _,o in ipairs(o) do
 			       if o:is_player() then
@@ -744,7 +745,7 @@ function mobs:register_mob(name, def)
 			    if lp.x > s.x then
 			       yaw = yaw + math.pi
 			    end
-			 else 
+			 else
 			    yaw = self.object:getyaw() + ((math.random(0, 360) - 180) / 180 * math.pi)
 			 end
 			 self.object:setyaw(yaw)
@@ -817,7 +818,7 @@ function mobs:register_mob(name, def)
 		      end
 
 		      -- exploding mobs
-		   elseif self.state == "attack" and self.attack_type == "explode" then 
+		   elseif self.state == "attack" and self.attack_type == "explode" then
 		      if not self.attack.player
 			 or not self.attack.player:is_player() then
 			 self.state = "stand"
@@ -842,7 +843,7 @@ function mobs:register_mob(name, def)
 			 self:set_animation("walk")
 			 self.attack.dist = dist
 		      end
-		      
+
 		      local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
 		      yaw = math.atan(vec.z / vec.x) + math.pi / 2 - self.rotate
 		      if p.x > s.x then
@@ -966,7 +967,7 @@ function mobs:register_mob(name, def)
 		      else
 			 self.attack.dist = dist
 		      end
-		      
+
 		      local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
 		      yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
 		      if p.x > s.x then
@@ -1039,7 +1040,7 @@ function mobs:register_mob(name, def)
 		      else
 			 self.attack.dist = dist
 		      end
-		      
+
 		      local vec = {x = p.x - s.x, y = p.y - s.y, z = p.z - s.z}
 		      yaw = (math.atan(vec.z / vec.x) + math.pi / 2) - self.rotate
 		      if p.x > s.x then
@@ -1047,7 +1048,7 @@ function mobs:register_mob(name, def)
 		      end
 		      self.object:setyaw(yaw)
 		      self.set_velocity(self, 0)
-		      
+
 		      if self.shoot_interval and self.timer > self.shoot_interval and math.random(1, 100) <= 60 then
 			 self.timer = 0
 
