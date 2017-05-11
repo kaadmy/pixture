@@ -1,6 +1,6 @@
 --
 -- Goodies mod
--- By Kaadmy
+-- By Kaadmy, for Pixture
 --
 
 goodies = {}
@@ -10,17 +10,17 @@ goodies.max_items = 20
 
 goodies.types = {}
 -- custom types
-goodies.types["FURNACE_SRC"]  = {
+goodies.types["FURNACE_SRC"] = {
    ["default:lump_iron"] = 3,
    ["default:dust_carbonsteel"] = 8,
    ["farming:flour"] = 5,
 }
-goodies.types["FURNACE_FUEL"]  = {
+goodies.types["FURNACE_FUEL"] = {
    ["default:lump_coal"] = 2,
    ["default:planks_oak"] = 4,
    ["default:planks_birch"] = 5,
 }
-goodies.types["FURNACE_DST"]  = {
+goodies.types["FURNACE_DST"] = {
    ["default:ingot_steel"] = 5,
    ["default:ingot_carbonsteel"] = 12,
    ["farming:bread"] = 8,
@@ -28,7 +28,7 @@ goodies.types["FURNACE_DST"]  = {
 
 -- chunk types for villages
 if minetest.get_modpath("village") ~= nil then
-   goodies.types["forge"]  = {
+   goodies.types["forge"] = {
       ["default:ingot_steel"] = 10,
       ["default:lump_coal"] = 4,
       ["default:lump_iron"] = 6,
@@ -43,7 +43,7 @@ if minetest.get_modpath("village") ~= nil then
       ["mobs:pork"] = 9,
       ["default:ladder"] = 9,
    }
-   goodies.types["house"]  = {
+   goodies.types["house"] = {
       ["default:stick"] = 2,
       ["farming:bread"] = 6,
       ["farming:cotton_1"] = 9,
@@ -80,7 +80,7 @@ function goodies.fill(pos, ctype, pr, listname, keepchance)
 
    local meta = minetest.get_meta(pos)
    local inv = meta:get_inventory()
-   
+
    local size = inv:get_size(listname)
 
    if size < 1 then return end
