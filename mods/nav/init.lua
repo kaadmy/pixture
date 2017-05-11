@@ -5,5 +5,5 @@
 
 nav = {}
 
-dofile(minetest.get_modpath("nav").."/map.lua")
-dofile(minetest.get_modpath("nav").."/compass.lua")
+dofile(core.get_modpath("nav").."/map.lua")
+dofile(core.get_modpath("nav").."/compass.lua")

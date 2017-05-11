@@ -15,8 +15,8 @@ local particlespawners = {}
 local player_step = {}
 local player_health_step = {}
 local player_bar = {}
-local base_interval = tonumber(minetest.setting_get("hunger_step")) or 3.0 -- seconds per hunger update, 2.0 is slightly fast
-local file = minetest.get_worldpath() .. "/hunger"
+local base_interval = tonumber(core.setting_get("hunger_step")) or 3.0 -- seconds per hunger update, 2.0 is slightly fast
+local file = core.get_worldpath() .. "/hunger"
 
 function hunger.save_hunger()
    local output = io.open(file, "w")
@@ -44,7 +44,7 @@ local function load_hunger()
 	 hunger.hunger[name] = hnger
 	 hunger.saturation[name] = sat
 
---	 minetest.log("action", name.." has "..hnger.." hunger and is saturated to "..sat.."%")
+--	 core.log("action", name.." has "..hnger.." hunger and is saturated to "..sat.."%")
       until input:read(0) == nil
       io.close(input)
    else
@@ -73,7 +73,7 @@ function hunger.update_bar(player)
    end
 end
 
-if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunger_enable") then
+if core.setting_getbool("enable_damage") and core.setting_getbool("hunger_enable") then
    player_effects.register_effect(
       "hunger_eating",
       {
@@ -86,21 +86,21 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
       })
 
    -- Prevent players from starving while afk (<--joke)
-   minetest.register_on_dignode(
+   core.register_on_dignode(
       function(pos, oldnode, player)
 	 if not player then return end
 	 local name = player:get_player_name()
 	 hunger.active[name] = hunger.active[name]+ 2
       end)
 
-   minetest.register_on_placenode(
+   core.register_on_placenode(
       function(pos, node, player)
 	 if not player then return end
 	 local name = player:get_player_name()
 	 hunger.active[name] = hunger.active[name]+ 2
       end)
 
-   minetest.register_on_joinplayer(
+   core.register_on_joinplayer(
       function(player)
 	 local name = player:get_player_name()
 	 if not hunger.hunger[name] then hunger.hunger[name] = 20 end
@@ -118,13 +118,13 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 hunger.update_bar(player)
       end)
 
-   minetest.register_on_leaveplayer(
+   core.register_on_leaveplayer(
       function(player)
 	 local name = player:get_player_name()
 	 player_bar[name] = nil
       end)
 
-   minetest.register_on_respawnplayer(
+   core.register_on_respawnplayer(
       function(player)
 	 local name = player:get_player_name()
 	 hunger.hunger[name] = 20
@@ -132,7 +132,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 hunger.save_hunger()
       end)
 
-   minetest.register_on_item_eat(
+   core.register_on_item_eat(
       function(hpdata, replace_with_item, itemstack, player, pointed_thing)
 	 if not player then return end
 	 if not hpdata then return end
@@ -161,9 +161,9 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 
 	 local headpos  = player:getpos()
 	 headpos.y = headpos.y + 1
-	 minetest.sound_play("hunger_eat", {pos = headpos, max_hear_distance = 8})
+	 core.sound_play("hunger_eat", {pos = headpos, max_hear_distance = 8})
 
-	 particlespawners[name] = minetest.add_particlespawner(
+	 particlespawners[name] = core.add_particlespawner(
 	    {
 	       amount = 10,
 	       time = 0.1,
@@ -180,7 +180,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	       texture = "magicpuff.png"
 	    })
 
-	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
+	 core.after(0.15, function() core.delete_particlespawner(particlespawners[name]) end)
 
 	 player_effects.apply_effect(player, "hunger_eating")
 
@@ -194,9 +194,9 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 
    -- Main function
    local timer = 0
-   minetest.register_globalstep(
+   core.register_globalstep(
       function(dtime)
-	 for _,player in ipairs(minetest.get_connected_players()) do
+	 for _,player in ipairs(core.get_connected_players()) do
 	    local name = player:get_player_name()
 	    local controls = player:get_player_control()
 	    local moving = 0
@@ -227,7 +227,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 if timer < base_interval then return end
 
 	 timer = 0
-	 for _,player in ipairs(minetest.get_connected_players()) do
+	 for _,player in ipairs(core.get_connected_players()) do
 	    local name = player:get_player_name()
 	    local hp = player:get_hp()
 
@@ -254,7 +254,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 		     hunger.hunger[name] = 0
 		     
 		     local pos_sound  = player:getpos()
-		     minetest.chat_send_player(name, "You are hungry.")
+		     core.chat_send_player(name, "You are hungry.")
 		  end
 	       end
 	    end
@@ -274,11 +274,11 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 hunger.save_hunger()
       end)
 else
-   minetest.register_on_item_eat(
+   core.register_on_item_eat(
       function(hpdata, replace_with_item, itemstack, player, pointed_thing)
 	 local headpos  = player:getpos()
 	 headpos.y = headpos.y + 1
-	 minetest.sound_play("hunger_eat", {pos = headpos, max_hear_distance = 8})
+	 core.sound_play("hunger_eat", {pos = headpos, max_hear_distance = 8})
 
 	 itemstack:take_item(1)
 

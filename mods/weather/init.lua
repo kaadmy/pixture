@@ -11,29 +11,29 @@ local function addvec(v1, v2)
    return {x = v1.x + v2.x, y = v1.y + v2.y, z = v1.z + v2.z}
 end
 
-local snow_enable = minetest.setting_getbool("weather_snow_enable") or false
+local snow_enable = core.setting_getbool("weather_snow_enable") or false
 
 local weather_soundspec=nil
-local weather_pr=PseudoRandom(minetest.get_mapgen_params().seed + 2387)
+local weather_pr=PseudoRandom(core.get_mapgen_params().seed + 2387)
 
 local function play_sound()
    if weather_soundspec ~= nil then
-      minetest.sound_stop(weather_soundspec)
+      core.sound_stop(weather_soundspec)
    end
 
    if weather.weather == "storm" then
-      weather_soundspec=minetest.sound_play({name="weather_storm"})
+      weather_soundspec=core.sound_play({name="weather_storm"})
 
-      minetest.after(18, play_sound)
+      core.after(18, play_sound)
       return
    elseif weather.weather == "snowstorm" then
-      weather_soundspec=minetest.sound_play({name="weather_snowstorm"})
+      weather_soundspec=core.sound_play({name="weather_snowstorm"})
 
-      minetest.after(7, play_sound)
+      core.after(7, play_sound)
       return
    end
 
-   minetest.after(3, play_sound)
+   core.after(3, play_sound)
 end
 
 function setweather_type(type)
@@ -49,9 +49,9 @@ function setweather_type(type)
    end
 end
 
-minetest.register_globalstep(
+core.register_globalstep(
    function(dtime)
-      if minetest.setting_getbool("weather_enable") then
+      if core.setting_getbool("weather_enable") then
 	 if weather_pr:next(0, 5000) < 1 then
 	    local weathertype = weather_pr:next(0, 19)
 
@@ -70,7 +70,7 @@ minetest.register_globalstep(
 	 end
       end
 
-      local light = (minetest.get_timeofday()*2)
+      local light = (core.get_timeofday()*2)
 
       if light > 1 then
 	 light=1-(light-1)
@@ -79,7 +79,7 @@ minetest.register_globalstep(
 
       local skycol=math.floor(light*190)
 
-      for _,player in ipairs(minetest.get_connected_players()) do
+      for _,player in ipairs(core.get_connected_players()) do
 	 if weather.weather == "storm" or weather.weather == "snowstorm" then
 	    player:set_sky({r = skycol, g = skycol, b = skycol*1.2}, "plain", {})
 	    player:override_day_night_ratio(light)
@@ -91,10 +91,10 @@ minetest.register_globalstep(
 	 local p=player:getpos()
 
 	 if weather.weather == "storm" then
-	    if minetest.get_node_light({x=p.x, y=p.y+15, z=p.z}, 0.5) == 15 then
+	    if core.get_node_light({x=p.x, y=p.y+15, z=p.z}, 0.5) == 15 then
 	       local minpos = addvec(player:getpos(), {x = -15, y = 15, z = -15})
 	       local maxpos = addvec(player:getpos(), {x = 15, y = 10, z = 15})
-	       minetest.add_particlespawner(
+	       core.add_particlespawner(
 		  {
 		     amount = 30,
 		     time = 0.5,
@@ -118,17 +118,17 @@ minetest.register_globalstep(
 	    if math.random(0, 6000*dtime) <= 1 then
 	       local hp = player:get_hp()
 
-	       if minetest.get_node_light(p) == 15 then
+	       if core.get_node_light(p) == 15 then
 		  player:set_hp(hp-1)
 	       end
 	    end
 
-	    if minetest.get_node_light({x=p.x, y=p.y+15, z=p.z}, 0.5) == 15 then
+	    if core.get_node_light({x=p.x, y=p.y+15, z=p.z}, 0.5) == 15 then
 	       local minpos = addvec(player:getpos(), {x = -30, y = 20, z = -30})
 	       local maxpos = addvec(player:getpos(), {x = 30, y = 15, z = 30})
 	       local vel = {x = 16.0, y = -8, z = 13.0}
 	       local acc = {x = -16.0, y = -8, z = -13.0}
-	       minetest.add_particlespawner(
+	       core.add_particlespawner(
 		  {
 		     amount = 8,
 		     time = 0.4,
@@ -154,56 +154,56 @@ minetest.register_globalstep(
    end
 )
 
-minetest.register_abm(
+core.register_abm(
    {
       nodenames = {"weather:ice"},
       interval = 4,
       chance = 80,
       action = function(pos, node, active_object_count, active_object_count_wider)
 		  if weather.weather ~= "snowstorm" then
-		     minetest.remove_node(pos)
+		     core.remove_node(pos)
 		  end
 	       end
    })
 
---[[minetest.register_abm(
+--[[core.register_abm(
    {
       nodenames = {"air"},
       interval = 2,
       chance = 80,
       action = function(pos, node, active_object_count, active_object_count_wider)
-		  if minetest.get_node_light(pos) ~= 15 then return end
+		  if core.get_node_light(pos) ~= 15 then return end
 
 		  local under_nodepos={x=pos.x, y=pos.y-1, z=pos.z}
-		  local under_node=minetest.get_node(under_nodepos)
+		  local under_node=core.get_node(under_nodepos)
 
 		  if under_node.name == "air" then return end
 
-		  local under_nodedef=minetest.registered_nodes[under_node.name]
+		  local under_nodedef=core.registered_nodes[under_node.name]
 
 		  if under_node.name == "default:water_source" and weather.weather == "snowstorm" then
-		     minetest.set_node(under_nodepos, {name = "weather:ice"})
+		     core.set_node(under_nodepos, {name = "weather:ice"})
 		  else
 		     if under_node.name ~= "weather:snow" then
 			if weather.weather == "snowstorm" then
 			   if under_node.name ~= "default:heated_dirt_path" then
 			      if under_nodedef.walkable then
-				 minetest.set_node(pos, {name = "weather:snow"})
+				 core.set_node(pos, {name = "weather:snow"})
 			      elseif under_nodedef.drawtype ~= "airlike" and under_nodedef.buildable_to and math.random(0, 20) <= 1 then
-				 minetest.set_node(under_nodepos, {name = "weather:snow"})
+				 core.set_node(under_nodepos, {name = "weather:snow"})
 			      end
 			   end
 			end
 		     else
 			if weather.weather ~= "snowstorm" then
-			   minetest.remove_node(under_nodepos)
+			   core.remove_node(under_nodepos)
 			end
 		     end
 		  end
 	       end,
    })--]]
 
-minetest.register_node(
+core.register_node(
    "weather:snow",
    {
       description = "Snow",
@@ -218,7 +218,7 @@ minetest.register_node(
       sounds = default.node_sound_snow_defaults(),
    })
 
-minetest.register_node(
+core.register_node(
    "weather:ice",
    {
       description = "Ice",
@@ -230,18 +230,18 @@ minetest.register_node(
       sounds = default.node_sound_glass_defaults(),
       on_destruct = function(pos)
 		       local function add_water()
-			  minetest.set_node(pos, {name = "default:water_source"})
+			  core.set_node(pos, {name = "default:water_source"})
 		       end
 		       
-		       if minetest.find_node_near(pos, 1, {"weather:ice", "default:water_source"}) then
-			  minetest.after(0, add_water)
+		       if core.find_node_near(pos, 1, {"weather:ice", "default:water_source"}) then
+			  core.after(0, add_water)
 		       end
 		    end
    })
 
-minetest.register_privilege("weather", "Can use /weather.weather command")
+core.register_privilege("weather", "Can use /weather.weather command")
 
-minetest.register_chatcommand(
+core.register_chatcommand(
    "weather",
    {
       params = "[storm|snowstorm|clear]",

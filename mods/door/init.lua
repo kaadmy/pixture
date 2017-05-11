@@ -32,7 +32,7 @@ function door.register_door(name, def)
    end
    
    
-   minetest.register_craftitem(
+   core.register_craftitem(
       name, {
 	 description = def.description,
 	 inventory_image = def.inventory_image,
@@ -45,24 +45,24 @@ function door.register_door(name, def)
 		       end
 
 		       local ptu = pointed_thing.under
-		       local nu = minetest.get_node(ptu)
-		       if minetest.registered_nodes[nu.name].on_rightclick then
-			  return minetest.registered_nodes[nu.name].on_rightclick(ptu, nu, placer, itemstack)
+		       local nu = core.get_node(ptu)
+		       if core.registered_nodes[nu.name].on_rightclick then
+			  return core.registered_nodes[nu.name].on_rightclick(ptu, nu, placer, itemstack)
 		       end
 
 		       local pt = pointed_thing.above
 		       local pt2 = {x=pt.x, y=pt.y, z=pt.z}
 		       pt2.y = pt2.y+1
 		       if
-			  not minetest.registered_nodes[minetest.get_node(pt).name].buildable_to or
-		       not minetest.registered_nodes[minetest.get_node(pt2).name].buildable_to or
+			  not core.registered_nodes[core.get_node(pt).name].buildable_to or
+		       not core.registered_nodes[core.get_node(pt2).name].buildable_to or
 		    not placer or
 		    not placer:is_player()
 		 then
 		    return itemstack
 		 end
 
-		 local p2 = minetest.dir_to_facedir(placer:get_look_dir())
+		 local p2 = core.dir_to_facedir(placer:get_look_dir())
 		 local pt3 = {x=pt.x, y=pt.y, z=pt.z}
 		 if p2 == 0 then
 		    pt3.x = pt3.x-1
@@ -73,14 +73,14 @@ function door.register_door(name, def)
 		 elseif p2 == 3 then
 		    pt3.z = pt3.z-1
 		 end
-		 if minetest.get_item_group(minetest.get_node(pt3).name, "door") == 0 then
-		    minetest.set_node(pt, {name=name.."_b_1", param2=p2})
-		    minetest.set_node(pt2, {name=name.."_t_1", param2=p2})
+		 if core.get_item_group(core.get_node(pt3).name, "door") == 0 then
+		    core.set_node(pt, {name=name.."_b_1", param2=p2})
+		    core.set_node(pt2, {name=name.."_t_1", param2=p2})
 		 else
-		    minetest.set_node(pt, {name=name.."_b_2", param2=p2})
-		    minetest.set_node(pt2, {name=name.."_t_2", param2=p2})
-		    minetest.get_meta(pt):set_int("right", 1)
-		    minetest.get_meta(pt2):set_int("right", 1)
+		    core.set_node(pt, {name=name.."_b_2", param2=p2})
+		    core.set_node(pt2, {name=name.."_t_2", param2=p2})
+		    core.get_meta(pt):set_int("right", 1)
+		    core.get_meta(pt2):set_int("right", 1)
 		 end
 
 		 itemstack:take_item()
@@ -93,24 +93,24 @@ function door.register_door(name, def)
    local tb = def.tiles_bottom
    
    local function after_dig_node(pos, name, digger)
-      local node = minetest.get_node(pos)
+      local node = core.get_node(pos)
       if node.name == name then
-	 minetest.node_dig(pos, node, digger)
+	 core.node_dig(pos, node, digger)
       end
    end
 
    local function on_rightclick(pos, dir, check_name, replace, replace_dir, params)
       pos.y = pos.y+dir
-      if not minetest.get_node(pos).name == check_name then
+      if not core.get_node(pos).name == check_name then
 	 return
       end
-      local p2 = minetest.get_node(pos).param2
+      local p2 = core.get_node(pos).param2
       p2 = params[p2+1]
       
-      minetest.swap_node(pos, {name=replace_dir, param2=p2})
+      core.swap_node(pos, {name=replace_dir, param2=p2})
       
       pos.y = pos.y-dir
-      minetest.swap_node(pos, {name=replace, param2=p2})
+      core.swap_node(pos, {name=replace, param2=p2})
 
       local snd_1 = def.sound_close_door
       local snd_2 = def.sound_open_door 
@@ -119,10 +119,10 @@ function door.register_door(name, def)
 	 snd_2 = def.sound_close_door
       end
 
-      if minetest.get_meta(pos):get_int("right") ~= 0 then
-	 minetest.sound_play(snd_1, {pos = pos, gain = 0.8, max_hear_distance = 10})
+      if core.get_meta(pos):get_int("right") ~= 0 then
+	 core.sound_play(snd_1, {pos = pos, gain = 0.8, max_hear_distance = 10})
       else
-	 minetest.sound_play(snd_2, {pos = pos, gain = 0.8, max_hear_distance = 10})
+	 core.sound_play(snd_2, {pos = pos, gain = 0.8, max_hear_distance = 10})
       end
    end
 
@@ -130,11 +130,11 @@ function door.register_door(name, def)
       if not def.only_placer_can_open then
 	 return true
       end
-      local meta = minetest.get_meta(pos)
+      local meta = core.get_meta(pos)
       local pn = player:get_player_name()
    end
 
-   minetest.register_node(
+   core.register_node(
       name.."_b_1",
       {
 	 tiles = {tb[2], tb[2], tb[2], tb[2], tb[1], tb[1].."^[transformfx"},
@@ -168,7 +168,7 @@ function door.register_door(name, def)
 	 sunlight_propagates = def.sunlight
       })
 
-   minetest.register_node(
+   core.register_node(
       name.."_t_1",
       {
 	 tiles = {tt[2], tt[2], tt[2], tt[2], tt[1], tt[1].."^[transformfx"},
@@ -202,7 +202,7 @@ function door.register_door(name, def)
 	 sunlight_propagates = def.sunlight,
       })
 
-   minetest.register_node(
+   core.register_node(
       name.."_b_2",
       {
 	 tiles = {tb[2], tb[2], tb[2], tb[2], tb[1].."^[transformfx", tb[1]},
@@ -236,7 +236,7 @@ function door.register_door(name, def)
 	 sunlight_propagates = def.sunlight
       })
 
-   minetest.register_node(
+   core.register_node(
       name.."_t_2",
       {
 	 tiles = {tt[2], tt[2], tt[2], tt[2], tt[1].."^[transformfx", tt[1]},
@@ -284,7 +284,7 @@ door.register_door(
       sunlight = false,
    })
 
-minetest.register_craft(
+core.register_craft(
    {
       output = "door:door_wood",
       recipe = {
@@ -306,7 +306,7 @@ door.register_door(
       sunlight = false,
    })
 
-minetest.register_craft(
+core.register_craft(
    {
       output = "door:door_stone",
       recipe = {

@@ -1,5 +1,5 @@
 -- wool
-minetest.register_node(
+core.register_node(
    "mobs:wool",
    {
       description = "Wool Bundle",
@@ -10,24 +10,24 @@ minetest.register_node(
    })
 
 -- raw meat
-minetest.register_craftitem(
+core.register_craftitem(
    "mobs:meat_raw",
    {
       description = "Raw Meat",
       inventory_image = "mobs_meat_raw.png",
-      on_use = minetest.item_eat({hp = 3, sat = 30}),
+      on_use = core.item_eat({hp = 3, sat = 30}),
    })
 
 -- cooked meat
-minetest.register_craftitem(
+core.register_craftitem(
    "mobs:meat", 
    {
       description = "Cooked Meat",
       inventory_image = "mobs_meat_cooked.png",
-      on_use = minetest.item_eat({hp = 7, sat = 70}),
+      on_use = core.item_eat({hp = 7, sat = 70}),
    })
 
-minetest.register_craft(
+core.register_craft(
    {
       type = "cooking",
       output = "mobs:meat",
@@ -36,14 +36,14 @@ minetest.register_craft(
    })
 
 -- net (right click to capture animal)
-minetest.register_tool(
+core.register_tool(
    "mobs:net",
    {
       description = "Net (Right-click to capture)",
       inventory_image = "mobs_net.png",
    })
 
-minetest.register_craft(
+core.register_craft(
    {
       output = "mobs:net",
       recipe = {
@@ -54,14 +54,14 @@ minetest.register_craft(
    })
 
 -- lasso (right click to capture animal)
-minetest.register_tool(
+core.register_tool(
    "mobs:lasso",
    {
       description = "Lasso (Right-click to capture)",
       inventory_image = "mobs_lasso.png",
    })
 
-minetest.register_craft(
+core.register_craft(
    {
       output = "mobs:lasso",
       recipe = {

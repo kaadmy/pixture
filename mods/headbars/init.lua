@@ -5,12 +5,12 @@
 
 headbars = {}
 
-local enable_damage = minetest.setting_getbool("enable_damage")
+local enable_damage = core.setting_getbool("enable_damage")
 
-local enable_headbars = minetest.setting_getbool("headbars_enable")
+local enable_headbars = core.setting_getbool("headbars_enable")
 if enable_headbars == nil then enable_headbars = true end
 
-local headbars_scale = tonumber(minetest.setting_get("headbars_scale")) or 1.0
+local headbars_scale = tonumber(core.setting_get("headbars_scale")) or 1.0
 
 function headbars.get_sprite(icon, background, max, amt)
    local img = "[combine:" .. (max * 8) .. "x16:0,0=ui_null.png:0,0=ui_null.png"
@@ -37,7 +37,7 @@ function headbars.get_sprite(icon, background, max, amt)
    return img
 end
 
-minetest.register_entity(
+core.register_entity(
    "headbars:hpbar",
    {
       visual = "sprite",
@@ -50,7 +50,7 @@ minetest.register_entity(
       on_step = function(self, dtime)
          local ent = self.wielder
 
-         if ent == nil or (minetest.get_player_by_name(ent:get_player_name(0)) == nil) then
+         if ent == nil or (core.get_player_by_name(ent:get_player_name(0)) == nil) then
             self.object:remove()
             return
          end
@@ -66,7 +66,7 @@ function headbars.attach_hpbar(to)
    if not enable_headbars then return end
 
    local pos = to:getpos()
-   local bar = minetest.add_entity(pos, "headbars:hpbar")
+   local bar = core.add_entity(pos, "headbars:hpbar")
 
    if bar == nil then return end
 
@@ -78,5 +78,5 @@ function headbars.attach_hpbar(to)
    bar.wielder = to
 end
 
-minetest.register_on_joinplayer(headbars.attach_hpbar)
+core.register_on_joinplayer(headbars.attach_hpbar)
 default.log("mod:headbars", "loaded")

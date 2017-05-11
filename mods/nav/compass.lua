@@ -3,7 +3,7 @@
 local wield_image_0 = "nav_compass_inventory_0.png"
 local wield_image_1 = "nav_compass_inventory_1.png"
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_0",
    {
       description = "Compass(E)",
@@ -15,7 +15,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_1",
    {
       description = "Compass(NE)",
@@ -27,7 +27,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_2",
    {
       description = "Compass(N)",
@@ -39,7 +39,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_3",
    {
       description = "Compass(NW)",
@@ -51,7 +51,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_4",
    {
       description = "Compass(W)",
@@ -63,7 +63,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_5",
    {
       description = "Compass(SW)",
@@ -75,7 +75,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_6",
    {
       description = "Compass(S)",
@@ -87,7 +87,7 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_craftitem(
+core.register_craftitem(
    "nav:compass_7",
    {
       description = "Compass(SE)",
@@ -99,9 +99,9 @@ minetest.register_craftitem(
       stack_max = 1,
    })
 
-minetest.register_alias("nav:compass", "nav:compass_2")
+core.register_alias("nav:compass", "nav:compass_2")
 
-minetest.register_craft(
+core.register_craft(
    {
       output = "nav:compass_2",
       recipe = {
@@ -112,7 +112,7 @@ minetest.register_craft(
    })
 
 function step(dtime)
-   for _, player in pairs(minetest.get_connected_players()) do
+   for _, player in pairs(core.get_connected_players()) do
       local inv = player:get_inventory()
 
       local yaw = player:get_look_yaw()
@@ -128,7 +128,7 @@ function step(dtime)
 
       for i = 1, 8 do
 	 local itemstack = inv:get_stack("main", i)
-	 local item = minetest.registered_items[itemstack:get_name()]
+	 local item = core.registered_items[itemstack:get_name()]
 	 
 	 if item ~= nil then
 	    if item.groups.nav_compass then
@@ -139,7 +139,7 @@ function step(dtime)
    end
 end
 
-minetest.register_globalstep(step)
+core.register_globalstep(step)
 
 -- Achievements
 

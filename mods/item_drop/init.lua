@@ -8,14 +8,14 @@ local function valid(object)
    return object:get_luaentity().timer ~= nil and object:get_luaentity().timer > 1
 end
 
-minetest.register_globalstep(
+core.register_globalstep(
    function(dtime)
-      for _,player in ipairs(minetest.get_connected_players()) do
-	 if player:get_hp() > 0 or not minetest.setting_getbool("enable_damage") then
+      for _,player in ipairs(core.get_connected_players()) do
+	 if player:get_hp() > 0 or not core.setting_getbool("enable_damage") then
 	    local pos = player:getpos()
 	    local inv = player:get_inventory()
 	    
-	    for _,object in ipairs(minetest.get_objects_inside_radius(pos, 1.35)) do
+	    for _,object in ipairs(core.get_objects_inside_radius(pos, 1.35)) do
 	       if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" and valid(object) then
 		  if inv and inv:room_for_item("main", ItemStack(object:get_luaentity().itemstring)) then
 		     local pos1 = pos
@@ -42,7 +42,7 @@ minetest.register_globalstep(
 			   if inv:room_for_item("main", ItemStack(lua.itemstring)) then
 			      inv:add_item("main", ItemStack(lua.itemstring))
 			      if lua.itemstring ~= "" then
-				 minetest.sound_play("item_drop_pickup", {pos = pos, gain = 0.3, max_hear_distance = 16})
+				 core.sound_play("item_drop_pickup", {pos = pos, gain = 0.3, max_hear_distance = 16})
 			      end
 			      lua.itemstring = ""
 			      object:remove()
@@ -62,7 +62,7 @@ minetest.register_globalstep(
       end
    end)
 
-function minetest.handle_node_drops(pos, drops, digger)
+function core.handle_node_drops(pos, drops, digger)
    for _,item in ipairs(drops) do
       local count, name
       if type(item) == "string" then
@@ -73,7 +73,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 	 name = item:get_name()
       end
       for i=1,count do
-	 local obj = minetest.add_item(pos, name)
+	 local obj = core.add_item(pos, name)
 	 if obj ~= nil then
 	    local x = math.random(1, 5)
 	    if math.random(1,2) == 1 then
@@ -86,8 +86,8 @@ function minetest.handle_node_drops(pos, drops, digger)
 	    obj:setvelocity({x=1/x, y=obj:getvelocity().y, z=1/z})
 	    
 	    -- FIXME this doesnt work for deactiveted objects
-	    if minetest.setting_get("remove_items") and tonumber(minetest.setting_get("remove_items")) then
-	       minetest.after(tonumber(minetest.setting_get("remove_items")), function(obj)
+	    if core.setting_get("remove_items") and tonumber(core.setting_get("remove_items")) then
+	       core.after(tonumber(core.setting_get("remove_items")), function(obj)
 										 obj:remove()
 									      end, obj)
 	    end

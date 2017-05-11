@@ -1,4 +1,4 @@
-minetest.register_node(
+core.register_node(
    "village:entity_spawner",
    {
       description = "Chunk defs may choose which entities to spawn here",
@@ -8,7 +8,7 @@ minetest.register_node(
       sounds = default.node_sound_wood_defaults()
 })
 
-minetest.register_node(
+core.register_node(
    "village:grassland_village",
    {
       description = "Village spawner",
@@ -18,7 +18,7 @@ minetest.register_node(
       sounds = default.node_sound_wood_defaults()
 })
 
-minetest.register_node(
+core.register_node(
    "village:grassland_village_mg",
    {
       description = "Mapgen village spawner(Has chance of not spawning village)",
@@ -35,42 +35,42 @@ minetest.register_node(
       groups = {not_in_craftingguide = 1},
 })
 
-minetest.register_abm(
+core.register_abm(
    {
       nodenames = {"village:grassland_village", "village:grassland_village_mg"},
       interval = 1,
       chance = 1,
       action = function(pos, node)
-         minetest.remove_node(pos)
+         core.remove_node(pos)
 
-         if minetest.setting_getbool("mapgen_disable_villages") == true then
+         if core.setting_getbool("mapgen_disable_villages") == true then
             return
          end
 
-         local pr = PseudoRandom(minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z)
+         local pr = PseudoRandom(core.get_mapgen_params().seed+pos.x+pos.y+pos.z)
 
          if node.name  == "village:grassland_village_mg" then
-            if ((minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z) % 30) == 1 then
+            if ((core.get_mapgen_params().seed+pos.x+pos.y+pos.z) % 30) == 1 then
                local nearest = village.get_nearest_village(pos)
 
                if nearest.dist > village.min_spawn_dist then
-                  minetest.log("Spawning a (Mapgen)Grassland village at "..dump(pos))
+                  core.log("Spawning a (Mapgen)Grassland village at "..dump(pos))
 
                   -- a short delay to (hopefully) ensure that the surrounding terrain is generated
-                  minetest.after(3.0, function() village.spawn_village(pos, pr) end)
+                  core.after(3.0, function() village.spawn_village(pos, pr) end)
                else
-                  minetest.log("Cannot spawn village, too near another village")
+                  core.log("Cannot spawn village, too near another village")
                end
             end
          else
-            minetest.log("Spawning a Grassland village at "..dump(pos))
+            core.log("Spawning a Grassland village at "..dump(pos))
 
             village.spawn_village(pos, pr)
          end
       end
 })
 
-minetest.register_decoration(
+core.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",

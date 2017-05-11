@@ -2,21 +2,21 @@
 -- Single village generation
 --
 
-local mp = minetest.get_modpath("village")
+local mp = core.get_modpath("village")
 
 village.villages = {}
 
-local village_file = minetest.get_worldpath() .. "/villages"
+local village_file = core.get_worldpath() .. "/villages"
 
 function village.get_id(name, pos)
-   return name .. minetest.hash_node_position(pos)
+   return name .. core.hash_node_position(pos)
 end
 
 function village.save_villages()
    local f = io.open(village_file, "w")
 
    for name, def in pairs(village.villages) do
-      f:write(name .. " " .. def.name .. " " .. minetest.hash_node_position(def.pos) .. "\n")
+      f:write(name .. " " .. def.name .. " " .. core.hash_node_position(def.pos) .. "\n")
    end
 
    io.close(f)
@@ -33,7 +33,7 @@ function village.load_villages()
 	 for name, fname, pos in string.gfind(l, "(.+) (%a+) (%d.+)") do
 	    village.villages[name] = {
 	       name = fname,
-	       pos = minetest.get_position_from_hash(pos),
+	       pos = core.get_position_from_hash(pos),
 	    }
 	 end
       until f:read(0) == nil
@@ -156,11 +156,11 @@ function village.lift_ground(pos, scanheight)
    for y = pos.y, pos.y - scanheight, -1 do
       local p = {x = pos.x, y = y, z = pos.z}
 
-      local nn = minetest.get_node(p).name
-      local an = minetest.get_node({x = p.x, y = p.y + 1, z = p.z}).name
+      local nn = core.get_node(p).name
+      local an = core.get_node({x = p.x, y = p.y + 1, z = p.z}).name
 
       if nn ~= "air" then
-	 local nd = minetest.registered_nodes[nn]
+	 local nd = core.registered_nodes[nn]
 	 if not nd.buildable_to then -- avoid grass, fluids, etc.
 	    if topnode == nil and nn ~= an then
 	       topnode = nn
@@ -197,11 +197,11 @@ function village.lift_ground(pos, scanheight)
       local th = pos.y - y
 
       if th <= fillerdepth - topdepth then
-	 minetest.set_node(p, {name = fillernode})
+	 core.set_node(p, {name = fillernode})
       elseif th <= topdepth then
-	 minetest.set_node(p, {name = topnode})
+	 core.set_node(p, {name = topnode})
       else
-	 minetest.set_node(p, {name = stonenode})
+	 core.set_node(p, {name = stonenode})
       end
    end
 end
@@ -218,7 +218,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 	    village.lift_ground(pos, 15) -- distance to lift ground; larger numbers will be slower
 	 end, true)
 
-      minetest.place_schematic(
+      core.place_schematic(
 	 pos,
 	 mp.."/schematics/village_empty.mts",
 	 "0",
@@ -226,7 +226,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 	 true
       )
 
-      minetest.place_schematic(
+      core.place_schematic(
 	 {x = pos.x-6, y = pos.y-5, z = pos.z-6},
 	 mp.."/schematics/village_filler.mts",
 	 "0",
@@ -235,7 +235,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
       )
    end
 
-   minetest.place_schematic(
+   core.place_schematic(
       pos,
       mp.."/schematics/village_"..chunktype..".mts",
       orient,
@@ -260,7 +260,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
       "music:player",
       function(pos)
 	 if pr:next(1, 2) > 1 then
-	    minetest.remove_node(pos)
+	    core.remove_node(pos)
 	 end
       end, true)
 
@@ -273,7 +273,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 	       {x = pos.x+12, y = pos.y+12, z = pos.z+12},
 	       "village:entity_spawner",
 	       function(pos)
-		  minetest.remove_node(pos)
+		  core.remove_node(pos)
             end)
 	    return
 	 end
@@ -286,7 +286,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 	    "village:entity_spawner",
 	    function(pos)
 	       table.insert(ent_spawns, pos)
-	       minetest.remove_node(pos)
+	       core.remove_node(pos)
 	    end, true)
 
 	 if #ent_spawns > 0 then
@@ -295,7 +295,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 		  local spawn = util.choice_element(ent_spawns, pr)
 		  if spawn ~= nil then
 		     spawn.y = spawn.y + 1.6
-		     minetest.add_entity(spawn, ent)
+		     core.add_entity(spawn, ent)
 		  end
 	       end
 	    end
@@ -335,7 +335,7 @@ function village.spawn_road(pos, houses, built, roads, depth, pr)
 	 nextpos.x = nextpos.x + 12
       end
 
-      local hnp = minetest.hash_node_position(nextpos)
+      local hnp = core.hash_node_position(nextpos)
 
       if built[hnp] == nil then
 	 built[hnp] = true
@@ -372,14 +372,14 @@ function village.spawn_village(pos, pr)
    local spawnpos = pos
 
    village.spawn_chunk(pos, "0", {}, pr, "well")
-   built[minetest.hash_node_position(pos)] = true
+   built[core.hash_node_position(pos)] = true
 
    local t1 = os.clock()
    village.spawn_road(pos, houses, built, roads, depth, pr)
    print(string.format("Took %.2fms to spawn village", (os.clock() - t1) * 1000))
 
    local function connects(pos, nextpos)
-      local hnp = minetest.hash_node_position(nextpos)
+      local hnp = core.hash_node_position(nextpos)
 
       if houses[hnp] ~= nil then
 	 if vector.equals(houses[hnp].front, pos) then
@@ -451,7 +451,7 @@ function village.spawn_village(pos, pr)
    end
 end
 
-minetest.after(
+core.after(
    0,
    function()
       village.load_villages()

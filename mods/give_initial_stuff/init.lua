@@ -3,7 +3,7 @@
 -- By Kaadmy, for Pixture
 --
 
-local giveme = minetest.setting_getbool("give_initial_stuff")
+local giveme = core.setting_getbool("give_initial_stuff")
 
 local function give_initial_stuff(player)
    if giveme then
@@ -14,6 +14,6 @@ local function give_initial_stuff(player)
    end
 end
 
-minetest.register_on_newplayer(give_initial_stuff)
+core.register_on_newplayer(give_initial_stuff)
 
 default.log("mod:give_initial_stuff", "loaded")

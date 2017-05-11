@@ -28,11 +28,11 @@ function util.fixlight(pos1, pos2)
 
    --make area stay loaded
                          
-   local manip = minetest.get_voxel_manip()
+   local manip = core.get_voxel_manip()
    manip:read_from_map(pos1, pos2)
 
-   local nodes = minetest.find_nodes_in_area(pos1, pos2, "air")
-   local dig_node = minetest.dig_node
+   local nodes = core.find_nodes_in_area(pos1, pos2, "air")
+   local dig_node = core.dig_node
    for _, pos in ipairs(nodes) do
       dig_node(pos)
    end
@@ -41,10 +41,10 @@ function util.fixlight(pos1, pos2)
 
    return #nodes
 end
-if minetest.setting_getbool("fixlight_command_enable") then
-   minetest.register_privilege("fixlight", "Can use /fixlight command")
+if core.setting_getbool("fixlight_command_enable") then
+   core.register_privilege("fixlight", "Can use /fixlight command")
 
-   minetest.register_chatcommand(
+   core.register_chatcommand(
       "fixlight",
       {
 	 params = "[radius 1-20]",
@@ -57,7 +57,7 @@ if minetest.setting_getbool("fixlight_command_enable") then
 		      return false, "Bad param for /fixlight; type /help fixlight"
 		   end
 
-		   local player = minetest.get_player_by_name(name)
+		   local player = core.get_player_by_name(name)
 
 		   local pos = player:getpos()
 		   pos.x = math.floor(pos.x + 0.5)
@@ -69,7 +69,7 @@ if minetest.setting_getbool("fixlight_command_enable") then
 
 		   util.fixlight(minp, maxp)
 
-		   minetest.chat_send_all("*** " .. name .. " has fixed light in a " .. rad .. "m radius at (" .. pos.x .. ", " .. pos.y .. ", " .. pos.z .. ")")
+		   core.chat_send_all("*** " .. name .. " has fixed light in a " .. rad .. "m radius at (" .. pos.x .. ", " .. pos.y .. ", " .. pos.z .. ")")
 		end
       })
 end
@@ -80,11 +80,11 @@ function util.nodefunc(pos1, pos2, name, func, nomanip)
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
    if not nomanip then
-      local manip = minetest.get_voxel_manip()
+      local manip = core.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
    
-   local nodes = minetest.find_nodes_in_area(pos1, pos2, name)
+   local nodes = core.find_nodes_in_area(pos1, pos2, name)
    for _, pos in ipairs(nodes) do
       func(pos)
    end
@@ -95,7 +95,7 @@ function util.getvoxelmanip(pos1, pos2)
    -- return a voxel manipulator
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
-   local manip = minetest.get_voxel_manip()
+   local manip = core.get_voxel_manip()
    manip:read_from_map(pos1, pos2)
    
    return manip
@@ -107,14 +107,14 @@ function util.remove_area(pos1, pos2, nomanip)
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
    if not nomanip then
-      local manip = minetest.get_voxel_manip()
+      local manip = core.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
    
    for i = pos1.x, pos2.x-1 do
       for j = pos1.y, pos2.y-1 do
 	 for k = pos1.z, pos2.z-1 do
-	    minetest.remove_node({x = i, y = j, z = k})
+	    core.remove_node({x = i, y = j, z = k})
 	 end
       end
    end
@@ -128,7 +128,7 @@ function util.areafunc(pos1, pos2, func, nomanip)
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
    if not nomanip then
-      local manip = minetest.get_voxel_manip()
+      local manip = core.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
    
@@ -147,27 +147,27 @@ function util.reconstruct(pos1, pos2, nomanip)
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
    if not nomanip then
-      local manip = minetest.get_voxel_manip()
+      local manip = core.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
    
    -- fix chests
-   local nodes = minetest.find_nodes_in_area(pos1, pos2, "default:chest")
-   local node = minetest.registered_nodes["default:chest"]
+   local nodes = core.find_nodes_in_area(pos1, pos2, "default:chest")
+   local node = core.registered_nodes["default:chest"]
    for _, pos in ipairs(nodes) do
       node.on_construct(pos)
    end
 
    -- fix music players
-   nodes = minetest.find_nodes_in_area(pos1, pos2, "music:player")
-   node = minetest.registered_nodes["music:player"]
+   nodes = core.find_nodes_in_area(pos1, pos2, "music:player")
+   node = core.registered_nodes["music:player"]
    for _, pos in ipairs(nodes) do      
       node.on_construct(pos)
    end
 
    -- fix furnaces
-   nodes = minetest.find_nodes_in_area(pos1, pos2, "default:furnace")
-   node = minetest.registered_nodes["default:furnace"]
+   nodes = core.find_nodes_in_area(pos1, pos2, "default:furnace")
+   node = core.registered_nodes["default:furnace"]
    for _, pos in ipairs(nodes) do      
       node.on_construct(pos)
    end

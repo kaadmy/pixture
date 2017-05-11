@@ -3,12 +3,12 @@
 -- By Kaadmy, for Pixture
 --
 
-local enable_saving = minetest.setting_getbool("pm_enable_saving")
+local enable_saving = core.setting_getbool("pm_enable_saving")
 if enable_saving == nil then enable_saving = true end
 
 local messages = {}
 
-minetest.register_chatcommand(
+core.register_chatcommand(
    "pm",
    {
       params = "<player> <message>",
@@ -19,7 +19,7 @@ minetest.register_chatcommand(
 
 		if not sendto then return false, "Invalid usage, see /help pm." end
 
-		if not minetest.get_player_by_name(sendto) then
+		if not core.get_player_by_name(sendto) then
 		   if enable_saving then
 		      if messages[sendto] == nil then messages[sendto] = {} end
 		      table.insert(messages[sendto], name .. ": " .. message)
@@ -32,15 +32,15 @@ minetest.register_chatcommand(
 		   end
 		end
 
-		minetest.log("action", "PM from " .. name .. " to " .. sendto
+		core.log("action", "PM from " .. name .. " to " .. sendto
 			     .. ": " .. message)
-		minetest.chat_send_player(sendto, "PM from " .. name .. ": "
+		core.chat_send_player(sendto, "PM from " .. name .. ": "
 					  .. message)
 		return true, "PM sent."
 	     end
    })
 
-minetest.register_chatcommand(
+core.register_chatcommand(
    "pms",
    {
       description = "Show saved private messages",
@@ -48,7 +48,7 @@ minetest.register_chatcommand(
 		if not enable_saving then return false, "PM saving is disabled." end
 		if messages[name] == nil then return false, "No saved PMs." end
 
-		minetest.chat_send_player(name, "Saved PMs:")
+		core.chat_send_player(name, "Saved PMs:")
 
 		local str = ""
 		local amt_pms = 0
@@ -57,7 +57,7 @@ minetest.register_chatcommand(
 		   str = str .. "  " .. msg .. "\n"
 		end
 
-		minetest.chat_send_player(name, str)
+		core.chat_send_player(name, str)
 
 		messages[name] = nil
 
@@ -66,15 +66,15 @@ minetest.register_chatcommand(
    })
 
 if enable_saving then
-   minetest.register_on_joinplayer(
+   core.register_on_joinplayer(
       function(player)
 	 local name = player:get_player_name()
 
          if messages[name] ~= nil and #messages[name] >= 1 then
-            minetest.chat_send_player(name, core.colorize("#0ff", "You have " .. #messages[name] .. " saved PMs. Type /pms to view."))
+            core.chat_send_player(name, core.colorize("#0ff", "You have " .. #messages[name] .. " saved PMs. Type /pms to view."))
             return false
          else
-            minetest.chat_send_player(name, core.colorize("#0ff", "You have no saved PMs. Send PMs with the /pm command."))
+            core.chat_send_player(name, core.colorize("#0ff", "You have no saved PMs. Send PMs with the /pm command."))
             return true
          end
       end)

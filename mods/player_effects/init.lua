@@ -10,12 +10,12 @@ player_effects.registered_effects = {}
 
 local update_time = 1 -- update every second
 local timer = 10
-local effects_file = minetest.get_worldpath() .. "/player_effects"
+local effects_file = core.get_worldpath() .. "/player_effects"
 
 local function save_effects()
    local f = io.open(effects_file, "w")
 
-   f:write(minetest.serialize(player_effects.effects))
+   f:write(core.serialize(player_effects.effects))
 
    io.close(f)
 end
@@ -24,7 +24,7 @@ local function load_effects()
    local f = io.open(effects_file, "r")
 
    if f then
-      player_effects.effects = minetest.deserialize(f:read("*all"))
+      player_effects.effects = core.deserialize(f:read("*all"))
 
       io.close(f)
    else
@@ -59,7 +59,7 @@ function player_effects.apply_effect(player, ename)
    local effect = player_effects.get_registered_effect(ename)
 
    if effect.duration >= 0 then
-      player_effects.effects[player:get_player_name()][ename] = minetest.get_gametime() + effect.duration
+      player_effects.effects[player:get_player_name()][ename] = core.get_gametime() + effect.duration
    else
       player_effects.effects[player:get_player_name()][ename] = -1
    end
@@ -153,9 +153,9 @@ end
 local function step(dtime)
    timer = timer + dtime
    if timer > update_time then
-      local gt = minetest.get_gametime()
+      local gt = core.get_gametime()
 
-      for _, player in pairs(minetest.get_connected_players()) do
+      for _, player in pairs(core.get_connected_players()) do
 	 local name = player:get_player_name()
 
 	 for ename, endtime in pairs(player_effects.effects[name]) do
@@ -193,12 +193,12 @@ local function on_dieplayer(player)
    player_effects.clear_effects(player)
 end
 
-minetest.register_globalstep(step)
-minetest.register_on_joinplayer(on_joinplayer)
-minetest.register_on_leaveplayer(on_leaveplayer)
-minetest.register_on_dieplayer(on_dieplayer)
+core.register_globalstep(step)
+core.register_on_joinplayer(on_joinplayer)
+core.register_on_leaveplayer(on_leaveplayer)
+core.register_on_dieplayer(on_dieplayer)
 
-minetest.register_chatcommand(
+core.register_chatcommand(
    "player_effects",
    {
       description = "Show current player effects",
@@ -210,16 +210,16 @@ minetest.register_chatcommand(
 		   if endtime < 0 then
 		      s = s .. "  " .. player_effects.registered_effects[ename].title .. ": unlimited\n"
 		   else
-		      s = s .. "  " .. player_effects.registered_effects[ename].title .. ": " .. (endtime - minetest.get_gametime()) .. " seconds remaining\n"
+		      s = s .. "  " .. player_effects.registered_effects[ename].title .. ": " .. (endtime - core.get_gametime()) .. " seconds remaining\n"
 		   end
 
 		   ea = ea + 1
 		end
 
 		if ea > 0 then
-		   minetest.chat_send_player(name, s)
+		   core.chat_send_player(name, s)
 		else
-		   minetest.chat_send_player(name, "You currently have no effects")
+		   core.chat_send_player(name, "You currently have no effects")
 		end
 	     end
    })
@@ -244,15 +244,15 @@ player_effects.register_effect(
 	 speed = 2,
       }
    })
-minetest.register_privilege("uberspeed", "Can use /uberspeed command")
-minetest.register_chatcommand(
+core.register_privilege("uberspeed", "Can use /uberspeed command")
+core.register_chatcommand(
    "uberspeed",
    {
       params = "[on|off|cinematic]",
       description = "Set Uberspeed",
       privs = {uberspeed = true},
       func = function(name, param)
-		local player=minetest.get_player_by_name(name)
+		local player=core.get_player_by_name(name)
 
 		if param == "on" then
 		   player_effects.apply_effect(player, "uberspeed")
@@ -262,7 +262,7 @@ minetest.register_chatcommand(
 		   player_effects.remove_effect(player, "uberspeed")
 		   player_effects.remove_effect(player, "uberspeed_cinematic")
 		else
-		   minetest.chat_send_player(name, "Bad param for /uberspeed; type /help uberspeed")
+		   core.chat_send_player(name, "Bad param for /uberspeed; type /help uberspeed")
 		end
 	     end
    })

@@ -3,7 +3,7 @@
 -- By Kaadmy, for Pixture
 --
 
-if minetest.setting_getbool("testing_enable") then
+if core.setting_getbool("testing_enable") then
    local t1 = os.clock()
    for i = 1, 10000 do
       dump({x=0,y=50,z=100})
@@ -18,9 +18,9 @@ if minetest.setting_getbool("testing_enable") then
 
    local t3 = os.clock()
    for i = 1, 10000 do
-      minetest.serialize({x=0,y=50,z=100})
+      core.serialize({x=0,y=50,z=100})
    end
-   print(string.format("10000 iterations with minetest.serialize({x=0,y=50,z=100}) took %.2fms", (os.clock() - t3) * 1000))
+   print(string.format("10000 iterations with core.serialize({x=0,y=50,z=100}) took %.2fms", (os.clock() - t3) * 1000))
 
    local t4 = os.clock()
    for i = 1, 10000 do
@@ -30,7 +30,7 @@ if minetest.setting_getbool("testing_enable") then
 
    local t5 = os.clock()
    for i = 1, 10000 do
-      minetest.hash_node_position({x=0,y=50,z=100})
+      core.hash_node_position({x=0,y=50,z=100})
    end
-   print(string.format("10000 iterations with minetest.hash_node_position({x=0,y=50,z=100}) took %.2fms", (os.clock() - t5) * 1000))
+   print(string.format("10000 iterations with core.hash_node_position({x=0,y=50,z=100}) took %.2fms", (os.clock() - t5) * 1000))
 end

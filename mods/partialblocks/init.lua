@@ -6,15 +6,15 @@
 partialblocks = {}
 
 function partialblocks.register_material(name, desc, node, can_burn)
-   local nodedef = minetest.registered_nodes[node]
+   local nodedef = core.registered_nodes[node]
 
    if nodedef == nil then
-      minetest.log("warning", "Cannot find node for partialblock: " .. node)
+      core.log("warning", "Cannot find node for partialblock: " .. node)
       return
    end
 
    -- Slab
-   minetest.register_node(
+   core.register_node(
       "partialblocks:" .. name .. "_slab",
       {
 	 tiles = nodedef.tiles,
@@ -34,14 +34,14 @@ function partialblocks.register_material(name, desc, node, can_burn)
 	 paramtype = "light",
 	 paramtype2 = "wallmounted",
       })
-   minetest.register_craft( -- Craft to
+   core.register_craft( -- Craft to
       {
 	 output = "partialblocks:" .. name .. "_slab 3",
 	 recipe = {
 	    {node, node, node},
 	 },
       })
-   minetest.register_craft( -- Craft back
+   core.register_craft( -- Craft back
       {
 	 output = node,
 	 type = "shapeless",
@@ -49,7 +49,7 @@ function partialblocks.register_material(name, desc, node, can_burn)
       })
 
    if can_burn then
-      minetest.register_craft( -- Fuel
+      core.register_craft( -- Fuel
 	 {
 	    type = "fuel",
 	    recipe = "partialblocks:" .. name .. "_slab",
@@ -58,7 +58,7 @@ function partialblocks.register_material(name, desc, node, can_burn)
    end
 
    -- Stair
-   minetest.register_node(
+   core.register_node(
       "partialblocks:" .. name .. "_stair",
       {
 	 tiles = nodedef.tiles,
@@ -79,7 +79,7 @@ function partialblocks.register_material(name, desc, node, can_burn)
 	 paramtype = "light",
 	 paramtype2 = "facedir",
       })
-   minetest.register_craft( -- Craft to
+   core.register_craft( -- Craft to
       {
 	 output = "partialblocks:" .. name .. "_stair 6",
 	 recipe = {
@@ -88,7 +88,7 @@ function partialblocks.register_material(name, desc, node, can_burn)
 	    {node, node, node},
 	 },
       })
-   minetest.register_craft( -- Craft back
+   core.register_craft( -- Craft back
       {
 	 output = node,
 	 type = "shapeless",
@@ -96,7 +96,7 @@ function partialblocks.register_material(name, desc, node, can_burn)
       })
 
    if can_burn then
-      minetest.register_craft( -- Fuel
+      core.register_craft( -- Fuel
 	 {
 	    type = "fuel",
 	    recipe = "partialblocks:" .. name .. "_stair",

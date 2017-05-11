@@ -4,7 +4,7 @@
 -- Tweaked by Kaadmy, for Pixture
 --
 
-local path = minetest.get_modpath("mobs")
+local path = core.get_modpath("mobs")
 
 -- Mob Api
 dofile(path.."/api.lua")

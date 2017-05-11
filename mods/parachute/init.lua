@@ -14,7 +14,7 @@ function a(v)
    return ((m * g + 0.5 * cw * rho * A * v * v) / m)
 end
 
-minetest.register_craftitem(
+core.register_craftitem(
    "parachute:parachute", {
       description = "Parachute",
       inventory_image = "parachute_inventory.png",
@@ -23,7 +23,7 @@ minetest.register_craftitem(
       on_use = function(itemstack, player, pointed_thing)
          local pos = player:getpos()
 
-         local on = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
+         local on = core.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 
          if default.player_attached[player:get_player_name()] then
             return
@@ -33,7 +33,7 @@ minetest.register_craftitem(
             -- Spawn parachute
             pos.y = pos.y + 3
 
-            local ent = minetest.add_entity(pos, "parachute:entity")
+            local ent = core.add_entity(pos, "parachute:entity")
 
             ent:setvelocity({x = 0, y = player:get_player_velocity().y, z = 0})
 
@@ -48,14 +48,14 @@ minetest.register_craftitem(
             itemstack:take_item()
             return itemstack
          else
-            minetest.chat_send_player(
+            core.chat_send_player(
                player:get_player_name(),
                "Cannot open parachute on ground!")
          end
       end
 })
 
-minetest.register_entity(
+core.register_entity(
    "parachute:entity",
    {
       visual = "mesh",
@@ -66,7 +66,7 @@ minetest.register_entity(
       attached = nil,
       on_step = function(self, dtime)
          local pos = self.object:getpos()
-         local under = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
+         local under = core.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 
          if self.attached ~= nil then
             local vel = self.object:getvelocity()
@@ -119,7 +119,7 @@ minetest.register_entity(
       end
 })
 
-minetest.register_craft(
+core.register_craft(
    {
       output = "parachute:parachute",
       recipe = {

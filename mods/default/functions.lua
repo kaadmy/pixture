@@ -5,11 +5,11 @@
 -- Chest naming via signs
 function default.write_name(pos, text)
    -- check above, if allowed
-   if minetest.setting_getbool("signs_allow_name_above") then
+   if core.setting_getbool("signs_allow_name_above") then
       local above = {x = pos.x, y = pos.y + 1, z = pos.z}
       local abovedef = nil
-      if minetest.registered_nodes[minetest.get_node(above).name] then
-	 abovedef = minetest.registered_nodes[minetest.get_node(above).name]
+      if core.registered_nodes[core.get_node(above).name] then
+	 abovedef = core.registered_nodes[core.get_node(above).name]
       end
       if abovedef and abovedef.write_name ~= nil then
 	 abovedef.write_name(above, text)
@@ -19,8 +19,8 @@ function default.write_name(pos, text)
    -- then below
    local below = {x = pos.x, y = pos.y - 1, z = pos.z}
    local belowdef = nil
-   if minetest.registered_nodes[minetest.get_node(below).name] then
-      belowdef = minetest.registered_nodes[minetest.get_node(below).name]
+   if core.registered_nodes[core.get_node(below).name] then
+      belowdef = core.registered_nodes[core.get_node(below).name]
    end
    if belowdef and belowdef.write_name ~= nil then
       belowdef.write_name(below, text)
@@ -32,28 +32,28 @@ end
 function default.grow_tree(pos, variety)
    local function grow()
       if variety == "apple" then
-	 minetest.place_schematic({x = pos.x-2, y = pos.y-1, z = pos.z-2}, minetest.get_modpath("default").."/schematics/default_tree.mts", "0", {}, false)
+	 core.place_schematic({x = pos.x-2, y = pos.y-1, z = pos.z-2}, core.get_modpath("default").."/schematics/default_tree.mts", "0", {}, false)
       elseif variety == "oak" then
-	 minetest.place_schematic({x = pos.x-2, y = pos.y-1, z = pos.z-2}, minetest.get_modpath("default").."/schematics/default_tree.mts", "0", {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"}, false)
+	 core.place_schematic({x = pos.x-2, y = pos.y-1, z = pos.z-2}, core.get_modpath("default").."/schematics/default_tree.mts", "0", {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"}, false)
       elseif variety == "birch" then
-	 minetest.place_schematic({x = pos.x-1, y = pos.y-1, z = pos.z-1}, minetest.get_modpath("default").."/schematics/default_squaretree.mts", "0", {["default:leaves"] = "default:leaves_birch", ["default:tree"] = "default:tree_birch", ["default:apple"] = "air"}, false)
+	 core.place_schematic({x = pos.x-1, y = pos.y-1, z = pos.z-1}, core.get_modpath("default").."/schematics/default_squaretree.mts", "0", {["default:leaves"] = "default:leaves_birch", ["default:tree"] = "default:tree_birch", ["default:apple"] = "air"}, false)
       end
    end
 
-   minetest.remove_node(pos)
+   core.remove_node(pos)
 
-   minetest.after(0, grow)
+   core.after(0, grow)
 
-   default.log(variety.." tree sapling grows at "..minetest.pos_to_string(pos), "info")
+   default.log(variety.." tree sapling grows at "..core.pos_to_string(pos), "info")
 end
 
-minetest.register_abm( -- apple trees or default trees
+core.register_abm( -- apple trees or default trees
    {
       nodenames = {"default:sapling"},
       interval = 10,
       chance = 40,
       action = function(pos, node)
-		  local is_soil = minetest.registered_nodes[minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
+		  local is_soil = core.registered_nodes[core.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
 
 		  if is_soil == nil or is_soil == 0 then return end
 
@@ -61,25 +61,25 @@ minetest.register_abm( -- apple trees or default trees
 	       end
    })
 
-minetest.register_abm( -- oak trees
+core.register_abm( -- oak trees
    {
       nodenames = {"default:sapling_oak"},
       interval = 10,
       chance = 60,
       action = function(pos, node)
-		  local is_soil = minetest.registered_nodes[minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
+		  local is_soil = core.registered_nodes[core.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
 		  if is_soil == nil or is_soil == 0 then return end
 		  default.grow_tree(pos, "oak")
 	       end
    })
 
-minetest.register_abm( -- birch trees
+core.register_abm( -- birch trees
    {
       nodenames = {"default:sapling_birch"},
       interval = 10,
       chance = 50,
       action = function(pos, node)
-		  local is_soil = minetest.registered_nodes[minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
+		  local is_soil = core.registered_nodes[core.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
 		  if is_soil == nil or is_soil == 0 then return end
 		  default.grow_tree(pos, "birch")
 	       end
@@ -90,18 +90,18 @@ minetest.register_abm( -- birch trees
 function default.dig_up(pos, node, digger)
    --	if digger == nil then return end
    local np = {x = pos.x, y = pos.y + 1, z = pos.z}
-   local nn = minetest.get_node(np)
+   local nn = core.get_node(np)
    if nn.name == node.name then
-      minetest.node_dig(np, nn, digger)
+      core.node_dig(np, nn, digger)
    end
 end
 
 function default.dig_down(pos, node, digger)
    --	if digger == nil then return end
    local np = {x = pos.x, y = pos.y - 1, z = pos.z}
-   local nn = minetest.get_node(np)
+   local nn = core.get_node(np)
    if nn.name == node.name then
-      minetest.node_dig(np, nn, digger)
+      core.node_dig(np, nn, digger)
    end
 end
 
@@ -112,19 +112,19 @@ default.leafdecay_enable_cache = true
 -- Spread the load of finding trunks
 default.leafdecay_trunk_find_allow_accumulator = 0
 
-minetest.register_globalstep(function(dtime)
+core.register_globalstep(function(dtime)
 				local finds_per_second = 5000
 				default.leafdecay_trunk_find_allow_accumulator =
 				   math.floor(dtime * finds_per_second)
 			     end)
 
 default.after_place_leaves = function(pos, placer, itemstack, pointed_thing)
-				local node = minetest.get_node(pos)
+				local node = core.get_node(pos)
 				node.param2 = 1
-				minetest.set_node(pos, node)
+				core.set_node(pos, node)
 			     end
 
-minetest.register_abm( -- leaf decay
+core.register_abm( -- leaf decay
    {
       nodenames = {"group:leafdecay"},
       neighbors = {"air", "group:liquid"},
@@ -135,23 +135,23 @@ minetest.register_abm( -- leaf decay
       action = function(p0, node, _, _)
 		  --print("leafdecay ABM at "..p0.x..", "..p0.y..", "..p0.z..")")
 		  local do_preserve = false
-		  local d = minetest.registered_nodes[node.name].groups.leafdecay
+		  local d = core.registered_nodes[node.name].groups.leafdecay
 		  if not d or d == 0 then
 		     --print("not groups.leafdecay")
 		     return
 		  end
-		  local n0 = minetest.get_node(p0)
+		  local n0 = core.get_node(p0)
 		  if n0.param2 ~= 0 then
 		     --print("param2 ~= 0")
 		     return
 		  end
 		  local p0_hash = nil
 		  if default.leafdecay_enable_cache then
-		     p0_hash = minetest.hash_node_position(p0)
+		     p0_hash = core.hash_node_position(p0)
 		     local trunkp = default.leafdecay_trunk_cache[p0_hash]
 		     if trunkp then
-			local n = minetest.get_node(trunkp)
-			local reg = minetest.registered_nodes[n.name]
+			local n = core.get_node(trunkp)
+			local reg = core.registered_nodes[n.name]
 			-- Assume ignore is a trunk, to make the thing work at the border of the active area
 			if n.name == "ignore" or (reg and reg.groups.tree and reg.groups.tree ~= 0) then
 			   --print("cached trunk still exists")
@@ -168,7 +168,7 @@ minetest.register_abm( -- leaf decay
 		  default.leafdecay_trunk_find_allow_accumulator =
 		     default.leafdecay_trunk_find_allow_accumulator - 1
 		  -- Assume ignore is a trunk, to make the thing work at the border of the active area
-		  local p1 = minetest.find_node_near(p0, d, {"ignore", "group:tree"})
+		  local p1 = core.find_node_near(p0, d, {"ignore", "group:tree"})
 		  if p1 then
 		     do_preserve = true
 		     if default.leafdecay_enable_cache then
@@ -179,55 +179,55 @@ minetest.register_abm( -- leaf decay
 		  end
 		  if not do_preserve then
 		     -- Drop stuff other than the node itself
-		     local itemstacks = minetest.get_node_drops(n0.name)
+		     local itemstacks = core.get_node_drops(n0.name)
 		     for _, itemname in ipairs(itemstacks) do
-			if minetest.get_item_group(n0.name, "leafdecay_drop") ~= 0 or itemname ~= n0.name then
+			if core.get_item_group(n0.name, "leafdecay_drop") ~= 0 or itemname ~= n0.name then
 			local p_drop = {
 			   x = p0.x - 0.5 + math.random(),
 			   y = p0.y - 0.5 + math.random(),
 			   z = p0.z - 0.5 + math.random(),
 			}
-			minetest.add_item(p_drop, itemname)
+			core.add_item(p_drop, itemname)
 		     end
 		  end
 		  -- Remove node
-		  minetest.remove_node(p0)
+		  core.remove_node(p0)
 		  nodeupdate(p0)
 	       end
 	    end
    })
 
-minetest.register_abm( -- dirt and grass footsteps becomes dirt with grass if uncovered
+core.register_abm( -- dirt and grass footsteps becomes dirt with grass if uncovered
    {
       nodenames = {"default:dirt", "default:dirt_with_grass_footsteps"},
       interval = 2,
       chance = 40,
       action = function(pos, node)
 		  local above = {x=pos.x, y=pos.y+1, z=pos.z}
-		  local name = minetest.get_node(above).name
-		  local nodedef = minetest.registered_nodes[name]
-		  if nodedef and (nodedef.sunlight_propagates or nodedef.paramtype == "light") and nodedef.liquidtype == "none" and (minetest.get_node_light(above) or 0) >= 8 then
-		     minetest.set_node(pos, {name = "default:dirt_with_grass"})
+		  local name = core.get_node(above).name
+		  local nodedef = core.registered_nodes[name]
+		  if nodedef and (nodedef.sunlight_propagates or nodedef.paramtype == "light") and nodedef.liquidtype == "none" and (core.get_node_light(above) or 0) >= 8 then
+		     core.set_node(pos, {name = "default:dirt_with_grass"})
 	       end
 	    end
    })
 
-minetest.register_abm( -- dirt with grass becomes dirt if covered
+core.register_abm( -- dirt with grass becomes dirt if covered
    {
       nodenames = {"default:dirt_with_grass"},
       interval = 2,
       chance = 10,
       action = function(pos, node)
 		  local above = {x=pos.x, y=pos.y+1, z=pos.z}
-		  local name = minetest.get_node(above).name
-		  local nodedef = minetest.registered_nodes[name]
+		  local name = core.get_node(above).name
+		  local nodedef = core.registered_nodes[name]
 		  if name ~= "ignore" and nodedef and not ((nodedef.sunlight_propagates or nodedef.paramtype == "light") and nodedef.liquidtype == "none") then
-		     minetest.set_node(pos, {name = "default:dirt"})
+		     core.set_node(pos, {name = "default:dirt"})
 		  end
 	       end
    })
 
-minetest.register_abm( -- grass expands
+core.register_abm( -- grass expands
    {
       nodenames = {"default:grass"},
       interval = 20,
@@ -238,16 +238,16 @@ minetest.register_abm( -- grass expands
 
 		  local edgepos = {x = pos.x+rx, y = pos.y, z = pos.z+rz}
 		  local downpos = {x = pos.x+rx, y = pos.y-1, z = pos.z+rz}
-		  local edgenode = minetest.get_node(edgepos)
-		  local downnode = minetest.get_node(downpos)
+		  local edgenode = core.get_node(edgepos)
+		  local downnode = core.get_node(downpos)
 		  
 		  if edgenode.name == "air" and downnode.name ~= "air" and downnode.buildable_to == false and walkable == true then
-		     minetest.set_node(edgepos, {name = "default:grass"})
+		     core.set_node(edgepos, {name = "default:grass"})
 		  end
 	       end
    })
 
-minetest.register_abm( -- clams grow
+core.register_abm( -- clams grow
    {
       nodenames = {"default:clam"},
       interval = 20,
@@ -258,16 +258,16 @@ minetest.register_abm( -- clams grow
 
 		  local edgepos = {x = pos.x+rx, y = pos.y, z = pos.z+rz}
 		  local downpos = {x = pos.x+rx, y = pos.y-1, z = pos.z+rz}
-		  local edgenode = minetest.get_node(edgepos)
-		  local downnode = minetest.get_node(downpos)
+		  local edgenode = core.get_node(edgepos)
+		  local downnode = core.get_node(downpos)
 		  
 		  if edgenode.name == "air" and downnode.name ~= "air" and downnode.buildable_to == false and walkable == true then
-		     minetest.set_node(edgepos, {name = "default:clam"})
+		     core.set_node(edgepos, {name = "default:clam"})
 		  end
 	       end
    })
 
-minetest.register_abm( -- cactus grows
+core.register_abm( -- cactus grows
    {
       nodenames = {"default:cactus"},
       neighbors = {"group:sand"},
@@ -275,24 +275,24 @@ minetest.register_abm( -- cactus grows
       chance = 10,
       action = function(pos, node)
 		  pos.y = pos.y-1
-		  local name = minetest.get_node(pos).name
-		  if minetest.get_item_group(name, "sand") ~= 0 then
+		  local name = core.get_node(pos).name
+		  if core.get_item_group(name, "sand") ~= 0 then
 		     pos.y = pos.y+1
 		     local height = 0
-		     while minetest.get_node(pos).name == "default:cactus" and height < 3 do
+		     while core.get_node(pos).name == "default:cactus" and height < 3 do
 			height = height+1
 			pos.y = pos.y+1
 		     end
 		     if height < 3 then
-			if minetest.get_node(pos).name == "air" then
-			   minetest.set_node(pos, {name="default:cactus"})
+			if core.get_node(pos).name == "air" then
+			   core.set_node(pos, {name="default:cactus"})
 			end
 		     end
 		  end
 	       end,
    })
 
-minetest.register_abm( -- papyrus grows
+core.register_abm( -- papyrus grows
    {
       nodenames = {"default:papyrus"},
       neighbors = {"group:plantable_sandy", "group:plantable_soil"},
@@ -300,26 +300,26 @@ minetest.register_abm( -- papyrus grows
       chance = 10,
       action = function(pos, node)
 		  pos.y = pos.y-1
-		  local name = minetest.get_node(pos).name
+		  local name = core.get_node(pos).name
 
-		  if minetest.find_node_near(pos, 3, {"group:water"}) == nil then
+		  if core.find_node_near(pos, 3, {"group:water"}) == nil then
 		     return
 		  end
 		  pos.y = pos.y+1
 		  local height = 0
-		  while minetest.get_node(pos).name == "default:papyrus" and height < 3 do
+		  while core.get_node(pos).name == "default:papyrus" and height < 3 do
 		     height = height+1
 		     pos.y = pos.y+1
 		  end
 		  if height < 3 then
-		     if minetest.get_node(pos).name == "air" then
-			minetest.set_node(pos, {name="default:papyrus"})
+		     if core.get_node(pos).name == "air" then
+			core.set_node(pos, {name="default:papyrus"})
 		     end
 		  end
 	       end,
    })
 
-minetest.register_abm( -- papyrus grows
+core.register_abm( -- papyrus grows
    {
       nodenames = {"default:thistle"},
       neighbors = {"group:plantable_soil"},
@@ -327,26 +327,26 @@ minetest.register_abm( -- papyrus grows
       chance = 30,
       action = function(pos, node)
 		  local height = 0
-		  while minetest.get_node(pos).name == "default:thistle" and height < 3 do
+		  while core.get_node(pos).name == "default:thistle" and height < 3 do
 		     height = height+1
 		     pos.y = pos.y+1
 		  end
 		  if height < 3 then
-		     if minetest.get_node(pos).name == "air" then
-			minetest.set_node(pos, {name="default:thistle"})
+		     if core.get_node(pos).name == "air" then
+			core.set_node(pos, {name="default:thistle"})
 		     end
 		  end
 	       end,
    })
 
 --[[ TORCH FLAME IS VERY, VERY SLOW, THERE ARE NOW ANIMATIONS INSTEAD
-minetest.register_abm( -- torch flame
+core.register_abm( -- torch flame
    {
       nodenames = {"default:torch", "default:torch_weak"},
       interval = 5,
       chance = 1,
       action = function(pos, node)
-		  minetest.add_particlespawner(
+		  core.add_particlespawner(
 		     {
 			amount = 10,
 			time = 5,
@@ -366,13 +366,13 @@ minetest.register_abm( -- torch flame
    })
 --]]
 
-minetest.register_abm( -- weak torchs burn out and die after ~3 minutes
+core.register_abm( -- weak torchs burn out and die after ~3 minutes
    {
       nodenames = {"default:torch_weak"},
       interval = 3,
       chance = 60,
       action = function(pos, node)
-		  minetest.set_node(pos, {name = "default:torch_dead", param = node.param, param2 = node.param2})
+		  core.set_node(pos, {name = "default:torch_dead", param = node.param, param2 = node.param2})
 	       end
    })
 

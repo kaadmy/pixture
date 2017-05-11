@@ -21,12 +21,12 @@ armor.slots = {"helmet", "chestplate", "boots"}
 local form_armor = default.ui.get_page("core_2part")
 default.ui.register_page("core_armor", form_armor)
 
-local enable_drop = minetest.setting_getbool("drop_items_on_die") or false
+local enable_drop = core.setting_getbool("drop_items_on_die") or false
 
 local armor_timer = 10
 
 function armor.is_armor(itemname)
-   local item = minetest.registered_items[itemname]
+   local item = core.registered_items[itemname]
 
    if item ~= nil and item.groups ~= nil then
       if item.groups.is_armor then
@@ -45,7 +45,7 @@ function armor.is_slot(itemname, slot)
 end
 
 function armor.get_base_skin(player)
-   if minetest.get_modpath("player_skins") ~= nil then
+   if core.get_modpath("player_skins") ~= nil then
       return player_skins.get_skin(player:get_player_name())
    else
       return armor.player_skin
@@ -61,7 +61,7 @@ function armor.get_texture(player, base)
       local itemstack = inv:get_stack("armor_"..slot, 1)
       local itemname = itemstack:get_name()
       if armor.is_armor(itemname) and armor.is_slot(itemname, slot) then
-	 local item = minetest.registered_items[itemname]
+	 local item = core.registered_items[itemname]
 	 local mat = armor.materials[item.groups.armor_material][1]
 
 	 image = image .. "^armor_" .. slot .. "_" .. mat ..".png"
@@ -86,7 +86,7 @@ function armor.get_groups(player)
       local itemname = itemstack:get_name()
 
       if armor.is_armor(itemname) then
-	 local item = minetest.registered_items[itemname]
+	 local item = core.registered_items[itemname]
 	 
 	 for mat_index, _ in ipairs(armor.materials) do
 	    local mat = armor.materials[mat_index][1]
@@ -157,7 +157,7 @@ local function on_die(player)
 	 z = pos.z + math.random(-0.2, 0.2)
       }
 
-      local drop = minetest.add_item(rpos, item)
+      local drop = core.add_item(rpos, item)
       
       if drop then
 	 drop:setvelocity(
@@ -177,14 +177,14 @@ local function step(dtime)
    armor_timer = armor_timer + dtime
 
    if armor_timer > armor.update_time then
-      for _, player in pairs(minetest.get_connected_players()) do
+      for _, player in pairs(core.get_connected_players()) do
 	 armor.update(player)
       end
       armor_timer = 0
    end
 end
 
-minetest.register_craftitem(
+core.register_craftitem(
    "armor:chainmail_sheet",
    {
       description = "Chainmail sheet",
@@ -195,7 +195,7 @@ minetest.register_craftitem(
       stack_max = 20,
    })
 
-minetest.register_craft(
+core.register_craft(
    {
       output = "armor:chainmail_sheet 3",
       recipe = {
@@ -213,7 +213,7 @@ for mat_index, _ in ipairs(armor.materials) do
 --   print("Material " .. mat .. ": " .. armor_def)
 
    for _, slot in ipairs(armor.slots) do
-      minetest.register_craftitem(
+      core.register_craftitem(
 	 "armor:"..slot.."_"..mat,
 	 {
 	    description = def[4].." "..slot,
@@ -233,7 +233,7 @@ for mat_index, _ in ipairs(armor.materials) do
 
    local n = def[2]
 
-   minetest.register_craft(
+   core.register_craft(
       {
 	 output = "armor:helmet_"..mat,
 	 recipe = {
@@ -242,7 +242,7 @@ for mat_index, _ in ipairs(armor.materials) do
 	    {"", "", ""},
 	 }
       })
-   minetest.register_craft(
+   core.register_craft(
       {
 	 output = "armor:chestplate_"..mat,
 	 recipe = {
@@ -251,7 +251,7 @@ for mat_index, _ in ipairs(armor.materials) do
 	    {n,  n,  n},
 	 }
       })
-   minetest.register_craft(
+   core.register_craft(
       {
 	 output = "armor:boots_"..mat,
 	 recipe = {
@@ -262,12 +262,12 @@ for mat_index, _ in ipairs(armor.materials) do
       })
 end
 
-minetest.register_on_newplayer(on_newplayer)
-minetest.register_on_joinplayer(on_joinplayer)
+core.register_on_newplayer(on_newplayer)
+core.register_on_joinplayer(on_joinplayer)
 if enable_drop then
-   minetest.register_on_dieplayer(on_die)
+   core.register_on_dieplayer(on_die)
 end
-minetest.register_globalstep(step)
+core.register_globalstep(step)
 
 local form_armor = default.ui.get_page("core_2part")
 form_armor = form_armor .. "list[current_player;main;0.25,4.75;8,4;]"

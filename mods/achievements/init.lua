@@ -9,7 +9,7 @@ achievements.achievements = {}
 achievements.registered_achievements = {}
 achievements.registered_achievements_list = {}
 
-local achievements_file = minetest.get_worldpath() .. "/achievements"
+local achievements_file = core.get_worldpath() .. "/achievements"
 
 function achievements.register_achievement(name, def)
    local rd = {
@@ -28,7 +28,7 @@ end
 local function save_achievements()
    local f = io.open(achievements_file, "w")
 
-   f:write(minetest.serialize(achievements.achievements))
+   f:write(core.serialize(achievements.achievements))
 
    io.close(f)
 end
@@ -37,7 +37,7 @@ local function load_achievements()
    local f = io.open(achievements_file, "r")
 
    if f then
-      achievements.achievements = minetest.deserialize(f:read("*all"))
+      achievements.achievements = core.deserialize(f:read("*all"))
 
       io.close(f)
    else
@@ -69,8 +69,8 @@ function achievements.trigger_achievement(player, aname, times)
 
    if achievements.achievements[name][aname] >= achievements.registered_achievements[aname].times then
       achievements.achievements[name][aname] = -1
-      minetest.after(2.0, function()
-                        minetest.chat_send_all(
+      core.after(2.0, function()
+                        core.chat_send_all(
                            core.colorize("#0f0", "*** " .. name .." has earned the achievement [" ..
                                             achievements.registered_achievements[aname].title .. "]"))
       end)
@@ -101,7 +101,7 @@ local function on_craft(itemstack, player, craftgrid, craftinv)
 	 else
 	    local group = string.match(def.craftitem, "group:(.*)")
 
-	    if group and minetest.get_item_group(itemstack:get_name(), group) ~= 0 then
+	    if group and core.get_item_group(itemstack:get_name(), group) ~= 0 then
 	       achievements.trigger_achievement(player, aname)
 	    end
 	 end
@@ -118,7 +118,7 @@ local function on_dig(pos, oldnode, player)
 	 else
 	    local group = string.match(def.dignode, "group:(.*)")
 
-	    if group and minetest.get_item_group(oldnode.name, group) ~= 0 then
+	    if group and core.get_item_group(oldnode.name, group) ~= 0 then
 	       achievements.trigger_achievement(player, aname)
 	    end
 	 end
@@ -134,7 +134,7 @@ local function on_place(pos, newnode, player, oldnode, itemstack, pointed_thing)
 	 else
 	    local group = string.match(def.placenode, "group:(.*)")
 
-	    if group and minetest.get_item_group(newnode.name, group) ~= 0 then
+	    if group and core.get_item_group(newnode.name, group) ~= 0 then
 	       achievements.trigger_achievement(player, aname)
 	    end
 	 end
@@ -144,13 +144,13 @@ end
 
 -- Add callback functions
 
-minetest.after(0, on_load)
+core.after(0, on_load)
 
-minetest.register_on_newplayer(on_newplayer)
+core.register_on_newplayer(on_newplayer)
 
-minetest.register_on_craft(on_craft)
-minetest.register_on_dignode(on_dig)
-minetest.register_on_placenode(on_place)
+core.register_on_craft(on_craft)
+core.register_on_dignode(on_dig)
+core.register_on_placenode(on_place)
 
 -- Formspecs
 
@@ -187,8 +187,8 @@ function achievements.get_formspec(name, row)
 	 achievement_list = achievement_list .. ","
       end
 
-      achievement_list = achievement_list .. minetest.formspec_escape(def.title) .. ","
-      achievement_list = achievement_list .. minetest.formspec_escape(def.description) .. ","
+      achievement_list = achievement_list .. core.formspec_escape(def.title) .. ","
+      achievement_list = achievement_list .. core.formspec_escape(def.description) .. ","
       achievement_list = achievement_list .. progress
    end
 
@@ -210,12 +210,12 @@ function achievements.get_formspec(name, row)
       progress = "Missing"
    end
 
-   form = form .. "label[0.25,8.15;" .. minetest.formspec_escape(amt_gotten .. " of " .. #achievements.registered_achievements_list .. " achievements gotten, " .. amt_progress .. " in progress") .. "]"
+   form = form .. "label[0.25,8.15;" .. core.formspec_escape(amt_gotten .. " of " .. #achievements.registered_achievements_list .. " achievements gotten, " .. amt_progress .. " in progress") .. "]"
 
-   form = form .. "label[0.25,0.25;" .. minetest.formspec_escape(def.title) .. "]"
-   form = form .. "label[7.25,0.25;" .. minetest.formspec_escape(progress) .. "]"
+   form = form .. "label[0.25,0.25;" .. core.formspec_escape(def.title) .. "]"
+   form = form .. "label[7.25,0.25;" .. core.formspec_escape(progress) .. "]"
 
-   form = form .. "label[0.5,0.75;" .. minetest.formspec_escape(def.description) .. "]"
+   form = form .. "label[0.5,0.75;" .. core.formspec_escape(def.description) .. "]"
 
    return form
 end
@@ -230,17 +230,17 @@ local function receive_fields(player, form_name, fields)
    local selected = 1
 
    if fields.achievement_list then
-      local selection = minetest.explode_table_event(fields.achievement_list)
+      local selection = core.explode_table_event(fields.achievement_list)
 
       if selection.type == "CHG" or selection.type == "DCL" then
 	 selected = selection.row
       end
    end
 
-   minetest.show_formspec(name, "core_achievements", achievements.get_formspec(name, selected))
+   core.show_formspec(name, "core_achievements", achievements.get_formspec(name, selected))
 end
 
-minetest.register_on_player_receive_fields(receive_fields)
+core.register_on_player_receive_fields(receive_fields)
 
 --
 -- Below are the default achievements

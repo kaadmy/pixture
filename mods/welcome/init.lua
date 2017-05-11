@@ -15,8 +15,8 @@ welcome.rules = {
 }
 
 function welcome.get_formspec(name)
-   if not minetest.setting_getbool("welcome_enable") then
-      minetest.chat_send_player(name, "Welcoming is disabled")
+   if not core.setting_getbool("welcome_enable") then
+      core.chat_send_player(name, "Welcoming is disabled")
       return ""
    end
 
@@ -27,12 +27,12 @@ function welcome.get_formspec(name)
    for _, t in ipairs(welcome.rules) do
       if rules ~= "" then rules = rules .. "," end
 
-      rules = rules .. minetest.formspec_escape(t)
+      rules = rules .. core.formspec_escape(t)
    end
 
    form = form .. "textlist[0.25,0.75;7.75,6.75;rules;" .. rules .. "]"
 
-   if not minetest.check_player_privs(name, {interact = true}) then
+   if not core.check_player_privs(name, {interact = true}) then
       form = form .. default.ui.button_exit(1.25, 7.75, 3, 1, "decline_rules", "Nope")
       form = form .. default.ui.button_exit(4.25, 7.75, 3, 1, "accept_rules", "Okay")
    else
@@ -46,14 +46,14 @@ function welcome.show_rules(name)
    local f = welcome.get_formspec(name)
 
    if f ~= "" then
-      minetest.show_formspec(name, "welcome:welcome", f)
+      core.show_formspec(name, "welcome:welcome", f)
    end
 end
 
-minetest.register_on_player_receive_fields(
+core.register_on_player_receive_fields(
    function(player, form_name, fields)
       local name = player:get_player_name()
-      local privs = minetest.get_player_privs(name)
+      local privs = core.get_player_privs(name)
 
       if privs.interact or fields.rules then
 	 return
@@ -61,14 +61,14 @@ minetest.register_on_player_receive_fields(
 
       if fields.accept_rules then
 	 privs.interact = true
-	 minetest.set_player_privs(name, privs)
-	 minetest.chat_send_player(name, "You now have interact, follow the rules and have fun!")
+	 core.set_player_privs(name, privs)
+	 core.chat_send_player(name, "You now have interact, follow the rules and have fun!")
       else
-	 minetest.chat_send_player(name, "If you want to interact, please read and accept the rules. Type /welcome to show rules.")
+	 core.chat_send_player(name, "If you want to interact, please read and accept the rules. Type /welcome to show rules.")
       end
    end)
 
-minetest.register_chatcommand(
+core.register_chatcommand(
    "welcome",
    {
       description = "Show rules",
@@ -77,11 +77,11 @@ minetest.register_chatcommand(
 	     end
    })
 
-minetest.register_on_joinplayer(
+core.register_on_joinplayer(
    function(player)
       local name = player:get_player_name()
 
-      if not minetest.check_player_privs(name, {interact = true}) and minetest.setting_getbool("welcome_enable") then
+      if not core.check_player_privs(name, {interact = true}) and core.setting_getbool("welcome_enable") then
 	 welcome.show_rules(name)
       end
    end)

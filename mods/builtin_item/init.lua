@@ -4,7 +4,7 @@
 -- Tweaked by Kaadmy, for Pixture
 --
 
-minetest.register_entity(
+core.register_entity(
    ":__builtin:item",
    {
       initial_properties = {
@@ -39,9 +39,9 @@ minetest.register_entity(
 
 		    local item_texture = nil
 		    local item_type = ""
-		    if minetest.registered_items[itemname] then
-		       item_texture = minetest.registered_items[itemname].inventory_image
-		       item_type = minetest.registered_items[itemname].type
+		    if core.registered_items[itemname] then
+		       item_texture = core.registered_items[itemname].inventory_image
+		       item_type = core.registered_items[itemname].type
 		    end
 		    local prop = {
 		       is_visible = true,
@@ -63,7 +63,7 @@ minetest.register_entity(
 
       get_staticdata = function(self)
 			  --return self.itemstring
-			  return minetest.serialize(
+			  return core.serialize(
 			     {
 				itemstring = self.itemstring,
 				always_collect = self.always_collect,
@@ -73,7 +73,7 @@ minetest.register_entity(
 
       on_activate = function(self, staticdata, dtime_s)
 		       if string.sub(staticdata, 1, string.len("return")) == "return" then
-			  local data = minetest.deserialize(staticdata)
+			  local data = core.deserialize(staticdata)
 			  if data and type(data) == "table" then
 			     self.itemstring = data.itemstring
 			     self.always_collect = data.always_collect
@@ -93,7 +93,7 @@ minetest.register_entity(
 		    end,
       
       on_step = function(self, dtime)
-		   local time = tonumber(minetest.setting_get("remove_items"))
+		   local time = tonumber(core.setting_get("remove_items"))
 		   if not time then time = 600 end
 		   if not self.timer then self.timer = 0 end
 		   
@@ -104,17 +104,17 @@ minetest.register_entity(
 		   
 		   local p = self.object:getpos()
 		   
-		   local name = minetest.get_node(p).name
-		   if minetest.registered_nodes[name].damage_per_second > 0 or name == "maptools:igniter" then
-		      minetest.sound_play("builtin_item_lava", {pos = self.object:getpos(), gain = 0.45})
+		   local name = core.get_node(p).name
+		   if core.registered_nodes[name].damage_per_second > 0 or name == "maptools:igniter" then
+		      core.sound_play("builtin_item_lava", {pos = self.object:getpos(), gain = 0.45})
 		      self.object:remove()
 		      return
 		   end
 		   
 		   p.y = p.y - 0.3
-		   local nn = minetest.get_node(p).name
+		   local nn = core.get_node(p).name
 		   -- If node is not registered or node is walkably solid:
-		   if not minetest.registered_nodes[nn] or minetest.registered_nodes[nn].walkable then
+		   if not core.registered_nodes[nn] or core.registered_nodes[nn].walkable then
 		      if self.physical_state then
 			 self.object:setvelocity({x=0,y=0,z=0})
 			 self.object:setacceleration({x=0, y=0, z=0})
