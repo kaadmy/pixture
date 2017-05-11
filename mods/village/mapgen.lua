@@ -43,7 +43,9 @@ minetest.register_abm(
       action = function(pos, node)
          minetest.remove_node(pos)
 
-         if minetest.setting_get_bool("mapgen_disable_villages")
+         if minetest.setting_getbool("mapgen_disable_villages") == true then
+            return
+         end
 
          local pr = PseudoRandom(minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z)
 
