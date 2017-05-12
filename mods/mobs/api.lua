@@ -154,9 +154,19 @@ function mobs:register_mob(name, def)
 			      and def.drawtype == "side" then
 			      self.rotate = math.rad(90)
 			   end
-			   local yaw = self.object:getyaw() + self.rotate
+
+                           local tmpyaw = self.object:getyaw()
+			   local yaw = self.rotate
+
+                           if tmpyaw ~= tmpyaw then -- It's a nan value
+                              minetest.log("warning", "[mod:mobs] object:getyaw() nan shim used")
+                           else
+                              yaw = yaw + tmpyaw
+                           end
+
 			   local x = math.sin(yaw) * -v
 			   local z = math.cos(yaw) * v
+
 			   self.object:setvelocity({x = x, y = self.object:getvelocity().y, z = z})
 			end,
 	 get_velocity = function(self)
