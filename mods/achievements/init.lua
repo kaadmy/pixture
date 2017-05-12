@@ -31,8 +31,6 @@ local function save_achievements()
 
    f:write(minetest.serialize(achievements.achievements))
 
-   print("Save: " .. dump(achievements.achievements))
-
    saving = false
 
    io.close(f)
@@ -52,11 +50,8 @@ local function load_achievements()
    if f then
       achievements.achievements = minetest.deserialize(f:read("*all"))
 
-      print("Load: " .. dump(achievements.achievements))
-
       io.close(f)
    else
-      print("Firstload...")
       save_achievements()
    end
 end
