@@ -143,6 +143,7 @@ minetest.register_globalstep(
 		     minsize = 3,
 		     maxsize = 4,
 		     collisiondetection = true,
+		     collision_removal = true,
 		     vertical = false,
 		     texture = "weather_snowflake.png",
 		     playername = player:get_player_name()
@@ -154,92 +155,7 @@ minetest.register_globalstep(
    end
 )
 
-minetest.register_abm(
-   {
-      nodenames = {"weather:ice"},
-      interval = 4,
-      chance = 80,
-      action = function(pos, node, active_object_count, active_object_count_wider)
-		  if weather.weather ~= "snowstorm" then
-		     minetest.remove_node(pos)
-		  end
-	       end
-   })
-
---[[minetest.register_abm(
-   {
-      nodenames = {"air"},
-      interval = 2,
-      chance = 80,
-      action = function(pos, node, active_object_count, active_object_count_wider)
-		  if minetest.get_node_light(pos) ~= 15 then return end
-
-		  local under_nodepos={x=pos.x, y=pos.y-1, z=pos.z}
-		  local under_node=minetest.get_node(under_nodepos)
-
-		  if under_node.name == "air" then return end
-
-		  local under_nodedef=minetest.registered_nodes[under_node.name]
-
-		  if under_node.name == "default:water_source" and weather.weather == "snowstorm" then
-		     minetest.set_node(under_nodepos, {name = "weather:ice"})
-		  else
-		     if under_node.name ~= "weather:snow" then
-			if weather.weather == "snowstorm" then
-			   if under_node.name ~= "default:heated_dirt_path" then
-			      if under_nodedef.walkable then
-				 minetest.set_node(pos, {name = "weather:snow"})
-			      elseif under_nodedef.drawtype ~= "airlike" and under_nodedef.buildable_to and math.random(0, 20) <= 1 then
-				 minetest.set_node(under_nodepos, {name = "weather:snow"})
-			      end
-			   end
-			end
-		     else
-			if weather.weather ~= "snowstorm" then
-			   minetest.remove_node(under_nodepos)
-			end
-		     end
-		  end
-	       end,
-   })--]]
-
-minetest.register_node(
-   "weather:snow",
-   {
-      description = "Snow",
-      tiles ={"weather_snow.png"},
-      drawtype = "nodebox",
-      paramtype = "light",
-      node_box = {
-	 type = "fixed",
-	 fixed = {-0.5, -0.5, -0.5, 0.5, -0.5+(1/8), 0.5},
-      },
-      groups = {crumbly=3, falling_node=1, snow=1, fall_damage_add_percent=-10},
-      sounds = default.node_sound_snow_defaults(),
-   })
-
-minetest.register_node(
-   "weather:ice",
-   {
-      description = "Ice",
-      drawtype = "glasslike",
-      tiles ={"weather_ice.png"},
-      use_texture_alpha = true,
-      paramtype = "light",
-      groups = {snappy=3, ice=1, fall_damage_add_percent=10},
-      sounds = default.node_sound_glass_defaults(),
-      on_destruct = function(pos)
-		       local function add_water()
-			  minetest.set_node(pos, {name = "default:water_source"})
-		       end
-		       
-		       if minetest.find_node_near(pos, 1, {"weather:ice", "default:water_source"}) then
-			  minetest.after(0, add_water)
-		       end
-		    end
-   })
-
-minetest.register_privilege("weather", "Can use /weather.weather command")
+minetest.register_privilege("weather", "Can use /weather command")
 
 minetest.register_chatcommand(
    "weather",
@@ -248,9 +164,9 @@ minetest.register_chatcommand(
       description = "Set the weather to either clear, storm, or snowstorm",
       privs = {weather= true},
       func = function(name, param)
-		setweather_type(param)
-	     end
-   })
+         setweather_type(param)
+      end
+})
 
 setweather_type("clear")
 

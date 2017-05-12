@@ -127,7 +127,7 @@ minetest.register_craft(
 
 bed_player_spawns = {}
 
-local file = io.open(minetest.get_worldpath().."/bed.txt", "r")
+local file = io.open(minetest.get_worldpath().."/bed.dat", "r")
 if file then
    bed_player_spawns = minetest.deserialize(file:read("*all"))
    file:close()
@@ -167,7 +167,7 @@ minetest.register_globalstep(
 		  bed_player_spawns[player:get_player_name()] = player:getpos()
 	       end
 
-	       local file = io.open(minetest.get_worldpath().."/bed.txt", "w")
+	       local file = io.open(minetest.get_worldpath().."/bed.dat", "w")
 	       file:write(minetest.serialize(bed_player_spawns))
 	       file:close()
 	    end

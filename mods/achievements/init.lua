@@ -9,7 +9,8 @@ achievements.achievements = {}
 achievements.registered_achievements = {}
 achievements.registered_achievements_list = {}
 
-local achievements_file = minetest.get_worldpath() .. "/achievements"
+local achievements_file = minetest.get_worldpath() .. "/achievements.dat"
+local saving = false
 
 function achievements.register_achievement(name, def)
    local rd = {
@@ -30,7 +31,19 @@ local function save_achievements()
 
    f:write(minetest.serialize(achievements.achievements))
 
+   print("Save: " .. dump(achievements.achievements))
+
+   saving = false
+
    io.close(f)
+end
+
+local function delayed_save()
+   if not saving then
+      saving = true
+
+      minetest.after(60, save_achievements)
+   end
 end
 
 local function load_achievements()
@@ -39,8 +52,11 @@ local function load_achievements()
    if f then
       achievements.achievements = minetest.deserialize(f:read("*all"))
 
+      print("Load: " .. dump(achievements.achievements))
+
       io.close(f)
    else
+      print("Firstload...")
       save_achievements()
    end
 end
@@ -76,13 +92,19 @@ function achievements.trigger_achievement(player, aname, times)
       end)
    end
 
-   save_achievements()
+   delayed_save()
 end
 
 -- Load achievements table
 
 local function on_load()
    load_achievements()
+end
+
+-- Save achievements table
+
+local function on_shutdown()
+   save_achievements()
 end
 
 -- New player
@@ -145,6 +167,8 @@ end
 -- Add callback functions
 
 minetest.after(0, on_load)
+
+minetest.register_on_shutdown(on_shutdown)
 
 minetest.register_on_newplayer(on_newplayer)
 

@@ -10,7 +10,7 @@ player_effects.registered_effects = {}
 
 local update_time = 1 -- update every second
 local timer = 10
-local effects_file = minetest.get_worldpath() .. "/player_effects"
+local effects_file = minetest.get_worldpath() .. "/player_effects.dat"
 
 local function save_effects()
    local f = io.open(effects_file, "w")
@@ -45,7 +45,7 @@ end
 
 function player_effects.get_registered_effect(ename)
    local e = player_effects.registered_effects[ename]
-   
+
    if not e then
       default.log("[mod:player_effects] Cannot find registered player effect " .. ename, "error")
 

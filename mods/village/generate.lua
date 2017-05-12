@@ -6,7 +6,7 @@ local mp = minetest.get_modpath("village")
 
 village.villages = {}
 
-local village_file = minetest.get_worldpath() .. "/villages"
+local village_file = minetest.get_worldpath() .. "/villages.dat"
 
 function village.get_id(name, pos)
    return name .. minetest.hash_node_position(pos)

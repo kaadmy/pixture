@@ -16,7 +16,7 @@ local player_step = {}
 local player_health_step = {}
 local player_bar = {}
 local base_interval = tonumber(minetest.setting_get("hunger_step")) or 3.0 -- seconds per hunger update, 2.0 is slightly fast
-local file = minetest.get_worldpath() .. "/hunger"
+local file = minetest.get_worldpath() .. "/hunger.dat"
 
 function hunger.save_hunger()
    local output = io.open(file, "w")
@@ -44,7 +44,7 @@ local function load_hunger()
 	 hunger.hunger[name] = hnger
 	 hunger.saturation[name] = sat
 
---	 minetest.log("action", name.." has "..hnger.." hunger and is saturated to "..sat.."%")
+         --	 minetest.log("action", name.." has "..hnger.." hunger and is saturated to "..sat.."%")
       until input:read(0) == nil
       io.close(input)
    else
@@ -69,7 +69,7 @@ function hunger.update_bar(player)
 	    dir = 0,
 	    size = {x=16, y=16},
 	    offset = {x=64, y=-(48+24+16)},
-	 })
+      })
    end
 end
 
@@ -83,7 +83,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 physics = {
 	    speed = 0.6,
 	 }
-      })
+   })
 
    -- Prevent players from starving while afk (<--joke)
    minetest.register_on_dignode(
@@ -91,14 +91,14 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 if not player then return end
 	 local name = player:get_player_name()
 	 hunger.active[name] = hunger.active[name]+ 2
-      end)
+   end)
 
    minetest.register_on_placenode(
       function(pos, node, player)
 	 if not player then return end
 	 local name = player:get_player_name()
 	 hunger.active[name] = hunger.active[name]+ 2
-      end)
+   end)
 
    minetest.register_on_joinplayer(
       function(player)
@@ -113,16 +113,16 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	       dir = 0,
 	       size = {x=16, y=16},
 	       offset = {x=64, y=-(48+24+16)},
-	    })
-	 
+         })
+
 	 hunger.update_bar(player)
-      end)
+   end)
 
    minetest.register_on_leaveplayer(
       function(player)
 	 local name = player:get_player_name()
 	 player_bar[name] = nil
-      end)
+   end)
 
    minetest.register_on_respawnplayer(
       function(player)
@@ -130,7 +130,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 hunger.hunger[name] = 20
 	 hunger.update_bar(player)
 	 hunger.save_hunger()
-      end)
+   end)
 
    minetest.register_on_item_eat(
       function(hpdata, replace_with_item, itemstack, player, pointed_thing)
@@ -139,7 +139,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 
 	 local hp_change = 0
 	 local saturation = 2
-	 
+
 	 if type(hpdata) == "number" then
 	    hp_change = hpdata
 	 else
@@ -178,7 +178,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	       minsize = 0.5,
 	       maxsize = 2,
 	       texture = "magicpuff.png"
-	    })
+         })
 
 	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
 
@@ -190,7 +190,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 itemstack:take_item(1)
 
 	 return itemstack
-      end)
+   end)
 
    -- Main function
    local timer = 0
@@ -221,7 +221,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 
 	    hunger.moving[name] = moving
 	 end
-	 
+
 	 timer = timer + dtime
 
 	 if timer < base_interval then return end
@@ -252,9 +252,9 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 		  if hunger.hunger[name] <= 0 and hp >= 0 then
 		     player:set_hp(hp - 1)
 		     hunger.hunger[name] = 0
-		     
+
 		     local pos_sound  = player:getpos()
-		     minetest.chat_send_player(name, "You are hungry.")
+		     minetest.chat_send_player(name, minetest.colorize("#f00", "You are hungry."))
 		  end
 	       end
 	    end
@@ -272,7 +272,7 @@ if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunge
 	 end
 
 	 hunger.save_hunger()
-      end)
+   end)
 else
    minetest.register_on_item_eat(
       function(hpdata, replace_with_item, itemstack, player, pointed_thing)
@@ -283,5 +283,5 @@ else
 	 itemstack:take_item(1)
 
 	 return itemstack
-      end)
+   end)
 end
