@@ -71,8 +71,8 @@ function achievements.trigger_achievement(player, aname, times)
       achievements.achievements[name][aname] = -1
       minetest.after(2.0, function()
                         minetest.chat_send_all(
-                           core.colorize("#0f0", "*** " .. name .." has earned the achievement [" ..
-                                            achievements.registered_achievements[aname].title .. "]"))
+                           minetest.colorize("#0f0", "*** " .. name .." has earned the achievement [" ..
+                                                achievements.registered_achievements[aname].title .. "]"))
       end)
    end
 

@@ -1,0 +1,43 @@
+
+##
+## Pixture's menu settings
+##
+
+## Multiplayer settings
+
+welcome_enable (Welcome) bool true
+
+## Player stuff
+
+give_initial_stuff (Give initial items) bool false
+
+drop_items_on_die (Drop items on death) bool true
+
+enable_pvp (PvP) bool true
+
+## Mobs
+
+mobs_peaceful (Peaceful mobs) bool false
+mobs_safe_spawn (Safe spawn from mobs) bool true
+
+static_spawn_radius (Safe spawn radius) int 256
+
+## Beds
+
+bed_enable (Enable beds) bool true
+
+## Music
+
+music_enable (Enable music players) bool true
+
+## Weather
+
+weather_enable (Enable dynamic weather) bool true
+
+## Ambiance
+
+ambiance_enable (Enable ambient sounds) bool true
+
+## Player skins
+
+player_skins_names (Player skin list) string male,female

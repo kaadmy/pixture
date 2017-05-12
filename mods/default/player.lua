@@ -16,7 +16,7 @@ local function step(dtime)
       if player_pos.x < -30000 or player_pos.x > 30000
 	 or player_pos.y < -30000 or player_pos.y > 30000
       or player_pos.z < -30000 or player_pos.z > 30000 then
-	 minetest.chat_send_player(name, core.colorize("#f00", "Don't go past 30000m in any direction!"))
+	 minetest.chat_send_player(name, minetest.colorize("#f00", "Don't go past 30000m in any direction!"))
 	 player:setpos(player_lastpos[name])
       end
 
@@ -100,25 +100,34 @@ local function on_joinplayer(player)
 
    player_health[name] = player:get_hp()
 
-   -- uncomment to enable player-on-player collisions
+   player_lastpos[name] = player:getpos()
+
+   -- Uncomment to enable player-on-player collisions
    --   player:set_properties({physical = true})
 
-   -- uncomment to disable the sneak glitch
+   -- Uncomment to disable the sneak glitch
    player:set_physics_override({sneak_glitch = false})
 
-   -- uncomment to disable the minimap
+   -- Uncomment to disable the minimap
    player:hud_set_flags({minimap = false})
 
-   player_lastpos[name] = player:getpos()
+   -- Welcome
+   local function welcome()
+      minetest.chat_send_player(player:get_player_name(), minetest.colorize("#ff0", "Welcome to Pixture! Type /help for a list of commands."))
+   end
+
+   minetest.after(1.0, welcome)
 end
 
 local function on_leaveplayer(player)
    local name=player:get_player_name()
 
+   player_health[name] = nil
+
+   player_lastpos[name] = nil
+
    player_soundspec[name] = nil
    player_lastsound[name] = nil
-   player_health[name] = nil
-   player_lastpos[name] = nil
 end
 
 minetest.register_on_joinplayer(on_joinplayer)

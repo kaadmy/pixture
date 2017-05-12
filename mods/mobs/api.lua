@@ -6,6 +6,7 @@ mobs.mod = "redo"
 local damage_enabled = minetest.setting_getbool("enable_damage") or false
 local peaceful_only = minetest.setting_getbool("only_peaceful_mobs") or false
 local enable_blood = minetest.setting_getbool("mobs_enable_blood") or false
+
 mobs.protected = tonumber(minetest.setting_get("mobs_spawn_protected")) or 0
 mobs.remove = minetest.setting_getbool("remove_far_mobs") or false
 

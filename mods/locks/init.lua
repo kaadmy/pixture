@@ -62,7 +62,7 @@ minetest.register_tool(
             if own then
                minetest.chat_send_player(
                   own,
-                  core.colorize("#f00", player:get_player_name() .. " has broken into your locked chest!"))
+                  minetest.colorize("#f00", player:get_player_name() .. " has broken into your locked chest!"))
             end
          end
 
