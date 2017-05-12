@@ -104,8 +104,6 @@ minetest.register_craftitem(
          local pos_protected = minetest.get_pointed_thing_position(pointed_thing, true)
          if minetest.is_protected(pos_protected, user) then return end
 
-         itemstack:take_item()
-
          local inv=user:get_inventory()
 
          if inv:room_for_item("main", {name="default:bucket"}) then
@@ -117,10 +115,16 @@ minetest.register_craftitem(
          end
 
          local pos = pointed_thing.above
-         if minetest.registered_nodes[minetest.get_node(pointed_thing.under).name].buildable_to then
+         local above_nodedef = minetest.registered_nodes[minetest.get_node(pointed_thing.above).name]
+         local under_nodedef = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+
+         if under_nodedef.buildable_to then
             pos=pointed_thing.under
          end
-         minetest.add_node(pos, {name = "default:water_source"})
+
+         if not above_nodedef.walkable then
+            minetest.add_node(pos, {name = "default:water_source"})
+         end
 
          return itemstack
       end
@@ -153,10 +157,16 @@ minetest.register_craftitem(
          end
 
          local pos = pointed_thing.above
-         if minetest.registered_nodes[minetest.get_node(pointed_thing.under).name].buildable_to then
+         local above_nodedef = minetest.registered_nodes[minetest.get_node(pointed_thing.above).name]
+         local under_nodedef = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+
+         if under_nodedef.buildable_to then
             pos=pointed_thing.under
          end
-         minetest.add_node(pos, {name = "default:river_water_source"})
+
+         if not above_nodedef.walkable then
+            minetest.add_node(pos, {name = "default:river_water_source"})
+         end
 
          return itemstack
       end
@@ -189,10 +199,16 @@ minetest.register_craftitem(
          end
 
          local pos = pointed_thing.above
-         if minetest.registered_nodes[minetest.get_node(pointed_thing.under).name].buildable_to then
+         local above_nodedef = minetest.registered_nodes[minetest.get_node(pointed_thing.above).name]
+         local under_nodedef = minetest.registered_nodes[minetest.get_node(pointed_thing.under).name]
+
+         if under_nodedef.buildable_to then
             pos=pointed_thing.under
          end
-         minetest.add_node(pos, {name = "default:swamp_water_source"})
+
+         if not above_nodedef.walkable then
+            minetest.add_node(pos, {name = "default:swamp_water_source"})
+         end
 
          return itemstack
       end
