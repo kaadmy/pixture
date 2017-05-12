@@ -3,7 +3,7 @@
 -- By Kaadmy, for Pixture
 --
 
-local enable_drop = core.setting_getbool("drop_items_on_die") or false
+local enable_drop = minetest.setting_getbool("drop_items_on_die") or false
 
 local function on_die(player)
    local pos = player:getpos()
@@ -19,7 +19,7 @@ local function on_die(player)
 	 z = pos.z + math.random(-0.3, 0.3)
       }
 
-      local drop = core.add_item(rpos, item)
+      local drop = minetest.add_item(rpos, item)
       
       if drop ~= nil then
 	 local x = math.random(1, 5)
@@ -39,7 +39,7 @@ local function on_die(player)
 end
 
 if enable_drop then
-   core.register_on_dieplayer(on_die)
+   minetest.register_on_dieplayer(on_die)
 end
 
 default.log("mod:drop_items_on_die", "loaded")

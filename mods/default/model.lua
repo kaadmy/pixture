@@ -107,14 +107,14 @@ function default.player_set_animation(player, anim_name, speed)
 end
 
 -- Update appearance when the player joins
-core.register_on_joinplayer(
+minetest.register_on_joinplayer(
    function(player)
       default.player_attached[player:get_player_name()] = false
       default.player_set_model(player, "character.b3d")
       player:set_local_animation({x = 0, y = 79}, {x = 168, y = 187}, {x = 189, y = 198}, {x = 200, y = 219}, player_animation_speed)
    end)
 
-core.register_on_leaveplayer(
+minetest.register_on_leaveplayer(
    function(player)
       local name = player:get_player_name()
       player_model[name] = nil
@@ -127,9 +127,9 @@ local player_set_animation = default.player_set_animation
 local player_attached = default.player_attached
 
 -- Check each player and apply animations
-core.register_globalstep(
+minetest.register_globalstep(
    function(dtime)
-      for _, player in pairs(core.get_connected_players()) do
+      for _, player in pairs(minetest.get_connected_players()) do
 	 local name = player:get_player_name()
 	 local model_name = player_model[name]
 	 local model = model_name and models[model_name]

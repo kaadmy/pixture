@@ -9,13 +9,13 @@ wielditem = {}
 local update_time = 1
 local timer = 10 -- needs to be more than update_time
 
-core.register_craftitem(
+minetest.register_craftitem(
    "wielditem:null",
    {
       wield_image = "ui_null.png"
    })
 
-core.register_entity(
+minetest.register_entity(
    "wielditem:wielditem",
    {
       textures = {"default:broadsword"},
@@ -33,7 +33,7 @@ core.register_entity(
       on_step = function(self, dtime)
 		   local player = self.wielder
 
-		   if player == nil or (core.get_player_by_name(player:get_player_name()) == nil) then
+		   if player == nil or (minetest.get_player_by_name(player:get_player_name()) == nil) then
 		      self.object:remove()
 		      return
 		   end
@@ -52,7 +52,7 @@ local function attach_wielditem(player)
    local name = player:get_player_name()
    local pos = player:getpos()
 
-   wielditem[name] = core.add_entity(pos, "wielditem:wielditem")
+   wielditem[name] = minetest.add_entity(pos, "wielditem:wielditem")
    wielditem[name]:set_attach(player, "right_arm", {x = -1.5, y = 5.7, z = 2.5}, {x = 90, y = -45, z = 270})
    wielditem[name]:get_luaentity().wielder = player
 end
@@ -64,7 +64,7 @@ local function detach_wielditem(player)
    wielditem[name] = nil
 end
 
-core.register_on_joinplayer(attach_wielditem)
-core.register_on_leaveplayer(detach_wielditem)
+minetest.register_on_joinplayer(attach_wielditem)
+minetest.register_on_leaveplayer(detach_wielditem)
 
 default.log("mod:wielditem", "loaded")

@@ -21,7 +21,7 @@ function craftingguide.get_formspec(name)
 
    form = form .. "label[0.41,1.74;"..user.itemno.."/"..#craftingguide.items[user.item].."]" -- itemno
    form = form .. "label[3.9,8.15;"..page.."/"..max_pages.."]" -- page
-   form = form .. "label[4.4,2.5;"..core.formspec_escape(core.registered_items[user.item].description).."]" -- itemname
+   form = form .. "label[4.4,2.5;"..minetest.formspec_escape(minetest.registered_items[user.item].description).."]" -- itemname
 
    local method = craftingguide.items[user.item][user.itemno].type
    if method == "normal" or method == "crafting" then
@@ -129,7 +129,7 @@ local function receive_fields(player, form_name, fields)
       craftingguide.users[name].page = page
       craftingguide.users[name].itemno = itemno
 
-      core.show_formspec(name, "core_craftingguide", craftingguide.get_formspec(name))
+      minetest.show_formspec(name, "core_craftingguide", craftingguide.get_formspec(name))
    end
 end
 
@@ -146,8 +146,8 @@ local function on_leaveplayer(player)
 end
 
 local function load_recipes()
-   for itemname, itemdef in pairs(core.registered_items) do
-      local recipes = core.get_all_craft_recipes(itemname)
+   for itemname, itemdef in pairs(minetest.registered_items) do
+      local recipes = minetest.get_all_craft_recipes(itemname)
 
       if recipes ~= nil and itemname ~= "" then
 --	 print(dump(recipes))
@@ -161,11 +161,11 @@ local function load_recipes()
    print("Got "..#craftingguide.itemlist.." craftable items")
 end
 
-core.after(0, load_recipes)
+minetest.after(0, load_recipes)
 
-core.register_on_joinplayer(on_joinplayer)
-core.register_on_leaveplayer(on_leaveplayer)
-core.register_on_player_receive_fields(receive_fields)
+minetest.register_on_joinplayer(on_joinplayer)
+minetest.register_on_leaveplayer(on_leaveplayer)
+minetest.register_on_player_receive_fields(receive_fields)
 
 local form_craftingguide = default.ui.get_page("core")
 form_craftingguide = form_craftingguide .. default.ui.get_itemslot_bg(0.25, 4, 8, 4)
@@ -176,7 +176,7 @@ form_craftingguide = form_craftingguide .. default.ui.image_button(0.25, 0.5, 1,
 form_craftingguide = form_craftingguide .. default.ui.image_button(0.25, 2.5, 1, 1, "guide_prev_recipe", "ui_arrow_bg.png^[transformFY")
 form_craftingguide = form_craftingguide .. default.ui.get_itemslot_bg(1.25, 0.5, 3, 3)
 form_craftingguide = form_craftingguide .. default.ui.get_itemslot_bg(6.25, 1.5, 1, 1)
-form_craftingguide = form_craftingguide .. "image[5.25,1.5;1,1;"..core.formspec_escape("ui_arrow.png^[transformR270").."]"
+form_craftingguide = form_craftingguide .. "image[5.25,1.5;1,1;"..minetest.formspec_escape("ui_arrow.png^[transformR270").."]"
 
 default.ui.register_page("core_craftingguide", form_craftingguide)
 

@@ -38,30 +38,30 @@ end
 local function on_joinplayer(player)
    local name = player:get_player_name()
 
-   playerlist.players[name] = core.get_gametime()
+   playerlist.players[name] = minetest.get_gametime()
 end
 
 local function on_leaveplayer(player)
    local name = player:get_player_name()
 
-   playerlist.players[name] = core.get_gametime()
+   playerlist.players[name] = minetest.get_gametime()
 end
 
-core.register_on_joinplayer(on_joinplayer)
-core.register_on_leaveplayer(on_leaveplayer)
+minetest.register_on_joinplayer(on_joinplayer)
+minetest.register_on_leaveplayer(on_leaveplayer)
 
-core.register_chatcommand(
+minetest.register_chatcommand(
    "plist",
    {
       params = "[all|recent]",
       description = "List players that are connected and have connected since the last server restart",
       func = function(player_name, param)
-		local time = core.get_gametime()
+		local time = minetest.get_gametime()
 
 		local str = ""
 
 		if param == "all" then
-		   core.chat_send_player(player_name, "Players:")
+		   minetest.chat_send_player(player_name, "Players:")
 		elseif param == "recent" then
 		   str = str .. "Recent players: "
 		else
@@ -70,14 +70,14 @@ core.register_chatcommand(
 
 		local player_count = 0
 		for name, jointime in pairs(playerlist.players) do
-		   local plyr = core.get_player_by_name(name)
+		   local plyr = minetest.get_player_by_name(name)
 
 		   if param == "all" then
 		      if plyr ~= nil then
 			 player_count = player_count + 1
-			 core.chat_send_player(player_name, "  " .. name .. ": connected for " .. prettytime(time - jointime))
+			 minetest.chat_send_player(player_name, "  " .. name .. ": connected for " .. prettytime(time - jointime))
 		      else
-			 core.chat_send_player(player_name, "  " .. name .. ": last seen " .. prettytime(time - jointime) .. " ago")
+			 minetest.chat_send_player(player_name, "  " .. name .. ": last seen " .. prettytime(time - jointime) .. " ago")
 		      end
 		   else
 		      if param == "recent" then
@@ -92,12 +92,12 @@ core.register_chatcommand(
 		   end
 		end
 
-		core.chat_send_player(player_name, str)
+		minetest.chat_send_player(player_name, str)
 
 		if param == "recent" then
-		   core.chat_send_player(player_name, player_count .. " recent players")
+		   minetest.chat_send_player(player_name, player_count .. " recent players")
 		else
-		   core.chat_send_player(player_name, player_count .. " connected players")
+		   minetest.chat_send_player(player_name, player_count .. " connected players")
 		end
 	     end
    })

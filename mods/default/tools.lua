@@ -7,7 +7,7 @@ local creative_digtime=0.5
 local tool_levels=nil
 
 -- Creative mode/hand defs
-if core.setting_getbool("creative_mode") == true then
+if minetest.setting_getbool("creative_mode") == true then
    tool_levels = {
       wood = {
          crumbly = {
@@ -99,7 +99,7 @@ if core.setting_getbool("creative_mode") == true then
       },
    }
 
-   core.register_item(
+   minetest.register_item(
       ":",
       {
 	 type = "none",
@@ -204,7 +204,7 @@ else
       },
    }
 
-   core.register_item(
+   minetest.register_item(
       ":",
       {
 	 type = "none",
@@ -229,7 +229,7 @@ end
 
 -- "Creative" Tool
 
-core.register_tool(
+minetest.register_tool(
    "default:creative_tool",
    {
       inventory_image = "default_creative_tool.png",
@@ -252,7 +252,7 @@ core.register_tool(
 
 -- Pickaxes
 
-core.register_tool(
+minetest.register_tool(
    "default:pick_wood",
    {
       description = "Wooden Pickaxe",
@@ -266,7 +266,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:pick_stone",
    {
       description = "Stone Pickaxe",
@@ -280,7 +280,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:pick_steel",
    {
       description = "Steel Pickaxe",
@@ -294,7 +294,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:pick_carbonsteel",
    {
       description = "Carbon Steel Pickaxe",
@@ -310,7 +310,7 @@ core.register_tool(
 
 -- Shovels
 
-core.register_tool(
+minetest.register_tool(
    "default:shovel_wood",
    {
       description = "Wooden Shovel",
@@ -324,7 +324,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:shovel_stone",
    {
       description = "Stone Shovel",
@@ -338,7 +338,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:shovel_steel",
    {
       description = "Steel Shovel",
@@ -352,7 +352,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:shovel_carbonsteel",
    {
       description = "Carbon Steel Shovel",
@@ -368,7 +368,7 @@ core.register_tool(
 
 -- Axes
 
-core.register_tool(
+minetest.register_tool(
    "default:axe_wood",
    {
       description = "Wooden Axe",
@@ -383,7 +383,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:axe_stone",
    {
       description = "Stone Axe",
@@ -398,7 +398,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:axe_steel",
    {
       description = "Steel Axe",
@@ -413,7 +413,7 @@ core.register_tool(
       },
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:axe_carbonsteel",
    {
       description = "Carbon Steel Axe",
@@ -430,7 +430,7 @@ core.register_tool(
 
 -- Spears
 
-core.register_tool(
+minetest.register_tool(
    "default:spear_wood",
    {
       description = "Wooden Spear",
@@ -446,7 +446,7 @@ core.register_tool(
       }
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:spear_stone",
    {
       description = "Stone Spear",
@@ -462,7 +462,7 @@ core.register_tool(
       }
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:spear_steel",
    {
       description = "Steel Spear",
@@ -478,7 +478,7 @@ core.register_tool(
       }
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:spear_carbonsteel",
    {
       description = "Carbon Steel Spear",
@@ -496,7 +496,7 @@ core.register_tool(
 
 -- Broadsword
 
-core.register_tool(
+minetest.register_tool(
    "default:broadsword",
    {
       description = "Broadsword",
@@ -511,14 +511,14 @@ core.register_tool(
 
 -- Other
 
-core.register_tool(
+minetest.register_tool(
    "default:shears",
    {
       description = "Steel Shears (Right-click to shear animals)",
       inventory_image = "default_shears.png",
    })
 
-core.register_tool(
+minetest.register_tool(
    "default:flint_and_steel",
    {
       description = "Flint and Steel",
@@ -528,17 +528,17 @@ core.register_tool(
 		  if pointed_thing.type ~= "node" then return end
 
 		  local pos = pointed_thing.under
-		  local node = core.get_node(pos)
+		  local node = minetest.get_node(pos)
 		  local nodename = node.name
 
 		  if nodename == "default:torch_weak" then
-		     core.set_node(pos, {name = "default:torch", param = node.param, param2 = node.param2})
+		     minetest.set_node(pos, {name = "default:torch", param = node.param, param2 = node.param2})
 		     itemstack:add_wear(800)
 		  elseif nodename == "default:torch_dead" then
-		     core.set_node(pos, {name = "default:torch_weak", param = node.param, param2 = node.param2})
+		     minetest.set_node(pos, {name = "default:torch_weak", param = node.param, param2 = node.param2})
 		     itemstack:add_wear(800)
 		  elseif nodename == "tnt:tnt" then
-		     local y = core.registered_nodes["tnt:tnt"]
+		     local y = minetest.registered_nodes["tnt:tnt"]
 		     if y ~= nil then
 			y.on_punch(pos, node, user)
 

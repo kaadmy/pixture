@@ -55,24 +55,24 @@ mobs:register_spawn("mobs:boar", {"default:dirt_with_grass"}, 20, 10, 15000, 1, 
 mobs:register_egg("mobs:boar", "Boar", "mobs_boar_inventory.png")
 
 -- raw porkchop
-core.register_craftitem(
+minetest.register_craftitem(
    "mobs:pork_raw",
    {
       description = "Raw Porkchop",
       inventory_image = "mobs_pork_raw.png",
-      on_use = core.item_eat({hp = 4, sat = 30}),
+      on_use = minetest.item_eat({hp = 4, sat = 30}),
    })
 
 -- cooked porkchop
-core.register_craftitem(
+minetest.register_craftitem(
    "mobs:pork",
    {
       description = "Cooked Porkchop",
       inventory_image = "mobs_pork_cooked.png",
-      on_use = core.item_eat({hp = 8, sat = 50}),
+      on_use = minetest.item_eat({hp = 8, sat = 50}),
    })
 
-core.register_craft(
+minetest.register_craft(
    {
       type = "cooking",
       output = "mobs:pork",

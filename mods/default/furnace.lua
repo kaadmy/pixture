@@ -50,7 +50,7 @@ form_furnace = form_furnace .. "image[3.25,1.75;1,1;ui_arrow_bg.png^[transformR2
 
 default.ui.register_page("default_furnace_inactive", form_furnace)
 
-core.register_node(
+minetest.register_node(
    "default:furnace",
    {
       description = "Furnace",
@@ -61,7 +61,7 @@ core.register_node(
       is_ground_content = false,
       sounds = default.node_sound_stone_defaults(),
       on_construct = function(pos)
-			local meta = core.get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", default.ui.get_page("default_furnace_inactive"))
 			meta:set_string("infotext", "Furnace")
 
@@ -71,7 +71,7 @@ core.register_node(
 			inv:set_size("dst", 4)
 		     end,
       can_dig = function(pos,player)
-		   local meta = core.get_meta(pos);
+		   local meta = minetest.get_meta(pos);
 		   local inv = meta:get_inventory()
 		   if not inv:is_empty("fuel") then
 		      return false
@@ -84,7 +84,7 @@ core.register_node(
 		end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:furnace_active",
    {
       description = "Furnace",
@@ -97,7 +97,7 @@ core.register_node(
       is_ground_content = false,
       sounds = default.node_sound_stone_defaults(),
       on_construct = function(pos)
-			local meta = core.get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", default.ui.get_page("default_furnace_inactive"))
 			meta:set_string("infotext", "Furnace");
 
@@ -107,7 +107,7 @@ core.register_node(
 			inv:set_size("dst", 4)
 		     end,
       can_dig = function(pos,player)
-		   local meta = core.get_meta(pos);
+		   local meta = minetest.get_meta(pos);
 		   local inv = meta:get_inventory()
 		   if not inv:is_empty("fuel") then
 		      return false
@@ -121,15 +121,15 @@ core.register_node(
    })
 
 function swap_node(pos, name)
-   local node = core.get_node(pos)
+   local node = minetest.get_node(pos)
    if node.name == name then
       return
    end
    node.name = name
-   core.swap_node(pos, node)
+   minetest.swap_node(pos, node)
 end
 
-core.register_abm(
+minetest.register_abm(
    {
       nodenames = {"default:furnace", "default:furnace_active"},
       interval = 1.0,
@@ -138,7 +138,7 @@ core.register_abm(
 		  --
 		  -- Initialize metadata
 		  --
-		  local meta = core.get_meta(pos)
+		  local meta = minetest.get_meta(pos)
 		  local fuel_time = meta:get_float("fuel_time") or 0
 		  local src_time = meta:get_float("src_time") or 0
 		  local fuel_totaltime = meta:get_float("fuel_totaltime") or 0
@@ -166,7 +166,7 @@ core.register_abm(
 		  --
 		  
 		  -- Check if we have cookable content
-		  local cooked, aftercooked = core.get_craft_result({method = "cooking", width = 1, items = srclist})
+		  local cooked, aftercooked = minetest.get_craft_result({method = "cooking", width = 1, items = srclist})
 		  local cookable = true
 		  
 		  if cooked.time == 0 then
@@ -194,7 +194,7 @@ core.register_abm(
 		     -- Furnace ran out of fuel
 		     if cookable then
 			-- We need to get new fuel
-			local fuel, afterfuel = core.get_craft_result({method = "fuel", width = 1, items = fuellist})
+			local fuel, afterfuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
 			
 			if fuel.time == 0 then
 			   -- No valid fuel in fuel list

@@ -6,7 +6,7 @@
 local lumien_on_radius = 2
 local lumien_off_radius = 4
 
-core.register_node(
+minetest.register_node(
    "lumien:crystal_on",
    {
       description = "Lumien Crystal",
@@ -28,7 +28,7 @@ core.register_node(
       sounds = default.node_sound_glass_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "lumien:crystal_off",
    {
       description = "Lumien Crystal",
@@ -49,7 +49,7 @@ core.register_node(
       sounds = default.node_sound_glass_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "lumien:block",
    {
       description = "Lumien Block",
@@ -59,7 +59,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "lumien:ore",
    {
       description = "Lumien Ore",
@@ -69,14 +69,14 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "lumien:crystal_off 9",
       recipe = {"lumien:block"},
       type = "shapeless",
    })
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "lumien:block",
       recipe = {
@@ -86,7 +86,7 @@ core.register_craft(
       },
    })
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "lumien:ore",
@@ -98,7 +98,7 @@ core.register_ore(
       y_max     = -64,
    })
 
-core.register_abm(
+minetest.register_abm(
    {
       nodenames = {"lumien:crystal_on"},
       interval = 1,
@@ -115,14 +115,14 @@ core.register_abm(
 		  )
 
 		  local ok = true
-		  for _,object in ipairs(core.get_objects_inside_radius(pos, lumien_off_radius)) do
+		  for _,object in ipairs(minetest.get_objects_inside_radius(pos, lumien_off_radius)) do
 		     if object:is_player() then
 			ok = false
 		     end
 		  end
 
 		  if ok then
-		     core.set_node(
+		     minetest.set_node(
 			pos,
 			{
 			   name = "lumien:crystal_off",
@@ -134,7 +134,7 @@ core.register_abm(
    })
 
 local function step(dtime)
-   for _, player in ipairs(core.get_connected_players()) do
+   for _, player in ipairs(minetest.get_connected_players()) do
       local pos = player:getpos()
 
       util.nodefunc(
@@ -142,9 +142,9 @@ local function step(dtime)
 	 {x = pos.x+lumien_on_radius, y = pos.y+lumien_on_radius, z = pos.z+lumien_on_radius},
 	 "lumien:crystal_off",
 	 function(pos)
-	    local node = core.get_node(pos)
+	    local node = minetest.get_node(pos)
 
-	    core.set_node(
+	    minetest.set_node(
 	       pos,
 	       {
 		  name = "lumien:crystal_on",
@@ -157,7 +157,7 @@ local function step(dtime)
    end
 end
 
-core.register_globalstep(step)
+minetest.register_globalstep(step)
 
 -- Achievements
 

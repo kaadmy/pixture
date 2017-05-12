@@ -14,7 +14,7 @@ ambiance.sounds["birds"] = {
    dist = 8,
    nodename = "group:leaves",
    can_play = function(pos)
-		 local tod = (core.get_timeofday() or 1) * 2
+		 local tod = (minetest.get_timeofday() or 1) * 2
 
 		 if tod > 0.47 and tod < 1.53 then -- bit of overlap into crickets
 		    return true
@@ -31,7 +31,7 @@ ambiance.sounds["crickets"] = {
    dist = 8,
    nodename = "group:grass",
    can_play = function(pos)
-		 local tod = (core.get_timeofday() or 1) * 2
+		 local tod = (minetest.get_timeofday() or 1) * 2
 
 		 if tod < 0.5 or tod > 1.5 then
 		    return true
@@ -49,13 +49,13 @@ ambiance.sounds["flowing_water"] = {
    nodename = "group:flowing_water",
 }
 
-local ambiance_volume = tonumber(core.setting_get("ambiance_volume")) or 1.0
+local ambiance_volume = tonumber(minetest.setting_get("ambiance_volume")) or 1.0
 
 local soundspec = {}
 local lastsound = {}
 
 local function ambient_node_near(sound, pos)
-   local nodepos = core.find_node_near(pos, sound.dist, sound.nodename)
+   local nodepos = minetest.find_node_near(pos, sound.dist, sound.nodename)
 
    if nodepos ~= nil and math.random(1, sound.chance) == 1 then
       return nodepos
@@ -67,12 +67,12 @@ end
 local function step(dtime)
    local player_positions = {}
 
-   for _, player in ipairs(core.get_connected_players()) do
+   for _, player in ipairs(minetest.get_connected_players()) do
       local pos = player:getpos()
       local name = player:get_player_name()
 
       for soundname, sound in pairs(ambiance.sounds) do
-	 if not core.setting_getbool("ambiance_disable_" .. soundname) then
+	 if not minetest.setting_getbool("ambiance_disable_" .. soundname) then
 	    if lastsound[name][soundname] then
 	       lastsound[name][soundname] = lastsound[name][soundname] + dtime
 	    else
@@ -88,7 +88,7 @@ local function step(dtime)
 	       
 	       if sourcepos == nil then
 		  if soundspec[name][soundname] then
-		     core.sound_stop(soundspec[name][soundname])
+		     minetest.sound_stop(soundspec[name][soundname])
 
 		     soundspec[name][soundname] = nil
 		     lastsound[name][soundname] = 0
@@ -102,7 +102,7 @@ local function step(dtime)
 		  end
 
 		  if ok then
-		     soundspec[name][soundname] = core.sound_play(
+		     soundspec[name][soundname] = minetest.sound_play(
 			sound.file,
 			{
 			   pos = sourcepos,
@@ -135,8 +135,8 @@ local function on_leaveplayer(player)
    lastsound[name] = nil
 end
 
-core.register_on_joinplayer(on_joinplayer)
-core.register_on_leaveplayer(on_leaveplayer)
-core.register_globalstep(step)
+minetest.register_on_joinplayer(on_joinplayer)
+minetest.register_on_leaveplayer(on_leaveplayer)
+minetest.register_globalstep(step)
 
 default.log("mod:ambiance", "loaded")

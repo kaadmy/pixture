@@ -7,8 +7,8 @@ player_skins = {}
 
 player_skins.skin_names = {"male", "female"}
 
-if core.setting_get("player_skins_names") then
-   player_skins.skin_names = util.split(core.setting_get("player_skins_names"), ",")
+if minetest.setting_get("player_skins_names") then
+   player_skins.skin_names = util.split(minetest.setting_get("player_skins_names"), ",")
 end
 
 player_skins.old_skins = {}
@@ -16,7 +16,7 @@ player_skins.skins = {}
 
 local update_time = 1
 local timer = 10
-local skins_file = core.get_worldpath() .. "/player_skins"
+local skins_file = minetest.get_worldpath() .. "/player_skins"
 
 local function save_skins()
    local f = io.open(skins_file, "w")
@@ -62,22 +62,22 @@ function player_skins.get_skin(name)
 end
  
 function player_skins.set_skin(name, tex)
-   if core.check_player_privs(name, {player_skin = true}) then
+   if minetest.check_player_privs(name, {player_skin = true}) then
       if is_valid_skin(tex) then
 	 player_skins.skins[name] = tex
 	 save_skins()
       else
-	 core.chat_send_player(name, "Invalid skin")
+	 minetest.chat_send_player(name, "Invalid skin")
       end
    else
-      core.chat_send_player(name, "You do not have the privilege to change your skin.")
+      minetest.chat_send_player(name, "You do not have the privilege to change your skin.")
    end
 end
 
 local function step(dtime)
    timer = timer + dtime
    if timer > update_time then
-      for _, player in pairs(core.get_connected_players()) do
+      for _, player in pairs(minetest.get_connected_players()) do
 	 local name = player:get_player_name()
 
 	 if player_skins.skins[name] ~= player_skins.old_skins[name] then
@@ -97,8 +97,8 @@ local function on_joinplayer(player)
    end
 end
 
-core.register_globalstep(step)
-core.register_on_joinplayer(on_joinplayer)
+minetest.register_globalstep(step)
+minetest.register_on_joinplayer(on_joinplayer)
 
 local function get_chatparams()
    local s = "["
@@ -138,7 +138,7 @@ function player_skins.get_formspec(playername)
    return form
 end
 
-core.register_on_player_receive_fields(
+minetest.register_on_player_receive_fields(
    function(player, form_name, fields)
       local name = player:get_player_name()
 
@@ -148,13 +148,13 @@ core.register_on_player_receive_fields(
 	 if skinname ~= nil then
 	    player_skins.set_skin(name, skinname)
 
-	    core.show_formspec(name, "core_player_skins", player_skins.get_formspec(name))
+	    minetest.show_formspec(name, "core_player_skins", player_skins.get_formspec(name))
 	 end
       end
    end)
 
-core.register_privilege("player_skin", "Can change player skin")
-core.register_chatcommand(
+minetest.register_privilege("player_skin", "Can change player skin")
+minetest.register_chatcommand(
    "player_skin",
    {
       params = get_chatparams(),
@@ -164,13 +164,13 @@ core.register_chatcommand(
 		if is_valid_skin(param) then
 		   player_skins.set_skin(name, param)
 		elseif param == "" then
-		   core.chat_send_player(name, "Current player skin: " .. player_skins.skins[name])		   
+		   minetest.chat_send_player(name, "Current player skin: " .. player_skins.skins[name])		   
 		else
-		   core.chat_send_player(name, "Bad param for /player_skin; type /help player_skin")
+		   minetest.chat_send_player(name, "Bad param for /player_skin; type /help player_skin")
 		end
 	     end
    })
 
-core.after(1.0, load_skins)
+minetest.after(1.0, load_skins)
 
 default.log("mod:player_skins", "loaded")

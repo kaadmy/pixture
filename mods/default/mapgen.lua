@@ -4,36 +4,36 @@
 -- Aliases for map generator outputs(Might not be needed with v7, but JIC)
 --
 
-core.register_alias("mapgen_stone", "default:stone")
-core.register_alias("mapgen_tree", "default:tree")
-core.register_alias("mapgen_leaves", "default:leaves")
-core.register_alias("mapgen_apple", "default:apple")
-core.register_alias("mapgen_water_source", "default:water_source")
-core.register_alias("mapgen_river_water_source", "default:river_water_source")
-core.register_alias("mapgen_dirt", "default:dirt")
-core.register_alias("mapgen_sand", "default:sand")
-core.register_alias("mapgen_desert_sand", "default:sand")
-core.register_alias("mapgen_desert_stone", "default:sandstone")
-core.register_alias("mapgen_gravel", "default:gravel")
-core.register_alias("mapgen_cobble", "default:cobble")
-core.register_alias("mapgen_mossycobble", "default:reinforced_cobble")
-core.register_alias("mapgen_dirt_with_grass", "default:dirt_with_grass")
-core.register_alias("mapgen_junglegrass", "default:grass")
-core.register_alias("mapgen_stone_with_coal", "default:stone_with_coal")
-core.register_alias("mapgen_stone_with_iron", "default:stone_with_iron")
-core.register_alias("mapgen_mese", "default:block_steel")
-core.register_alias("mapgen_stair_cobble", "default:reinforced_frame")
-core.register_alias("mapgen_lava_source", "default:water_source")
+minetest.register_alias("mapgen_stone", "default:stone")
+minetest.register_alias("mapgen_tree", "default:tree")
+minetest.register_alias("mapgen_leaves", "default:leaves")
+minetest.register_alias("mapgen_apple", "default:apple")
+minetest.register_alias("mapgen_water_source", "default:water_source")
+minetest.register_alias("mapgen_river_water_source", "default:river_water_source")
+minetest.register_alias("mapgen_dirt", "default:dirt")
+minetest.register_alias("mapgen_sand", "default:sand")
+minetest.register_alias("mapgen_desert_sand", "default:sand")
+minetest.register_alias("mapgen_desert_stone", "default:sandstone")
+minetest.register_alias("mapgen_gravel", "default:gravel")
+minetest.register_alias("mapgen_cobble", "default:cobble")
+minetest.register_alias("mapgen_mossycobble", "default:reinforced_cobble")
+minetest.register_alias("mapgen_dirt_with_grass", "default:dirt_with_grass")
+minetest.register_alias("mapgen_junglegrass", "default:grass")
+minetest.register_alias("mapgen_stone_with_coal", "default:stone_with_coal")
+minetest.register_alias("mapgen_stone_with_iron", "default:stone_with_iron")
+minetest.register_alias("mapgen_mese", "default:block_steel")
+minetest.register_alias("mapgen_stair_cobble", "default:reinforced_frame")
+minetest.register_alias("mapgen_lava_source", "default:water_source")
 
 --
 -- Biome setup
 --
 
-core.clear_registered_biomes()
+minetest.clear_registered_biomes()
 
 -- Aboveground biomes
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Marsh",
 
@@ -50,7 +50,7 @@ core.register_biome(
       humidity_point = 55,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Swamp",
 
@@ -67,7 +67,7 @@ core.register_biome(
       humidity_point = 42,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Deep Forest",
 
@@ -84,7 +84,7 @@ core.register_biome(
       humidity_point = 40,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Forest",
 
@@ -101,7 +101,7 @@ core.register_biome(
       humidity_point = 40,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Grove",
 
@@ -118,7 +118,7 @@ core.register_biome(
       humidity_point = 38,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Wilderness",
 
@@ -135,7 +135,7 @@ core.register_biome(
       humidity_point = 35,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Grassland",
 
@@ -152,7 +152,7 @@ core.register_biome(
       humidity_point = 33,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Orchard",
 
@@ -169,7 +169,7 @@ core.register_biome(
       humidity_point = 33,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Chaparral",
 
@@ -186,7 +186,7 @@ core.register_biome(
       humidity_point = 30,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Savanna",
 
@@ -203,7 +203,7 @@ core.register_biome(
       humidity_point = 25,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Desert",
 
@@ -220,7 +220,7 @@ core.register_biome(
       humidity_point = 20,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Wasteland",
 
@@ -239,7 +239,7 @@ core.register_biome(
 
 -- Oceans
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Grassland Ocean",
 
@@ -256,7 +256,7 @@ core.register_biome(
       humidity_point = 35,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Gravel Beach",
 
@@ -273,7 +273,7 @@ core.register_biome(
       humidity_point = 31,
    })
 
-core.register_biome(
+minetest.register_biome(
    {
       name = "Savanna Ocean",
 
@@ -296,7 +296,7 @@ core.register_biome(
 
 -- Trees
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -305,12 +305,12 @@ core.register_decoration(
       biomes = {"Forest"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:leaves_birch", ["default:tree"] = "default:tree_birch", ["default:apple"] = "air"},
-      schematic = core.get_modpath("default").."/schematics/default_squaretree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_squaretree.mts",
       y_min = -32000,
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -318,12 +318,12 @@ core.register_decoration(
       fill_ratio = 0.007,
       biomes = {"Orchard"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_tree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
       y_min = 10,
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -332,12 +332,12 @@ core.register_decoration(
       biomes = {"Forest", "Deep Forest"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
-      schematic = core.get_modpath("default").."/schematics/default_tree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
       y_min = -32000,
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -345,12 +345,12 @@ core.register_decoration(
       fill_ratio = 0.008,
       biomes = {"Forest"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_megatree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_megatree.mts",
       y_min = -32000,
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -358,12 +358,12 @@ core.register_decoration(
       fill_ratio = 0.023,
       biomes = {"Deep Forest"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_gigatree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_gigatree.mts",
       y_min = -32000,
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -372,12 +372,12 @@ core.register_decoration(
       biomes = {"Wilderness"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:apple"] = "air"},
-      schematic = core.get_modpath("default").."/schematics/default_tree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
       y_min = -32000,
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -386,12 +386,12 @@ core.register_decoration(
       biomes = {"Wilderness"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
-      schematic = core.get_modpath("default").."/schematics/default_tree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
       y_min = -32000,
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -399,14 +399,14 @@ core.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Grove"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_talltree.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_talltree.mts",
       y_min = 0,
       y_max = 32000,
    })
 
 -- Papyrus
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = {"default:sand", "default:dirt", "default:dirt_with_grass"},
@@ -423,7 +423,7 @@ core.register_decoration(
 
 -- Flowers
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -437,7 +437,7 @@ core.register_decoration(
 
 -- Grasses
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -449,7 +449,7 @@ core.register_decoration(
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_swamp_grass",
@@ -461,7 +461,7 @@ core.register_decoration(
       y_max = 40,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_dry_grass",
@@ -473,7 +473,7 @@ core.register_decoration(
       y_max = 500,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -485,7 +485,7 @@ core.register_decoration(
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -497,7 +497,7 @@ core.register_decoration(
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -509,7 +509,7 @@ core.register_decoration(
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -521,7 +521,7 @@ core.register_decoration(
       y_max = 32000,
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -535,7 +535,7 @@ core.register_decoration(
 
 -- Thistle
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -550,7 +550,7 @@ core.register_decoration(
 
 -- Ferns
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = "default:dirt_with_grass",
@@ -564,8 +564,8 @@ core.register_decoration(
 
 -- Farming
 
-if core.get_modpath("farming") ~= nil then
-   core.register_decoration(
+if minetest.get_modpath("farming") ~= nil then
+   minetest.register_decoration(
       {
 	 deco_type = "simple",
 	 place_on = "default:dirt_with_grass",
@@ -577,7 +577,7 @@ if core.get_modpath("farming") ~= nil then
 	 y_max = 32000,
       })
 
-   core.register_decoration(
+   minetest.register_decoration(
       {
 	 deco_type = "simple",
 	 place_on = "default:dirt_with_grass",
@@ -589,7 +589,7 @@ if core.get_modpath("farming") ~= nil then
 	 y_max = 32000,
       })
 
-   core.register_decoration(
+   minetest.register_decoration(
       {
 	 deco_type = "simple",
 	 place_on = "default:sand",
@@ -604,7 +604,7 @@ end
 
 -- Cactus
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:sand"},
@@ -612,7 +612,7 @@ core.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Desert"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_cactus.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_cactus.mts",
       y_min = 10,
       y_max = 500,
       rotation = "random",
@@ -620,7 +620,7 @@ core.register_decoration(
 
 -- Shrubs
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_dry_grass"},
@@ -629,13 +629,13 @@ core.register_decoration(
       biomes = {"Savanna", "Chaparral"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:dry_leaves"},
-      schematic = core.get_modpath("default").."/schematics/default_shrub.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_shrub.mts",
       y_min = 3,
       y_max = 32000,
       rotation = "0",
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_dry_grass"},
@@ -644,13 +644,13 @@ core.register_decoration(
       biomes = {"Chaparral"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:dry_leaves"},
-      schematic = core.get_modpath("default").."/schematics/default_bush.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_bush.mts",
       y_min = -32000,
       y_max = 32000,
       rotation = "0",
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dirt_with_grass"},
@@ -658,7 +658,7 @@ core.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Wilderness", "Grove"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_bush.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_bush.mts",
       y_min = 3,
       y_max = 32000,
       rotation = "0",
@@ -666,7 +666,7 @@ core.register_decoration(
 
 -- Rocks
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dry_dirt"},
@@ -674,13 +674,13 @@ core.register_decoration(
       fill_ratio = 0.006,
       biomes = {"Wasteland"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_small_rock.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_small_rock.mts",
       y_min = -32000,
       y_max = 32000,
       rotation = "random",
    })
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "schematic",
       place_on = {"default:dry_dirt"},
@@ -688,7 +688,7 @@ core.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Wasteland"},
       flags = "place_center_x, place_center_z",
-      schematic = core.get_modpath("default").."/schematics/default_large_rock.mts",
+      schematic = minetest.get_modpath("default").."/schematics/default_large_rock.mts",
       y_min = -32000,
       y_max = 32000,
       rotation = "random",
@@ -696,7 +696,7 @@ core.register_decoration(
 
 -- Clams
 
-core.register_decoration(
+minetest.register_decoration(
    {
       deco_type = "simple",
       place_on = {"default:sand", "default:gravel"},
@@ -715,7 +715,7 @@ core.register_decoration(
 
 -- Coal
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "default:stone_with_coal",
@@ -727,7 +727,7 @@ core.register_ore(
       y_max          = 32,
    })
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "default:stone_with_coal",
@@ -739,7 +739,7 @@ core.register_ore(
       y_max          = -32,
    })
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "default:stone_with_coal",
@@ -753,7 +753,7 @@ core.register_ore(
 
 -- Iron
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "default:stone_with_iron",
@@ -765,7 +765,7 @@ core.register_ore(
       y_max          = 0,
    })
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "default:stone_with_iron",
@@ -779,7 +779,7 @@ core.register_ore(
 
 -- Steel blocks
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "blob",
       ore            = "default:block_steel",
@@ -793,7 +793,7 @@ core.register_ore(
 
 -- Water
 
-core.register_ore( -- Springs
+minetest.register_ore( -- Springs
    {
       ore_type       = "blob",
       ore            = "default:water_source",
@@ -806,7 +806,7 @@ core.register_ore( -- Springs
       y_max          = 31000,
    })
 
-core.register_ore( -- Pools
+minetest.register_ore( -- Pools
    {
       ore_type       = "blob",
       ore            = "default:water_source",
@@ -819,7 +819,7 @@ core.register_ore( -- Pools
       y_max          = 40,
    })
 
-core.register_ore( -- Swamp
+minetest.register_ore( -- Swamp
    {
       ore_type       = "blob",
       ore            = "default:swamp_water_source",
@@ -832,7 +832,7 @@ core.register_ore( -- Swamp
       y_max          = 31000,
    })
 
-core.register_ore( -- Marsh
+minetest.register_ore( -- Marsh
    {
       ore_type       = "blob",
       ore            = "default:swamp_water_source",

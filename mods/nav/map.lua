@@ -47,7 +47,7 @@ local function get_formspec_waypoint(x, y, name, label, isinfo)
    local form = ""
    
    form = form .. "image_button["..(x-0.72)..","..(y-0.53)..";0.5,0.5;"..img..";"..name..";;false;false;"..img.."]"
-   form = form .. "tooltip["..name..";"..core.formspec_escape(label).."]"
+   form = form .. "tooltip["..name..";"..minetest.formspec_escape(label).."]"
 
    return form
 end
@@ -65,7 +65,7 @@ function nav.show_map(player)
 
    form = form .. "field[-1,-1;0,0;nav_map_tracker;;]"
 
-   form = form .. "label[0.25,0.25;"..core.formspec_escape(name).." (x: "..math.floor(pos.x+0.5)..", y: "..math.floor(pos.y)..", z: "..math.floor(pos.z+0.5)..")]"
+   form = form .. "label[0.25,0.25;"..minetest.formspec_escape(name).." (x: "..math.floor(pos.x+0.5)..", y: "..math.floor(pos.y)..", z: "..math.floor(pos.z+0.5)..")]"
 
    form = form .. "image[0.5,3;6,6;nav_background.png]"
 
@@ -84,9 +84,9 @@ function nav.show_map(player)
    form = form .. "image[5.5,3;1,1;nav_map_compass.png]"
 
    form = form .. "label[6.25,6.6;"..nav.map_radius.."m]"
-   form = form .. "image[5.5,5.5;3,3;"..core.formspec_escape("nav_legend.png^[transformFX").."]"
+   form = form .. "image[5.5,5.5;3,3;"..minetest.formspec_escape("nav_legend.png^[transformFX").."]"
 
-   core.show_formspec(name, "nav:map", form)
+   minetest.show_formspec(name, "nav:map", form)
 end
 
 local function recieve_fields(player, form_name, fields)
@@ -97,11 +97,11 @@ local function recieve_fields(player, form_name, fields)
    end
 end
 
-if core.setting_get_pos("static_spawnpoint") and (not core.is_singleplayer()) then
-   core.after(
+if minetest.setting_get_pos("static_spawnpoint") and (not minetest.is_singleplayer()) then
+   minetest.after(
       1.0,
       function()
-	 nav.add_waypoint(core.setting_get_pos("static_spawnpoint"),
+	 nav.add_waypoint(minetest.setting_get_pos("static_spawnpoint"),
 			  "spawn", "Spawn", true, "spawn")
       end)
 end
@@ -109,7 +109,7 @@ end
 local function on_joinplayer(player)
    local name = player:get_player_name()
 
-   core.after(
+   minetest.after(
       1.0,
       function()
 	 nav.add_waypoint(player:getpos(), "player_"..name, name, true, "player")
@@ -128,7 +128,7 @@ local function step(dtime)
    if timer > update_time then
       local players = {}
 
-      for _, player in pairs(core.get_connected_players()) do
+      for _, player in pairs(minetest.get_connected_players()) do
 	 if player ~= nil then
 	    local name = player:get_player_name()
 	    
@@ -140,7 +140,7 @@ local function step(dtime)
 
       for wptname, wpt in pairs(nav.waypoints) do
 	 if wpt.type == "player" then
-	    if players[wpt.label] ~= nil and core.get_player_by_name(wpt.label) ~= nil then
+	    if players[wpt.label] ~= nil and minetest.get_player_by_name(wpt.label) ~= nil then
 	       nav.relocate_waypoint(wptname, players[wpt.label]:getpos())
 	    end
 	 end
@@ -150,7 +150,7 @@ local function step(dtime)
    end
 end
 
-core.register_craftitem(
+minetest.register_craftitem(
    "nav:map",
    {
       description = "Map",
@@ -163,7 +163,7 @@ core.register_craftitem(
 	       end,
    })
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "nav:map",
       recipe = {
@@ -174,10 +174,10 @@ core.register_craft(
    })
 
 
-core.register_on_joinplayer(on_joinplayer)
-core.register_on_leaveplayer(on_leaveplayer)
-core.register_globalstep(step)
-core.register_on_player_receive_fields(recieve_fields)
+minetest.register_on_joinplayer(on_joinplayer)
+minetest.register_on_leaveplayer(on_leaveplayer)
+minetest.register_globalstep(step)
+minetest.register_on_player_receive_fields(recieve_fields)
 
 -- Achievements
 

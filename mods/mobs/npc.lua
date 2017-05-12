@@ -75,7 +75,7 @@ for _, npc_type in pairs(npc_types) do
 			       local hp = self.object:get_hp()
 			       -- return if full health
 			       if hp >= self.hp_max then
-				  core.chat_send_player(name, "Villager is no longer hungry.")
+				  minetest.chat_send_player(name, "Villager is no longer hungry.")
 				  return
 			       end
 
@@ -84,7 +84,7 @@ for _, npc_type in pairs(npc_types) do
 			       self.object:set_hp(hp)
 
 			       -- take item
-			       if not core.setting_getbool("creative_mode") then
+			       if not minetest.setting_getbool("creative_mode") then
 				  item:take_item()
 				  clicker:set_wielded_item(item)
 			       end

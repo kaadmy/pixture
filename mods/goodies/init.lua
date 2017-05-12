@@ -27,7 +27,7 @@ goodies.types["FURNACE_DST"] = {
 }
 
 -- chunk types for villages
-if core.get_modpath("village") ~= nil then
+if minetest.get_modpath("village") ~= nil then
    goodies.types["forge"] = {
       ["default:ingot_steel"] = 10,
       ["default:lump_coal"] = 4,
@@ -55,13 +55,13 @@ if core.get_modpath("village") ~= nil then
    }
 
    -- jewels and gold
-   if core.get_modpath("jewels") ~= nil then
+   if minetest.get_modpath("jewels") ~= nil then
       goodies.types["house"]["jewels:bench"] = 24 -- jeweling benches
       goodies.types["house"]["jewels:jewel"] = 34
       goodies.types["tavern"]["jewels:jewel"] = 32
       goodies.types["forge"]["jewels:jewel"] = 30
    end
-   if core.get_modpath("gold") ~= nil then
+   if minetest.get_modpath("gold") ~= nil then
       goodies.types["house"]["gold:gold"] = 12
       goodies.types["tavern"]["gold:gold"] = 10
       goodies.types["forge"]["gold:gold"] = 8
@@ -74,11 +74,11 @@ function goodies.fill(pos, ctype, pr, listname, keepchance)
    if goodies.types[ctype] == nil then return end
 
    if pr:next(1, keepchance) ~= 1 then
-      core.remove_node(pos)
+      minetest.remove_node(pos)
       return
    end
 
-   local meta = core.get_meta(pos)
+   local meta = minetest.get_meta(pos)
    local inv = meta:get_inventory()
 
    local size = inv:get_size(listname)

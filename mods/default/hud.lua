@@ -69,7 +69,7 @@ function default.hud.initialize_builtin_statbars(player)
       player:hud_set_flags(flg)
    end
 
-   if core.is_yes(core.setting_get("enable_damage")) then
+   if minetest.is_yes(minetest.setting_get("enable_damage")) then
       if default.hud.ids[name].id_healthbar == nil then
 	 health_bar_definition.number = player:get_hp()
 	 default.hud.ids[name].id_healthbar_bg  = player:hud_add(health_bar_bg)
@@ -83,7 +83,7 @@ function default.hud.initialize_builtin_statbars(player)
    end
 
    if (player:get_breath() < 11) then
-      if core.is_yes(core.setting_get("enable_damage")) then
+      if minetest.is_yes(minetest.setting_get("enable_damage")) then
 	 if default.hud.ids[name].id_breathbar == nil then
 
 	    default.hud.ids[name].id_breathbar_bg  = player:hud_add(breath_bar_bg)
@@ -161,7 +161,7 @@ function default.hud.replace_builtin(name, definition)
       health_bar_definition = definition
 
       for name,ids in pairs(default.hud.ids) do
-	 local player = core.get_player_by_name(name)
+	 local player = minetest.get_player_by_name(name)
 	 if  player and default.hud.ids[name].id_healthbar then
 	    player:hud_remove(default.hud.ids[name].id_healthbar)
 	    default.hud.initialize_builtin_statbars(player)
@@ -174,7 +174,7 @@ function default.hud.replace_builtin(name, definition)
       breath_bar_definition = definition
 
       for name,ids in pairs(default.hud.ids) do
-	 local player = core.get_player_by_name(name)
+	 local player = minetest.get_player_by_name(name)
 	 if  player and default.hud.ids[name].id_breathbar then
 	    player:hud_remove(default.hud.ids[name].id_breathbar)
 	    default.hud.initialize_builtin_statbars(player)
@@ -186,9 +186,9 @@ function default.hud.replace_builtin(name, definition)
    return false
 end
 
-core.register_on_joinplayer(default.hud.initialize_builtin_statbars)
-core.register_on_leaveplayer(default.hud.cleanup_builtin_statbars)
-core.register_playerevent(default.hud.player_event_handler)
+minetest.register_on_joinplayer(default.hud.initialize_builtin_statbars)
+minetest.register_on_leaveplayer(default.hud.cleanup_builtin_statbars)
+minetest.register_playerevent(default.hud.player_event_handler)
 
 default.log("hud", "loaded")
 

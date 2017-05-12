@@ -5,12 +5,12 @@
 
 gold = {}
 
-gold.pr = PseudoRandom(core.get_mapgen_params().seed+8732)
+gold.pr = PseudoRandom(minetest.get_mapgen_params().seed+8732)
 
 gold.trades = {}
 gold.trade_names = {}
 
-if core.get_modpath("mobs") ~= nil then
+if minetest.get_modpath("mobs") ~= nil then
    gold.trades["farmer"] = {
       -- plants
       {"gold:gold", "", "farming:wheat_1 6"},
@@ -95,7 +95,7 @@ if core.get_modpath("mobs") ~= nil then
 
    }
    -- trading currency
-   if core.get_modpath("jewels") ~= nil then -- jewels/gold
+   if minetest.get_modpath("jewels") ~= nil then -- jewels/gold
       --farmer
       table.insert(gold.trades["farmer"], {"gold:gold 16", "", "jewels:jewel"})
       table.insert(gold.trades["farmer"], {"gold:gold 22", "", "jewels:jewel 2"})
@@ -177,7 +177,7 @@ function gold.trade(trade, trade_type, player)
    inv:set_stack("gold_trade_wanted", 1, trade[1])
    inv:set_stack("gold_trade_wanted", 2, trade[2])
 
-   local meta = core.deserialize(item:get_metadata())
+   local meta = minetest.deserialize(item:get_metadata())
 
    if not meta then meta = {} end
    meta.trade = trade
@@ -188,23 +188,23 @@ function gold.trade(trade, trade_type, player)
    local trade_wanted2 = inv:get_stack("gold_trade_wanted", 2)
 
    local form = default.ui.get_page("gold_trading_book")
-   form = form .. "label[0.25,0.25;"..core.formspec_escape(trade_name).."]"
+   form = form .. "label[0.25,0.25;"..minetest.formspec_escape(trade_name).."]"
 
    form = form .. default.ui.fake_itemstack(1.25, 1.25, trade_wanted1, "trade_wanted1")
    form = form .. default.ui.fake_itemstack(1.25, 2.25, trade_wanted2, "trade_wanted2")
    form = form .. default.ui.fake_itemstack(3.75, 1.25, ItemStack(trade[3]), "vistrade_result")
 
-   core.show_formspec(name, "gold:trading_book", form)
+   minetest.show_formspec(name, "gold:trading_book", form)
 
    meta.trade_type = trade_type
 
-   item:set_metadata(core.serialize(meta))
+   item:set_metadata(minetest.serialize(meta))
    player:set_wielded_item(item)
 
    return true
 end
 
-core.register_on_player_receive_fields(
+minetest.register_on_player_receive_fields(
    function(player, form_name, fields)
       if form_name ~= "gold:trading_book" or fields.cancel then return end
 
@@ -221,7 +221,7 @@ core.register_on_player_receive_fields(
 
 	 local matches = trade_wanted1 == trade_in1 and trade_wanted2 == trade_in2
 
-	 local meta = core.deserialize(item:get_metadata())
+	 local meta = minetest.deserialize(item:get_metadata())
 
 	 local trade = {"gold:gold", "gold:gold", "default:stick"}
 	 local trade_type = ""
@@ -241,7 +241,7 @@ core.register_on_player_receive_fields(
       end
 end)
 
-core.register_craftitem(
+minetest.register_craftitem(
    "gold:trading_book",
    {
       description = "Trading Book",
@@ -249,7 +249,7 @@ core.register_craftitem(
       stack_max = 1,
 })
 
-core.register_craftitem(
+minetest.register_craftitem(
    "gold:gold",
    {
       description = "Gold",
@@ -257,16 +257,16 @@ core.register_craftitem(
       stack_max = 120
 })
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "gold:trading_book",
       type = "shapeless",
       recipe = {"default:book", "gold:gold"}
 })
 
-core.register_alias("gold", "gold:gold")
+minetest.register_alias("gold", "gold:gold")
 
-core.register_node(
+minetest.register_node(
    "gold:ore",
    {
       description = "Gold Ore",
@@ -277,7 +277,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
 })
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "gold:ore",

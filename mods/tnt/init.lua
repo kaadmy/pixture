@@ -7,8 +7,8 @@
 tnt = {}
 
 -- Default to enabled in singleplayer and disabled in multiplayer
-local singleplayer = core.is_singleplayer()
-local setting = core.setting_getbool("tnt_enable")
+local singleplayer = minetest.is_singleplayer()
+local setting = minetest.setting_getbool("tnt_enable")
 
 if (not singleplayer and setting ~= true) or (singleplayer and setting == false) then
    return
@@ -20,15 +20,15 @@ local loss_prob = {}
 loss_prob["default:cobble"] = 3
 loss_prob["default:dirt"] = 4
 
-local radius = tonumber(core.setting_get("tnt_radius") or 3)
+local radius = tonumber(minetest.setting_get("tnt_radius") or 3)
 
 -- Fill a list with data for content IDs, after all nodes are registered
 local cid_data = {}
-core.after(
+minetest.after(
    0,
    function()
-      for name, def in pairs(core.registered_nodes) do
-	 cid_data[core.get_content_id(name)] = {
+      for name, def in pairs(minetest.registered_nodes) do
+	 cid_data[minetest.get_content_id(name)] = {
 	    name = name,
 	    drops = def.drops,
 	    on_blast = def.on_blast,
@@ -54,7 +54,7 @@ local function eject_drops(drops, pos, radius)
 	    item:set_count(count)
 	 end
 	 rand_pos(pos, drop_pos, radius)
-	 local obj = core.add_item(drop_pos, item)
+	 local obj = minetest.add_item(drop_pos, item)
 	 if obj then
 	    obj:get_luaentity().collect = true
 	    obj:setacceleration({x=0, y=-10, z=0})
@@ -82,7 +82,7 @@ local function add_drop(drops, item)
 end
 
 local function destroy(drops, pos, cid)
-   if core.is_protected(pos, "") then
+   if minetest.is_protected(pos, "") then
       return
    end
    local def = cid_data[cid]
@@ -91,9 +91,9 @@ local function destroy(drops, pos, cid)
       return
    end
    
-   core.remove_node(pos)
+   minetest.remove_node(pos)
    if def then
-      local node_drops = core.get_node_drops(def.name, "")
+      local node_drops = minetest.get_node_drops(def.name, "")
       for _, item in ipairs(node_drops) do
 	 add_drop(drops, item)
       end
@@ -120,9 +120,9 @@ local function entity_physics(pos, radius)
    -- Make the damage radius larger than the destruction radius
    radius = radius * 2
 
-   local no_water = (core.find_node_near(pos, 2, {"default:water_source"}) == nil)
+   local no_water = (minetest.find_node_near(pos, 2, {"default:water_source"}) == nil)
 
-   local objs = core.get_objects_inside_radius(pos, radius)
+   local objs = minetest.get_objects_inside_radius(pos, radius)
    for _, obj in pairs(objs) do
       local obj_pos = obj:getpos()
       local obj_vel = obj:getvelocity()
@@ -141,7 +141,7 @@ local function entity_physics(pos, radius)
 end
 
 local function add_effects(pos, radius)
-   core.add_particlespawner(
+   minetest.add_particlespawner(
       {
 	 amount = 128,
 	 time = 1,
@@ -160,11 +160,11 @@ local function add_effects(pos, radius)
 end
 
 function tnt.burn(pos)
-   local name = core.get_node(pos).name
+   local name = minetest.get_node(pos).name
    if name == "tnt:tnt" then
-      core.sound_play("tnt_ignite", {pos = pos})
-      core.set_node(pos, {name = "tnt:tnt_burning"})
-      core.get_node_timer(pos):start(2)
+      minetest.sound_play("tnt_ignite", {pos = pos})
+      minetest.set_node(pos, {name = "tnt:tnt_burning"})
+      minetest.get_node_timer(pos):start(2)
    end
 end
 
@@ -181,7 +181,7 @@ local function explode(pos, radius)
    local drops = {}
    local p = {}
 
-   local c_air = core.get_content_id("air")
+   local c_air = minetest.get_content_id("air")
 
    for z = -radius, radius do
       for y = -radius, radius do
@@ -206,8 +206,8 @@ end
 
 
 function tnt.boom(pos)
-   core.sound_play("tnt_explode", {pos = pos, gain = 1.5, max_hear_distance = 128})
-   core.remove_node(pos)
+   minetest.sound_play("tnt_explode", {pos = pos, gain = 1.5, max_hear_distance = 128})
+   minetest.remove_node(pos)
 
    local drops = explode(pos, radius)
    entity_physics(pos, radius)
@@ -215,7 +215,7 @@ function tnt.boom(pos)
    add_effects(pos, radius)
 end
 
-core.register_node(
+minetest.register_node(
    "tnt:tnt",
    {
       description = "TNT",
@@ -235,7 +235,7 @@ core.register_node(
 		 end,
    })
 
-core.register_node(
+minetest.register_node(
    "tnt:tnt_burning",
    {
       tiles = {
@@ -258,7 +258,7 @@ core.register_node(
       on_blast = function() end,
    })
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "tnt:tnt",
       recipe = {
@@ -268,7 +268,7 @@ core.register_craft(
       }
    })
 
-core.register_craft(
+minetest.register_craft(
    {
       type = "fuel",
       recipe = "tnt:tnt",

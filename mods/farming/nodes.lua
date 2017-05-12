@@ -1,4 +1,4 @@
-core.register_node(
+minetest.register_node(
    "farming:wheat_1",
    {
       description = "Wheat Seed",
@@ -24,7 +24,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:wheat_2",
    {
       description = "Wheat",
@@ -48,7 +48,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:wheat_3",
    {
       description = "Wheat",
@@ -72,7 +72,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:wheat_4",
    {
       description = "Wheat",
@@ -99,7 +99,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:cotton_1",
    {
       description = "Cotton Seed",
@@ -125,7 +125,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:cotton_2",
    {
       description = "Cotton",
@@ -149,7 +149,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:cotton_3",
    {
       description = "Cotton",
@@ -173,7 +173,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:cotton_4",
    {
       description = "Cotton",
@@ -200,7 +200,7 @@ core.register_node(
 		    local name = player:get_wielded_item():get_name()
 
 		    if name == "default:shears" then
-		       core.set_node(pos, {name = "farming:cotton_3"})
+		       minetest.set_node(pos, {name = "farming:cotton_3"})
 
 		       for i = 1, 2 do
 			  if math.random(1, 2) == 1 then
@@ -218,7 +218,7 @@ core.register_node(
 			     z = pos.z + math.random(-0.3, 0.3)
 			  }
 
-			  local drop = core.add_item(rpos, item)
+			  local drop = minetest.add_item(rpos, item)
 			  
 			  if drop ~= nil then
 			     local x = math.random(1, 5)
@@ -238,7 +238,7 @@ core.register_node(
       sounds=default.node_sound_leaves_defaults()
    })
 
-core.register_node(
+minetest.register_node(
    "farming:cotton_bale",
    {
       description = "Cotton Bale",
@@ -248,7 +248,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_alias("farming:cotton_seed", "farming:cotton_1")
-core.register_alias("farming:wheat_seed", "farming:wheat_1")
+minetest.register_alias("farming:cotton_seed", "farming:cotton_1")
+minetest.register_alias("farming:wheat_seed", "farming:wheat_1")
 
 default.log("nodes", "loaded")

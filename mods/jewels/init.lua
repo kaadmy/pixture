@@ -33,7 +33,7 @@ function jewels.register_jewel(toolname, new_toolname, def)
    end
    table.insert(jewels.registered_jewels[toolname], data)
 
-   local tooldef = core.deserialize(core.serialize(core.registered_tools[toolname]))
+   local tooldef = minetest.deserialize(minetest.serialize(minetest.registered_tools[toolname]))
 
    local new_tool_invimage = ""
    if tooldef.inventory_image then
@@ -101,7 +101,7 @@ function jewels.register_jewel(toolname, new_toolname, def)
 
    new_tooldef.description = desc   
 
-   core.register_tool(new_toolname, new_tooldef)
+   minetest.register_tool(new_toolname, new_tooldef)
 end
 
 function jewels.can_jewel(toolname)
@@ -122,7 +122,7 @@ function jewels.get_jeweled(toolname)
    end
 end
 
-core.register_craftitem(
+minetest.register_craftitem(
    "jewels:jewel",
    {
       description = "Jewel",
@@ -130,7 +130,7 @@ core.register_craftitem(
       stack_max = 10
    })
 
-core.register_node(
+minetest.register_node(
    "jewels:bench",
    {
       description = "Jewelers Workbench",
@@ -141,7 +141,7 @@ core.register_node(
       is_ground_content = false,
       sounds = default.node_sound_wood_defaults(),
       on_construct = function(pos)
-			local meta = core.get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", default.ui.get_page("jewels_bench"))
 			meta:set_string("infotext", "Jewelers Workbench")
 
@@ -149,7 +149,7 @@ core.register_node(
 			inv:set_size("main", 1)
 		     end,
       can_dig = function(pos, player)
-		   local meta = core.get_meta(pos)
+		   local meta = minetest.get_meta(pos)
 		   local inv = meta:get_inventory()
 
 		   return inv:is_empty("main")
@@ -158,7 +158,7 @@ core.register_node(
 		    local itemstack = player:get_wielded_item()
 		    
 		    if itemstack:get_name() == "jewels:jewel" then
-		       local meta = core.get_meta(pos)
+		       local meta = minetest.get_meta(pos)
 		       local inv = meta:get_inventory()
 
 		       local itemname = inv:get_stack("main", 1):get_name()
@@ -177,7 +177,7 @@ core.register_node(
 		end,
    })
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "jewels:bench",
       recipe = {
@@ -201,7 +201,7 @@ form_bench = form_bench .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
 form_bench = form_bench .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
 default.ui.register_page("jewels_bench", form_bench)
 
-core.register_node(
+minetest.register_node(
    "jewels:jewel_ore",
    {
       description = "Jewel Ore",
@@ -212,7 +212,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_ore(
+minetest.register_ore(
    {
       ore_type       = "scatter",
       ore            = "jewels:jewel_ore",
@@ -224,7 +224,7 @@ core.register_ore(
       y_max     = 31000,
    })
 
-dofile(core.get_modpath("jewels").."/jewels.lua")
+dofile(minetest.get_modpath("jewels").."/jewels.lua")
 
 -- Achievements
 

@@ -50,7 +50,7 @@ mobs:register_mob(
       replace_with = "air",
       replace_offset = -1,
       on_replace = function(self, pos)
-		      core.set_node(pos, {name = self.replace_with})
+		      minetest.set_node(pos, {name = self.replace_with})
 		      if mobs:feed_tame(self, self.follow, 8, true) then
 			 if self.gotten == false then
 			    self.object:set_properties(
@@ -84,7 +84,7 @@ mobs:register_mob(
 			       self.gotten = true -- shaved
 			       local pos = self.object:getpos()
 			       pos.y = pos.y + 0.5
-			       local obj = core.add_item(pos, ItemStack("mobs:wool"))
+			       local obj = minetest.add_item(pos, ItemStack("mobs:wool"))
 			       if obj then
 				  obj:setvelocity(
 				     {

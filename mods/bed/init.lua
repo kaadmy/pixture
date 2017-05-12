@@ -6,7 +6,7 @@
 
 local players_in_bed = {}
 
-core.register_node(
+minetest.register_node(
    "bed:bed_foot",
    {
       description = "Bed",
@@ -29,34 +29,34 @@ core.register_node(
       },
 
       after_place_node = function(pos)
-			    local node = core.get_node(pos)
-			    local dir = core.facedir_to_dir(node.param2)
+			    local node = minetest.get_node(pos)
+			    local dir = minetest.facedir_to_dir(node.param2)
 			    local head_pos = vector.add(pos, dir)
 			    node.name = "bed:bed_head"
-			    if core.registered_nodes[core.get_node(head_pos).name].buildable_to then
-			       core.set_node(head_pos, node)
+			    if minetest.registered_nodes[minetest.get_node(head_pos).name].buildable_to then
+			       minetest.set_node(head_pos, node)
 			    else
-			       core.remove_node(pos)
+			       minetest.remove_node(pos)
 			    end
 			 end,
 
       on_destruct = function(pos)
-		       local node = core.get_node(pos)
-		       local dir = core.facedir_to_dir(node.param2)
+		       local node = minetest.get_node(pos)
+		       local dir = minetest.facedir_to_dir(node.param2)
 		       local head_pos = vector.add(pos, dir)
-		       if core.get_node(head_pos).name == "bed:bed_head" then
-			  core.remove_node(head_pos)
+		       if minetest.get_node(head_pos).name == "bed:bed_head" then
+			  minetest.remove_node(head_pos)
 		       end
 		    end,
 
       on_rightclick = function(pos, node, clicker)
-			 if not clicker:is_player() or not core.setting_getbool("bed_enabled") then
+			 if not clicker:is_player() or not minetest.setting_getbool("bed_enabled") then
 			    return
 			 end
 
 			 local name = clicker:get_player_name()
-			 local meta = core.get_meta(pos)
-			 local put_pos = vector.add(pos, vector.divide(core.facedir_to_dir(node.param2), 2))
+			 local meta = minetest.get_meta(pos)
+			 local put_pos = vector.add(pos, vector.divide(minetest.facedir_to_dir(node.param2), 2))
 
 			 if clicker:get_player_name() == meta:get_string("player") then
 			    put_pos.y = put_pos.y - 0.5
@@ -94,11 +94,11 @@ core.register_node(
 		      end,
 
       can_dig = function(pos)
-		   return core.get_meta(pos):get_string("player") == ""
+		   return minetest.get_meta(pos):get_string("player") == ""
 		end
    })
 
-core.register_node(
+minetest.register_node(
    "bed:bed_head",
    {
       drawtype = "nodebox",
@@ -114,9 +114,9 @@ core.register_node(
       }
    })
 
-core.register_alias("bed:bed", "bed:bed_foot")
+minetest.register_alias("bed:bed", "bed:bed_foot")
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "bed:bed",
       recipe = {
@@ -127,16 +127,16 @@ core.register_craft(
 
 bed_player_spawns = {}
 
-local file = io.open(core.get_worldpath().."/bed.txt", "r")
+local file = io.open(minetest.get_worldpath().."/bed.txt", "r")
 if file then
-   bed_player_spawns = core.deserialize(file:read("*all"))
+   bed_player_spawns = minetest.deserialize(file:read("*all"))
    file:close()
 end
 
 local timer = 0
 local wait = false
 
-core.register_globalstep(
+minetest.register_globalstep(
    function(dtime)
       if timer < 2 then
 	 timer = timer + dtime
@@ -151,24 +151,24 @@ core.register_globalstep(
 	 end
       end
 
-      local players = #core.get_connected_players()
+      local players = #minetest.get_connected_players()
       if players > 0 and players * 0.5 < sleeping_players then
-	 if core.get_timeofday() < 0.2 or core.get_timeofday() > 0.8 then
+	 if minetest.get_timeofday() < 0.2 or minetest.get_timeofday() > 0.8 then
 	    if not wait then
-	       core.chat_send_all("[zzz] "..sleeping_players.." of "..players.." players slept, skipping to day.")
+	       minetest.chat_send_all("[zzz] "..sleeping_players.." of "..players.." players slept, skipping to day.")
 
 	       wait = true
-	       core.after(2, function()
-				    core.set_timeofday(0.23)
+	       minetest.after(2, function()
+				    minetest.set_timeofday(0.23)
 				    wait = false
 				 end)
 
-	       for _, player in ipairs(core.get_connected_players()) do
+	       for _, player in ipairs(minetest.get_connected_players()) do
 		  bed_player_spawns[player:get_player_name()] = player:getpos()
 	       end
 
-	       local file = io.open(core.get_worldpath().."/bed.txt", "w")
-	       file:write(core.serialize(bed_player_spawns))
+	       local file = io.open(minetest.get_worldpath().."/bed.txt", "w")
+	       file:write(minetest.serialize(bed_player_spawns))
 	       file:close()
 	    end
 	 end
@@ -188,7 +188,7 @@ player_effects.register_effect(
       }
    })
 
-core.register_on_respawnplayer(
+minetest.register_on_respawnplayer(
    function(player)
       local name = player:get_player_name()
       if bed_player_spawns[name] then
@@ -196,7 +196,7 @@ core.register_on_respawnplayer(
       end
    end)
 
-core.register_on_leaveplayer(
+minetest.register_on_leaveplayer(
    function(player)
       players_in_bed[player:get_player_name()] = nil
    end)

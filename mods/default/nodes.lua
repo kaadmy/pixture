@@ -2,7 +2,7 @@
 -- Node definitions
 --wate
 
-core.register_node(
+minetest.register_node(
    "default:stone",
    {
       description = "Stone",
@@ -12,7 +12,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:cobble",
    {
       description = "Cobble",
@@ -22,7 +22,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:reinforced_cobble",
    {
       description = "Reinforced Cobble",
@@ -31,7 +31,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:stone_with_coal",
    {
       description = "Stone with Coal",
@@ -41,7 +41,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:stone_with_iron",
    {
       description = "Stone with Iron",
@@ -51,7 +51,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:block_steel",
    {
       description = "Steel Block",
@@ -60,7 +60,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:block_coal",
    {
       description = "Coal Block",
@@ -69,7 +69,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dirt",
    {
       description = "Dirt",
@@ -79,7 +79,7 @@ core.register_node(
       sounds = default.node_sound_dirt_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dry_dirt",
    {
       description = "Dry Dirt",
@@ -89,7 +89,7 @@ core.register_node(
       sounds = default.node_sound_dirt_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:swamp_dirt",
    {
       description = "Swamp Dirt",
@@ -99,7 +99,7 @@ core.register_node(
       sounds = default.node_sound_dirt_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:fertilized_dirt",
    {
       description = "Fertilized Dirt",
@@ -116,7 +116,7 @@ core.register_node(
       sounds = default.node_sound_dirt_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dirt_with_dry_grass",
    {
       description = "Dirt with Dry Grass",
@@ -137,7 +137,7 @@ core.register_node(
 	 }),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dirt_with_swamp_grass",
    {
       description = "Dirt with Swamp Grass",
@@ -158,7 +158,7 @@ core.register_node(
 	 }),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dirt_with_grass",
    {
       description = "Dirt with Grass",
@@ -180,7 +180,7 @@ core.register_node(
 	 }),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dirt_with_grass_footsteps",
    {
       description = "Dirt with Grass Footsteps",
@@ -202,7 +202,7 @@ core.register_node(
 	 }),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dirt_path",
    {
       description = "Dirt Path",
@@ -218,7 +218,7 @@ core.register_node(
       sounds = default.node_sound_dirt_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:path_slab",
    {
       description = "Dirt Path Slab",
@@ -234,7 +234,7 @@ core.register_node(
       sounds = default.node_sound_dirt_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:heated_dirt_path",
    {
       description = "Heated Dirt Path",
@@ -251,7 +251,7 @@ core.register_node(
       sounds = default.node_sound_dirt_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:brick",
    {
       description = "Brick",
@@ -261,7 +261,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:sand",
    {
       description = "Sand",
@@ -270,7 +270,7 @@ core.register_node(
       sounds = default.node_sound_sand_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:fertilized_sand",
    {
       description = "Fertilized Sand",
@@ -289,7 +289,7 @@ core.register_node(
       sounds = default.node_sound_sand_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:sandstone",
    {
       description = "Sandstone",
@@ -299,7 +299,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:compressed_sandstone",
    {
       description = "Compressed Sandstone",
@@ -309,7 +309,7 @@ core.register_node(
       sounds = default.node_sound_stone_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:gravel",
    {
       description = "Gravel",
@@ -321,7 +321,7 @@ core.register_node(
 	 }),
    })
 
-core.register_node(
+minetest.register_node(
    "default:sapling_oak",
    {
       description = "Oak Sapling",
@@ -340,7 +340,7 @@ core.register_node(
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:tree_oak",
    {
       description = "Oak Tree",
@@ -349,7 +349,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:leaves_oak",
    {
       description = "Oak Leaves",
@@ -374,7 +374,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node( -- looks just like default oak leaves, except they decay much farther
+minetest.register_node( -- looks just like default oak leaves, except they decay much farther
    "default:leaves_oak_huge",
    {
       description = "Oak Leaves(Huge)",
@@ -400,7 +400,7 @@ core.register_node( -- looks just like default oak leaves, except they decay muc
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:sapling_birch",
    {
       description = "Birch Sapling",
@@ -420,7 +420,7 @@ core.register_node(
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:tree_birch",
    {
       description = "Birch Tree",
@@ -429,7 +429,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:leaves_birch",
    {
       description = "Birch Leaves",
@@ -454,7 +454,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:sapling",
    {
       description = "Sapling",
@@ -474,7 +474,7 @@ core.register_node(
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:tree",
    {
       description = "Tree",
@@ -483,7 +483,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:leaves",
    {
       description = "Leaves",
@@ -508,7 +508,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dry_leaves",
    {
       description = "Dry Leaves",
@@ -533,7 +533,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:cactus",
    {
       description = "Cactus",
@@ -560,10 +560,10 @@ core.register_node(
       after_dig_node = function(pos, node, metadata, digger)
 			  default.dig_up(pos, node, digger)
 		       end,
-      on_use = core.item_eat({hp = 2, sat = 5}),
+      on_use = minetest.item_eat({hp = 2, sat = 5}),
    })
 
-core.register_node(
+minetest.register_node(
    "default:rope",
    {
       description = "Rope",
@@ -587,7 +587,7 @@ core.register_node(
 		       end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:papyrus",
    {
       description = "Papyrus",
@@ -619,7 +619,7 @@ core.register_node(
 		       end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:papyrus",
    {
       description = "Papyrus",
@@ -651,7 +651,7 @@ core.register_node(
 		       end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:bookshelf",
    {
       description = "Bookshelf",
@@ -661,19 +661,19 @@ core.register_node(
       is_ground_content = false,
       sounds = default.node_sound_wood_defaults(),
       on_construct = function(pos)
-			local meta = core.get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", default.ui.get_page("core_bookshelf"))
 			meta:set_string("infotext", "Bookshelf")
 			local inv = meta:get_inventory()
 			inv:set_size("main", 4*2)
 		     end,
       can_dig = function(pos,player)
-		   local meta = core.get_meta(pos);
+		   local meta = minetest.get_meta(pos);
 		   local inv = meta:get_inventory()
 		   return inv:is_empty("main")
 		end,
       write_name = function(pos, text)
-		   local meta = core.get_meta(pos)
+		   local meta = minetest.get_meta(pos)
 
 		   if text ~= "" then
 		      meta:set_string("infotext", text)
@@ -683,7 +683,7 @@ core.register_node(
 		end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:glass",
    {
       description = "Glass",
@@ -696,7 +696,7 @@ core.register_node(
       sounds = default.node_sound_glass_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:fence",
    {
       description = "Wooden Fence",
@@ -717,7 +717,7 @@ core.register_node(
 		       end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:fence_oak",
    {
       description = "Oak Fence",
@@ -738,7 +738,7 @@ core.register_node(
 		       end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:fence_birch",
    {
       description = "Birch Fence",
@@ -759,7 +759,7 @@ core.register_node(
 		       end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:ladder",
    {
       description = "Ladder",
@@ -791,7 +791,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:planks",
    {
       description = "Planks",
@@ -801,7 +801,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:planks_oak",
    {
       description = "Oak Planks",
@@ -811,7 +811,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:planks_birch",
    {
       description = "Birch Planks",
@@ -821,7 +821,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:frame",
    {
       description = "Frame",
@@ -831,7 +831,7 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:reinforced_frame",
    {
       description = "Reinforced Frame",
@@ -841,11 +841,11 @@ core.register_node(
       sounds = default.node_sound_wood_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:water_flowing",
    {
       description = "Water (flowing)",
-      inventory_image = core.inventorycube("default_water.png"),
+      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "flowingliquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -877,11 +877,11 @@ core.register_node(
       is_ground_content = false,
    })
 
-core.register_node(
+minetest.register_node(
    "default:water_source",
    {
       description = "Water",
-      inventory_image = core.inventorycube("default_water.png"),
+      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "liquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -907,11 +907,11 @@ core.register_node(
       is_ground_content = false,
    })
 
-core.register_node(
+minetest.register_node(
    "default:river_water_flowing",
    {
       description = "River Water (flowing)",
-      inventory_image = core.inventorycube("default_water.png"),
+      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "flowingliquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -945,11 +945,11 @@ core.register_node(
       is_ground_content = false,
    })
 
-core.register_node(
+minetest.register_node(
    "default:river_water_source",
    {
       description = "River Water",
-      inventory_image = core.inventorycube("default_water.png"),
+      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "liquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -977,11 +977,11 @@ core.register_node(
       is_ground_content = false,
    })
 
-core.register_node(
+minetest.register_node(
    "default:swamp_water_flowing",
    {
       description = "Swamp Water (flowing)",
-      inventory_image = core.inventorycube("default_swamp_water.png"),
+      inventory_image = minetest.inventorycube("default_swamp_water.png"),
       drawtype = "flowingliquid",
       tiles ={"default_swamp_water.png"},
       special_tiles = {
@@ -1015,11 +1015,11 @@ core.register_node(
       is_ground_content = false,
    })
 
-core.register_node(
+minetest.register_node(
    "default:swamp_water_source",
    {
       description = "Swamp Water",
-      inventory_image = core.inventorycube("default_swamp.png"),
+      inventory_image = minetest.inventorycube("default_swamp.png"),
       drawtype = "liquid",
       tiles ={"default_swamp_water.png"},
       special_tiles = {
@@ -1047,7 +1047,7 @@ core.register_node(
       is_ground_content = false,
    })
 
-core.register_node(
+minetest.register_node(
    "default:torch_dead",
    {
       description = "Dead Torch",
@@ -1098,7 +1098,7 @@ core.register_node(
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:torch_weak",
    {
       description = "Weak Torch",
@@ -1150,7 +1150,7 @@ core.register_node(
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:torch",
    {
       description = "Torch",
@@ -1202,7 +1202,7 @@ core.register_node(
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:sign",
    {
       description = "Sign",
@@ -1224,19 +1224,19 @@ core.register_node(
       is_ground_content = false,
       sounds = default.node_sound_defaults(),
       on_construct = function(pos)
-			--local n = core.get_node(pos)
-			local meta = core.get_meta(pos)
+			--local n = minetest.get_node(pos)
+			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", default.ui.get_page("core_field"))
 			meta:set_string("infotext", '""')
 			meta:set_string("text", "")
 		     end,
       on_receive_fields = function(pos, formname, fields, sender)
-			     --print("Sign at "..core.pos_to_string(pos).." got "..dump(fields))
+			     --print("Sign at "..minetest.pos_to_string(pos).." got "..dump(fields))
 			     if fields.text == nil then return end
-			     local meta = core.get_meta(pos)
-			     core.log("action", (sender:get_player_name() or "")..
+			     local meta = minetest.get_meta(pos)
+			     minetest.log("action", (sender:get_player_name() or "")..
 				       " wrote \""..fields.text.."\" to sign at "..
-				       core.pos_to_string(pos))
+				       minetest.pos_to_string(pos))
 			     meta:set_string("text", fields.text)
 			     meta:set_string("infotext", '"'..fields.text..'"')
 
@@ -1247,7 +1247,7 @@ core.register_node(
 	       end
    })
 
-core.register_node(
+minetest.register_node(
    "default:fern",
    {
       description = "Fern",
@@ -1268,7 +1268,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:flower",
    {
       description = "Flower",
@@ -1288,7 +1288,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:swamp_grass",
    {
       description = "Swamp Grass Clump",
@@ -1309,7 +1309,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:dry_grass",
    {
       description = "Dry Grass Clump",
@@ -1330,7 +1330,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:grass",
    {
       description = "Grass Clump",
@@ -1351,7 +1351,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:tall_grass",
    {
       description = "Tall Grass Clump",
@@ -1373,7 +1373,7 @@ core.register_node(
       sounds = default.node_sound_leaves_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:thistle",
    {
       description = "Thistle",
@@ -1395,7 +1395,7 @@ core.register_node(
 		       end,
    })
 
-core.register_node(
+minetest.register_node(
    "default:apple",
    {
       description = "Apple",
@@ -1415,11 +1415,11 @@ core.register_node(
       sunlight_propagates = true,
       walkable = false,
       groups = {fleshy = 3, dig_immediate = 2, leafdecay = 3, leafdecay_drop = 1, attached_node = 1},
-      on_use = core.item_eat({hp = 2, sat = 10}),
+      on_use = minetest.item_eat({hp = 2, sat = 10}),
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:clam",
    {
       description = "Clam",
@@ -1445,11 +1445,11 @@ core.register_node(
 	 }
       },
       groups = {fleshy = 3, oddly_breakable_by_hand = 2, choppy = 3, attached_node = 1},
-      on_use = core.item_eat({hp = 4, sat = 40}),
+      on_use = minetest.item_eat({hp = 4, sat = 40}),
       sounds = default.node_sound_defaults(),
    })
 
-core.register_node(
+minetest.register_node(
    "default:chest",
    {
       description = "Chest",
@@ -1460,7 +1460,7 @@ core.register_node(
       is_ground_content = false,
       sounds = default.node_sound_wood_defaults(),
       on_construct = function(pos)
-			local meta = core.get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", default.ui.get_page("default_chest"))
 			meta:set_string("infotext", "Chest")
 
@@ -1468,12 +1468,12 @@ core.register_node(
 			inv:set_size("main", 8*4)
 		     end,
       can_dig = function(pos, player)
-		   local meta = core.get_meta(pos)
+		   local meta = minetest.get_meta(pos)
 		   local inv = meta:get_inventory()
 		   return inv:is_empty("main")
 		end,
       write_name = function(pos, text)
-		   local meta = core.get_meta(pos)
+		   local meta = minetest.get_meta(pos)
 
 		   if text ~= "" then
 		      meta:set_string("infotext", text)

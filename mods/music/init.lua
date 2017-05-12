@@ -5,36 +5,36 @@
 
 music = {}
 
-music.default_track = core.setting_get("music_track") or "music_catsong"
-music.track_length = tonumber(core.setting_get("music_track_length")) or 30.0
-music.volume = tonumber(core.setting_get("music_volume")) or 1.0
+music.default_track = minetest.setting_get("music_track") or "music_catsong"
+music.track_length = tonumber(minetest.setting_get("music_track_length")) or 30.0
+music.volume = tonumber(minetest.setting_get("music_volume")) or 1.0
 
 music.players = {} -- music players
 
-if core.setting_getbool("music_enable") then
+if minetest.setting_getbool("music_enable") then
    function music.stop(pos)
-      local dp = core.hash_node_position(pos)
+      local dp = minetest.hash_node_position(pos)
 
-      local meta = core.get_meta(pos)
+      local meta = minetest.get_meta(pos)
       meta:set_string("infotext", "Music player (Off)")
       meta:set_int("music_player_enabled", 0)
 
       if music.players[dp] ~= nil then
-	 core.sound_stop(music.players[dp]["handle"])
+	 minetest.sound_stop(music.players[dp]["handle"])
 	 music.players[dp] = nil
       end
    end
 
    function music.start(pos)
-      local dp = core.hash_node_position(pos)
+      local dp = minetest.hash_node_position(pos)
 
-      local meta = core.get_meta(pos)
+      local meta = minetest.get_meta(pos)
       meta:set_string("infotext", "Music player (On)")
       meta:set_int("music_player_enabled", 1)
 
       if music.players[dp] == nil then
 	 music.players[dp] = {
-	    ["handle"] = core.sound_play(
+	    ["handle"] = minetest.sound_play(
 	       music.default_track,
 	       {
 		  pos = pos,
@@ -45,8 +45,8 @@ if core.setting_getbool("music_enable") then
 	 }
       else
 	 music.players[dp]["timer"] = 0
-	 core.sound_stop(music.players[dp]["handle"])
-	 music.players[dp]["handle"] = core.sound_play(
+	 minetest.sound_stop(music.players[dp]["handle"])
+	 music.players[dp]["handle"] = minetest.sound_play(
 	    music.default_track,
 	    {
 	       pos = pos,
@@ -56,10 +56,10 @@ if core.setting_getbool("music_enable") then
    end
 
    function music.update(pos)
-      local dp = core.hash_node_position(pos)
+      local dp = minetest.hash_node_position(pos)
 
       if music.players[dp] ~= nil then
-	 local node = core.get_node(pos)
+	 local node = minetest.get_node(pos)
 
 	 if node.name ~= "music:player" then
 	    music.stop(pos)
@@ -74,7 +74,7 @@ if core.setting_getbool("music_enable") then
    end
 
    function music.toggle(pos)
-      local dp = core.hash_node_position(pos)
+      local dp = minetest.hash_node_position(pos)
 
       if music.players[dp] == nil then
 	 music.start(pos)
@@ -83,7 +83,7 @@ if core.setting_getbool("music_enable") then
       end
    end
 
-   core.register_node(
+   minetest.register_node(
       "music:player",
       {
 	 description = "Music player",
@@ -124,16 +124,16 @@ if core.setting_getbool("music_enable") then
       end
    end
 
-   core.register_globalstep(step)
+   minetest.register_globalstep(step)
 
-   core.register_abm(
+   minetest.register_abm(
       {
 	 nodenames = {"music:player"},
 	 chance = 1,
 	 interval = 1,
 	 action = function(pos, node)
-            if music.players[core.hash_node_position(pos)] == nil then
-               local meta = core.get_meta(pos)
+            if music.players[minetest.hash_node_position(pos)] == nil then
+               local meta = minetest.get_meta(pos)
                if meta:get_int("music_player_enabled") == 1 then
                   music.start(pos)
                end
@@ -141,7 +141,7 @@ if core.setting_getbool("music_enable") then
          end
    })
 else
-   core.register_node(
+   minetest.register_node(
       "music:player",
       {
 	 description = "Music player",
@@ -160,7 +160,7 @@ else
 	 },
 
 	 on_construct = function(pos)
-            local meta = core.get_meta(pos)
+            local meta = minetest.get_meta(pos)
 
             meta:set_string("infotext", "Music player(Disabled by server)")
          end,
@@ -169,7 +169,7 @@ else
    })
 end
 
-core.register_craft(
+minetest.register_craft(
    {
       output = "music:player",
       recipe = {
