@@ -131,7 +131,7 @@ end
 
 local form_trading = ""
 
-form_trading = form_trading .. default.ui.get_page("core_2part")
+form_trading = form_trading .. default.ui.get_page("default:2part")
 
 form_trading = form_trading .. "list[current_player;gold_trade_out;3.75,2.25;1,1;]"
 form_trading = form_trading .. "listring[current_player;gold_trade_out]"

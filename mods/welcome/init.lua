@@ -20,7 +20,7 @@ function welcome.get_formspec(name)
       return ""
    end
 
-   local form = default.ui.get_page("core_notabs")
+   local form = default.ui.get_page("default:notabs")
 
    local rules = ""
 

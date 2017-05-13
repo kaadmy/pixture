@@ -134,7 +134,7 @@ minetest.register_node(
             end
 
             local np = pos.x .. "," .. pos.y .. "," .. pos.z
-            local form = default.ui.get_page("core_2part")
+            local form = default.ui.get_page("default:2part")
             form = form .. "list[nodemeta:" .. np .. ";main;0.25,0.25;8,4;]"
             form = form .. "listring[nodemeta:" .. np .. ";main]"
             form = form .. default.ui.get_itemslot_bg(0.25, 0.25, 8, 4)

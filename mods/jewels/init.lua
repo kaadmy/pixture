@@ -99,7 +99,7 @@ function jewels.register_jewel(toolname, new_toolname, def)
       end
    end
 
-   new_tooldef.description = desc   
+   new_tooldef.description = desc
 
    minetest.register_tool(new_toolname, new_tooldef)
 end
@@ -156,7 +156,7 @@ minetest.register_node(
 		end,
       on_punch = function(pos, node, player, pointed_thing)
 		    local itemstack = player:get_wielded_item()
-		    
+
 		    if itemstack:get_name() == "jewels:jewel" then
 		       local meta = minetest.get_meta(pos)
 		       local inv = meta:get_inventory()
@@ -170,7 +170,7 @@ minetest.register_node(
 
 			  achievements.trigger_achievement(player, "jeweler")
 			  achievements.trigger_achievement(player, "master_jeweler")
-		       end		       
+		       end
 		    end
 
 		    player:set_wielded_item(itemstack)
@@ -187,7 +187,7 @@ minetest.register_craft(
       }
    })
 
-local form_bench = default.ui.get_page("core_2part")
+local form_bench = default.ui.get_page("default:2part")
 form_bench = form_bench .. "list[current_name;main;2.25,1.75;1,1;]"
 form_bench = form_bench .. "listring[current_name;main]"
 form_bench = form_bench .. default.ui.get_itemslot_bg(2.25, 1.75, 1, 1)

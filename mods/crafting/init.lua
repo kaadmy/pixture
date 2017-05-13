@@ -15,6 +15,7 @@ crafting.default_craftdef = {
    output = nil,
    description = "",
    items = {},
+   groups = {},
 }
 
 function crafting.register_craft(output, def)
@@ -33,7 +34,8 @@ function crafting.register_craft(output, def)
    local craftdef = {
       output = itemstack,
       description = def.description or minetest.registered_items[itemn].description,
-      items = def.items or default.default_craftdef.items,
+      items = def.items or crafting.default_craftdef.items,
+      groups = def.groups or crafting.default_craftdef.groups,
    }
 
    if #craftdef.items > 4 then
@@ -143,6 +145,28 @@ function crafting.craft(output, items)
    return items
 end
 
+local form = default.ui.get_page("default:2part")
+form = form .. "list[current_player;main;0.25,4.75;8,4;]"
+form = form .. "listring[current_player;main]"
+form = form .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
+form = form .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
+
+form = form .. "list[current_player;craft;2.25,0.75;3,3;]"
+form = form .. "listring[current_player;craft]"
+
+form = form .. "image[5.25,1.75;1,1;ui_arrow_bg.png^[transformR270]"
+
+form = form .. "list[current_player;craftpreview;6.25,1.75;1,1;]"
+form = form .. default.ui.get_itemslot_bg(2.25, 0.75, 3, 3)
+form = form .. default.ui.get_itemslot_bg(6.25, 1.75, 1, 1)
+default.ui.register_page("crafting:crafting", form)
+
+function crafting.get_formspec(name)
+   local form = default.ui.get_page("crafting:crafting")
+
+   return form
+end
+
 crafting.register_craft(
    "default:stone 4",
    {
@@ -156,14 +180,14 @@ crafting.register_craft(
 crafting.craft(
    "default:stone 2",
    {
-      {name = "default:stick", count = 4}, -- 0 leftover
+      "default:stick 4", -- 0 leftover
       {name = "default:stick", count = 5}, -- 3 leftover
-      {name = "default:fiber", count = 9}, -- 5 leftover
+      "default:fiber 9", -- 5 leftover
       {name = "group:stone", count = 4}, -- 0 leftover
 })
 
 local function on_player_recieve_fields(player, form_name, fields)
-   if form_name ~= "crafting:crafting" or fields.cancel then return end
+   if form_name ~= "core:crafting" or fields.cancel then return end
 
    local inv = player:get_inventory()
 

@@ -6,7 +6,7 @@
 armor = {}
 
 armor.player_skin = "character.png"
-armor.update_time = 1
+armor.update_time = 3
 
 armor.materials = {
 --   material       craftitem                   %   description
@@ -18,8 +18,8 @@ armor.materials = {
 
 armor.slots = {"helmet", "chestplate", "boots"}
 
-local form_armor = default.ui.get_page("core_2part")
-default.ui.register_page("core_armor", form_armor)
+local form_armor = default.ui.get_page("default:2part")
+default.ui.register_page("armor:armor", form_armor)
 
 local enable_drop = minetest.setting_getbool("drop_items_on_die") or false
 
@@ -87,7 +87,7 @@ function armor.get_groups(player)
 
       if armor.is_armor(itemname) then
 	 local item = minetest.registered_items[itemname]
-	 
+
 	 for mat_index, _ in ipairs(armor.materials) do
 	    local mat = armor.materials[mat_index][1]
 
@@ -158,7 +158,7 @@ local function on_die(player)
       }
 
       local drop = minetest.add_item(rpos, item)
-      
+
       if drop then
 	 drop:setvelocity(
 	    {
@@ -190,7 +190,7 @@ minetest.register_craftitem(
       description = "Chainmail sheet",
 
       inventory_image = "armor_chainmail.png",
-      wield_image = "armor_chainmail.png",      
+      wield_image = "armor_chainmail.png",
 
       stack_max = 20,
    })
@@ -264,12 +264,14 @@ end
 
 minetest.register_on_newplayer(on_newplayer)
 minetest.register_on_joinplayer(on_joinplayer)
+
 if enable_drop then
    minetest.register_on_dieplayer(on_die)
 end
+
 minetest.register_globalstep(step)
 
-local form_armor = default.ui.get_page("core_2part")
+local form_armor = default.ui.get_page("default:2part")
 form_armor = form_armor .. "list[current_player;main;0.25,4.75;8,4;]"
 form_armor = form_armor .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
 form_armor = form_armor .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
@@ -290,7 +292,7 @@ form_armor = form_armor .. "list[current_player;armor_helmet;2.25,0.75;1,1;]"
 form_armor = form_armor .. "listring[current_player;armor_helmet]"
 form_armor = form_armor .. default.ui.get_itemslot_bg(2.25, 0.75, 1, 1)
 
-default.ui.register_page("core_armor", form_armor)
+default.ui.register_page("armor:armor", form_armor)
 
 -- Achievements
 

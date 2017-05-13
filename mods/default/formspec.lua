@@ -1,9 +1,9 @@
 default.ui = {}
 
-default.ui.core = {}
+default.ui.default = {}
 
-default.ui.core.colors = "listcolors[#00000000;#00000010;#00000000;#68B259;#FFF]"
-default.ui.core.bg = "bgcolor[#00000000;false]"
+default.ui.default.colors = "listcolors[#00000000;#00000010;#00000000;#68B259;#FFF]"
+default.ui.default.bg = "bgcolor[#00000000;false]"
 
 function default.ui.get_itemslot_bg(x, y, w, h)
    local out = ""
@@ -166,58 +166,42 @@ function default.ui.register_page(name, form)
    default.ui.registered_pages[name] = form
 end
 
-local form_core = ""
-form_core = form_core .. "size[8.5,9]"
-form_core = form_core .. default.ui.core.colors
-form_core = form_core .. default.ui.core.bg
-form_core = form_core .. default.ui.tab(-0.9, 0.5, "tab_crafting", "ui_icon_crafting.png", "Crafting")
+local form_default_default = ""
+form_default_default = form_default_default .. "size[8.5,9]"
+form_default_default = form_default_default .. default.ui.default.colors
+form_default_default = form_default_default .. default.ui.default.bg
+form_default_default = form_default_default .. default.ui.tab(-0.9, 0.5, "tab_crafting", "ui_icon_crafting.png", "Crafting")
 if minetest.get_modpath("armor") ~= nil then
-   form_core = form_core .. default.ui.tab(-0.9, 1.28, "tab_armor", "ui_icon_armor.png", "Armor")
+   form_default_default = form_default_default .. default.ui.tab(-0.9, 1.28, "tab_armor", "ui_icon_armor.png", "Armor")
 end
 if minetest.get_modpath("achievements") ~= nil then
-   form_core = form_core .. default.ui.tab(-0.9, 2.06, "tab_achievements", "ui_icon_achievements.png", "Achievements")
+   form_default_default = form_default_default .. default.ui.tab(-0.9, 2.06, "tab_achievements", "ui_icon_achievements.png", "Achievements")
 end
 if minetest.get_modpath("player_skins") ~= nil then
-   form_core = form_core .. default.ui.tab(-0.9, 2.84, "tab_player_skins", "ui_icon_player_skins.png", "Player Skins")
+   form_default_default = form_default_default .. default.ui.tab(-0.9, 2.84, "tab_player_skins", "ui_icon_player_skins.png", "Player Skins")
 end
-form_core = form_core .. "background[0,0;8.5,9;ui_formspec_bg_tall.png]"
-default.ui.register_page("core", form_core)
-default.ui.register_page("core_2part", form_core .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]")
+form_default_default = form_default_default .. "background[0,0;8.5,9;ui_formspec_bg_tall.png]"
+default.ui.register_page("default:default", form_default_default)
+default.ui.register_page("default:2part", form_default_default .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]")
 
-local form_core_notabs = ""
-form_core_notabs = form_core_notabs .. "size[8.5,9]"
-form_core_notabs = form_core_notabs .. default.ui.core.colors
-form_core_notabs = form_core_notabs .. default.ui.core.bg
-form_core_notabs = form_core_notabs .. "background[0,0;8.5,9;ui_formspec_bg_tall.png]"
-default.ui.register_page("core_notabs", form_core_notabs)
-default.ui.register_page("core_notabs_2part", form_core_notabs .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]")
+local form_default_notabs = ""
+form_default_notabs = form_default_notabs .. "size[8.5,9]"
+form_default_notabs = form_default_notabs .. default.ui.default.colors
+form_default_notabs = form_default_notabs .. default.ui.default.bg
+form_default_notabs = form_default_notabs .. "background[0,0;8.5,9;ui_formspec_bg_tall.png]"
+default.ui.register_page("default:notabs", form_default_notabs)
+default.ui.register_page("default:notabs_2part", form_default_notabs .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]")
 
-local form_core_field = ""
-form_core_field = form_core_field .. "size[8.5,5]"
-form_core_field = form_core_field .. default.ui.core.colors
-form_core_field = form_core_field .. default.ui.core.bg
-form_core_field = form_core_field .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]"
-form_core_field = form_core_field .. default.ui.button_exit(2.75, 3, 3, 1, "", "Write", false)
-form_core_field = form_core_field .. "field[1,1.75;7,0;text;;${text}]"
-default.ui.register_page("core_field", form_core_field)
+local form_default_field = ""
+form_default_field = form_default_field .. "size[8.5,5]"
+form_default_field = form_default_field .. default.ui.default.colors
+form_default_field = form_default_field .. default.ui.default.bg
+form_default_field = form_default_field .. "background[0,0;8.5,4.5;ui_formspec_bg_short.png]"
+form_default_field = form_default_field .. default.ui.button_exit(2.75, 3, 3, 1, "", "Write", false)
+form_default_field = form_default_field .. "field[1,1.75;7,0;text;;${text}]"
+default.ui.register_page("default:field", form_default_field)
 
-local form_crafting = default.ui.get_page("core_2part")
-form_crafting = form_crafting .. "list[current_player;main;0.25,4.75;8,4;]"
-form_crafting = form_crafting .. "listring[current_player;main]"
-form_crafting = form_crafting .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
-form_crafting = form_crafting .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
-
-form_crafting = form_crafting .. "list[current_player;craft;2.25,0.75;3,3;]"
-form_crafting = form_crafting .. "listring[current_player;craft]"
-
-form_crafting = form_crafting .. "image[5.25,1.75;1,1;ui_arrow_bg.png^[transformR270]"
-
-form_crafting = form_crafting .. "list[current_player;craftpreview;6.25,1.75;1,1;]"
-form_crafting = form_crafting .. default.ui.get_itemslot_bg(2.25, 0.75, 3, 3)
-form_crafting = form_crafting .. default.ui.get_itemslot_bg(6.25, 1.75, 1, 1)
-default.ui.register_page("core_crafting", form_crafting)
-
-local form_bookshelf = default.ui.get_page("core_2part")
+local form_bookshelf = default.ui.get_page("default:2part")
 form_bookshelf = form_bookshelf .. "list[current_player;main;0.25,4.75;8,4;]"
 form_bookshelf = form_bookshelf .. "listring[current_player;main]"
 form_bookshelf = form_bookshelf .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
@@ -226,7 +210,7 @@ form_bookshelf = form_bookshelf .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
 form_bookshelf = form_bookshelf .. "list[current_name;main;2.25,1.25;4,2;]"
 form_bookshelf = form_bookshelf .. "listring[current_name;main]"
 form_bookshelf = form_bookshelf .. default.ui.get_itemslot_bg(2.25, 1.25, 4, 2)
-default.ui.register_page("core_bookshelf", form_bookshelf)
+default.ui.register_page("default:bookshelf", form_bookshelf)
 
 function default.ui.receive_fields(player, form_name, fields)
    local name = player:get_player_name()
@@ -234,13 +218,13 @@ function default.ui.receive_fields(player, form_name, fields)
    --   print("Received formspec fields from '"..name.."': "..dump(fields))
 
    if fields.tab_crafting then
-      minetest.show_formspec(name, "core_crafting", default.ui.get_page("core_crafting"))
+      minetest.show_formspec(name, "crafting:crafting", crafting.get_formspec(name))
    elseif minetest.get_modpath("armor") ~= nil and fields.tab_armor then
-      minetest.show_formspec(name, "core_armor", default.ui.get_page("core_armor"))
+      minetest.show_formspec(name, "armor:armor", default.ui.get_page("armor:armor"))
    elseif minetest.get_modpath("achievements") ~= nil and fields.tab_achievements then
-      minetest.show_formspec(name, "core_achievements", achievements.get_formspec(name))
+      minetest.show_formspec(name, "achievements:achievements", achievements.get_formspec(name))
    elseif minetest.get_modpath("player_skins") ~= nil and fields.tab_player_skins then
-      minetest.show_formspec(name, "core_player_skins", player_skins.get_formspec(name))
+      minetest.show_formspec(name, "player_skins:player_skins", player_skins.get_formspec(name))
    end
 end
 
@@ -251,5 +235,5 @@ end)
 
 minetest.register_on_joinplayer(
    function(player)
-      player:set_inventory_formspec(default.ui.get_page("core_crafting"))
+      player:set_inventory_formspec(default.ui.get_page("crafting:crafting"))
 end)
