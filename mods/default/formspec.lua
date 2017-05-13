@@ -38,7 +38,9 @@ function default.ui.button(x, y, w, h, name, label, noclip)
       nc = "true"
    end
 
-   if w == 2 then
+   if w == 1 then
+      return "image_button["..x..","..y..";"..w..","..h..";ui_button_1w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_1w_active.png]"
+   elseif w == 2 then
       return "image_button["..x..","..y..";"..w..","..h..";ui_button_2w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_2w_active.png]"
    else
       return "image_button["..x..","..y..";"..w..","..h..";ui_button_3w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_3w_active.png]"

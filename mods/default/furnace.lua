@@ -3,7 +3,7 @@
 --
 
 function default.furnace_active_formspec(percent, item_percent)
-   local form = default.ui.get_page("core_2part")
+   local form = default.ui.get_page("default:2part")
    form = form .. "list[current_player;main;0.25,4.75;8,4;]"
    form = form .. "listring[current_player;main]"
    form = form .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
@@ -28,7 +28,7 @@ function default.furnace_active_formspec(percent, item_percent)
    return form
 end
 
-local form_furnace = default.ui.get_page("core_2part")
+local form_furnace = default.ui.get_page("default:2part")
 form_furnace = form_furnace .. "list[current_player;main;0.25,4.75;8,4;]"
 form_furnace = form_furnace .. "listring[current_player;main]"
 form_furnace = form_furnace .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
@@ -142,7 +142,7 @@ minetest.register_abm(
 		  local fuel_time = meta:get_float("fuel_time") or 0
 		  local src_time = meta:get_float("src_time") or 0
 		  local fuel_totaltime = meta:get_float("fuel_totaltime") or 0
-		  
+
 		  --
 		  -- Initialize inventory
 		  --
@@ -160,24 +160,24 @@ minetest.register_abm(
 		  local srclist = inv:get_list("src")
 		  local fuellist = inv:get_list("fuel")
 		  local dstlist = inv:get_list("dst")
-		  
+
 		  --
 		  -- Cooking
 		  --
-		  
+
 		  -- Check if we have cookable content
 		  local cooked, aftercooked = minetest.get_craft_result({method = "cooking", width = 1, items = srclist})
 		  local cookable = true
-		  
+
 		  if cooked.time == 0 then
 		     cookable = false
 		  end
-		  
+
 		  -- Check if we have enough fuel to burn
 		  if fuel_time < fuel_totaltime then
 		     -- The furnace is currently active and has enough fuel
 		     fuel_time = fuel_time + 1
-		     
+
 		     -- If there is a cookable item then check if it is ready yet
 		     if cookable then
 			src_time = src_time + 1
@@ -195,7 +195,7 @@ minetest.register_abm(
 		     if cookable then
 			-- We need to get new fuel
 			local fuel, afterfuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
-			
+
 			if fuel.time == 0 then
 			   -- No valid fuel in fuel list
 			   fuel_totaltime = 0
@@ -204,10 +204,10 @@ minetest.register_abm(
 			else
 			   -- Take fuel from fuel list
 			   inv:set_stack("fuel", 1, afterfuel.items[1])
-			   
+
 			   fuel_totaltime = fuel.time
 			   fuel_time = 0
-			   
+
 			end
 		     else
 			-- We don't need to get new fuel since there is no cookable item
@@ -216,7 +216,7 @@ minetest.register_abm(
 			src_time = 0
 		     end
 		  end
-		  
+
 		  --
 		  -- Update formspec, infotext and node
 		  --
@@ -233,7 +233,7 @@ minetest.register_abm(
 			item_state = "Not cookable"
 		     end
 		  end
-		  
+
 		  local fuel_state = "Empty"
 		  local active = "inactive "
 		  if fuel_time <= fuel_totaltime and fuel_totaltime ~= 0 then
@@ -248,9 +248,9 @@ minetest.register_abm(
 		     end
 		     swap_node(pos, "default:furnace")
 		  end
-		  
+
 		  local infotext =  "Furnace " .. active .. "(Item: " .. item_state .. "; Fuel: " .. fuel_state .. ")"
-		  
+
 		  --
 		  -- Set meta values
 		  --
