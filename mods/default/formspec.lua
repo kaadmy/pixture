@@ -171,17 +171,14 @@ form_core = form_core .. "size[8.5,9]"
 form_core = form_core .. default.ui.core.colors
 form_core = form_core .. default.ui.core.bg
 form_core = form_core .. default.ui.tab(-0.9, 0.5, "tab_crafting", "ui_icon_crafting.png", "Crafting")
-if minetest.get_modpath("craftingguide") ~= nil then
-   form_core = form_core .. default.ui.tab(-0.9, 1.28, "tab_craftingguide", "ui_icon_craftingguide.png", "Crafting Guide")
-end
 if minetest.get_modpath("armor") ~= nil then
-   form_core = form_core .. default.ui.tab(-0.9, 2.06, "tab_armor", "ui_icon_armor.png", "Armor")
+   form_core = form_core .. default.ui.tab(-0.9, 1.28, "tab_armor", "ui_icon_armor.png", "Armor")
 end
 if minetest.get_modpath("achievements") ~= nil then
-   form_core = form_core .. default.ui.tab(-0.9, 2.84, "tab_achievements", "ui_icon_achievements.png", "Achievements")
+   form_core = form_core .. default.ui.tab(-0.9, 2.06, "tab_achievements", "ui_icon_achievements.png", "Achievements")
 end
 if minetest.get_modpath("player_skins") ~= nil then
-   form_core = form_core .. default.ui.tab(-0.9, 3.62, "tab_player_skins", "ui_icon_player_skins.png", "Player Skins")
+   form_core = form_core .. default.ui.tab(-0.9, 2.84, "tab_player_skins", "ui_icon_player_skins.png", "Player Skins")
 end
 form_core = form_core .. "background[0,0;8.5,9;ui_formspec_bg_tall.png]"
 default.ui.register_page("core", form_core)
@@ -238,8 +235,6 @@ function default.ui.receive_fields(player, form_name, fields)
 
    if fields.tab_crafting then
       minetest.show_formspec(name, "core_crafting", default.ui.get_page("core_crafting"))
-   elseif minetest.get_modpath("craftingguide") ~= nil and fields.tab_craftingguide then
-      minetest.show_formspec(name, "core_craftingguide", craftingguide.get_formspec(name))
    elseif minetest.get_modpath("armor") ~= nil and fields.tab_armor then
       minetest.show_formspec(name, "core_armor", default.ui.get_page("core_armor"))
    elseif minetest.get_modpath("achievements") ~= nil and fields.tab_achievements then
