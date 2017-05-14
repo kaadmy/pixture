@@ -1,9 +1,22 @@
+
 default.ui = {}
+
+-- UI defaults
 
 default.ui.default = {}
 
+-- Colors
+
 default.ui.default.colors = "listcolors[#00000000;#00000010;#00000000;#68B259;#FFF]"
 default.ui.default.bg = "bgcolor[#00000000;false]"
+
+-- Group default items
+
+default.ui.group_defaults = {
+   planks = "default:planks",
+   stone = "default:stone",
+   soil = "default:dirt",
+}
 
 function default.ui.get_itemslot_bg(x, y, w, h)
    local out = ""
@@ -96,8 +109,8 @@ function default.ui.fake_itemstack(x, y, itemstack, name)
    if itemname ~= "" then
       --      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
       result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
-      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
-      result = result .. "label["..(x+0.6)..","..(y+0.5)..";"..itemamt.."]"
+      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname .. " " .. itemamt).."]"
+
       result = result .. "tooltip["..name..";"..itemdesc.."]"
    end
 
@@ -123,14 +136,21 @@ function default.ui.fake_simple_itemstack(x, y, itemname, name)
    return result
 end
 
-function default.ui.item_group(x, y, group, name)
+function default.ui.item_group(x, y, group, count, name)
    local name = name or "fake_itemgroup"
 
    local itemname = ""
 
-   for itemn, itemdef in pairs(minetest.registered_items) do
-      if minetest.get_item_group(itemn, group) ~= 0 and minetest.get_item_group(itemn, "not_in_craftingguide") ~= 1 then
-	 itemname = itemn
+   local group_default = default.ui.group_defaults[group]
+
+   if group_default ~= nil and minetest.registered_items[group_default] then
+      itemname = group_default
+   else
+      for itemn, itemdef in pairs(minetest.registered_items) do
+         if minetest.get_item_group(itemn, group) ~= 0
+         and minetest.get_item_group(itemn, "not_in_craftingguide") ~= 1 then
+            itemname = itemn
+         end
       end
    end
 
@@ -141,13 +161,23 @@ function default.ui.item_group(x, y, group, name)
 
    local result = ""
    if itemname ~= "" then
-      --      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
-      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";G;false;false;ui_null.png]"
-      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
+      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
+      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname .. " " .. count).."]"
+
       result = result .. "tooltip["..name..";Group: "..group.."]"
    end
 
    return result
+end
+
+function default.ui.fake_itemstack_any(x, y, itemstack, name)
+   local group = string.match(itemstack:get_name(), "group:(.*)")
+
+   if group == nil then
+      return default.ui.fake_itemstack(x, y, itemstack, name)
+   else
+      return default.ui.item_group(x, y, group, itemstack:get_count(), name)
+   end
 end
 
 default.ui.registered_pages = {
