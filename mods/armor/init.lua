@@ -6,7 +6,7 @@
 armor = {}
 
 armor.player_skin = "character.png"
-armor.update_time = 3
+armor.update_time = 1
 
 armor.materials = {
 --   material       craftitem                   %   description

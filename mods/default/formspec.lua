@@ -237,5 +237,5 @@ end)
 
 minetest.register_on_joinplayer(
    function(player)
-      player:set_inventory_formspec(default.ui.get_page("crafting:crafting"))
+      player:set_inventory_formspec(crafting.get_formspec(player:get_player_name()))
 end)
