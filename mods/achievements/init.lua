@@ -23,6 +23,7 @@ function achievements.register_achievement(name, def)
    }
 
    achievements.registered_achievements[name] = def
+
    table.insert(achievements.registered_achievements_list, name)
 end
 
@@ -31,16 +32,16 @@ local function save_achievements()
 
    f:write(minetest.serialize(achievements.achievements))
 
-   saving = false
-
    io.close(f)
+
+   saving = false
 end
 
 local function delayed_save()
    if not saving then
       saving = true
 
-      minetest.after(60, save_achievements)
+      minetest.after(40, save_achievements)
    end
 end
 

@@ -8,9 +8,9 @@ player_effects = {}
 player_effects.effects = {}
 player_effects.registered_effects = {}
 
-local update_time = 1 -- update every second
-local timer = 10
 local effects_file = minetest.get_worldpath() .. "/player_effects.dat"
+local timer_interval = 1 -- update every second
+local timer = 10
 
 local function save_effects()
    local f = io.open(effects_file, "w")
@@ -152,22 +152,26 @@ end
 
 local function step(dtime)
    timer = timer + dtime
-   if timer > update_time then
-      local gt = minetest.get_gametime()
 
-      for _, player in pairs(minetest.get_connected_players()) do
-	 local name = player:get_player_name()
+   if timer < timer_interval then
+      return
+   end
 
-	 for ename, endtime in pairs(player_effects.effects[name]) do
-	    if endtime > 0 then
-	       local timeleft = endtime - gt
-	       if timeleft <= 0 then
-		  player_effects.remove_effect(player, ename)
-	       end
-	    end
-	 end
+   timer = 0
+
+   local gt = minetest.get_gametime()
+
+   for _, player in pairs(minetest.get_connected_players()) do
+      local name = player:get_player_name()
+
+      for ename, endtime in pairs(player_effects.effects[name]) do
+         if endtime > 0 then
+            local timeleft = endtime - gt
+            if timeleft <= 0 then
+               player_effects.remove_effect(player, ename)
+            end
+         end
       end
-      timer = 0
    end
 end
 
@@ -203,26 +207,26 @@ minetest.register_chatcommand(
    {
       description = "Show current player effects",
       func = function(name, param)
-		local s = "Current player effects:\n"
-		local ea = 0
+         local s = "Current player effects:\n"
+         local ea = 0
 
-		for ename, endtime in pairs(player_effects.effects[name]) do
-		   if endtime < 0 then
-		      s = s .. "  " .. player_effects.registered_effects[ename].title .. ": unlimited\n"
-		   else
-		      s = s .. "  " .. player_effects.registered_effects[ename].title .. ": " .. (endtime - minetest.get_gametime()) .. " seconds remaining\n"
-		   end
+         for ename, endtime in pairs(player_effects.effects[name]) do
+            if endtime < 0 then
+               s = s .. "  " .. player_effects.registered_effects[ename].title .. ": unlimited\n"
+            else
+               s = s .. "  " .. player_effects.registered_effects[ename].title .. ": " .. (endtime - minetest.get_gametime()) .. " seconds remaining\n"
+            end
 
-		   ea = ea + 1
-		end
+            ea = ea + 1
+         end
 
-		if ea > 0 then
-		   minetest.chat_send_player(name, s)
-		else
-		   minetest.chat_send_player(name, "You currently have no effects")
-		end
-	     end
-   })
+         if ea > 0 then
+            minetest.chat_send_player(name, s)
+         else
+            minetest.chat_send_player(name, "You currently have no effects")
+         end
+      end
+})
 
 player_effects.register_effect(
    "uberspeed",
@@ -233,7 +237,7 @@ player_effects.register_effect(
       physics = {
 	 speed = 8,
       }
-   })
+})
 player_effects.register_effect(
    "uberspeed_cinematic",
    {
@@ -243,7 +247,7 @@ player_effects.register_effect(
       physics = {
 	 speed = 2,
       }
-   })
+})
 minetest.register_privilege("uberspeed", "Can use /uberspeed command")
 minetest.register_chatcommand(
    "uberspeed",
@@ -252,19 +256,19 @@ minetest.register_chatcommand(
       description = "Set Uberspeed",
       privs = {uberspeed = true},
       func = function(name, param)
-		local player=minetest.get_player_by_name(name)
+         local player=minetest.get_player_by_name(name)
 
-		if param == "on" then
-		   player_effects.apply_effect(player, "uberspeed")
-		elseif param == "cinematic" then
-		   player_effects.apply_effect(player, "uberspeed_cinematic")
-		elseif param == "off" then
-		   player_effects.remove_effect(player, "uberspeed")
-		   player_effects.remove_effect(player, "uberspeed_cinematic")
-		else
-		   minetest.chat_send_player(name, "Bad param for /uberspeed; type /help uberspeed")
-		end
-	     end
-   })
+         if param == "on" then
+            player_effects.apply_effect(player, "uberspeed")
+         elseif param == "cinematic" then
+            player_effects.apply_effect(player, "uberspeed_cinematic")
+         elseif param == "off" then
+            player_effects.remove_effect(player, "uberspeed")
+            player_effects.remove_effect(player, "uberspeed_cinematic")
+         else
+            minetest.chat_send_player(name, "Bad param for /uberspeed; type /help uberspeed")
+         end
+      end
+})
 
 default.log("mod:player_effects", "loaded")
