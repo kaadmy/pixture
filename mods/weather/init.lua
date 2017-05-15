@@ -167,7 +167,7 @@ minetest.register_chatcommand(
    {
       params = "[storm|snowstorm|clear]",
       description = "Set the weather to either clear, storm, or snowstorm",
-      privs = {weather = true, give_to_singleplayer = false},
+      privs = {weather = true},
       func = function(name, param)
          setweather_type(param)
       end
