@@ -221,7 +221,7 @@ form = form .. default.ui.button(7.25, 1.25, 1, 1, "do_craft_1", "1")
 form = form .. default.ui.button(7.25, 2.25, 1, 1, "do_craft_10", "10")
 
 form = form .. "tableoptions[background=#DDDDDD30]"
-form = form .. "tablecolumns[color,span=2;text,align=left,width=2;text,align=left,width=40]"
+form = form .. "tablecolumns[text,align=left,width=2;text,align=left,width=40]"
 
 default.ui.register_page("crafting:crafting", form)
 
@@ -254,41 +254,6 @@ function crafting.get_formspec(name)
          if craft_list ~= "" then
             craft_list = craft_list .. ","
          end
-
-         local color = "#fff"
-
-         for i = 1, crafting.max_inputs do
-            if craftdef.items[i] ~= nil then
-               local group = string.match(craftdef.items[i]:get_name(), "group:(.*)")
-
-               if group ~= nil then
-                  local check_itemstack = ItemStack(craftdef.items[i])
-
-                  color = "#bbb"
-
-                  for itemn, _ in pairs(minetest.registered_items) do
-                     if minetest.get_item_group(itemn, group) ~= 0
-                     and minetest.get_item_group(itemn, "not_in_craftingguide") ~= 1 then
-                        check_itemstack:set_name(itemn)
-
-                        if inv:contains_item("main", check_itemstack) then
-                           color = "#fff"
-
-                           break
-                        end
-                     end
-                  end
-               else
-                  if not inv:contains_item("main", craftdef.items[i]) then
-                     color = "#bbb"
-
-                     break
-                  end
-               end
-            end
-         end
-
-         craft_list = craft_list .. color .. ","
 
          if itemstack:get_count() ~= 1 then
             craft_list = craft_list .. minetest.formspec_escape(itemstack:get_count())
@@ -383,6 +348,8 @@ local function on_player_receive_fields(player, form_name, fields)
                                 crafting.get_formspec(name, crafting.userdata[name].row))
       end
    end
+
+   player:set_inventory_formspec(crafting.get_formspec(name))
 end
 
 local function on_joinplayer(player)
