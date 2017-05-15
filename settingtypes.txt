@@ -15,6 +15,11 @@ drop_items_on_die (Drop items on death) bool true
 
 enable_pvp (PvP) bool true
 
+## TNT
+
+tnt_enable (Enable TNT) bool true
+tnt_radius (TNT radius int 3
+
 ## Mobs
 
 mobs_peaceful (Peaceful mobs) bool false
