@@ -402,8 +402,8 @@ crafting.register_craft(
       output = "default:fence 4",
       items = {
          "default:planks",
-         "default:stick 4",
          "default:fiber 4",
+         "default:stick 4",
       }
 })
 

@@ -18,6 +18,7 @@ default.ui.default.bg = "bgcolor[#00000000;false]"
 -- Group default items
 
 default.ui.group_defaults = {
+   fuzzy = "mobs:wool",
    planks = "default:planks",
    soil = "default:dirt",
    stone = "default:stone",

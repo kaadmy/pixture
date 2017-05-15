@@ -1,5 +1,7 @@
 
+--
 -- API
+--
 
 crafting = {}
 
@@ -46,7 +48,9 @@ function crafting.register_craft(def)
    end
 
    for i = 1, crafting.max_inputs do
-      craftdef.items[i] = ItemStack(craftdef.items[i])
+      if craftdef.items[i] ~= nil then
+         craftdef.items[i] = ItemStack(craftdef.items[i])
+      end
    end
 
    crafting.registered_crafts[itemkey] = craftdef
@@ -217,7 +221,7 @@ form = form .. default.ui.button(7.25, 1.25, 1, 1, "do_craft_1", "1")
 form = form .. default.ui.button(7.25, 2.25, 1, 1, "do_craft_10", "10")
 
 form = form .. "tableoptions[background=#DDDDDD30]"
-form = form .. "tablecolumns[text,align=left,width=2;text,align=left,width=40]"
+form = form .. "tablecolumns[color,span=2;text,align=left,width=2;text,align=left,width=40]"
 
 default.ui.register_page("crafting:crafting", form)
 
@@ -227,6 +231,8 @@ function crafting.get_formspec(name)
    if crafting.userdata[name] ~= nil then
       row = crafting.userdata[name].row
    end
+
+   local inv = minetest.get_player_by_name(name):get_inventory()
 
    local craft_list = ""
 
@@ -243,9 +249,46 @@ function crafting.get_formspec(name)
       end
 
       if itemdef ~= nil then
+        local craftdef = crafting.registered_crafts[itemn]
+
          if craft_list ~= "" then
             craft_list = craft_list .. ","
          end
+
+         local color = "#fff"
+
+         for i = 1, crafting.max_inputs do
+            if craftdef.items[i] ~= nil then
+               local group = string.match(craftdef.items[i]:get_name(), "group:(.*)")
+
+               if group ~= nil then
+                  local check_itemstack = ItemStack(craftdef.items[i])
+
+                  color = "#bbb"
+
+                  for itemn, _ in pairs(minetest.registered_items) do
+                     if minetest.get_item_group(itemn, group) ~= 0
+                     and minetest.get_item_group(itemn, "not_in_craftingguide") ~= 1 then
+                        check_itemstack:set_name(itemn)
+
+                        if inv:contains_item("main", check_itemstack) then
+                           color = "#fff"
+
+                           break
+                        end
+                     end
+                  end
+               else
+                  if not inv:contains_item("main", craftdef.items[i]) then
+                     color = "#bbb"
+
+                     break
+                  end
+               end
+            end
+         end
+
+         craft_list = craft_list .. color .. ","
 
          if itemstack:get_count() ~= 1 then
             craft_list = craft_list .. minetest.formspec_escape(itemstack:get_count())
@@ -277,7 +320,7 @@ function crafting.get_formspec(name)
          form = form .. default.ui.fake_itemstack_any(
             1.25, 3.25, selected_craftdef.items[4], "craftex_in_4")
       end
-      if selected_craftdef.items[4] ~= nil then
+      if selected_craftdef.output ~= nil then
          form = form .. default.ui.fake_itemstack_any(
             7.25, 0.25, selected_craftdef.output, "craftex_out")
       end
