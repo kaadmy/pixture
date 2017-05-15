@@ -131,7 +131,7 @@ end
 
 local form_trading = ""
 
-form_trading = form_trading .. default.ui.get_page("core_2part")
+form_trading = form_trading .. default.ui.get_page("default:2part")
 
 form_trading = form_trading .. "list[current_player;gold_trade_out;3.75,2.25;1,1;]"
 form_trading = form_trading .. "listring[current_player;gold_trade_out]"
@@ -192,7 +192,7 @@ function gold.trade(trade, trade_type, player)
 
    form = form .. default.ui.fake_itemstack(1.25, 1.25, trade_wanted1, "trade_wanted1")
    form = form .. default.ui.fake_itemstack(1.25, 2.25, trade_wanted2, "trade_wanted2")
-   form = form .. default.ui.fake_itemstack(3.75, 1.25, ItemStack(trade[3]), "vistrade_result")
+   form = form .. default.ui.fake_itemstack(3.75, 1.25, ItemStack(trade[3]), "trade_result")
 
    minetest.show_formspec(name, "gold:trading_book", form)
 

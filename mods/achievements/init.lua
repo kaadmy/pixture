@@ -174,10 +174,10 @@ minetest.register_on_placenode(on_place)
 
 -- Formspecs
 
-local form = default.ui.get_page("core")
+local form = default.ui.get_page("default:default")
 form = form .. "tableoptions[background=#DDDDDD30]"
 form = form .. "tablecolumns[text,align=left,width=11;text,align=left,width=28;text,align=left,width=5]"
-default.ui.register_page("core_achievements", form)
+default.ui.register_page("achievements:achievements", form)
 
 function achievements.get_formspec(name, row)
    if not row then row = 1 end
@@ -212,7 +212,7 @@ function achievements.get_formspec(name, row)
       achievement_list = achievement_list .. progress
    end
 
-   local form = default.ui.get_page("core_achievements")
+   local form = default.ui.get_page("achievements:achievements")
 
    form = form .. "table[0.25,2.5;7.75,5.5;achievement_list;" .. achievement_list .. ";" .. row .. "]"
 
@@ -243,7 +243,7 @@ end
 local function receive_fields(player, form_name, fields)
    local name = player:get_player_name()
 
-   if form_name ~= "core_achievements" then return end
+   if form_name ~= "achievements:achievements" then return end
 
    if fields.quit then return end
 
@@ -257,7 +257,7 @@ local function receive_fields(player, form_name, fields)
       end
    end
 
-   minetest.show_formspec(name, "core_achievements", achievements.get_formspec(name, selected))
+   minetest.show_formspec(name, "achievements:achievements", achievements.get_formspec(name, selected))
 end
 
 minetest.register_on_player_receive_fields(receive_fields)

@@ -22,7 +22,7 @@ minetest.register_craftitem(
 		     title = data.title
 		  end
 
-		  local form = default.ui.get_page("core_notabs")
+		  local form = default.ui.get_page("default:notabs")
 		  form = form .. "field[0.5,1.25;8,0;title;Title:;"..minetest.formspec_escape(title).."]"
 		  form = form .. "textarea[0.5,1.75;8,6.75;text;Contents:;"..minetest.formspec_escape(text).."]"
 		  form = form .. default.ui.button_exit(2.75, 7.75, 3, 1, "write", "Write")
@@ -41,7 +41,7 @@ minetest.register_on_player_receive_fields(
       if not data then data = {} end
       data.text = fields.text
       data.title = fields.title
-      
+
       itemstack:set_metadata(minetest.serialize(data))
       player:set_wielded_item(itemstack)
    end)

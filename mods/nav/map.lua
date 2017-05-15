@@ -4,7 +4,7 @@ nav.map_radius = 256
 
 nav.waypoints = {}
 
-local form_nav = default.ui.get_page("core")
+local form_nav = default.ui.get_page("default:default")
 default.ui.register_page("nav:nav", form_nav)
 
 local open_formspecs = {}
@@ -29,7 +29,7 @@ function nav.get_waypoints_in_square(pos, radius)
 
    for name, data in pairs(nav.waypoints) do
       local wp = data.pos
-      
+
       if wp.x > pos.x-radius and wp.x < pos.x+radius and  wp.z > pos.z-radius and wp.z < pos.z+radius then
 	 table.insert(wpts, name)
       end
@@ -45,7 +45,7 @@ local function get_formspec_waypoint(x, y, name, label, isinfo)
    end
 
    local form = ""
-   
+
    form = form .. "image_button["..(x-0.72)..","..(y-0.53)..";0.5,0.5;"..img..";"..name..";;false;false;"..img.."]"
    form = form .. "tooltip["..name..";"..minetest.formspec_escape(label).."]"
 
@@ -131,9 +131,9 @@ local function step(dtime)
       for _, player in pairs(minetest.get_connected_players()) do
 	 if player ~= nil then
 	    local name = player:get_player_name()
-	    
+
 	    players[name] = player
-	    
+
 	    nav.show_map(player)
 	 end
       end

@@ -16,7 +16,7 @@ player_skins.skins = {}
 
 local update_time = 1
 local timer = 10
-local skins_file = minetest.get_worldpath() .. "/player_skins"
+local skins_file = minetest.get_worldpath() .. "/player_skins.dat"
 
 local function save_skins()
    local f = io.open(skins_file, "w")
@@ -60,7 +60,7 @@ end
 function player_skins.get_skin(name)
    return "player_skins_" .. player_skins.skins[name] .. ".png"
 end
- 
+
 function player_skins.set_skin(name, tex)
    if minetest.check_player_privs(name, {player_skin = true}) then
       if is_valid_skin(tex) then
@@ -115,7 +115,7 @@ local function get_chatparams()
 end
 
 function player_skins.get_formspec(playername)
-   local form = default.ui.get_page("core")
+   local form = default.ui.get_page("default:default")
 
    form = form .. "image[4,0;0.5,10.05;ui_vertical_divider.png]"
 
@@ -129,7 +129,7 @@ function player_skins.get_formspec(playername)
       end
 
       form = form .. default.ui.button(x, y, 2, 1, "skin_select_" .. name, player_skins.skin_names[i])
-      form = form .. "image[" .. (x + 2.25) .. "," .. y.. ";1,1;player_skins_icon_" .. name .. ".png]"      
+      form = form .. "image[" .. (x + 2.25) .. "," .. y.. ";1,1;player_skins_icon_" .. name .. ".png]"
       if player_skins.skins[playername] == name then
 	 form = form .. "image[" .. (x + 3.25) .. "," .. (y + 0.25).. ";0.5,0.5;ui_checkmark.png]"
       end
@@ -148,7 +148,7 @@ minetest.register_on_player_receive_fields(
 	 if skinname ~= nil then
 	    player_skins.set_skin(name, skinname)
 
-	    minetest.show_formspec(name, "core_player_skins", player_skins.get_formspec(name))
+	    minetest.show_formspec(name, "player_skins:player_skins", player_skins.get_formspec(name))
 	 end
       end
    end)
@@ -164,7 +164,7 @@ minetest.register_chatcommand(
 		if is_valid_skin(param) then
 		   player_skins.set_skin(name, param)
 		elseif param == "" then
-		   minetest.chat_send_player(name, "Current player skin: " .. player_skins.skins[name])		   
+		   minetest.chat_send_player(name, "Current player skin: " .. player_skins.skins[name])
 		else
 		   minetest.chat_send_player(name, "Bad param for /player_skin; type /help player_skin")
 		end
