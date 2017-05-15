@@ -1,5 +1,5 @@
 Give initial stuff mod
 ======================
-By Kaadmy
+By Kaadmy, for Pixture
 
 Source license: LGPLv2.1

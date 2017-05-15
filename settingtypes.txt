@@ -9,11 +9,14 @@ welcome_enable (Welcome) bool true
 
 ## Player stuff
 
-give_initial_stuff (Give initial items) bool false
-
 drop_items_on_die (Drop items on death) bool true
 
 enable_pvp (PvP) bool true
+
+## Initial items
+
+give_initial_enable (Enable initial items) bool false
+give_initial_items (Initial items) string default:pick_stone,default:torch_weak 10
 
 ## TNT
 
