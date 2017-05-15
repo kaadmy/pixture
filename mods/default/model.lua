@@ -53,6 +53,7 @@ default.player_attached = {}
 
 function default.player_get_animation(player)
    local name = player:get_player_name()
+
    return {
       model = player_model[name],
       textures = player_textures[name],
@@ -95,7 +96,8 @@ function default.player_set_textures(player, textures)
    local name = player:get_player_name()
 
    player_textures[name] = textures
-   player:set_properties({textures = textures,})
+
+   player:set_properties({textures = textures})
 end
 
 function default.player_set_animation(player, anim_name, speed)
@@ -148,8 +150,10 @@ end
 local function on_globalstep(dtime)
    for _, player in pairs(minetest.get_connected_players()) do
       local name = player:get_player_name()
+
       local model_name = player_model[name]
       local model = model_name and models[model_name]
+
       local controls = player:get_player_control()
 
       if player_sneak[name] ~= controls.sneak then
@@ -171,16 +175,19 @@ local function on_globalstep(dtime)
          local animation_speed_mod = model.animation_speed or player_animation_speed
 
          -- Determine if the player is walking
+
          if controls.up or controls.down or controls.left or controls.right then
             walking = true
          end
 
          -- Determine if the player is sneaking, and reduce animation speed if so
+
          if controls.sneak then
-            animation_speed_mod = animation_speed_mod * 0.7
+            animation_speed_mod = animation_speed_mod * 0.6
          end
 
          -- Apply animations based on what the player is doing
+
          if player:get_hp() == 0 then -- dead
             player_set_animation(player, "lay")
          elseif walking then -- walking
@@ -188,14 +195,15 @@ local function on_globalstep(dtime)
                player_anim[name] = nil
                player_sneak[name] = controls.sneak
             end
-            if controls.LMB then -- walking and mining
+
+            if controls.LMB then -- Walking and mining
                player_set_animation(player, "walk_mine", animation_speed_mod)
-            else -- walking
+            else -- Walking
                player_set_animation(player, "walk", animation_speed_mod)
             end
-         elseif controls.LMB then -- mining
-            player_set_animation(player, "mine")
-         else -- standing
+         elseif controls.LMB then -- Mining
+            player_set_animation(player, "mine", animation_speed_mod)
+         else -- Standing
             player_set_animation(player, "stand", animation_speed_mod)
          end
       end

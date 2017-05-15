@@ -493,7 +493,7 @@ achievements.register_achievement(
    {
       title = "Smelting Room",
       description = "Craft 20 furnaces.",
-      times = 200,
+      times = 20,
       craftitem = "default:furnace",
 })
 
