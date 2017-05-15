@@ -170,6 +170,10 @@ local function on_globalstep(dtime)
          end
       end
 
+      if player_sneak[name] ~= controls.sneak then
+         player_sneak[name] = controls.sneak
+      end
+
       if model and not player_attached[name] then
          local walking = false
          local animation_speed_mod = model.animation_speed or player_animation_speed
@@ -191,11 +195,6 @@ local function on_globalstep(dtime)
          if player:get_hp() == 0 then -- dead
             player_set_animation(player, "lay")
          elseif walking then -- walking
-            if player_sneak[name] ~= controls.sneak then
-               player_anim[name] = nil
-               player_sneak[name] = controls.sneak
-            end
-
             if controls.LMB then -- Walking and mining
                player_set_animation(player, "walk_mine", animation_speed_mod)
             else -- Walking
