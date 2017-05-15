@@ -38,7 +38,7 @@ local function delayed_save()
    if not saving then
       saving = true
 
-      minetest.after(5, save_hunger)
+      minetest.after(40, save_hunger)
    end
 end
 
@@ -81,6 +81,10 @@ end
 
 local function on_load()
    load_hunger()
+end
+
+local function on_shutdown()
+   save_hunger()
 end
 
 function hunger.update_bar(player)
@@ -220,7 +224,7 @@ local function on_item_eat(hpdata, replace_with_item, itemstack,
    player_effects.apply_effect(player, "hunger_eating")
 
    hunger.update_bar(player)
-   hunger.save_hunger()
+   delayed_save()
 
    itemstack:take_item(1)
 
@@ -333,6 +337,10 @@ local function fake_on_item_eat(hpdata, replace_with_item, itemstack,
 end
 
 if minetest.setting_getbool("hunger_enable") then
+
+   minetest.after(0, on_load)
+
+   minetest.register_on_shutdown(on_shutdown)
 
    minetest.register_on_dignode(on_dignode)
    minetest.register_on_placenode(on_placenode)

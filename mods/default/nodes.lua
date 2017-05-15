@@ -845,7 +845,6 @@ minetest.register_node(
    "default:water_flowing",
    {
       description = "Water (flowing)",
-      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "flowingliquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -881,7 +880,6 @@ minetest.register_node(
    "default:water_source",
    {
       description = "Water",
-      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "liquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -911,7 +909,6 @@ minetest.register_node(
    "default:river_water_flowing",
    {
       description = "River Water (flowing)",
-      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "flowingliquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -949,7 +946,6 @@ minetest.register_node(
    "default:river_water_source",
    {
       description = "River Water",
-      inventory_image = minetest.inventorycube("default_water.png"),
       drawtype = "liquid",
       tiles ={"default_water.png"},
       special_tiles = {
@@ -981,7 +977,6 @@ minetest.register_node(
    "default:swamp_water_flowing",
    {
       description = "Swamp Water (flowing)",
-      inventory_image = minetest.inventorycube("default_swamp_water.png"),
       drawtype = "flowingliquid",
       tiles ={"default_swamp_water.png"},
       special_tiles = {
@@ -1019,7 +1014,6 @@ minetest.register_node(
    "default:swamp_water_source",
    {
       description = "Swamp Water",
-      inventory_image = minetest.inventorycube("default_swamp.png"),
       drawtype = "liquid",
       tiles ={"default_swamp_water.png"},
       special_tiles = {

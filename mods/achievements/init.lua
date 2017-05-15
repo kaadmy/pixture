@@ -338,7 +338,7 @@ achievements.register_achievement(
 })
 
 achievements.register_achievement(
-   "rockin'",
+   "rockin",
    {
       title = "Rockin'",
       description = "Mine 200 stone",

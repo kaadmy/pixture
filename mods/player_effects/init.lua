@@ -248,13 +248,19 @@ player_effects.register_effect(
 	 speed = 2,
       }
 })
-minetest.register_privilege("uberspeed", "Can use /uberspeed command")
+minetest.register_privilege(
+   "uberspeed",
+   {
+      description = "Can use /uberspeed command",
+      give_to_singleplayer = false
+})
+
 minetest.register_chatcommand(
    "uberspeed",
    {
       params = "[on|off|cinematic]",
       description = "Set Uberspeed",
-      privs = {uberspeed = true},
+      privs = {uberspeed = true, give_to_singleplayer = false},
       func = function(name, param)
          local player=minetest.get_player_by_name(name)
 

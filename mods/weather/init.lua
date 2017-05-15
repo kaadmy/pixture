@@ -155,14 +155,19 @@ minetest.register_globalstep(
    end
 )
 
-minetest.register_privilege("weather", "Can use /weather command")
+minetest.register_privilege(
+   "weather",
+   {
+      description = "Can use /weather command",
+      give_to_singleplayer = false
+})
 
 minetest.register_chatcommand(
    "weather",
    {
       params = "[storm|snowstorm|clear]",
       description = "Set the weather to either clear, storm, or snowstorm",
-      privs = {weather= true},
+      privs = {weather = true, give_to_singleplayer = false},
       func = function(name, param)
          setweather_type(param)
       end

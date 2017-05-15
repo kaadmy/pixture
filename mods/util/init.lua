@@ -27,7 +27,7 @@ function util.fixlight(pos1, pos2)
    local pos1, pos2 = util.sort_pos(pos1, pos2)
 
    --make area stay loaded
-                         
+
    local manip = minetest.get_voxel_manip()
    manip:read_from_map(pos1, pos2)
 
@@ -41,8 +41,14 @@ function util.fixlight(pos1, pos2)
 
    return #nodes
 end
+
 if minetest.setting_getbool("fixlight_command_enable") then
-   minetest.register_privilege("fixlight", "Can use /fixlight command")
+   minetest.register_privilege(
+      "fixlight",
+      {
+         description = "Can use /fixlight command",
+         give_to_singleplayer = false
+   })
 
    minetest.register_chatcommand(
       "fixlight",
@@ -83,7 +89,7 @@ function util.nodefunc(pos1, pos2, name, func, nomanip)
       local manip = minetest.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
-   
+
    local nodes = minetest.find_nodes_in_area(pos1, pos2, name)
    for _, pos in ipairs(nodes) do
       func(pos)
@@ -97,7 +103,7 @@ function util.getvoxelmanip(pos1, pos2)
 
    local manip = minetest.get_voxel_manip()
    manip:read_from_map(pos1, pos2)
-   
+
    return manip
 end
 
@@ -110,7 +116,7 @@ function util.remove_area(pos1, pos2, nomanip)
       local manip = minetest.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
-   
+
    for i = pos1.x, pos2.x-1 do
       for j = pos1.y, pos2.y-1 do
 	 for k = pos1.z, pos2.z-1 do
@@ -131,7 +137,7 @@ function util.areafunc(pos1, pos2, func, nomanip)
       local manip = minetest.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
-   
+
    for i = pos1.x, pos2.x-1 do
       for j = pos1.y, pos2.y-1 do
 	 for k = pos1.z, pos2.z-1 do
@@ -150,7 +156,7 @@ function util.reconstruct(pos1, pos2, nomanip)
       local manip = minetest.get_voxel_manip()
       manip:read_from_map(pos1, pos2)
    end
-   
+
    -- fix chests
    local nodes = minetest.find_nodes_in_area(pos1, pos2, "default:chest")
    local node = minetest.registered_nodes["default:chest"]
@@ -161,14 +167,14 @@ function util.reconstruct(pos1, pos2, nomanip)
    -- fix music players
    nodes = minetest.find_nodes_in_area(pos1, pos2, "music:player")
    node = minetest.registered_nodes["music:player"]
-   for _, pos in ipairs(nodes) do      
+   for _, pos in ipairs(nodes) do
       node.on_construct(pos)
    end
 
    -- fix furnaces
    nodes = minetest.find_nodes_in_area(pos1, pos2, "default:furnace")
    node = minetest.registered_nodes["default:furnace"]
-   for _, pos in ipairs(nodes) do      
+   for _, pos in ipairs(nodes) do
       node.on_construct(pos)
    end
 end
@@ -177,7 +183,7 @@ function util.choice(tab, pr)
    -- return a random index of the given table
 
    local choices = {}
-   
+
    for n, _ in pairs(tab) do
       table.insert(choices, n)
    end
@@ -195,7 +201,7 @@ function util.choice_element(tab, pr)
    -- return a random element of the given table
 
    local choices = {}
-   
+
    for _,n in pairs(tab) do
       table.insert(choices, n)
    end
