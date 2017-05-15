@@ -15,12 +15,12 @@ local player_step = {}
 local player_health_step = {}
 local player_bar = {}
 
+local hunger_file = minetest.get_worldpath() .. "/hunger.dat"
+local saving = false
+
 -- Seconds per hunger update, 2.0 is slightly fast
 local timer_interval = tonumber(minetest.setting_get("hunger_step")) or 3.0
 local timer = 0
-
-local hunger_file = minetest.get_worldpath() .. "/hunger.dat"
-local saving = false
 
 local function save_hunger()
    local f = io.open(hunger_file, "w")

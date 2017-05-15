@@ -16,7 +16,13 @@ local function step(dtime)
       if player_pos.x < -30000 or player_pos.x > 30000
 	 or player_pos.y < -30000 or player_pos.y > 30000
       or player_pos.z < -30000 or player_pos.z > 30000 then
-	 minetest.chat_send_player(name, minetest.colorize("#f00", "Don't go past 30000m in any direction!"))
+	 minetest.chat_send_player(
+            name,
+            minetest.colorize(
+               "#f00",
+               "Don't go past 30000m in any direction!"
+         ))
+
 	 player:setpos(player_lastpos[name])
       end
 
@@ -30,6 +36,7 @@ local function step(dtime)
 	       max_hear_distance = 4,
          })
       end
+
       player_health[name] = player:get_hp()
 
       head_pos.x=math.floor(head_pos.x+0.5)
@@ -49,8 +56,16 @@ local function step(dtime)
 	    {
 	       amount = 2,
 	       time = 0.1,
-	       minpos = {x = head_pos.x - 0.2, y = head_pos.y - 0.3, z = head_pos.z - 0.3},
-	       maxpos = {x = head_pos.x + 0.3, y = head_pos.y + 0.3, z = head_pos.z + 0.3},
+	       minpos = {
+                  x = head_pos.x - 0.2,
+                  y = head_pos.y - 0.3,
+                  z = head_pos.z - 0.3
+               },
+	       maxpos = {
+                  x = head_pos.x + 0.3,
+                  y = head_pos.y + 0.3,
+                  z = head_pos.z + 0.3
+               },
                minvel = {x = -0.5, y = 0, z = -0.5},
                maxvel = {x = 0.5, y = 0, z = 0.5},
                minacc = {x = -0.5, y = 4, z = -0.5},
@@ -62,10 +77,12 @@ local function step(dtime)
                texture = "bubble.png"
          })
 
-	 minetest.after(0.15, function() minetest.delete_particlespawner(particlespawners[name]) end)
+	 minetest.after(0.15, function()
+                           minetest.delete_particlespawner(particlespawners[name])
+         end)
       end
 
-      if minetest.get_item_group(minetest.get_node(player_pos).name, 'water') > 0 then
+      if minetest.get_item_group(minetest.get_node(player_pos).name, "water") > 0 then
 	 if player_lastsound[name] > 3.3 then
 	    player_soundspec[name]=minetest.sound_play(
 	       "default_water",
@@ -112,15 +129,19 @@ local function on_joinplayer(player)
    player:hud_set_flags({minimap = false})
 
    -- Welcome
-   local function welcome()
-      minetest.chat_send_player(player:get_player_name(), minetest.colorize("#ff0", "Welcome to Pixture! Type /help for a list of commands."))
-   end
 
-   minetest.after(1.0, welcome)
+   minetest.after(1.0, function()
+                     minetest.chat_send_player(
+                        player:get_player_name(),
+                        minetest.colorize(
+                           "#ff0",
+                           "Welcome to Pixture! Type /help for a list of commands."
+                     ))
+   end)
 end
 
 local function on_leaveplayer(player)
-   local name=player:get_player_name()
+   local name = player:get_player_name()
 
    player_health[name] = nil
 
@@ -132,6 +153,7 @@ end
 
 minetest.register_on_joinplayer(on_joinplayer)
 minetest.register_on_leaveplayer(on_leaveplayer)
+
 minetest.register_globalstep(step)
 
 default.log("player", "loaded")

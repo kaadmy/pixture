@@ -5,6 +5,8 @@
 
 player_skins = {}
 
+-- Array of usable player skins
+
 player_skins.skin_names = {"male", "female"}
 
 if minetest.setting_get("player_skins_names") then
@@ -14,11 +16,13 @@ end
 player_skins.old_skins = {}
 player_skins.skins = {}
 
-local update_time = 1
-local timer = 10
 local skins_file = minetest.get_worldpath() .. "/player_skins.dat"
+local saving = false
 
-local function save_skins()
+local timer_interval = 1
+local timer = 10
+
+local function save_player_skins()
    local f = io.open(skins_file, "w")
 
    for name, tex in pairs(player_skins.skins) do
@@ -28,7 +32,15 @@ local function save_skins()
    io.close(f)
 end
 
-local function load_skins()
+local function delayed_save()
+   if not saving then
+      saving = true
+
+      minetest.after(40, save_player_skins)
+   end
+end
+
+local function load_player_skins()
    local f = io.open(skins_file, "r")
 
    if f then
@@ -43,7 +55,7 @@ local function load_skins()
 
       io.close(f)
    else
-      save_skins()
+      save_player_skins()
    end
 end
 
@@ -65,28 +77,24 @@ function player_skins.set_skin(name, tex)
    if minetest.check_player_privs(name, {player_skin = true}) then
       if is_valid_skin(tex) then
 	 player_skins.skins[name] = tex
-	 save_skins()
+	 save_player_skins()
       else
 	 minetest.chat_send_player(name, "Invalid skin")
       end
    else
-      minetest.chat_send_player(name, "You do not have the privilege to change your skin.")
+      minetest.chat_send_player(
+         name,
+         "You do not have the privilege to change your skin."
+      )
    end
 end
 
-local function step(dtime)
-   timer = timer + dtime
-   if timer > update_time then
-      for _, player in pairs(minetest.get_connected_players()) do
-	 local name = player:get_player_name()
+local function on_load()
+   load_player_skins()
+end
 
-	 if player_skins.skins[name] ~= player_skins.old_skins[name] then
-	    default.player_set_textures(player, {"player_skins_" .. player_skins.skins[name] .. ".png"})
-	    player_skins.old_skins[name] = player_skins.skins[name]
-	 end
-      end
-      timer = 0
-   end
+local function on_shutdown()
+   save_player_skins()
 end
 
 local function on_joinplayer(player)
@@ -97,8 +105,38 @@ local function on_joinplayer(player)
    end
 end
 
-minetest.register_globalstep(step)
+local function on_globalstep(dtime)
+   timer = timer + dtime
+
+   if timer < timer_interval then
+      return
+   end
+
+   timer = 0
+
+   for _, player in pairs(minetest.get_connected_players()) do
+      local name = player:get_player_name()
+
+      if player_skins.skins[name] ~= player_skins.old_skins[name] then
+         default.player_set_textures(
+            player, {
+               "player_skins_" .. player_skins.skins[name] .. ".png"
+         })
+
+         player_skins.old_skins[name] = player_skins.skins[name]
+
+         delayed_save()
+      end
+   end
+end
+
+minetest.after(0, on_load)
+
+minetest.register_on_shutdown(on_shutdown)
+
 minetest.register_on_joinplayer(on_joinplayer)
+
+minetest.register_globalstep(on_globalstep)
 
 local function get_chatparams()
    local s = "["
@@ -128,10 +166,13 @@ function player_skins.get_formspec(playername)
 	 y = y - 8
       end
 
-      form = form .. default.ui.button(x, y, 2, 1, "skin_select_" .. name, player_skins.skin_names[i])
-      form = form .. "image[" .. (x + 2.25) .. "," .. y.. ";1,1;player_skins_icon_" .. name .. ".png]"
+      form = form .. default.ui.button(x, y, 2, 1, "skin_select_"
+                                          .. name, player_skins.skin_names[i])
+      form = form .. "image[" .. (x + 2.25) .. "," .. y.. ";1,1;player_skins_icon_"
+         .. name .. ".png]"
       if player_skins.skins[playername] == name then
-	 form = form .. "image[" .. (x + 3.25) .. "," .. (y + 0.25).. ";0.5,0.5;ui_checkmark.png]"
+	 form = form .. "image[" .. (x + 3.25) .. "," .. (y + 0.25)
+            .. ";0.5,0.5;ui_checkmark.png]"
       end
    end
 
@@ -148,10 +189,11 @@ minetest.register_on_player_receive_fields(
 	 if skinname ~= nil then
 	    player_skins.set_skin(name, skinname)
 
-	    minetest.show_formspec(name, "player_skins:player_skins", player_skins.get_formspec(name))
+	    minetest.show_formspec(name, "player_skins:player_skins",
+                                   player_skins.get_formspec(name))
 	 end
       end
-   end)
+end)
 
 minetest.register_privilege("player_skin", "Can change player skin")
 minetest.register_chatcommand(
@@ -161,16 +203,19 @@ minetest.register_chatcommand(
       description = "Set your player skin",
       privs = {player_skin = true},
       func = function(name, param)
-		if is_valid_skin(param) then
-		   player_skins.set_skin(name, param)
-		elseif param == "" then
-		   minetest.chat_send_player(name, "Current player skin: " .. player_skins.skins[name])
-		else
-		   minetest.chat_send_player(name, "Bad param for /player_skin; type /help player_skin")
-		end
-	     end
-   })
-
-minetest.after(1.0, load_skins)
+         if is_valid_skin(param) then
+            player_skins.set_skin(name, param)
+         elseif param == "" then
+            minetest.chat_send_player(
+               name,
+               "Current player skin: " .. player_skins.skins[name])
+         else
+            minetest.chat_send_player(
+               name,
+               "Bad param for /player_skin; type /help player_skin"
+            )
+         end
+      end
+})
 
 default.log("mod:player_skins", "loaded")

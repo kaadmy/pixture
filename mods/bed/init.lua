@@ -55,9 +55,9 @@ local function put_player_in_bed(player)
       {x=162, y=166},
       {x=162, y=166},
       {x=162, y=168},
-      30)
+      default.player_animation_speed)
 
-   default.player_set_animation(player, "lay", 30)
+   default.player_set_animation(player, "lay", player_animation_speed)
 
    default.player_attached[name] = true
 
@@ -80,9 +80,9 @@ local function take_player_from_bed(player)
       {x=168, y=187},
       {x=189, y=198},
       {x=200, y=219},
-      30)
+      default.player_animation_speed)
 
-   default.player_set_animation(player, "stand", 30)
+   default.player_set_animation(player, "stand", default.player_animation_speed)
 
    default.player_attached[name] = false
 end
