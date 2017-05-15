@@ -111,7 +111,7 @@ end
 
 -- Interaction callbacks
 
-local function on_craft(itemstack, player, craftgrid, craftinv)
+local function on_craft(itemstack, player)
    for aname, def in pairs(achievements.registered_achievements) do
       if def.craftitem ~= nil then
 	 if def.craftitem == itemstack:get_name() then
@@ -168,9 +168,10 @@ minetest.register_on_shutdown(on_shutdown)
 
 minetest.register_on_newplayer(on_newplayer)
 
-minetest.register_on_craft(on_craft)
 minetest.register_on_dignode(on_dig)
 minetest.register_on_placenode(on_place)
+
+crafting.register_on_craft(on_craft)
 
 -- Formspecs
 

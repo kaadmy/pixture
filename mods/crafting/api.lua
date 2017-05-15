@@ -5,15 +5,26 @@
 
 crafting = {}
 
+-- Callbacks
+
+crafting.callbacks = {
+   on_craft = {},
+}
+
+-- Array of registered craft recipes
+
 crafting.registered_crafts = {}
 
 -- User table of last selected row etc.
+
 crafting.userdata = {}
 
 -- Crafting can only take 4 itemstacks as input for sanity/interface reasons
+
 crafting.max_inputs = 4
 
 -- Default crafting definition values
+
 crafting.default_craftdef = {
    output = nil,
    items = {},
@@ -100,7 +111,11 @@ function crafting.get_crafts(filter)
    return results
 end
 
-function crafting.craft(wanted, wanted_count, output, items)
+function crafting.register_on_craft(func)
+   table.insert(crafting.callbacks.on_craft, func)
+end
+
+function crafting.craft(player, wanted, wanted_count, output, items)
    -- `output` can be any ItemStack value
    -- Duplicate items in `items` should work correctly
 
@@ -195,6 +210,10 @@ function crafting.craft(wanted, wanted_count, output, items)
          remove_used_item(required_itemstack:get_name(),
                           required_itemstack:get_count() * craft_count)
       end
+   end
+
+   for _, func in ipairs(crafting.callbacks.on_craft) do
+      func(output, player)
    end
 
    return {items = items, output = output}
@@ -324,10 +343,8 @@ local function on_player_receive_fields(player, form_name, fields)
          return
       end
 
-      local crafted = crafting.craft(wanted_itemstack,
-                                     count,
-                                     output_itemstack,
-                                     inv:get_list("craft_in"))
+      local crafted = crafting.craft(player, wanted_itemstack, count,
+                                     output_itemstack, inv:get_list("craft_in"))
 
       if crafted then
          inv:set_stack("craft_out", 1, "")
