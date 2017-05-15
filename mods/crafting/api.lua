@@ -213,7 +213,9 @@ function crafting.craft(player, wanted, wanted_count, output, items)
    end
 
    for _, func in ipairs(crafting.callbacks.on_craft) do
-      func(output, player)
+      for i = 1, output:get_count() do
+         func(output, player)
+      end
    end
 
    return {items = items, output = output}
