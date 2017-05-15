@@ -21,7 +21,7 @@ give_initial_items (Initial items) string default:pick_stone,default:torch_weak 
 ## TNT
 
 tnt_enable (Enable TNT) bool true
-tnt_radius (TNT radius int 3
+tnt_radius (TNT radius) int 3
 
 ## Mobs
 
