@@ -213,10 +213,8 @@ form = form .. "list[current_player;craft_out;7.25,3.25;1,1;]"
 form = form .. default.ui.get_itemslot_bg(0.25, 0.25, 1, 4)
 form = form .. default.ui.get_itemslot_bg(7.25, 3.25, 1, 1)
 
-form = form .. "image[5.25,3.25;1,1;ui_arrow_bg.png^[transformR270]"
-
-form = form .. default.ui.button(7.25, 0.25, 1, 1, "do_craft_1", "1")
-form = form .. default.ui.button(7.25, 1.25, 1, 1, "do_craft_10", "10")
+form = form .. default.ui.button(7.25, 1.25, 1, 1, "do_craft_1", "1")
+form = form .. default.ui.button(7.25, 2.25, 1, 1, "do_craft_10", "10")
 
 form = form .. "tableoptions[background=#DDDDDD30]"
 form = form .. "tablecolumns[text,align=left,width=2;text,align=left,width=40]"
@@ -259,7 +257,7 @@ function crafting.get_formspec(name)
 
    local form = default.ui.get_page("crafting:crafting")
 
-   form = form .. "table[2.25,0.25;4.75,2.75;craft_list;" .. craft_list
+   form = form .. "table[2.25,0.25;4.75,3.75;craft_list;" .. craft_list
       .. ";" .. row .. "]"
 
    if selected_craftdef ~= nil then
@@ -281,7 +279,7 @@ function crafting.get_formspec(name)
       end
       if selected_craftdef.items[4] ~= nil then
          form = form .. default.ui.fake_itemstack_any(
-            6.25, 3.25, selected_craftdef.output, "craftex_out")
+            7.25, 0.25, selected_craftdef.output, "craftex_out")
       end
    end
 
