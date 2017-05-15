@@ -324,7 +324,7 @@ crafting.register_craft(
    {
       output = "default:path_slab",
       items = {
-         "group:soil_path",
+         "default:dirt_path",
       }
 })
 

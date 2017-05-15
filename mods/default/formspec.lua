@@ -1,6 +1,11 @@
 
 default.ui = {}
 
+-- Registered UI pages
+
+default.ui.registered_pages = {
+}
+
 -- UI defaults
 
 default.ui.default = {}
@@ -14,9 +19,12 @@ default.ui.default.bg = "bgcolor[#00000000;false]"
 
 default.ui.group_defaults = {
    planks = "default:planks",
-   stone = "default:stone",
    soil = "default:dirt",
+   stone = "default:stone",
+   tree = "default:tree",
 }
+
+-- Itemslot backgrounds
 
 function default.ui.get_itemslot_bg(x, y, w, h)
    local out = ""
@@ -32,16 +40,20 @@ function default.ui.get_hotbar_itemslot_bg(x, y, w, h)
    local out = ""
    for i = 0, w - 1, 1 do
       for j = 0, h - 1, 1 do
-	 out = out .."image["..x+i..","..y+j..";1,1;ui_itemslot.png^ui_itemslot_dark.png]"
+	 out = out .."image["..x+i..","..y+j
+            ..";1,1;ui_itemslot.png^ui_itemslot_dark.png]"
       end
    end
    return out
 end
 
+-- Buttons
+
 function default.ui.image_button(x, y, w, h, name, image)
    local image = minetest.formspec_escape(image)
 
-   return "image_button["..x..","..y..";"..w..","..h..";"..image..";"..name..";;;false;"..image.."]"
+   return "image_button["..x..","..y..";"..w..","..h..";"
+      ..image..";"..name..";;;false;"..image.."]"
 end
 
 function default.ui.button(x, y, w, h, name, label, noclip)
@@ -52,11 +64,17 @@ function default.ui.button(x, y, w, h, name, label, noclip)
    end
 
    if w == 1 then
-      return "image_button["..x..","..y..";"..w..","..h..";ui_button_1w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_1w_active.png]"
+      return "image_button["..x..","..y..";"..w..","..h
+         ..";ui_button_1w_inactive.png;"..name..";"..label..";"
+         ..nc..";false;ui_button_1w_active.png]"
    elseif w == 2 then
-      return "image_button["..x..","..y..";"..w..","..h..";ui_button_2w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_2w_active.png]"
+      return "image_button["..x..","..y..";"..w..","..h
+         ..";ui_button_2w_inactive.png;"..name..";"..label..";"
+         ..nc..";false;ui_button_2w_active.png]"
    else
-      return "image_button["..x..","..y..";"..w..","..h..";ui_button_3w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_3w_active.png]"
+      return "image_button["..x..","..y..";"..w..","..h
+         ..";ui_button_3w_inactive.png;"..name..";"..label..";"
+         ..nc..";false;ui_button_3w_active.png]"
    end
 end
 
@@ -68,22 +86,34 @@ function default.ui.button_exit(x, y, w, h, name, label, noclip)
    end
 
    if w == 2 then
-      return "image_button_exit["..x..","..y..";"..w..","..h..";ui_button_2w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_2w_active.png]"
+      return "image_button_exit["..x..","..y..";"..w..","..h
+         ..";ui_button_2w_inactive.png;"..name..";"..label..";"
+         ..nc..";false;ui_button_2w_active.png]"
    else
-      return "image_button_exit["..x..","..y..";"..w..","..h..";ui_button_3w_inactive.png;"..name..";"..label..";"..nc..";false;ui_button_3w_active.png]"
+      return "image_button_exit["..x..","..y..";"..w..","..h
+         ..";ui_button_3w_inactive.png;"..name..";"..label..";"
+         ..nc..";false;ui_button_3w_active.png]"
    end
 end
+
+-- Tabs
 
 function default.ui.tab(x, y, name, icon, tooltip)
    local tooltip = tooltip or ""
    local shifted_icon = "[combine:16x16:0,0=ui_tab_active.png:0,1="..icon
 
    local form = ""
-   form = form .. "image_button["..x..","..y..";1,1;ui_tab_inactive.png^"..icon..";"..name..";;true;false;"..minetest.formspec_escape(shifted_icon).."]"
+
+   form = form .. "image_button["..x..","..y..";1,1;ui_tab_inactive.png^"
+      ..icon..";"..name..";;true;false;"
+      ..minetest.formspec_escape(shifted_icon).."]"
+
    form = form .. "tooltip["..name..";"..tooltip.."]"
 
    return form
 end
+
+-- Itemstacks
 
 local function get_itemdef_field(itemname, fieldname)
    if not minetest.registered_items[itemname] then
@@ -99,7 +129,8 @@ function default.ui.fake_itemstack(x, y, itemstack, name)
    local itemamt = itemstack:get_count()
 
    local itemdesc = ""
-   if minetest.registered_items[itemname] and minetest.registered_items[itemname].description ~= nil then
+   if minetest.registered_items[itemname]
+   and minetest.registered_items[itemname].description ~= nil then
       itemdesc = minetest.registered_items[itemname].description
    end
 
@@ -107,11 +138,12 @@ function default.ui.fake_itemstack(x, y, itemstack, name)
 
    local result = ""
    if itemname ~= "" then
-      --      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
-      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
-      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname .. " " .. itemamt).."]"
+      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"
+         ..name..";;false;false;ui_null.png]"
+      result = result .. "item_image["..x..","..y..";1,1;"
+         ..minetest.formspec_escape(itemname .. " " .. itemamt).."]"
 
-      result = result .. "tooltip["..name..";"..itemdesc.."]"
+      result = result .. "tooltip["..name..";"..minetest.formspec_escape(itemdesc).."]"
    end
 
    return result
@@ -121,16 +153,19 @@ function default.ui.fake_simple_itemstack(x, y, itemname, name)
    local name = name or "fake_simple_itemstack"
 
    local itemdesc = ""
-   if minetest.registered_items[itemname] and minetest.registered_items[itemname].description ~= nil then
+   if minetest.registered_items[itemname]
+   and minetest.registered_items[itemname].description ~= nil then
       itemdesc = minetest.registered_items[itemname].description
    end
 
    local result = ""
    if itemname ~= "" then
-      --      result = result .. "image_button["..x..","..y..";1,1;"..itemimage..";"..name..";;false;false;"..itemimage.."]"
-      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
-      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname).."]"
-      result = result .. "tooltip["..name..";"..itemdesc.."]"
+      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"
+         ..name..";;false;false;ui_null.png]"
+      result = result .. "item_image["..x..","..y..";1,1;"
+         ..minetest.formspec_escape(itemname).."]"
+      result = result .. "tooltip["..name..";"
+         ..minetest.formspec_escape(itemdesc).."]"
    end
 
    return result
@@ -154,17 +189,15 @@ function default.ui.item_group(x, y, group, count, name)
       end
    end
 
-   local itemdesc = ""
-   if minetest.registered_items[itemname] and minetest.registered_items[itemname].description ~= nil then
-      itemdesc = minetest.registered_items[itemname].description
-   end
-
    local result = ""
    if itemname ~= "" then
-      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"..name..";;false;false;ui_null.png]"
-      result = result .. "item_image["..x..","..y..";1,1;"..minetest.formspec_escape(itemname .. " " .. count).."]"
+      result = result .. "image_button["..x..","..y..";1,1;ui_null.png;"
+         ..name..";;false;false;ui_null.png]"
+      result = result .. "item_image["..x..","..y..";1,1;"
+         ..minetest.formspec_escape(itemname .. " " .. count).."]"
 
-      result = result .. "tooltip["..name..";Group: "..group.."]"
+      result = result .. "tooltip["..name..";Group: "
+         ..minetest.formspec_escape(group).."]"
    end
 
    return result
@@ -180,8 +213,7 @@ function default.ui.fake_itemstack_any(x, y, itemstack, name)
    end
 end
 
-default.ui.registered_pages = {
-}
+-- Pages
 
 function default.ui.get_page(name)
    local page= default.ui.registered_pages[name]
@@ -197,6 +229,8 @@ end
 function default.ui.register_page(name, form)
    default.ui.registered_pages[name] = form
 end
+
+-- Default formspec boilerplates
 
 local form_default_default = ""
 form_default_default = form_default_default .. "size[8.5,9]"

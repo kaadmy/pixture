@@ -96,22 +96,22 @@ function crafting.get_crafts(filter)
    return results
 end
 
-function crafting.craft(wanted, output, items)
+function crafting.craft(wanted, wanted_count, output, items)
    -- `output` can be any ItemStack value
    -- Duplicate items in `items` should work correctly
 
-   local craftdef = crafting.registered_crafts[wanted:get_name()]
+   local craftdef = crafting.registered_crafts[wanted:to_string()]
 
    if craftdef == nil then
       minetest.log("warning",
-                   "Tried to craft an unregistered item " .. wanted:get_name())
+                   "Tried to craft an unregistered item " .. wanted:to_string())
 
       return nil
    end
 
    -- Check for validity
 
-   local craft_count = wanted:get_count()
+   local craft_count = wanted_count
 
    for i = 1, crafting.max_inputs do
       local required_itemstack = ItemStack(craftdef.items[i])
@@ -250,7 +250,7 @@ function crafting.get_formspec(name)
          end
 
          if itemstack:get_count() ~= 1 then
-            craft_list = craft_list .. minetest.formspec_escape( itemstack:get_count())
+            craft_list = craft_list .. minetest.formspec_escape(itemstack:get_count())
          end
 
          craft_list = craft_list .. "," .. minetest.formspec_escape(itemdef.description)
@@ -259,51 +259,33 @@ function crafting.get_formspec(name)
 
    local form = default.ui.get_page("crafting:crafting")
 
-   form = form .. "table[1.25,0.25;5.75,2.75;craft_list;" .. craft_list
+   form = form .. "table[2.25,0.25;4.75,2.75;craft_list;" .. craft_list
       .. ";" .. row .. "]"
 
    if selected_craftdef ~= nil then
       if selected_craftdef.items[1] ~= nil then
          form = form .. default.ui.fake_itemstack_any(
-            4.25, 3.25, selected_craftdef.items[1])
+            1.25, 0.25, selected_craftdef.items[1], "craftex_in_1")
       end
       if selected_craftdef.items[2] ~= nil then
          form = form .. default.ui.fake_itemstack_any(
-            3.25, 3.25, selected_craftdef.items[2])
+            1.25, 1.25, selected_craftdef.items[2], "craftex_in_2")
       end
       if selected_craftdef.items[3] ~= nil then
          form = form .. default.ui.fake_itemstack_any(
-            2.25, 3.25, selected_craftdef.items[3])
+            1.25, 2.25, selected_craftdef.items[3], "craftex_in_3")
       end
       if selected_craftdef.items[4] ~= nil then
          form = form .. default.ui.fake_itemstack_any(
-            1.25, 3.25, selected_craftdef.items[4])
+            1.25, 3.25, selected_craftdef.items[4], "craftex_in_4")
       end
       if selected_craftdef.items[4] ~= nil then
          form = form .. default.ui.fake_itemstack_any(
-            6.25, 3.25, selected_craftdef.output)
+            6.25, 3.25, selected_craftdef.output, "craftex_out")
       end
    end
 
    return form
-end
-
-local function on_joinplayer(player)
-   local name = player:get_player_name()
-
-   local inv = player:get_inventory()
-
-   if crafting.userdata[name] == nil then
-      crafting.userdata[name] = {row = 1}
-   end
-
-   if inv:get_size("craft_in") ~= 4 then
-      inv:set_size("craft_in", 4)
-   end
-
-   if inv:get_size("craft_out") ~= 1 then
-      inv:set_size("craft_out", 1)
-   end
 end
 
 local function on_player_receive_fields(player, form_name, fields)
@@ -326,15 +308,18 @@ local function on_player_receive_fields(player, form_name, fields)
          return -- Different item type in output already
       end
 
+      local count = 1
+
       if fields.do_craft_1 then
-         wanted_itemstack:set_count(1)
+         count = 1
       elseif fields.do_craft_10 then
-         wanted_itemstack:set_count(10)
+         count = 10
       else
          return
       end
 
       local crafted = crafting.craft(wanted_itemstack,
+                                     count,
                                      output_itemstack,
                                      inv:get_list("craft_in"))
 
@@ -356,6 +341,24 @@ local function on_player_receive_fields(player, form_name, fields)
          minetest.show_formspec(name, "crafting:crafting",
                                 crafting.get_formspec(name, crafting.userdata[name].row))
       end
+   end
+end
+
+local function on_joinplayer(player)
+   local name = player:get_player_name()
+
+   local inv = player:get_inventory()
+
+   if crafting.userdata[name] == nil then
+      crafting.userdata[name] = {row = 1}
+   end
+
+   if inv:get_size("craft_in") ~= 4 then
+      inv:set_size("craft_in", 4)
+   end
+
+   if inv:get_size("craft_out") ~= 1 then
+      inv:set_size("craft_out", 1)
    end
 end
 
