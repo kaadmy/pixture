@@ -7,7 +7,7 @@ local give_initial_enable = minetest.setting_getbool("give_initial_enable")
 local give_initial_items = util.split(minetest.setting_get("give_initial_items"), ",")
 
 local function on_newplayer(player)
-   if give_initial_stuff_enable then
+   if give_initial_enable then
       local inv = player:get_inventory()
 
       for _, itemstring in ipairs(give_initial_items) do
