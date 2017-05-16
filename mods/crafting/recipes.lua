@@ -189,8 +189,8 @@ crafting.register_craft(
    {
       output = "default:dust_carbonsteel",
       items = {
-         "default:lump_coal",
-         "default:lump_iron 2",
+         "default:lump_coal 2",
+         "default:lump_iron 3",
       }
 })
 

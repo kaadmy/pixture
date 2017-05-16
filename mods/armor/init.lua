@@ -6,24 +6,44 @@
 armor = {}
 
 armor.player_skin = "character.png"
-armor.update_time = 1
 
 armor.materials = {
---   material       craftitem                   %   description
+   -- material     craftitem                    %   description
    {"wood",        "group:planks",              15, "Wooden"},
    {"steel",       "default:ingot_steel",       30, "Steel"},
    {"chainmail",   "armor:chainmail_sheet",     45, "Chainmail"},
    {"carbonsteel", "default:ingot_carbonsteel", 60, "Carbonsteel"},
 }
 
-armor.slots = {"helmet", "chestplate", "boots"}
+-- Usable slots
 
-local form_armor = default.ui.get_page("default:2part")
-default.ui.register_page("armor:armor", form_armor)
+armor.slots = {"helmet", "chestplate", "boots"}
 
 local enable_drop = minetest.setting_getbool("drop_items_on_die") or false
 
-local armor_timer = 10
+-- Timer
+
+local timer_interval = 1
+local timer = 10
+
+-- Formspec
+
+local form_armor = default.ui.get_page("default:2part")
+
+form_armor = form_armor .. "list[current_player;main;0.25,4.75;8,4;]"
+form_armor = form_armor .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
+form_armor = form_armor .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
+form_armor = form_armor .. "listring[current_player;main]"
+
+form_armor = form_armor .. "label[3.25,1;Helmet]"
+form_armor = form_armor .. "label[3.25,2;Chestplate]"
+form_armor = form_armor .. "label[3.25,3;Boots]"
+
+form_armor = form_armor .. "list[current_player;armor;2.25,0.75;1,3;]"
+form_armor = form_armor .. "listring[current_player;armor]"
+form_armor = form_armor .. default.ui.get_itemslot_bg(2.25, 0.75, 1, 3)
+
+default.ui.register_page("armor:armor", form_armor)
 
 function armor.is_armor(itemname)
    local item = minetest.registered_items[itemname]
@@ -57,9 +77,10 @@ function armor.get_texture(player, base)
 
    local image = base
 
-   for _, slot in ipairs(armor.slots) do
-      local itemstack = inv:get_stack("armor_"..slot, 1)
+   for slot_index, slot in ipairs(armor.slots) do
+      local itemstack = inv:get_stack("armor", slot_index)
       local itemname = itemstack:get_name()
+
       if armor.is_armor(itemname) and armor.is_slot(itemname, slot) then
 	 local item = minetest.registered_items[itemname]
 	 local mat = armor.materials[item.groups.armor_material][1]
@@ -68,7 +89,7 @@ function armor.get_texture(player, base)
       end
    end
 
---   print("[armor] Got armor texture: " .. image)
+   --   print("[armor] Got armor texture: " .. image)
 
    return image
 end
@@ -81,8 +102,8 @@ function armor.get_groups(player)
 
    local inv = player:get_inventory()
 
-   for _, slot in ipairs(armor.slots) do
-      local itemstack = inv:get_stack("armor_"..slot, 1)
+   for slot_index, slot in ipairs(armor.slots) do
+      local itemstack = inv:get_stack("armor", slot_index)
       local itemname = itemstack:get_name()
 
       if armor.is_armor(itemname) then
@@ -96,9 +117,11 @@ function armor.get_groups(player)
 	       if match_mat == nil then
 		  match_mat = mat
 	       end
+
 	       if mat == match_mat then
 		  match_amt = match_amt + 1
 	       end
+
 	       break
 	    end
 	 end
@@ -106,7 +129,9 @@ function armor.get_groups(player)
       end
    end
 
-   if match_amt == #armor.slots then -- if full set of same armor material, then boost armor by 10%
+   -- If full set of same armor material, then boost armor by 10%
+
+   if match_amt == #armor.slots then
       groups.fleshy = groups.fleshy - 10
    end
 
@@ -118,10 +143,8 @@ end
 function armor.init(player)
    local inv = player:get_inventory()
 
-   for _, slot in ipairs(armor.slots) do
-      if inv:get_size("armor_"..slot) ~= 1 then
-	 inv:set_size("armor_"..slot, 1)
-      end
+   if inv:get_size("armor") ~= 3 then
+      inv:set_size("armor", 3)
    end
 end
 
@@ -143,13 +166,13 @@ local function on_joinplayer(player)
    armor.init(player)
 end
 
-local function on_die(player)
+local function on_dieplayer(player)
    local pos = player:getpos()
 
    local inv = player:get_inventory()
 
-   for _, slot in ipairs(armor.slots) do
-      local item = inv:get_stack("armor_"..slot, 1)
+   for slot_index, slot in ipairs(armor.slots) do
+      local item = inv:get_stack("armor", slot_index)
 
       local rpos = {
 	 x = pos.x + math.random(-0.2, 0.2),
@@ -165,7 +188,7 @@ local function on_die(player)
 	       x = math.random(-0.3, 0.3),
 	       y = 3,
 	       z = math.random(-0.3, 0.3),
-	    })
+         })
       end
 
       item:clear()
@@ -173,53 +196,73 @@ local function on_die(player)
    end
 end
 
-local function step(dtime)
-   armor_timer = armor_timer + dtime
+local function on_globalstep(dtime)
+   timer = timer + dtime
 
-   if armor_timer > armor.update_time then
-      for _, player in pairs(minetest.get_connected_players()) do
-	 armor.update(player)
-      end
-      armor_timer = 0
+   if timer < timer_interval then
+      return
+   end
+
+   timer = 0
+
+   for _, player in pairs(minetest.get_connected_players()) do
+      armor.update(player)
    end
 end
+
+if enable_drop then
+   minetest.register_on_dieplayer(on_dieplayer)
+end
+
+minetest.register_on_newplayer(on_newplayer)
+minetest.register_on_joinplayer(on_joinplayer)
+
+minetest.register_globalstep(on_globalstep)
+
+-- Chainmail
 
 minetest.register_craftitem(
    "armor:chainmail_sheet",
    {
-      description = "Chainmail sheet",
+      description = "Chainmail Sheet",
 
       inventory_image = "armor_chainmail.png",
       wield_image = "armor_chainmail.png",
 
       stack_max = 20,
-   })
+})
 
-minetest.register_craft(
+crafting.register_craft(
    {
       output = "armor:chainmail_sheet 3",
-      recipe = {
-	 {"default:ingot_steel", "", "default:ingot_steel"},
-	 {"", "default:ingot_steel", ""},
-	 {"default:ingot_steel", "", "default:ingot_steel"},
+      items = {
+         "default:ingot_steel 5",
       }
-   })
+})
+
+-- Armor pieces
 
 for mat_index, _ in ipairs(armor.materials) do
    local def = armor.materials[mat_index]
    local mat = def[1]
 
    local armor_def = math.floor(def[3] / #armor.slots)
---   print("Material " .. mat .. ": " .. armor_def)
+   --   print("Material " .. mat .. ": " .. armor_def)
 
    for _, slot in ipairs(armor.slots) do
-      minetest.register_craftitem(
-	 "armor:"..slot.."_"..mat,
-	 {
-	    description = def[4].." "..slot,
+      local slot_pretty = slot:gsub(
+         "(%a)([%w_']*)",
+         function(first, rest)
+            return first:upper() .. rest:lower()
+      end)
 
-	    inventory_image = "armor_"..slot.."_"..mat.."_inventory.png",
-	    wield_image = "armor_"..slot.."_"..mat.."_inventory.png",
+      minetest.register_craftitem(
+	 "armor:" .. slot .. "_" .. mat,
+	 {
+	    description = def[4] .. " " .. slot_pretty,
+
+	    inventory_image = "armor_" .. slot .. "_" .. mat .. "_inventory.png",
+	    wield_image = "armor_" .. slot .. "_" .. mat .. "_inventory.png",
 
 	    groups = {
 	       is_armor = 1,
@@ -228,71 +271,33 @@ for mat_index, _ in ipairs(armor.materials) do
 	    },
 
 	    stack_max = 1,
-	 })
+      })
    end
 
-   local n = def[2]
+   crafting.register_craft(
+      {
+	 output = "armor:helmet_" .. mat,
+	 items = {
+            def[2] .. " 5",
+	 }
+   })
 
-   minetest.register_craft(
+   crafting.register_craft(
       {
-	 output = "armor:helmet_"..mat,
-	 recipe = {
-	    {n,  n,  n},
-	    {n,  "", n},
-	    {"", "", ""},
+	 output = "armor:chestplate_" .. mat,
+	 items = {
+            def[2] .. " 8",
 	 }
-      })
-   minetest.register_craft(
+   })
+
+   crafting.register_craft(
       {
-	 output = "armor:chestplate_"..mat,
-	 recipe = {
-	    {n,  "", n},
-	    {n,  n,  n},
-	    {n,  n,  n},
+	 output = "armor:boots_" .. mat,
+	 items = {
+            def[2] .. " 6",
 	 }
-      })
-   minetest.register_craft(
-      {
-	 output = "armor:boots_"..mat,
-	 recipe = {
-	    {"", "", ""},
-	    {n,  "", n},
-	    {n,  "", n},
-	 }
-      })
+   })
 end
-
-minetest.register_on_newplayer(on_newplayer)
-minetest.register_on_joinplayer(on_joinplayer)
-
-if enable_drop then
-   minetest.register_on_dieplayer(on_die)
-end
-
-minetest.register_globalstep(step)
-
-local form_armor = default.ui.get_page("default:2part")
-form_armor = form_armor .. "list[current_player;main;0.25,4.75;8,4;]"
-form_armor = form_armor .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
-form_armor = form_armor .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
-form_armor = form_armor .. "listring[current_player;main]"
-
-form_armor = form_armor .. "label[3.25,3;Boots]"
-form_armor = form_armor .. "list[current_player;armor_boots;2.25,2.75;1,1;]"
-form_armor = form_armor .. "listring[current_player;armor_boots]"
-form_armor = form_armor .. default.ui.get_itemslot_bg(2.25, 2.75, 1, 1)
-
-form_armor = form_armor .. "label[3.25,2;Chestplate]"
-form_armor = form_armor .. "list[current_player;armor_chestplate;2.25,1.75;1,1;]"
-form_armor = form_armor .. "listring[current_player;armor_chestplate]"
-form_armor = form_armor .. default.ui.get_itemslot_bg(2.25, 1.75, 1, 1)
-
-form_armor = form_armor .. "label[3.25,1;Helmet]"
-form_armor = form_armor .. "list[current_player;armor_helmet;2.25,0.75;1,1;]"
-form_armor = form_armor .. "listring[current_player;armor_helmet]"
-form_armor = form_armor .. default.ui.get_itemslot_bg(2.25, 0.75, 1, 1)
-
-default.ui.register_page("armor:armor", form_armor)
 
 -- Achievements
 
@@ -303,15 +308,15 @@ achievements.register_achievement(
       description = "Craft a piece of armor",
       times = 1,
       craftitem = "group:is_armor",
-   })
+})
 
 achievements.register_achievement(
    "warrior",
    {
       title = "Warrior",
-      description = "Craft 10 piece of armor",
+      description = "Craft 10 pieces of armor",
       times = 10,
       craftitem = "group:is_armor",
-   })
+})
 
 default.log("mod:armor", "loaded")
