@@ -163,17 +163,20 @@ function crafting.craft(player, wanted, wanted_count, output, items)
 
    -- Put stuff in output stack
 
-   if output:get_free_space() < (craft_count * craftdef.output:get_count()) then
-      craft_count = math.floor(output:get_free_space() / craftdef.output:get_count())
+   local free_space = wanted:get_stack_max() - output:get_count()
+   if free_space < (craft_count * craftdef.output:get_count()) then
+      craft_count = math.floor(free_space / craftdef.output:get_count())
    end
 
    if craft_count < 1 then
       return nil -- Can't hold any output
    end
 
-   output:add_item(ItemStack({
-                         name = craftdef.output:get_name(),
-                         count = craftdef.output:get_count() * craft_count}))
+   output:add_item(
+      ItemStack({
+            name = craftdef.output:get_name(),
+            count = craftdef.output:get_count() * craft_count
+   }))
 
    -- Iterate through second time to take items used for crafting
 
