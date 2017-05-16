@@ -7,9 +7,7 @@ crafting = {}
 
 -- Callbacks
 
-crafting.callbacks = {
-   on_craft = {},
-}
+crafting.callbacks = {}
 
 -- Array of registered craft recipes
 
@@ -112,6 +110,10 @@ function crafting.get_crafts(filter)
 end
 
 function crafting.register_on_craft(func)
+   if not crafting.callbacks.on_craft then
+      crafting.callbacks.on_craft = {}
+   end
+
    table.insert(crafting.callbacks.on_craft, func)
 end
 
@@ -213,7 +215,7 @@ function crafting.craft(player, wanted, wanted_count, output, items)
    end
 
    for _, func in ipairs(crafting.callbacks.on_craft) do
-      for i = 1, output:get_count() do
+      for i = 1, (craftdef.output:get_count() * craft_count) do
          func(output, player)
       end
    end
