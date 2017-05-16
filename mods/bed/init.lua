@@ -11,9 +11,14 @@ bed = {}
 
 bed.userdata = {}
 
+-- Savefile
+
 local bed_file = minetest.get_worldpath() .. "/bed.dat"
 local saving = false
 
+-- Timer
+
+local timer_interval = 1
 local timer = 0
 
 local delay_daytime = false
@@ -57,7 +62,7 @@ local function put_player_in_bed(player)
       {x=162, y=168},
       default.player_animation_speed)
 
-   default.player_set_animation(player, "lay", player_animation_speed)
+   default.player_set_animation(player, "lay", default.player_animation_speed)
 
    default.player_attached[name] = true
 
@@ -117,13 +122,19 @@ local function load_bed()
    end
 end
 
+-- Server start
+
 local function on_load()
    load_bed()
 end
 
+-- Server shutdown
+
 local function on_shutdown()
    save_bed()
 end
+
+-- Joining player
 
 local function on_joinplayer(player)
    local name = player:get_player_name()
@@ -151,6 +162,8 @@ local function on_joinplayer(player)
       end)
    end
 end
+
+-- Respawning player
 
 local function on_respawnplayer(player)
    local name = player:get_player_name()
@@ -180,10 +193,12 @@ local function on_respawnplayer(player)
    end
 end
 
+-- Update function
+
 local function on_globalstep(dtime)
    timer = timer + dtime
 
-   if timer < 2 then
+   if timer < timer_interval then
       return
    end
 
@@ -191,15 +206,22 @@ local function on_globalstep(dtime)
 
    local sleeping_players = 0
 
-   for _, data in pairs(bed.userdata) do
+   for name, data in pairs(bed.userdata) do
       if data.in_bed then
+         local player = minetest.get_player_by_name(name)
+
          sleeping_players = sleeping_players + 1
+
+         if vector.distance(player:getpos(), data.spawn_pos) > 2 then
+            player:moveto(data.spawn_pos)
+         end
       end
    end
 
-   local players = #minetest.get_connected_players()
+   local players = minetest.get_connected_players()
+   local player_count = #players
 
-   if players > 0 and (players / 2.0) < sleeping_players then
+   if player_count > 0 and (player_count / 2.0) < sleeping_players then
       if minetest.get_timeofday() < 0.2 or minetest.get_timeofday() > 0.8 then
          if not delay_daytime then
             delay_daytime = true
@@ -210,13 +232,13 @@ local function on_globalstep(dtime)
                   minetest.chat_send_all(
                      minetest.colorize(
                         "#0ff",
-                        "*** " .. sleeping_players .. " of " .. players
+                        "*** " .. sleeping_players .. " of " .. player_count
                            .. " players slept, rise and shine!"))
 
                   minetest.set_timeofday(0.23)
                   delay_daytime = false
 
-                  for _, player in ipairs(minetest.get_connected_players()) do
+                  for _, player in ipairs(players) do
                      if bed.userdata[player:get_player_name()].in_bed then
                         bed.userdata[player:get_player_name()].slept = true
                      end
@@ -238,6 +260,8 @@ minetest.register_on_joinplayer(on_joinplayer)
 minetest.register_on_respawnplayer(on_respawnplayer)
 
 minetest.register_globalstep(on_globalstep)
+
+-- Nodes
 
 minetest.register_node(
    "bed:bed_foot",
@@ -350,6 +374,8 @@ minetest.register_node(
 
 minetest.register_alias("bed:bed", "bed:bed_foot")
 
+-- Crafting
+
 crafting.register_craft(
    {
       output = "bed:bed",
@@ -358,6 +384,8 @@ crafting.register_craft(
          "group:planks 3",
       }
 })
+
+-- Player effects
 
 player_effects.register_effect(
    "inbed",
