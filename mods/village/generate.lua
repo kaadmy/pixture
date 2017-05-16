@@ -1,12 +1,15 @@
+
 --
 -- Single village generation
 --
 
-local mp = minetest.get_modpath("village")
-
 village.villages = {}
 
+-- Savefile
+
 local village_file = minetest.get_worldpath() .. "/villages.dat"
+
+local modpath = minetest.get_modpath("village")
 
 function village.get_id(name, pos)
    return name .. minetest.hash_node_position(pos)
@@ -16,7 +19,8 @@ function village.save_villages()
    local f = io.open(village_file, "w")
 
    for name, def in pairs(village.villages) do
-      f:write(name .. " " .. def.name .. " " .. minetest.hash_node_position(def.pos) .. "\n")
+      f:write(name .. " " .. def.name .. " "
+                 .. minetest.hash_node_position(def.pos) .. "\n")
    end
 
    io.close(f)
@@ -220,7 +224,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 
       minetest.place_schematic(
 	 pos,
-	 mp.."/schematics/village_empty.mts",
+	 modpath .. "/schematics/village_empty.mts",
 	 "0",
 	 {},
 	 true
@@ -228,7 +232,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 
       minetest.place_schematic(
 	 {x = pos.x-6, y = pos.y-5, z = pos.z-6},
-	 mp.."/schematics/village_filler.mts",
+	 modpath .. "/schematics/village_filler.mts",
 	 "0",
 	 {},
 	 false
@@ -237,7 +241,7 @@ function village.spawn_chunk(pos, orient, replace, pr, chunktype, nofill)
 
    minetest.place_schematic(
       pos,
-      mp.."/schematics/village_"..chunktype..".mts",
+      modpath .. "/schematics/village_" .. chunktype .. ".mts",
       orient,
       replace,
       true

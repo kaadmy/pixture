@@ -28,7 +28,9 @@ tnt_radius (TNT radius) int 3
 mobs_peaceful (Peaceful mobs) bool false
 mobs_safe_spawn (Safe spawn from mobs) bool true
 
-static_spawn_radius (Safe spawn radius) int 256
+## Spawning
+
+static_spawn_radius (Spawnpoint safety radius) int 256
 
 ## Beds
 

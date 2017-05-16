@@ -1,3 +1,13 @@
+
+--
+-- Mapgen
+--
+
+local spawn_pos = minetest.setting_get_pos("static_spawnpoint") or {x = 0, y = 0, z = 0}
+local spawn_radius = minetest.setting_get("static_spawn_radius") or 256
+
+-- Nodes
+
 minetest.register_node(
    "village:entity_spawner",
    {
@@ -15,7 +25,16 @@ minetest.register_node(
       tiles = {"default_grass.png^default_book.png"},
       is_ground_content = false,
       groups = {dig_immediate = 2},
-      sounds = default.node_sound_wood_defaults()
+      sounds = default.node_sound_wood_defaults(),
+
+      on_construct = function(pos)
+         minetest.remove_node(pos)
+
+         local pr = PseudoRandom(minetest.get_mapgen_params().seed
+                                    + pos.x + pos.y + pos.z)
+
+         village.spawn_village(pos, pr)
+      end,
 })
 
 minetest.register_node(
@@ -35,11 +54,18 @@ minetest.register_node(
       groups = {not_in_craftingguide = 1},
 })
 
-minetest.register_abm(
+-- Spawning LBM
+
+minetest.register_lbm(
    {
-      nodenames = {"village:grassland_village", "village:grassland_village_mg"},
-      interval = 1,
-      chance = 1,
+      name = "village:spawn_village",
+      label = "Village spawning",
+      nodenames = {
+         "village:grassland_village_mg",
+      },
+
+      run_at_every_load = true,
+
       action = function(pos, node)
          minetest.remove_node(pos)
 
@@ -47,37 +73,49 @@ minetest.register_abm(
             return
          end
 
-         local pr = PseudoRandom(minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z)
+         local pr = PseudoRandom(minetest.get_mapgen_params().seed
+                                    + pos.x + pos.y + pos.z)
 
-         if node.name  == "village:grassland_village_mg" then
-            if ((minetest.get_mapgen_params().seed+pos.x+pos.y+pos.z) % 30) == 1 then
-               local nearest = village.get_nearest_village(pos)
+         if ((minetest.get_mapgen_params().seed + pos.x + pos.y + pos.z) % 30) == 1 then
+            local nearest = village.get_nearest_village(pos)
 
-               if nearest.dist > village.min_spawn_dist then
-                  minetest.log("Spawning a (Mapgen)Grassland village at "..dump(pos))
+            if nearest.dist > village.min_spawn_dist then
+               if vector.distance(spawn_pos, pos) > spawn_radius then
+                  minetest.log("Spawning a Grassland village at " .. "(" .. pos.x
+                                  .. ", " .. pos.y .. ", " .. pos.z .. ")")
 
-                  -- a short delay to (hopefully) ensure that the surrounding terrain is generated
-                  minetest.after(3.0, function() village.spawn_village(pos, pr) end)
+                  minetest.after(
+                     2.0,
+                     function()
+                        village.spawn_village(pos, pr)
+                  end)
                else
-                  minetest.log("Cannot spawn village, too near another village")
+                  minetest.log("Cannot spawn village, too near the static spawnpoint")
                end
+            else
+               minetest.log("Cannot spawn village, too near another village")
             end
-         else
-            minetest.log("Spawning a Grassland village at "..dump(pos))
-
-            village.spawn_village(pos, pr)
          end
-      end
+      end,
 })
 
-minetest.register_decoration(
-   {
-      deco_type = "simple",
-      place_on = "default:dirt_with_grass",
-      sidelen = 16,
-      fill_ratio = 0.005,
-      biomes = {"Grassland", "Forest"},
-      decoration = {"village:grassland_village_mg"},
-      y_min = 1,
-      y_max = 1000,
-})
+-- Spawn decoration
+
+if not minetest.setting_getbool("mapgen_disable_villages") then
+   minetest.register_decoration(
+      {
+         deco_type = "simple",
+         place_on = "default:dirt_with_grass",
+         sidelen = 16,
+         fill_ratio = 0.005,
+         biomes = {
+            "Grassland",
+            "Forest"
+         },
+         decoration = {
+            "village:grassland_village_mg"
+         },
+         y_min = 1,
+         y_max = 1000,
+   })
+end
