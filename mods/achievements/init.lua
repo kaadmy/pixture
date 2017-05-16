@@ -62,10 +62,6 @@ function achievements.trigger_achievement(player, aname, times)
 
    times = times or 1
 
-   if achievements.achievements[name] == nil then
-      achievements.achievements[name] = {}
-   end
-
    if achievements.achievements[name][aname] == nil then
       achievements.achievements[name][aname] = 0
    end
@@ -111,10 +107,14 @@ local function on_shutdown()
    save_achievements()
 end
 
--- New player
+-- Joining player
 
-local function on_newplayer(player)
-   achievements.achievements[player:get_player_name()] = {}
+local function on_joinplayer(player)
+   local name = player:get_player_name()
+
+   if not achievements.achievements[name] then
+      achievements.achievements[name] = {}
+   end
 end
 
 -- Interaction callbacks
@@ -174,7 +174,7 @@ minetest.after(0, on_load)
 
 minetest.register_on_shutdown(on_shutdown)
 
-minetest.register_on_newplayer(on_newplayer)
+minetest.register_on_joinplayer(on_joinplayer)
 
 minetest.register_on_dignode(on_dig)
 minetest.register_on_placenode(on_place)
@@ -184,13 +184,19 @@ crafting.register_on_craft(on_craft)
 -- Formspecs
 
 local form = default.ui.get_page("default:default")
+
 form = form .. "tableoptions[background=#DDDDDD30]"
 form = form .. "tablecolumns[text,align=left,width=11;text,align=left,width=28;"
    .. "text,align=left,width=5]"
+
 default.ui.register_page("achievements:achievements", form)
 
 function achievements.get_formspec(name, row)
-   if not row then row = 1 end
+   row = row or 1
+
+   if not achievements.achievements[name] then
+      achievements.achievements[name] = {}
+   end
 
    local achievement_list = ""
 
