@@ -1,3 +1,4 @@
+
 --
 -- TNT mod
 -- By PilzAdam and ShadowNinja
@@ -7,6 +8,7 @@
 tnt = {}
 
 -- Default to enabled in singleplayer and disabled in multiplayer
+
 local singleplayer = minetest.is_singleplayer()
 local setting = minetest.setting_getbool("tnt_enable")
 
@@ -14,27 +16,18 @@ if (not singleplayer and setting ~= true) or (singleplayer and setting == false)
    return
 end
 
--- loss probabilities array (one in X will be lost)
-local loss_prob = {}
+local tnt_radius = tonumber(minetest.setting_get("tnt_radius") or 3)
 
-loss_prob["default:cobble"] = 3
-loss_prob["default:dirt"] = 4
+-- Loss probabilities array (one in X will be lost)
 
-local radius = tonumber(minetest.setting_get("tnt_radius") or 3)
+local loss_prob = {
+   ["default:cobble"] = 3,
+   ["default:dirt"] = 4,
+}
 
 -- Fill a list with data for content IDs, after all nodes are registered
+
 local cid_data = {}
-minetest.after(
-   0,
-   function()
-      for name, def in pairs(minetest.registered_nodes) do
-	 cid_data[minetest.get_content_id(name)] = {
-	    name = name,
-	    drops = def.drops,
-	    on_blast = def.on_blast,
-	 }
-      end
-end)
 
 local function rand_pos(center, pos, radius)
    pos.x = center.x + math.random(-radius, radius)
@@ -168,6 +161,8 @@ function tnt.burn(pos)
    end
 end
 
+-- TNT ground removal
+
 function tnt.explode(pos, radius, sound)
    minetest.sound_play(
       sound,
@@ -212,14 +207,32 @@ function tnt.explode(pos, radius, sound)
    return drops
 end
 
+-- TNT node explosion
+
 function tnt.boom(pos)
    minetest.remove_node(pos)
 
-   local drops = tnt.explode(pos, radius, "tnt_explode")
-   entity_physics(pos, radius)
-   eject_drops(drops, pos, radius)
-   add_effects(pos, radius)
+   local drops = tnt.explode(pos, tnt_radius, "tnt_explode")
+   entity_physics(pos, tnt_radius)
+   eject_drops(drops, pos, tnt_radius)
+   add_effects(pos, tnt_radius)
 end
+
+-- On load register content IDs
+
+local function on_load()
+   for name, def in pairs(minetest.registered_nodes) do
+      cid_data[minetest.get_content_id(name)] = {
+         name = name,
+         drops = def.drops,
+         on_blast = def.on_blast,
+      }
+   end
+end
+
+minetest.after(0, on_load)
+
+-- Nodes
 
 minetest.register_node(
    "tnt:tnt",
@@ -229,17 +242,20 @@ minetest.register_node(
       is_ground_content = false,
       groups = {dig_immediate = 2},
       sounds = default.node_sound_wood_defaults(),
-      on_punch = function(pos, node, puncher)
-		    local itemname = puncher:get_wielded_item():get_name()
 
-		    if itemname == "default:flint_and_steel" then
-		      tnt.burn(pos)
-		    end
-		 end,
+      on_punch = function(pos, node, puncher)
+         local itemname = puncher:get_wielded_item():get_name()
+
+         if itemname == "default:flint_and_steel" then
+            tnt.burn(pos)
+         end
+      end,
       on_blast = function(pos, intensity)
-		    tnt.burn(pos)
-		 end,
-   })
+         tnt.burn(pos)
+      end,
+})
+
+-- Nodes
 
 minetest.register_node(
    "tnt:tnt_burning",
@@ -262,24 +278,25 @@ minetest.register_node(
       on_timer = tnt.boom,
       -- unaffected by explosions
       on_blast = function() end,
-   })
+})
 
-minetest.register_craft(
+-- Crafting
+
+crafting.register_craft(
    {
       output = "tnt:tnt",
-      recipe = {
-	 {"",           "group:planks",    ""},
-	 {"group:planks", "default:flint_and_steel", "group:planks"},
-	 {"",           "group:planks",    ""}
+      items = {
+         "group:planks 4",
+         "default:flint_and_steel",
       }
-   })
+})
 
 minetest.register_craft(
    {
       type = "fuel",
       recipe = "tnt:tnt",
       burntime = 13,
-   })
+})
 
 -- Achievements
 
@@ -290,6 +307,6 @@ achievements.register_achievement(
       description = "Craft TNT",
       times = 1,
       craftitem = "tnt:tnt",
-   })
+})
 
 default.log("mod:tnt", "loaded")

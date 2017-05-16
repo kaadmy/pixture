@@ -41,7 +41,7 @@ minetest.register_globalstep(on_globalstep)
 minetest.register_craftitem(
    "nav:compass_0",
    {
-      description = "Compass(N)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_0.png",
       wield_image = wield_image_0,
@@ -53,7 +53,7 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_1",
    {
-      description = "Compass(NE)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_1.png",
       wield_image = wield_image_1,
@@ -65,7 +65,7 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_2",
    {
-      description = "Compass(E)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_0.png^[transformR270",
       wield_image = wield_image_0 .. "^[transformR270",
@@ -77,7 +77,7 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_3",
    {
-      description = "Compass(SE)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_1.png^[transformR270",
       wield_image = wield_image_1 .. "^[transformR270",
@@ -90,7 +90,7 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_4",
    {
-      description = "Compass(S)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_0.png^[transformR180",
       wield_image = wield_image_0 .. "^[transformR180",
@@ -102,7 +102,7 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_5",
    {
-      description = "Compass(SW)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_1.png^[transformR180",
       wield_image = wield_image_1 .. "^[transformR180",
@@ -114,7 +114,7 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_6",
    {
-      description = "Compass(W)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_0.png^[transformR90",
       wield_image = wield_image_0 .. "^[transformR90",
@@ -126,7 +126,7 @@ minetest.register_craftitem(
 minetest.register_craftitem(
    "nav:compass_7",
    {
-      description = "Compass(NW)",
+      description = "Compass",
 
       inventory_image = "nav_compass_inventory_1.png^[transformR90",
       wield_image = wield_image_1 .. "^[transformR90",
@@ -135,13 +135,13 @@ minetest.register_craftitem(
       stack_max = 1,
 })
 
-minetest.register_alias("nav:compass", "nav:compass_2")
+minetest.register_alias("nav:compass", "nav:compass_0")
 
 -- Crafting
 
 crafting.register_craft(
    {
-      output = "nav:compass_2",
+      output = "nav:compass",
       items = {
          "default:ingot_steel 4",
          "default:stick",
@@ -156,7 +156,7 @@ achievements.register_achievement(
       title = "True Navigator",
       description = "Craft a compass",
       times = 1,
-      craftitem = "nav:compass_2",
+      craftitem = "nav:compass",
 })
 
 default.log("compass", "loaded")
