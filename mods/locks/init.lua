@@ -1,3 +1,4 @@
+
 --
 -- Locks mod
 -- By Kaadmy, for Pixture
@@ -5,8 +6,12 @@
 
 locks = {}
 
+-- Settings
+
 local picked_time = tonumber(minetest.setting_get("locks_picked_time")) or 15 -- unlocked for 15 seconds
 local all_unlocked = minetest.setting_getbool("locks_all_unlocked")
+
+-- API functions
 
 function locks.is_owner(meta, player)
    local name = player:get_player_name()
@@ -41,6 +46,8 @@ function locks.is_locked(meta, player)
    return true
 end
 
+-- Items and nodes
+
 minetest.register_tool(
    "locks:pick",
    {
@@ -62,7 +69,8 @@ minetest.register_tool(
             if own then
                minetest.chat_send_player(
                   own,
-                  minetest.colorize("#f00", player:get_player_name() .. " has broken into your locked chest!"))
+                  minetest.colorize("#f00", player:get_player_name()
+                                       .. " has broken into your locked chest!"))
             end
          end
 
@@ -78,26 +86,6 @@ minetest.register_craftitem(
 
       inventory_image = "locks_lock.png",
       wield_image = "locks_lock.png",
-})
-
-minetest.register_craft(
-   {
-      output = "locks:pick",
-      recipe = {
-	 {"", "", "default:ingot_steel"},
-	 {"", "default:stick", ""},
-	 {"default:stick", "", ""},
-      },
-})
-
-minetest.register_craft(
-   {
-      output = "locks:lock",
-      recipe = {
-	 {"", "default:ingot_steel", ""},
-	 {"default:ingot_steel", "", "default:ingot_steel"},
-	 {"group:planks", "group:planks", "group:planks"},
-      },
 })
 
 minetest.register_node(
@@ -189,11 +177,33 @@ minetest.register_node(
       on_blast = function() end,
 })
 
-minetest.register_craft(
+-- Crafting
+
+crafting.register_craft(
+   {
+      output = "locks:pick",
+      items = {
+         "default:ingot_carbonsteel 2",
+         "default:stick 3",
+      },
+})
+
+crafting.register_craft(
+   {
+      output = "locks:lock",
+      items = {
+         "default:ingot_steel 3",
+         "group:planks 2",
+      },
+})
+
+crafting.register_craft(
    {
       output = "locks:chest",
-      type = "shapeless",
-      recipe = {"default:chest", "locks:lock"},
+      items = {
+         "default:chest",
+         "locks:lock",
+      },
 })
 
 -- Achievements

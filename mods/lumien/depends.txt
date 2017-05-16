@@ -1,4 +1,5 @@
-achievements
 default
 tnt
 util
+crafting
+achievements

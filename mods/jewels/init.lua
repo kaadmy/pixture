@@ -1,13 +1,38 @@
+
 --
 -- Jewels mod
 -- By Kaadmy
 --
 
 jewels = {}
+
+-- Array of registered jeweled tools
+
 jewels.registered_jewels = {}
 
-local function p(i)
-   if i >= 0 then i = "+" .. i end
+-- Formspec
+
+local form_bench = default.ui.get_page("default:2part")
+
+form_bench = form_bench .. "list[current_name;main;2.25,1.75;1,1;]"
+form_bench = form_bench .. "listring[current_name;main]"
+form_bench = form_bench .. default.ui.get_itemslot_bg(2.25, 1.75, 1, 1)
+
+form_bench = form_bench .. "label[3.25,1.75;1. Place unjeweled tool here]"
+form_bench = form_bench .. "label[3.25,2.25;2. Hold a jewel and punch the bench]"
+
+form_bench = form_bench .. "list[current_player;main;0.25,4.75;8,4;]"
+form_bench = form_bench .. "listring[current_player;main]"
+form_bench = form_bench .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
+form_bench = form_bench .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
+
+default.ui.register_page("jewels_bench", form_bench)
+
+local function plus_power(i)
+   if i >= 0 then
+      i = "+" .. i
+   end
+
    return i
 end
 
@@ -31,6 +56,7 @@ function jewels.register_jewel(toolname, new_toolname, def)
    if not jewels.registered_jewels[toolname] then
       jewels.registered_jewels[toolname] = {}
    end
+
    table.insert(jewels.registered_jewels[toolname], data)
 
    local tooldef = minetest.deserialize(minetest.serialize(minetest.registered_tools[toolname]))
@@ -59,13 +85,13 @@ function jewels.register_jewel(toolname, new_toolname, def)
 
    if data.stats.range and new_tooldef.range then
       new_tooldef.range = new_tooldef.range + data.stats.range
-      desc = desc .. "\nRange: " .. p(data.stats.range)
+      desc = desc .. "\nRange: " .. plus_power(data.stats.range)
    end
 
    if new_tooldef.tool_capabilities then
       if data.stats.maxdrop and new_tooldef.tool_capabilities.max_drop_level then
 	 new_tooldef.tool_capabilities.max_drop_level = new_tooldef.tool_capabilities.max_drop_level + data.stats.maxdrop
-	 desc = desc .. "\nDrop level: " .. p(data.stats.maxdrop)
+	 desc = desc .. "\nDrop level: " .. plus_power(data.stats.maxdrop)
       end
 
       if data.stats.digspeed then
@@ -83,19 +109,19 @@ function jewels.register_jewel(toolname, new_toolname, def)
 	    end
 	 end
 
-	 desc = desc .. "\nDig time: " .. p(data.stats.digspeed) .. " seconds"
+	 desc = desc .. "\nDig time: " .. plus_power(data.stats.digspeed) .. " seconds"
       end
 
       if data.stats.uses then
-	 desc = desc .. "\nUses: " .. p(data.stats.uses)
+	 desc = desc .. "\nUses: " .. plus_power(data.stats.uses)
       end
       if data.stats.maxlevel then
-	 desc = desc .. "\nDig level: " .. p(data.stats.maxlevel)
+	 desc = desc .. "\nDig level: " .. plus_power(data.stats.maxlevel)
       end
 
       if data.stats.fleshy and new_tooldef.tool_capabilities.damage_groups and new_tooldef.tool_capabilities.damage_groups.fleshy then
 	 new_tooldef.tool_capabilities.damage_groups.fleshy = new_tooldef.tool_capabilities.damage_groups.fleshy + data.stats.fleshy
-	 desc = desc .. "\nDamage: " .. p(data.stats.fleshy)
+	 desc = desc .. "\nDamage: " .. plus_power(data.stats.fleshy)
       end
    end
 
@@ -128,7 +154,7 @@ minetest.register_craftitem(
       description = "Jewel",
       inventory_image = "jewels_jewel.png",
       stack_max = 10
-   })
+})
 
 minetest.register_node(
    "jewels:bench",
@@ -141,65 +167,51 @@ minetest.register_node(
       is_ground_content = false,
       sounds = default.node_sound_wood_defaults(),
       on_construct = function(pos)
-			local meta = minetest.get_meta(pos)
-			meta:set_string("formspec", default.ui.get_page("jewels_bench"))
-			meta:set_string("infotext", "Jewelers Workbench")
+         local meta = minetest.get_meta(pos)
+         meta:set_string("formspec", default.ui.get_page("jewels_bench"))
+         meta:set_string("infotext", "Jewelers Workbench")
 
-			local inv = meta:get_inventory()
-			inv:set_size("main", 1)
-		     end,
+         local inv = meta:get_inventory()
+         inv:set_size("main", 1)
+      end,
       can_dig = function(pos, player)
-		   local meta = minetest.get_meta(pos)
-		   local inv = meta:get_inventory()
+         local meta = minetest.get_meta(pos)
+         local inv = meta:get_inventory()
 
-		   return inv:is_empty("main")
-		end,
+         return inv:is_empty("main")
+      end,
       on_punch = function(pos, node, player, pointed_thing)
-		    local itemstack = player:get_wielded_item()
+         local itemstack = player:get_wielded_item()
 
-		    if itemstack:get_name() == "jewels:jewel" then
-		       local meta = minetest.get_meta(pos)
-		       local inv = meta:get_inventory()
+         if itemstack:get_name() == "jewels:jewel" then
+            local meta = minetest.get_meta(pos)
+            local inv = meta:get_inventory()
 
-		       local itemname = inv:get_stack("main", 1):get_name()
+            local itemname = inv:get_stack("main", 1):get_name()
 
-		       if jewels.can_jewel(itemname) then
-			  inv:set_stack("main", 1, ItemStack(jewels.get_jeweled(itemname)))
+            if jewels.can_jewel(itemname) then
+               inv:set_stack("main", 1, ItemStack(jewels.get_jeweled(itemname)))
 
-			  itemstack:take_item()
+               itemstack:take_item()
 
-			  achievements.trigger_achievement(player, "jeweler")
-			  achievements.trigger_achievement(player, "master_jeweler")
-		       end
-		    end
+               achievements.trigger_achievement(player, "jeweler")
+               achievements.trigger_achievement(player, "master_jeweler")
+            end
+         end
 
-		    player:set_wielded_item(itemstack)
-		end,
-   })
+         player:set_wielded_item(itemstack)
+      end,
+})
 
-minetest.register_craft(
+crafting.register_craft(
    {
       output = "jewels:bench",
-      recipe = {
-	 {"group:planks", "jewels:jewel", "group:planks"},
-	 {"default:ingot_carbonsteel", "group:planks", "default:ingot_carbonsteel"},
-	 {"group:planks", "group:planks", "group:planks"}
+      items = {
+         "group:planks 5",
+         "default:ingot_carbonsteel 2",
+         "jewels:jewel",
       }
-   })
-
-local form_bench = default.ui.get_page("default:2part")
-form_bench = form_bench .. "list[current_name;main;2.25,1.75;1,1;]"
-form_bench = form_bench .. "listring[current_name;main]"
-form_bench = form_bench .. default.ui.get_itemslot_bg(2.25, 1.75, 1, 1)
-
-form_bench = form_bench .. "label[3.25,1.75;1. Place unjeweled tool here]"
-form_bench = form_bench .. "label[3.25,2.25;2. Hold a jewel and punch the bench]"
-
-form_bench = form_bench .. "list[current_player;main;0.25,4.75;8,4;]"
-form_bench = form_bench .. "listring[current_player;main]"
-form_bench = form_bench .. default.ui.get_hotbar_itemslot_bg(0.25, 4.75, 8, 1)
-form_bench = form_bench .. default.ui.get_itemslot_bg(0.25, 5.75, 8, 3)
-default.ui.register_page("jewels_bench", form_bench)
+})
 
 minetest.register_node(
    "jewels:jewel_ore",
@@ -210,7 +222,7 @@ minetest.register_node(
       drop = "jewels:jewel",
       groups = {snappy=1, choppy=1, tree=1},
       sounds = default.node_sound_wood_defaults(),
-   })
+})
 
 minetest.register_ore(
    {
@@ -222,9 +234,7 @@ minetest.register_ore(
       clust_size     = 6,
       y_min     = 0,
       y_max     = 31000,
-   })
-
-dofile(minetest.get_modpath("jewels").."/jewels.lua")
+})
 
 -- Achievements
 
@@ -234,7 +244,7 @@ achievements.register_achievement(
       title = "Jeweler",
       description = "Jewel a tool",
       times = 1,
-   })
+})
 
 achievements.register_achievement(
    "master_jeweler",
@@ -242,6 +252,10 @@ achievements.register_achievement(
       title = "Master Jeweler",
       description = "Jewel 10 tools",
       times = 10,
-   })
+})
+
+-- The tool jewel definitions
+
+dofile(minetest.get_modpath("jewels").."/jewels.lua")
 
 default.log("mod:jewels", "loaded")

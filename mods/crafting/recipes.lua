@@ -332,7 +332,7 @@ crafting.register_craft(
    {
       output = "default:heated_dirt_path",
       items = {
-         "group:soil_path",
+         "default:dirt_path",
          "default:ingot_steel",
       }
 })

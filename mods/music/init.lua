@@ -1,3 +1,4 @@
+
 --
 -- Music player mod
 -- By Kaadmy, for Pixture
@@ -9,7 +10,9 @@ music.default_track = minetest.setting_get("music_track") or "music_catsong"
 music.track_length = tonumber(minetest.setting_get("music_track_length")) or 30.0
 music.volume = tonumber(minetest.setting_get("music_volume")) or 1.0
 
-music.players = {} -- music players
+-- Array of music players
+
+music.players = {}
 
 if minetest.setting_getbool("music_enable") then
    function music.stop(pos)
@@ -169,12 +172,12 @@ else
    })
 end
 
-minetest.register_craft(
+crafting.register_craft(
    {
       output = "music:player",
-      recipe = {
-	 {"group:planks", "group:planks", "group:planks"},
-	 {"group:planks", "default:ingot_steel", "group:planks"},
+      items = {
+         "group:planks 5",
+         "default:ingot_steel",
       }
 })
 

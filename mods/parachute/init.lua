@@ -1,13 +1,14 @@
+
 --
 -- Parachute mod
 -- By webdesigner97(No license?)
 -- Tweaked by Kaadmy, for Pixture
 --
 
-function a(v)
+function air_physics(v)
    local m = 80    -- Weight of player, kg
    local g = -9.81 -- Earth Acceleration, m/s^2
-   local cw = 1.33 -- Drag coefficient
+   local cw = 1.25 -- Drag coefficient
    local rho = 1.2 -- Density of air (on ground, not accurate), kg/m^3
    local A = 25    -- Surface of the parachute, m^2
 
@@ -21,11 +22,13 @@ minetest.register_craftitem(
       wield_image = "parachute_inventory.png",
       stack_max = 1,
       on_use = function(itemstack, player, pointed_thing)
+         local name = player:get_player_name()
+
          local pos = player:getpos()
 
          local on = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 
-         if default.player_attached[player:get_player_name()] then
+         if default.player_attached[name] then
             return
          end
 
@@ -35,17 +38,24 @@ minetest.register_craftitem(
 
             local ent = minetest.add_entity(pos, "parachute:entity")
 
-            ent:setvelocity({x = 0, y = player:get_player_velocity().y, z = 0})
+            ent:setvelocity(
+               {
+                  x = 0,
+                  y = math.min(0, player:get_player_velocity().y),
+                  z = 0
+            })
 
             player:set_attach(ent, "", {x = 0, y = -8, z = 0}, {x = 0, y = 0, z = 0})
 
-            ent:setyaw(player:get_look_yaw() - (math.pi / 2))
+            ent:setyaw(player:get_look_horizontal())
+
             ent = ent:get_luaentity()
-            ent.attached = player
+            ent.attached = name
 
             default.player_attached[player:get_player_name()] = true
 
             itemstack:take_item()
+
             return itemstack
          else
             minetest.chat_send_player(
@@ -69,26 +79,37 @@ minetest.register_entity(
          local under = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
 
          if self.attached ~= nil then
+            local player = minetest.get_player_by_name(self.attached)
+
             local vel = self.object:getvelocity()
 
             local accel = {x = 0, y = 0, z = 0}
 
-            local lookyaw = self.attached:get_look_yaw()
+            local lookyaw = math.pi - player:get_look_horizontal()
 
-            local s = math.sin((math.pi * 0.5) - lookyaw)
-            local c = math.cos((math.pi * 0.5) - lookyaw)
+            if lookyaw < 0 then
+               lookyaw = lookyaw + (math.pi * 2)
+            end
 
-            local sr = math.sin(((math.pi * 0.5) - lookyaw) + (math.pi / 2))
-            local cr = math.cos(((math.pi * 0.5) - lookyaw) + (math.pi / 2))
+            if lookyaw >= (math.pi * 2) then
+               lookyaw = lookyaw - (math.pi * 2)
+            end
+--            self.object:setyaw(lookyaw)
 
-            local controls = self.attached:get_player_control()
+            local s = math.sin(lookyaw)
+            local c = math.cos(lookyaw)
 
-            local speed = 3.0
+            local sr = math.sin(lookyaw - (math.pi / 2))
+            local cr = math.cos(lookyaw - (math.pi / 2))
 
-            if controls.up then
+            local controls = player:get_player_control()
+
+            local speed = 4.0
+
+            if controls.down then
                accel.x = s * speed
                accel.z = c * speed
-            elseif controls.down then
+            elseif controls.up then
                accel.x = s * -speed
                accel.z = c * -speed
             end
@@ -101,31 +122,36 @@ minetest.register_entity(
                accel.z = cr * -speed
             end
 
-            accel.y = accel.y + a(vel.y) * 0.25
+            accel.y = accel.y + air_physics(vel.y) * 0.25
 
             self.object:setacceleration(accel)
 
             if under.name ~= "air" then
-               default.player_attached[self.attached:get_player_name()] = false
+               default.player_attached[self.attached] = false
             end
          end
 
          if under.name ~= "air" then
-            default.player_attached[self.attached:get_player_name()] = false
+            if self.attached ~= nil then
+               default.player_attached[self.attached] = false
 
-            self.object:set_detach()
+               self.object:set_detach()
+            end
+
             self.object:remove()
          end
       end
 })
 
-minetest.register_craft(
+-- Crafting
+
+crafting.register_craft(
    {
       output = "parachute:parachute",
-      recipe = {
-	 {"group:fuzzy", "group:fuzzy", "group:fuzzy"},
-	 {"default:rope", "", "default:rope"},
-	 {"", "default:stick", ""}
+      items = {
+         "group:fuzzy 3",
+         "default:rope 4",
+         "default:stick 6",
       }
 })
 

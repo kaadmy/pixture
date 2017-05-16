@@ -3,6 +3,7 @@
 --
 
 -- Pickaxes
+
 jewels.register_jewel(
    "default:pick_stone",
    "jewels:pick_stone_digspeed",
@@ -85,6 +86,7 @@ jewels.register_jewel(
    })
 
 -- Shovels
+
 jewels.register_jewel(
    "default:shovel_stone",
    "jewels:shovel_stone_digspeed",
@@ -167,6 +169,7 @@ jewels.register_jewel(
    })
 
 -- Axes
+
 jewels.register_jewel(
    "default:axe_stone",
    "jewels:axe_stone_digspeed",
@@ -249,6 +252,7 @@ jewels.register_jewel(
    })
 
 -- Spears
+
 jewels.register_jewel(
    "default:spear_stone",
    "jewels:spear_stone_digspeed",
