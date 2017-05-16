@@ -45,32 +45,54 @@ mobs:register_mob(
 	 punch_start = 90,
 	 punch_end = 101,
       },
-      on_rightclick = function(self, clicker)
-			 mobs:feed_tame(self, clicker, 8, true)
-			 mobs:capture_mob(self, clicker, 0, 5, 40, false, nil)
-		      end,
-   })
 
-mobs:register_spawn("mobs:boar", {"default:dirt_with_grass"}, 20, 10, 15000, 1, 31000)
+      on_rightclick = function(self, clicker)
+         mobs:feed_tame(self, clicker, 8, true)
+
+         mobs:capture_mob(self, clicker, 0, 5, 40, false, nil)
+      end,
+      on_die = function(self, pos, hitter)
+         if hitter == nil or (hitter ~= nil and not hitter:is_player()) then
+            return
+         end
+
+         achievements.trigger_achievement(hitter, "hunter")
+      end,
+})
+
+mobs:register_spawn(
+   "mobs:boar",
+   {
+      "default:dirt_with_grass"
+   },
+   20,
+   10,
+   15000,
+   1,
+   31000
+)
+
 mobs:register_egg("mobs:boar", "Boar", "mobs_boar_inventory.png")
 
--- raw porkchop
+-- Raw porkchop
+
 minetest.register_craftitem(
    "mobs:pork_raw",
    {
       description = "Raw Porkchop",
       inventory_image = "mobs_pork_raw.png",
       on_use = minetest.item_eat({hp = 4, sat = 30}),
-   })
+})
 
--- cooked porkchop
+-- Cooked porkchop
+
 minetest.register_craftitem(
    "mobs:pork",
    {
       description = "Cooked Porkchop",
       inventory_image = "mobs_pork_cooked.png",
       on_use = minetest.item_eat({hp = 8, sat = 50}),
-   })
+})
 
 minetest.register_craft(
    {
@@ -78,4 +100,4 @@ minetest.register_craft(
       output = "mobs:pork",
       recipe = "mobs:pork_raw",
       cooktime = 5,
-   })
+})

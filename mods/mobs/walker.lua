@@ -55,6 +55,17 @@ mobs:register_mob(
 	 punch_start = 25,
 	 punch_end = 34,
       },
-   })
+})
 
-mobs:register_spawn("mobs:walker", {"default:dry_dirt"}, 20, 14, 200000, 1, 31000)
+mobs:register_spawn(
+   "mobs:walker",
+   {
+      "default:dry_dirt",
+      "default:dirt_with_dry_grass"
+   },
+   20,
+   14,
+   200000,
+   1,
+   31000
+)

@@ -1,3 +1,4 @@
+
 -- Npc by TenPlus1
 -- Modded by Kaadmy
 
@@ -63,56 +64,58 @@ for _, npc_type in pairs(npc_types) do
 	    punch_end = 219,
 	 },
 	 on_spawn = function(self)
-		       self.npc_type = npc_type
-		    end,
+            self.npc_type = npc_type
+         end,
 	 on_rightclick = function(self, clicker)
-			    local item = clicker:get_wielded_item()
-			    local name = clicker:get_player_name()
+            local item = clicker:get_wielded_item()
+            local name = clicker:get_player_name()
 
-			    -- feed to heal npc
-			    if item:get_name() == "mobs:meat" or item:get_name() == "mobs:pork" or item:get_name() == "farming:bread" then
-			       
-			       local hp = self.object:get_hp()
-			       -- return if full health
-			       if hp >= self.hp_max then
-				  minetest.chat_send_player(name, "Villager is no longer hungry.")
-				  return
-			       end
+            -- Feed to heal npc
 
-			       hp = hp + 4
-			       if hp > self.hp_max then hp = self.hp_max end
-			       self.object:set_hp(hp)
+            if item:get_name() == "mobs:meat" or item:get_name() == "mobs:pork"
+            or item:get_name() == "farming:bread" then
 
-			       -- take item
-			       if not minetest.setting_getbool("creative_mode") then
-				  item:take_item()
-				  clicker:set_wielded_item(item)
-			       end
-			       
-			       -- right clicking with trading book trades, else changes order if tame
-			       -- trading is done in the gold mod
-			    else
-			       -- if owner switch between follow and stand
-			       if not self.npc_trade then
-				  self.npc_trade = util.choice_element(gold.trades[self.npc_type], gold.pr)
-			       end
+               local hp = self.object:get_hp()
+               -- return if full health
+               if hp >= self.hp_max then
+                  minetest.chat_send_player(name, "Villager is no longer hungry.")
+                  return
+               end
 
-			       if not gold.trade(self.npc_trade, self.npc_type, clicker) then
-				  if self.owner and self.owner == clicker:get_player_name() then
-				     if self.order == "follow" then
-					self.order = "stand"
-				     else
-					self.order = "follow"
-				     end
-				  end
-			       end
-			    end
+               hp = hp + 4
+               if hp > self.hp_max then hp = self.hp_max end
+               self.object:set_hp(hp)
 
-			    mobs:feed_tame(self, clicker, 8, false)
-			    --			 mobs:capture_mob(self, clicker, 20, 5, 10, false, nil)
-			 end,
-      })
+               -- take item
+               if not minetest.setting_getbool("creative_mode") then
+                  item:take_item()
+                  clicker:set_wielded_item(item)
+               end
 
-   --mobs:register_spawn("mobs:npc", {"default:dirt_with_grass"}, 20, 0, 7000, 1, 31000)
+               -- Right clicking with trading book trades, else changes order if tame
+               -- Trading is done in the gold mod
+            else
+               -- If owner switch between follow and stand
+
+               if not self.npc_trade then
+                  self.npc_trade = util.choice_element(
+                     gold.trades[self.npc_type], gold.pr)
+               end
+
+               if not gold.trade(self.npc_trade, self.npc_type, clicker) then
+                  if self.owner and self.owner == clicker:get_player_name() then
+                     if self.order == "follow" then
+                        self.order = "stand"
+                     else
+                        self.order = "follow"
+                     end
+                  end
+               end
+            end
+
+            mobs:feed_tame(self, clicker, 8, false)
+         end,
+   })
+
    mobs:register_egg("mobs:npc_" .. npc_type, "NPC", "default_brick.png^mobs_egg.png")
 end

@@ -1,3 +1,4 @@
+
 -- Mineturtle by Kaadmy
 
 mobs:register_mob(
@@ -46,10 +47,28 @@ mobs:register_mob(
 	 punch_end = 60,
       },
       on_rightclick = function(self, clicker)
-			 mobs:feed_tame(self, clicker, 4, false)
-			 mobs:capture_mob(self, clicker, 0, 20, 40, false, nil)
-		      end,
-   })
+         mobs:feed_tame(self, clicker, 4, false)
+         mobs:capture_mob(self, clicker, 0, 20, 40, false, nil)
+      end,
+      on_die = function(self, pos, hitter)
+         if hitter == nil or (hitter ~= nil and not hitter:is_player()) then
+            return
+         end
 
-mobs:register_spawn("mobs:mineturtle", {"default:dirt_with_grass"}, 20, 5, 200000, 1, 31000)
+         achievements.trigger_achievement(hitter, "bomb_has_been_defused")
+      end,
+})
+
+mobs:register_spawn(
+   "mobs:mineturtle",
+   {
+      "default:dirt_with_grass"
+   },
+   20,
+   5,
+   200000,
+   1,
+   31000
+)
+
 mobs:register_egg("mobs:mineturtle", "Mine Turtle", "mobs_mineturtle_inventory.png")

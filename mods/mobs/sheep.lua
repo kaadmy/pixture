@@ -1,3 +1,4 @@
+
 -- Sheep by PilzAdam; tweaked for Pixture by Kaadmy
 
 mobs:register_mob(
@@ -16,7 +17,7 @@ mobs:register_mob(
 	 {"mobs_sheep.png"},
       },
       gotten_texture = {"mobs_sheep_shaved.png"},
---      gotten_mesh = "mobs_sheep.x",
+      --      gotten_mesh = "mobs_sheep.x",
       makes_footstep_sound = true,
       sounds = {
 	 random = "mobs_sheep",
@@ -46,68 +47,100 @@ mobs:register_mob(
       follow = "farming:wheat",
       view_range = 5,
       replace_rate = 50,
-      replace_what = {"default:grass", "default:tall_grass", "farming:wheat_3", "farming:wheat_4"},
+      replace_what = {
+         "default:grass",
+         "default:tall_grass",
+         "farming:wheat_3",
+         "farming:wheat_4"
+      },
       replace_with = "air",
       replace_offset = -1,
+
       on_replace = function(self, pos)
-		      minetest.set_node(pos, {name = self.replace_with})
-		      if mobs:feed_tame(self, self.follow, 8, true) then
-			 if self.gotten == false then
-			    self.object:set_properties(
-			       {
-				  textures = {"mobs_sheep.png"},
-				  mesh = "mobs_sheep.x",
-			       })
-			 end
-		      end
-		   end,
+         minetest.set_node(pos, {name = self.replace_with})
+
+         if mobs:feed_tame(self, self.follow, 8, true) then
+            if self.gotten == false then
+               self.object:set_properties(
+                  {
+                     textures = {"mobs_sheep.png"},
+                     mesh = "mobs_sheep.x",
+               })
+            end
+         end
+      end,
       on_rightclick = function(self, clicker)
-			 --are we feeding?
-			 if mobs:feed_tame(self, clicker, 8, true) then
-			    --if full grow fuzz
-			    if self.gotten == false then
-			       self.object:set_properties(
-				  {
-				     textures = {"mobs_sheep.png"},
-				     mesh = "mobs_sheep.x",
-				  })
-			    end
-			    return
-			 end
+         -- Are we feeding?
 
-			 local item = clicker:get_wielded_item()
-			 local itemname = item:get_name()
+         if mobs:feed_tame(self, clicker, 8, true) then
+            -- If full grow, add fuzz
 
-			 --are we giving a haircut>
-			 if itemname == "default:shears" then
-			    if self.gotten == false and self.child == false then
-			       self.gotten = true -- shaved
-			       local pos = self.object:getpos()
-			       pos.y = pos.y + 0.5
-			       local obj = minetest.add_item(pos, ItemStack("mobs:wool"))
-			       if obj then
-				  obj:setvelocity(
-				     {
-					x = math.random(-1,1),
-					y = 5,
-					z = math.random(-1,1)
-				     })
-			       end
-			       item:add_wear(650) -- 100 uses
-			       clicker:set_wielded_item(item)
-			       self.object:set_properties(
-				  {
-				     textures = {"mobs_sheep_shaved.png"},
-				     mesh = "mobs_sheep.x",
-				  })
-			    end
-			    return
-			 end
+            if self.gotten == false then
+               self.object:set_properties(
+                  {
+                     textures = {"mobs_sheep.png"},
+                     mesh = "mobs_sheep.x",
+               })
+            end
 
-			 --are we capturing?
-			 mobs:capture_mob(self, clicker, 0, 5, 60, false, nil)
-		      end
-   })
+            return
+         end
+
+         local item = clicker:get_wielded_item()
+         local itemname = item:get_name()
+
+         -- Are we giving a haircut?
+
+         if itemname == "default:shears" then
+            if self.gotten == false and self.child == false then
+               self.gotten = true -- shaved
+               local pos = self.object:getpos()
+               pos.y = pos.y + 0.5
+               local obj = minetest.add_item(pos, ItemStack("mobs:wool"))
+               if obj then
+                  obj:setvelocity(
+                     {
+                        x = math.random(-1,1),
+                        y = 5,
+                        z = math.random(-1,1)
+                  })
+               end
+               item:add_wear(650) -- 100 uses
+               clicker:set_wielded_item(item)
+               self.object:set_properties(
+                  {
+                     textures = {"mobs_sheep_shaved.png"},
+                     mesh = "mobs_sheep.x",
+               })
+            end
+
+            return
+         end
+
+         -- Are we capturing?
+
+         mobs:capture_mob(self, clicker, 0, 5, 60, false, nil)
+      end,
+      on_die = function(self, pos, hitter)
+         if hitter == nil or (hitter ~= nil and not hitter:is_player()) then
+            return
+         end
+
+         achievements.trigger_achievement(hitter, "hunter")
+      end,
+
+})
+
+mobs:register_spawn(
+   "mobs:sheep",
+   {
+      "default:dirt_with_grass"
+   },
+   20,
+   10,
+   15000,
+   1,
+   31000
+)
 
 mobs:register_egg("mobs:sheep", "Sheep", "mobs_sheep_inventory.png")
-mobs:register_spawn("mobs:sheep", {"default:dirt_with_grass"}, 20, 10, 15000, 1, 31000)

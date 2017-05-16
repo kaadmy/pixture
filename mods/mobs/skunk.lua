@@ -44,10 +44,29 @@ mobs:register_mob(
 	 punch_end = 101,
       },
       on_rightclick = function(self, clicker)
-			 mobs:feed_tame(self, clicker, 6, true)
-			 mobs:capture_mob(self, clicker, 10, 40, 20, false, nil)
-		      end,
-   })
+         mobs:feed_tame(self, clicker, 6, true)
+         mobs:capture_mob(self, clicker, 10, 40, 20, false, nil)
+      end,
+      on_die = function(self, pos, hitter)
+         if hitter == nil or (hitter ~= nil and not hitter:is_player()) then
+            return
+         end
 
-mobs:register_spawn("mobs:skunk", {"default:dirt_with_swamp_grass", "default:dirt_with_dry_grass"}, 20, 7, 12000, 2, 50)
+         achievements.trigger_achievement(hitter, "hunter")
+      end,
+})
+
+mobs:register_spawn(
+   "mobs:skunk",
+   {
+      "default:dirt_with_swamp_grass",
+      "default:dirt_with_dry_grass"
+   },
+   20,
+   7,
+   12000,
+   2,
+   50
+)
+
 mobs:register_egg("mobs:skunk", "Skunk", "mobs_skunk_inventory.png")

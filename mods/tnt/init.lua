@@ -34,7 +34,7 @@ minetest.after(
 	    on_blast = def.on_blast,
 	 }
       end
-   end)
+end)
 
 local function rand_pos(center, pos, radius)
    pos.x = center.x + math.random(-radius, radius)
@@ -90,7 +90,7 @@ local function destroy(drops, pos, cid)
       def.on_blast(vector.new(pos), 1)
       return
    end
-   
+
    minetest.remove_node(pos)
    if def then
       local node_drops = minetest.get_node_drops(def.name, "")
@@ -156,7 +156,7 @@ local function add_effects(pos, radius)
 	 minsize = 16,
 	 maxsize = 24,
 	 texture = "tnt_smoke.png",
-      })
+   })
 end
 
 function tnt.burn(pos)
@@ -168,7 +168,15 @@ function tnt.burn(pos)
    end
 end
 
-local function explode(pos, radius)
+function tnt.explode(pos, radius, sound)
+   minetest.sound_play(
+      sound,
+      {
+         pos = pos,
+         gain = 1.5,
+         max_hear_distance = 128
+   })
+
    local pos = vector.round(pos)
    local vm = VoxelManip()
    local pr = PseudoRandom(os.time())
@@ -204,12 +212,10 @@ local function explode(pos, radius)
    return drops
 end
 
-
 function tnt.boom(pos)
-   minetest.sound_play("tnt_explode", {pos = pos, gain = 1.5, max_hear_distance = 128})
    minetest.remove_node(pos)
 
-   local drops = explode(pos, radius)
+   local drops = tnt.explode(pos, radius, "tnt_explode")
    entity_physics(pos, radius)
    eject_drops(drops, pos, radius)
    add_effects(pos, radius)

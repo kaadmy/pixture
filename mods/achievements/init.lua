@@ -12,21 +12,6 @@ achievements.registered_achievements_list = {}
 local achievements_file = minetest.get_worldpath() .. "/achievements.dat"
 local saving = false
 
-function achievements.register_achievement(name, def)
-   local rd = {
-      title = def.title or name, -- good-looking name of the achievement
-      description = def.description or "The " .. name .. " achievement", -- description of what the achievement is, and how to get it
-      times = def.times or 1, -- how many times to trigger before getting the achievement
-      dignode = def.dignode or nil, -- digging this node also triggers the achievement
-      placenode = def.placenode or nil, -- placing this node also triggers the achievement
-      craftitem = def.craftitem or nil, -- crafting this item also triggers the achievement
-   }
-
-   achievements.registered_achievements[name] = def
-
-   table.insert(achievements.registered_achievements_list, name)
-end
-
 local function save_achievements()
    local f = io.open(achievements_file, "w")
 
@@ -57,8 +42,25 @@ local function load_achievements()
    end
 end
 
+function achievements.register_achievement(name, def)
+   local rd = {
+      title = def.title or name, -- good-looking name of the achievement
+      description = def.description or "The " .. name .. " achievement", -- description of what the achievement is, and how to get it
+      times = def.times or 1, -- how many times to trigger before getting the achievement
+      dignode = def.dignode or nil, -- digging this node also triggers the achievement
+      placenode = def.placenode or nil, -- placing this node also triggers the achievement
+      craftitem = def.craftitem or nil, -- crafting this item also triggers the achievement
+   }
+
+   achievements.registered_achievements[name] = def
+
+   table.insert(achievements.registered_achievements_list, name)
+end
+
 function achievements.trigger_achievement(player, aname, times)
    local name = player:get_player_name()
+
+   times = times or 1
 
    if achievements.achievements[name] == nil then
       achievements.achievements[name] = {}
@@ -72,19 +74,25 @@ function achievements.trigger_achievement(player, aname, times)
       return
    end
 
-   achievements.achievements[name][aname] = achievements.achievements[name][aname] + (times or 1)
+   achievements.achievements[name][aname] = achievements.achievements[name][aname] + times
 
    if not achievements.registered_achievements[aname] then
-      default.log("[mod:achievements] Cannot find registered achievement " .. aname, "error")
+      default.log("[mod:achievements] Cannot find registered achievement "
+                     .. aname, "error")
       return
    end
 
-   if achievements.achievements[name][aname] >= achievements.registered_achievements[aname].times then
+   if achievements.achievements[name][aname]
+   >= achievements.registered_achievements[aname].times then
       achievements.achievements[name][aname] = -1
-      minetest.after(2.0, function()
-                        minetest.chat_send_all(
-                           minetest.colorize("#0f0", "*** " .. name .." has earned the achievement [" ..
-                                                achievements.registered_achievements[aname].title .. "]"))
+      minetest.after(
+         2.0,
+         function()
+            minetest.chat_send_all(
+               minetest.colorize(
+                  "#0f0",
+                  "*** " .. name .." has earned the achievement [" ..
+                     achievements.registered_achievements[aname].title .. "]"))
       end)
    end
 
@@ -177,7 +185,8 @@ crafting.register_on_craft(on_craft)
 
 local form = default.ui.get_page("default:default")
 form = form .. "tableoptions[background=#DDDDDD30]"
-form = form .. "tablecolumns[text,align=left,width=11;text,align=left,width=28;text,align=left,width=5]"
+form = form .. "tablecolumns[text,align=left,width=11;text,align=left,width=28;"
+   .. "text,align=left,width=5]"
 default.ui.register_page("achievements:achievements", form)
 
 function achievements.get_formspec(name, row)
@@ -209,13 +218,15 @@ function achievements.get_formspec(name, row)
       end
 
       achievement_list = achievement_list .. minetest.formspec_escape(def.title) .. ","
-      achievement_list = achievement_list .. minetest.formspec_escape(def.description) .. ","
+      achievement_list = achievement_list .. minetest.formspec_escape(def.description)
+         .. ","
       achievement_list = achievement_list .. progress
    end
 
    local form = default.ui.get_page("achievements:achievements")
 
-   form = form .. "table[0.25,2.5;7.75,5.5;achievement_list;" .. achievement_list .. ";" .. row .. "]"
+   form = form .. "table[0.25,2.5;7.75,5.5;achievement_list;" .. achievement_list
+      .. ";" .. row .. "]"
 
    local aname = achievements.registered_achievements_list[row]
    local def = achievements.registered_achievements[aname]
@@ -231,7 +242,11 @@ function achievements.get_formspec(name, row)
       progress = "Missing"
    end
 
-   form = form .. "label[0.25,8.15;" .. minetest.formspec_escape(amt_gotten .. " of " .. #achievements.registered_achievements_list .. " achievements gotten, " .. amt_progress .. " in progress") .. "]"
+   form = form .. "label[0.25,8.15;"
+      .. minetest.formspec_escape(amt_gotten.. " of "
+                                     .. #achievements.registered_achievements_list
+                                     .. " achievements gotten, " .. amt_progress
+                                     .. " in progress") .. "]"
 
    form = form .. "label[0.25,0.25;" .. minetest.formspec_escape(def.title) .. "]"
    form = form .. "label[7.25,0.25;" .. minetest.formspec_escape(progress) .. "]"
@@ -258,7 +273,11 @@ local function receive_fields(player, form_name, fields)
       end
    end
 
-   minetest.show_formspec(name, "achievements:achievements", achievements.get_formspec(name, selected))
+   minetest.show_formspec(
+      name,
+      "achievements:achievements",
+      achievements.get_formspec(name, selected)
+   )
 end
 
 minetest.register_on_player_receive_fields(receive_fields)
