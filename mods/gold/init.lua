@@ -265,6 +265,33 @@ minetest.register_craftitem(
       inventory_image = "gold_ingot_gold.png",
 })
 
+-- Nodes
+
+minetest.register_node(
+   "gold:stone_with_gold",
+   {
+      description = "Stone with Gold",
+      tiles ={"default_stone.png^gold_mineral_gold.png"},
+      groups = {cracky=1, stone=1},
+      drop = "gold:lump_gold",
+      is_ground_content = true,
+      sounds = default.node_sound_stone_defaults(),
+})
+
+-- Ores
+
+minetest.register_ore(
+   {
+      ore_type       = "scatter",
+      ore            = "gold:stone_with_gold",
+      wherein        = "default:stone",
+      clust_scarcity = 9*9*9,
+      clust_num_ores = 12,
+      clust_size     = 6,
+      y_min          = -60,
+      y_max          = -45,
+})
+
 -- Crafting
 
 crafting.register_craft(
@@ -281,34 +308,7 @@ minetest.register_craft(
       type = "cooking",
       output = "gold:ingot_gold",
       recipe = "gold:lump_gold",
-      cooktime = 6,
-})
-
--- Nodes
-
-minetest.register_node(
-   "gold:ore",
-   {
-      description = "Gold Ore",
-      tiles ={"default_stone.png^gold_mineral.png"},
-      groups = {cracky=1, stone=1},
-      drop = "gold:lump_gold",
-      is_ground_content = true,
-      sounds = default.node_sound_stone_defaults(),
-})
-
--- Ore
-
-minetest.register_ore(
-   {
-      ore_type       = "scatter",
-      ore            = "gold:ore",
-      wherein        = "default:stone",
-      clust_scarcity = 12*12*12,
-      clust_num_ores = 10,
-      clust_size     = 10,
-      y_min     = -256,
-      y_max     = -32,
+      cooktime = 7,
 })
 
 -- Achievements

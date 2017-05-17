@@ -25,6 +25,26 @@ minetest.register_node(
       sounds = default.node_sound_stone_defaults(),
 })
 
+minetest.register_node(
+   "default:stone_with_tin",
+   {
+      description = "Stone with Tin",
+      tiles = {"default_stone.png^default_mineral_tin.png"},
+      groups = {cracky = 1, stone = 1, not_in_craftingguide = 1},
+      drop = "default:lump_tin",
+      sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node(
+   "default:stone_with_copper",
+   {
+      description = "Stone with Copper",
+      tiles = {"default_stone.png^default_mineral_copper.png"},
+      groups = {cracky = 1, stone = 1, not_in_craftingguide = 1},
+      drop = "default:lump_copper",
+      sounds = default.node_sound_stone_defaults(),
+})
+
 -- Stonelike
 
 minetest.register_node(

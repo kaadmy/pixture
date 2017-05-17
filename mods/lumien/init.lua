@@ -25,8 +25,16 @@ local function on_globalstep(dtime)
       local pos = player:getpos()
 
       util.nodefunc(
-	 {x = pos.x-lumien_on_radius, y = pos.y-lumien_on_radius, z = pos.z-lumien_on_radius},
-	 {x = pos.x+lumien_on_radius, y = pos.y+lumien_on_radius, z = pos.z+lumien_on_radius},
+	 {
+            x = pos.x-lumien_on_radius,
+            y = pos.y-lumien_on_radius,
+            z = pos.z-lumien_on_radius
+         },
+	 {
+            x = pos.x+lumien_on_radius,
+            y = pos.y+lumien_on_radius,
+            z = pos.z+lumien_on_radius
+         },
 	 "lumien:crystal_off",
 	 function(pos)
 	    local node = minetest.get_node(pos)
@@ -104,10 +112,10 @@ minetest.register_node(
 -- Ores
 
 minetest.register_node(
-   "lumien:ore",
+   "lumien:stone_with_lumien",
    {
-      description = "Lumien Ore",
-      tiles = {"default_stone.png^lumien_mineral.png"},
+      description = "Stone with Lumien",
+      tiles = {"default_stone.png^lumien_mineral_lumien.png"},
       groups = {cracky = 1, stone = 1},
       drop = "lumien:block",
       sounds = default.node_sound_stone_defaults(),
@@ -116,13 +124,13 @@ minetest.register_node(
 minetest.register_ore(
    {
       ore_type       = "scatter",
-      ore            = "lumien:ore",
+      ore            = "lumien:stone_with_lumien",
       wherein        = "default:stone",
-      clust_scarcity = 12*12*12,
-      clust_num_ores = 10,
-      clust_size     = 10,
-      y_min     = -256,
-      y_max     = -64,
+      clust_scarcity = 5*5*5,
+      clust_num_ores = 8,
+      clust_size     = 6,
+      y_min     = -107,
+      y_max     = -100,
 })
 
 -- Update functions
