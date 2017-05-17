@@ -299,11 +299,11 @@ else
 	    full_punch_interval = 1.0,
 	    max_drop_level = 0,
 	    groupcaps = {
-	       fleshy = {times={[2]=1.6, [3]=1.0}, uses=0, maxlevel=1},
 	       crumbly = {times={[2]=3.2, [3]=2.1}, uses=0, maxlevel=1},
 	       choppy = {times={[2]=3.5, [3]=3.8}, uses=0, maxlevel=1},
 	       cracky = {times={[2]=8.5, [3]=7.0}, uses=0, maxlevel=1},
 	       snappy = {times={[1]=2.5, [2]=2.0, [3]=1.5}, uses=0, maxlevel=1},
+	       fleshy = {times={[2]=1.6, [3]=1.0}, uses=0, maxlevel=1},
 	       oddly_breakable_by_hand = {times={[1]=7.0,[2]=5.5,[3]=4.0}, uses=0, maxlevel=1},
 	    },
 	    range = 3.8,
@@ -372,7 +372,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    cracky={times=tool_levels.wrought_iron.cracky, uses=25, maxlevel=2}
+	    cracky={times=tool_levels.wrought_iron.cracky, uses=15, maxlevel=2}
 	 },
 	 damage_groups = {fleshy = 4}
       },
@@ -386,9 +386,9 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    cracky={times=tool_levels.steel.cracky, uses=35, maxlevel=2}
+	    cracky={times=tool_levels.steel.cracky, uses=30, maxlevel=2}
 	 },
-	 damage_groups = {fleshy = 6}
+	 damage_groups = {fleshy = 5}
       },
 })
 
@@ -400,9 +400,9 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    cracky={times=tool_levels.carbon_steel.cracky, uses=35, maxlevel=2}
+	    cracky={times=tool_levels.carbon_steel.cracky, uses=40, maxlevel=2}
 	 },
-	 damage_groups = {fleshy = 6}
+	 damage_groups = {fleshy = 5}
       },
 })
 
@@ -414,9 +414,9 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    cracky={times=tool_levels.bronze.cracky, uses=35, maxlevel=2}
+	    cracky={times=tool_levels.bronze.cracky, uses=30, maxlevel=2}
 	 },
-	 damage_groups = {fleshy = 6}
+	 damage_groups = {fleshy = 5}
       },
 })
 
@@ -458,7 +458,7 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    crumbly={times=tool_levels.wrought_iron.crumbly, uses=25, maxlevel=2}
+	    crumbly={times=tool_levels.wrought_iron.crumbly, uses=15, maxlevel=2}
 	 },
 	 damage_groups = {fleshy = 4}
       },
@@ -472,9 +472,9 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    crumbly={times=tool_levels.steel.crumbly, uses=35, maxlevel=2}
+	    crumbly={times=tool_levels.steel.crumbly, uses=30, maxlevel=2}
 	 },
-	 damage_groups = {fleshy = 6}
+	 damage_groups = {fleshy = 5}
       },
 })
 
@@ -486,9 +486,9 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    crumbly={times=tool_levels.carbon_steel.crumbly, uses=35, maxlevel=2}
+	    crumbly={times=tool_levels.carbon_steel.crumbly, uses=40, maxlevel=2}
 	 },
-	 damage_groups = {fleshy = 6}
+	 damage_groups = {fleshy = 5}
       },
 })
 
@@ -500,9 +500,9 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    crumbly={times=tool_levels.bronze.crumbly, uses=35, maxlevel=2}
+	    crumbly={times=tool_levels.bronze.crumbly, uses=30, maxlevel=2}
 	 },
-	 damage_groups = {fleshy = 6}
+	 damage_groups = {fleshy = 5}
       },
 })
 
@@ -517,7 +517,7 @@ minetest.register_tool(
 	 max_drop_level=0,
 	 groupcaps={
 	    choppy={times=tool_levels.wood.choppy, uses=10, maxlevel=1},
-	    fleshy={times={[2]=1.20, [3]=0.60}, uses=10, maxlevel=1}
+	    fleshy={times={[2]=1.20, [3]=0.60}, uses=20, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 3}
       },
@@ -532,7 +532,7 @@ minetest.register_tool(
 	 max_drop_level=0,
 	 groupcaps={
 	    choppy={times=tool_levels.stone.choppy, uses=20, maxlevel=1},
-	    fleshy={times={[2]=1.10, [3]=0.40}, uses=20, maxlevel=1}
+	    fleshy={times={[2]=1.10, [3]=0.40}, uses=25, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 4}
       },
@@ -546,8 +546,8 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    choppy={times=tool_levels.wrought_iron.choppy, uses=25, maxlevel=2},
-	    fleshy={times={[2]=1.00, [3]=0.20}, uses=40, maxlevel=1}
+	    choppy={times=tool_levels.wrought_iron.choppy, uses=15, maxlevel=2},
+	    fleshy={times={[2]=1.00, [3]=0.20}, uses=30, maxlevel=1}
 	 },
 	 damage_groups = {fleshy = 5}
       },
@@ -561,10 +561,10 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    choppy={times=tool_levels.steel.choppy, uses=35, maxlevel=2},
-	    fleshy={times={[2]=1.00, [3]=0.20}, uses=40, maxlevel=1}
+	    choppy={times=tool_levels.steel.choppy, uses=30, maxlevel=2},
+	    fleshy={times={[2]=1.00, [3]=0.20}, uses=35, maxlevel=1}
 	 },
-	 damage_groups = {fleshy = 7}
+	 damage_groups = {fleshy = 6}
       },
 })
 
@@ -576,10 +576,10 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    choppy={times=tool_levels.carbon_steel.choppy, uses=45, maxlevel=2},
+	    choppy={times=tool_levels.carbon_steel.choppy, uses=40, maxlevel=2},
 	    fleshy={times={[2]=1.00, [3]=0.20}, uses=40, maxlevel=1}
 	 },
-	 damage_groups = {fleshy = 7}
+	 damage_groups = {fleshy = 6}
       },
 })
 
@@ -591,10 +591,10 @@ minetest.register_tool(
       tool_capabilities = {
 	 max_drop_level=1,
 	 groupcaps={
-	    choppy={times=tool_levels.bronze.choppy, uses=25, maxlevel=2},
+	    choppy={times=tool_levels.bronze.choppy, uses=30, maxlevel=2},
 	    fleshy={times={[2]=1.00, [3]=0.20}, uses=40, maxlevel=1}
 	 },
-	 damage_groups = {fleshy = 7}
+	 damage_groups = {fleshy = 6}
       },
 })
 
@@ -609,8 +609,8 @@ minetest.register_tool(
 	 full_punch_interval = 1.0,
 	 max_drop_level=0,
 	 groupcaps={
-	    fleshy={times={[2]=1.10, [3]=0.60}, uses=10, maxlevel=1},
 	    snappy={times=tool_levels.wood.snappy, uses=10, maxlevel=1},
+	    fleshy={times={[2]=1.10, [3]=0.60}, uses=10, maxlevel=1},
 	 },
 	 damage_groups = {fleshy = 4}
       }
@@ -625,8 +625,8 @@ minetest.register_tool(
 	 full_punch_interval = 1.0,
 	 max_drop_level=0,
 	 groupcaps={
-	    fleshy={times={[2]=0.80, [3]=0.40}, uses=20, maxlevel=1},
 	    snappy={times=tool_levels.stone.snappy, uses=20, maxlevel=1},
+	    fleshy={times={[2]=0.80, [3]=0.40}, uses=20, maxlevel=1},
 	 },
 	 damage_groups = {fleshy = 5}
       }
@@ -641,8 +641,8 @@ minetest.register_tool(
 	 full_punch_interval = 1.0,
 	 max_drop_level=1,
 	 groupcaps={
-	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=10, maxlevel=2},
-	    snappy={times=tool_levels.wrought_iron.snappy, uses=40, maxlevel=1},
+	    snappy={times=tool_levels.wrought_iron.snappy, uses=15, maxlevel=1},
+	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=15, maxlevel=2},
 	 },
 	 damage_groups = {fleshy = 6}
       }
@@ -657,8 +657,8 @@ minetest.register_tool(
 	 full_punch_interval = 1.0,
 	 max_drop_level=1,
 	 groupcaps={
-	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=25, maxlevel=2},
-	    snappy={times=tool_levels.steel.snappy, uses=55, maxlevel=1},
+	    snappy={times=tool_levels.steel.snappy, uses=30, maxlevel=1},
+	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=30, maxlevel=2},
 	 },
 	 damage_groups = {fleshy = 10}
       }
@@ -673,8 +673,8 @@ minetest.register_tool(
 	 full_punch_interval = 1.0,
 	 max_drop_level=1,
 	 groupcaps={
-	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=25, maxlevel=2},
-	    snappy={times=tool_levels.carbon_steel.snappy, uses=55, maxlevel=1},
+	    snappy={times=tool_levels.carbon_steel.snappy, uses=40, maxlevel=1},
+	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=40, maxlevel=2},
 	 },
 	 damage_groups = {fleshy = 10}
       }
@@ -689,8 +689,8 @@ minetest.register_tool(
 	 full_punch_interval = 1.0,
 	 max_drop_level=1,
 	 groupcaps={
-	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=25, maxlevel=2},
-	    snappy={times=tool_levels.bronze.snappy, uses=55, maxlevel=1},
+	    snappy={times=tool_levels.bronze.snappy, uses=30, maxlevel=1},
+	    fleshy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=30, maxlevel=2},
 	 },
 	 damage_groups = {fleshy = 10}
       }
