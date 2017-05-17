@@ -632,7 +632,7 @@ minetest.register_decoration(
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:dry_leaves"},
       schematic = minetest.get_modpath("default") .. "/schematics/default_bush.mts",
-      y_min = -32000,
+      y_min = 0,
       y_max = 32000,
       rotation = "0",
 })
@@ -663,7 +663,7 @@ minetest.register_decoration(
       flags = "place_center_x, place_center_z",
       schematic = minetest.get_modpath("default")
          .. "/schematics/default_small_rock.mts",
-      y_min = -32000,
+      y_min = 0,
       y_max = 32000,
       rotation = "random",
 })
@@ -678,9 +678,23 @@ minetest.register_decoration(
       flags = "place_center_x, place_center_z",
       schematic = minetest.get_modpath("default")
          .. "/schematics/default_large_rock.mts",
-      y_min = -32000,
+      y_min = 0,
       y_max = 32000,
       rotation = "random",
+})
+
+-- Sulfur decorations
+
+minetest.register_decoration(
+   {
+      deco_type = "simple",
+      place_on = "default:dry_dirt",
+      sidelen = 16,
+      fill_ratio = 0.005,
+      biomes = {"Wasteland"},
+      decoration = {"default:stone_with_sulfur"},
+      y_min = 2,
+      y_max = 14,
 })
 
 -- Clam decorations
@@ -697,6 +711,31 @@ minetest.register_decoration(
       y_max = 1,
 })
 
+-- Graphite ore
+
+minetest.register_ore( -- Common above sea level mainly
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_graphite",
+      wherein        = "default:stone",
+      clust_scarcity = 9*9*9,
+      clust_num_ores = 8,
+      clust_size     = 8,
+      y_min          = -8,
+      y_max          = 32,
+})
+
+minetest.register_ore( -- Slight scattering deeper down
+   {
+      ore_type       = "scatter",
+      ore            = "default:stone_with_graphite",
+      wherein        = "default:stone",
+      clust_scarcity = 13*13*13,
+      clust_num_ores = 6,
+      clust_size     = 8,
+      y_min          = -31000,
+      y_max          = -32,
+})
 
 -- Coal ore
 

@@ -6,6 +6,26 @@
 -- Ores
 
 minetest.register_node(
+   "default:stone_with_sulfur",
+   {
+      description = "Stone with Sulfur",
+      tiles = {"default_stone.png^default_mineral_sulfur.png"},
+      groups = {cracky = 2, stone = 1, not_in_craftingguide = 1},
+      drop = "default:lump_sulfur",
+      sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node(
+   "default:stone_with_graphite",
+   {
+      description = "Stone with Graphite",
+      tiles = {"default_stone.png^default_mineral_graphite.png"},
+      groups = {cracky = 2, stone = 1, not_in_craftingguide = 1},
+      drop = "default:sheet_graphite",
+      sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node(
    "default:stone_with_coal",
    {
       description = "Stone with Coal",

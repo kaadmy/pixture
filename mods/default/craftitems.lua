@@ -34,6 +34,15 @@ minetest.register_craftitem(
       inventory_image = "default_pearl.png",
 })
 
+-- Mineral misc.
+
+minetest.register_craftitem(
+   "default:sheet_graphite",
+   {
+      description = "Graphite Sheet",
+      inventory_image = "default_sheet_graphite.png",
+})
+
 -- Mineral lumps
 
 minetest.register_craftitem(
@@ -55,13 +64,6 @@ minetest.register_craftitem(
    {
       description = "Iron Lump",
       inventory_image = "default_lump_iron.png",
-})
-
-minetest.register_craftitem(
-   "default:lump_graphite",
-   {
-      description = "Graphite Lump",
-      inventory_image = "default_lump_graphite.png",
 })
 
 minetest.register_craftitem(

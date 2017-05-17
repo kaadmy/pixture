@@ -84,7 +84,7 @@ crafting.register_craft(
    {
       output = "default:ingot_steel 2",
       items = {
-         "default:lump_coal",
+         "default:sheet_graphite",
          "default:ingot_wrought_iron 4",
       }
 })
@@ -93,7 +93,7 @@ crafting.register_craft(
    {
       output = "default:ingot_carbon_steel 2",
       items = {
-         "default:lump_coal 2",
+         "default:sheet_graphite 2",
          "default:ingot_wrought_iron 7",
       }
 })
@@ -460,8 +460,17 @@ crafting.register_craft(
    {
       output = "default:fertilizer",
       items = {
-         "default:fern 3",
-         "default:fiber",
+         "default:fern 4",
+         "default:fiber 3",
+      }
+})
+
+crafting.register_craft(
+   {
+      output = "default:fertilizer 2",
+      items = {
+         "default:lump_sulfur 3",
+         "default:fiber 3",
       }
 })
 
