@@ -3,6 +3,9 @@
 -- Mapgen
 --
 
+-- Uncomment this to cut a big portion of ground out for visualizing ore spawning
+
+--[[
 local function on_generated(minp, maxp, blockseed)
    for x = minp.x, maxp.x do
       if x > 0 then
@@ -20,6 +23,7 @@ local function on_generated(minp, maxp, blockseed)
 end
 
 minetest.register_on_generated(on_generated)
+--]]
 
 -- Aliases for map generator outputs
 -- v7 still needs them.. sigh..
