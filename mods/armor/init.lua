@@ -5,21 +5,20 @@
 
 armor = {}
 
-armor.player_skin = "character.png"
+-- Wear is wear per HP of damage taken
 
 armor.materials = {
-   -- material      craftitem                     %   description
-   {"wood",         "group:planks",               15, "Wooden"},
-   {"steel",        "default:ingot_steel",        30, "Steel"},
-   {"chainmail",    "armor:chainmail_sheet",      45, "Chainmail"},
-   {"carbon_steel", "default:ingot_carbon_steel", 60, "Carbon Steel"},
+   -- material      craftitem                     description     %
+   {"wood",         "group:planks",               "Wooden",       10},
+   {"steel",        "default:ingot_steel",        "Steel",        20},
+   {"chainmail",    "armor:chainmail_sheet",      "Chainmail",    30},
+   {"carbon_steel", "default:ingot_carbon_steel", "Carbon Steel", 40},
+   {"bronze",       "default:ingot_bronze",       "Bronze",       60},
 }
 
 -- Usable slots
 
 armor.slots = {"helmet", "chestplate", "boots"}
-
-local enable_drop = minetest.setting_getbool("drop_items_on_die") or false
 
 -- Timer
 
@@ -166,36 +165,6 @@ local function on_joinplayer(player)
    armor.init(player)
 end
 
-local function on_dieplayer(player)
-   local pos = player:getpos()
-
-   local inv = player:get_inventory()
-
-   for slot_index, slot in ipairs(armor.slots) do
-      local item = inv:get_stack("armor", slot_index)
-
-      local rpos = {
-	 x = pos.x + math.random(-0.2, 0.2),
-	 y = pos.y,
-	 z = pos.z + math.random(-0.2, 0.2)
-      }
-
-      local drop = minetest.add_item(rpos, item)
-
-      if drop then
-	 drop:setvelocity(
-	    {
-	       x = math.random(-0.3, 0.3),
-	       y = 3,
-	       z = math.random(-0.3, 0.3),
-         })
-      end
-
-      item:clear()
-      inv:set_stack("armor_" .. slot, 1, item)
-   end
-end
-
 local function on_globalstep(dtime)
    timer = timer + dtime
 
@@ -210,8 +179,8 @@ local function on_globalstep(dtime)
    end
 end
 
-if enable_drop then
-   minetest.register_on_dieplayer(on_dieplayer)
+if minetest.get_modpath("drop_items_on_die") ~= nil then
+   drop_items_on_die.register_listname("armor")
 end
 
 minetest.register_on_newplayer(on_newplayer)
@@ -245,7 +214,7 @@ crafting.register_craft(
 for mat_index, matdef in ipairs(armor.materials) do
    local mat = matdef[1]
 
-   local armor_def = math.floor(matdef[3] / #armor.slots)
+   local armor_def = math.floor(matdef[4] / #armor.slots)
    --   print("Material " .. mat .. ": " .. armor_def)
 
    for _, slot in ipairs(armor.slots) do
@@ -259,7 +228,7 @@ for mat_index, matdef in ipairs(armor.materials) do
       minetest.register_craftitem(
 	 "armor:" .. slot .. "_" .. mat,
 	 {
-	    description = matdef[4] .. " " .. prettystring,
+	    description = matdef[3] .. " " .. prettystring,
 
 	    inventory_image = "armor_" .. slot .. "_" .. mat .. "_inventory.png",
 	    wield_image = "armor_" .. slot .. "_" .. mat .. "_inventory.png",
