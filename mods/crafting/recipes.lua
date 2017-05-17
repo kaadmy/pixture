@@ -85,7 +85,7 @@ crafting.register_craft(
       output = "default:ingot_steel 2",
       items = {
          "default:lump_coal",
-         "default:ingot_steel 4",
+         "default:ingot_wrought_iron 4",
       }
 })
 

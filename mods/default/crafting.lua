@@ -45,11 +45,29 @@ minetest.register_craft(
       cooktime = 6,
 })
 
+-- Metal smelting
+
 minetest.register_craft(
    {
       type = "cooking",
       output = "default:ingot_wrought_iron",
       recipe = "default:lump_iron",
+      cooktime = 3,
+})
+
+minetest.register_craft(
+   {
+      type = "cooking",
+      output = "default:ingot_tin",
+      recipe = "default:lump_tin",
+      cooktime = 3,
+})
+
+minetest.register_craft(
+   {
+      type = "cooking",
+      output = "default:ingot_copper",
+      recipe = "default:lump_copper",
       cooktime = 3,
 })
 
