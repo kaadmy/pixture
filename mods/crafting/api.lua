@@ -44,6 +44,12 @@ function crafting.register_craft(def)
                    "Tried to register an existing craft " .. itemkey .. ", allowing")
    end
 
+   if not minetest.registered_items[itemstack:get_name()] then
+      minetest.log("warning",
+                   "Trying to register craft " .. itemkey
+                      .. " that has an unknown output item")
+   end
+
    local craftdef = {
       output = itemstack,
       items = def.items or crafting.default_craftdef.items,

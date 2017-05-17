@@ -23,8 +23,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:pick_carbonsteel",
-   "jewels:pick_carbonsteel_digspeed",
+   "default:pick_carbon_steel",
+   "jewels:pick_carbon_steel_digspeed",
    {
       stats = {
 	 digspeed = -0.16,
@@ -50,8 +50,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:pick_carbonsteel",
-   "jewels:pick_carbonsteel_damage",
+   "default:pick_carbon_steel",
+   "jewels:pick_carbon_steel_damage",
    {
       stats = {
 	 fleshy = 3,
@@ -77,8 +77,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:pick_carbonsteel",
-   "jewels:pick_carbonsteel_uses",
+   "default:pick_carbon_steel",
+   "jewels:pick_carbon_steel_uses",
    {
       stats = {
 	 uses = 7,
@@ -106,8 +106,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:shovel_carbonsteel",
-   "jewels:shovel_carbonsteel_digspeed",
+   "default:shovel_carbon_steel",
+   "jewels:shovel_carbon_steel_digspeed",
    {
       stats = {
 	 digspeed = -0.17,
@@ -133,8 +133,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:shovel_carbonsteel",
-   "jewels:shovel_carbonsteel_damage",
+   "default:shovel_carbon_steel",
+   "jewels:shovel_carbon_steel_damage",
    {
       stats = {
 	 fleshy = 3,
@@ -160,8 +160,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:shovel_carbonsteel",
-   "jewels:shovel_carbonsteel_uses",
+   "default:shovel_carbon_steel",
+   "jewels:shovel_carbon_steel_uses",
    {
       stats = {
 	 uses = 7,
@@ -189,8 +189,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:axe_carbonsteel",
-   "jewels:axe_carbonsteel_digspeed",
+   "default:axe_carbon_steel",
+   "jewels:axe_carbon_steel_digspeed",
    {
       stats = {
 	 digspeed = -0.16,
@@ -216,8 +216,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:axe_carbonsteel",
-   "jewels:axe_carbonsteel_damage",
+   "default:axe_carbon_steel",
+   "jewels:axe_carbon_steel_damage",
    {
       stats = {
 	 fleshy = 4,
@@ -243,8 +243,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:axe_carbonsteel",
-   "jewels:axe_carbonsteel_uses",
+   "default:axe_carbon_steel",
+   "jewels:axe_carbon_steel_uses",
    {
       stats = {
 	 uses = 7,
@@ -272,8 +272,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:spear_carbonsteel",
-   "jewels:spear_carbonsteel_digspeed",
+   "default:spear_carbon_steel",
+   "jewels:spear_carbon_steel_digspeed",
    {
       stats = {
 	 digspeed = -0.16,
@@ -299,8 +299,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:spear_carbonsteel",
-   "jewels:spear_carbonsteel_damage",
+   "default:spear_carbon_steel",
+   "jewels:spear_carbon_steel_damage",
    {
       stats = {
 	 fleshy = 7,
@@ -326,8 +326,8 @@ jewels.register_jewel(
    })
 
 jewels.register_jewel(
-   "default:spear_carbonsteel",
-   "jewels:spear_carbonsteel_uses",
+   "default:spear_carbon_steel",
+   "jewels:spear_carbon_steel_uses",
    {
       stats = {
 	 uses = 7,

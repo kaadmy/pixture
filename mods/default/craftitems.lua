@@ -1,6 +1,9 @@
+
 --
 -- Crafting items
 --
+
+-- Organic items
 
 minetest.register_craftitem(
    "default:fiber",
@@ -25,12 +28,19 @@ minetest.register_craftitem(
 })
 
 minetest.register_craftitem(
-   "default:book",
+   "default:pearl",
    {
-      description = "Book",
-      inventory_image = "default_book.png",
-      wield_scale = {x=1,y=1,z=2},
-      stack_max = 1,
+      description = "Pearl",
+      inventory_image = "default_pearl.png",
+})
+
+-- Mineral lumps
+
+minetest.register_craftitem(
+   "default:lump_sulfur",
+   {
+      description = "Sulfur Lump",
+      inventory_image = "default_lump_sulfur.png",
 })
 
 minetest.register_craftitem(
@@ -48,10 +58,40 @@ minetest.register_craftitem(
 })
 
 minetest.register_craftitem(
-   "default:dust_carbonsteel",
+   "default:lump_graphite",
    {
-      description = "Carbon Steel Dust",
-      inventory_image = "default_dust_carbonsteel.png",
+      description = "Graphite Lump",
+      inventory_image = "default_lump_graphite.png",
+})
+
+minetest.register_craftitem(
+   "default:lump_tin",
+   {
+      description = "Tin Lump",
+      inventory_image = "default_lump_tin.png",
+})
+
+minetest.register_craftitem(
+   "default:lump_copper",
+   {
+      description = "Copper Lump",
+      inventory_image = "default_lump_copper.png",
+})
+
+minetest.register_craftitem(
+   "default:lump_bronze",
+   {
+      description = "Bronze Lump",
+      inventory_image = "default_lump_bronze.png",
+})
+
+-- Ingots
+
+minetest.register_craftitem(
+   "default:ingot_wrought_iron",
+   {
+      description = "Wrought Iron Ingot",
+      inventory_image = "default_ingot_wrought_iron.png",
 })
 
 minetest.register_craftitem(
@@ -62,32 +102,35 @@ minetest.register_craftitem(
 })
 
 minetest.register_craftitem(
-   "default:ingot_carbonsteel",
+   "default:ingot_carbon_steel",
    {
       description = "Carbon Steel Ingot",
-      inventory_image = "default_ingot_carbonsteel.png",
+      inventory_image = "default_ingot_carbon_steel.png",
 })
 
 minetest.register_craftitem(
-   "default:lump_sugar",
+   "default:ingot_bronze",
    {
-      description = "Sugar Lump",
-      inventory_image = "default_lump_sugar.png",
-      on_use = minetest.item_eat({hp = 1, sat = 10})
+      description = "Bronze Ingot",
+      inventory_image = "default_ingot_bronze.png",
 })
 
-minetest.register_craftitem(
-   "default:pearl",
-   {
-      description = "Pearl",
-      inventory_image = "default_pearl.png",
-})
+-- Crafted items
 
 minetest.register_craftitem(
    "default:flint",
    {
       description = "Flint Shard",
       inventory_image = "default_flint.png",
+})
+
+minetest.register_craftitem(
+   "default:book",
+   {
+      description = "Book",
+      inventory_image = "default_book.png",
+      wield_scale = {x=1,y=1,z=2},
+      stack_max = 1,
 })
 
 minetest.register_craftitem(

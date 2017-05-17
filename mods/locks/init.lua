@@ -92,8 +92,14 @@ minetest.register_node(
    "locks:chest",
    {
       description = "Locked Chest",
-      tiles ={"default_chest_top.png", "default_chest_top.png", "default_chest_sides.png",
-	      "default_chest_sides.png", "default_chest_sides.png", "locks_chest_front.png"},
+      tiles ={
+         "default_chest_top.png",
+         "default_chest_top.png",
+         "default_chest_sides.png",
+         "default_chest_sides.png",
+         "default_chest_sides.png",
+         "locks_chest_front.png"
+      },
       paramtype2 = "facedir",
       groups = {snappy = 2, choppy = 2, oddly_breakable_by_hand = 2},
       is_ground_content = false,
@@ -168,10 +174,12 @@ minetest.register_node(
       write_name = function(pos, text)
          local meta = minetest.get_meta(pos)
 
-         if text ~= "" then
-            meta:set_string("infotext", text .. " (Owned by " .. meta:get_string("lock_owner") .. ")")
+         if text == "" then
+            meta:set_string("infotext", "Locked Chest (Owned by "
+                               .. meta:get_string("lock_owner") .. ")")
          else
-            meta:set_string("infotext", "Locked Chest (Owned by " .. meta:get_string("lock_owner") .. ")")
+            meta:set_string("infotext", text .. " (Owned by "
+                               .. meta:get_string("lock_owner") .. ")")
          end
       end,
       on_blast = function() end,
@@ -183,7 +191,7 @@ crafting.register_craft(
    {
       output = "locks:pick",
       items = {
-         "default:ingot_carbonsteel 2",
+         "default:ingot_steel 2",
          "default:stick 3",
       },
 })

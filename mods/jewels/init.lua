@@ -59,7 +59,16 @@ function jewels.register_jewel(toolname, new_toolname, def)
 
    table.insert(jewels.registered_jewels[toolname], data)
 
-   local tooldef = minetest.deserialize(minetest.serialize(minetest.registered_tools[toolname]))
+   local tooldef = minetest.deserialize(
+      minetest.serialize(minetest.registered_tools[toolname]))
+
+   if not tooldef then
+      minetest.log("warning",
+                   "Trying to register jewel " .. new_toolname
+                      .. " that has an unknown output item " .. toolname)
+
+      return
+   end
 
    local new_tool_invimage = ""
    if tooldef.inventory_image then
@@ -90,7 +99,8 @@ function jewels.register_jewel(toolname, new_toolname, def)
 
    if new_tooldef.tool_capabilities then
       if data.stats.maxdrop and new_tooldef.tool_capabilities.max_drop_level then
-	 new_tooldef.tool_capabilities.max_drop_level = new_tooldef.tool_capabilities.max_drop_level + data.stats.maxdrop
+	 new_tooldef.tool_capabilities.max_drop_level =
+            new_tooldef.tool_capabilities.max_drop_level + data.stats.maxdrop
 	 desc = desc .. "\nDrop level: " .. plus_power(data.stats.maxdrop)
       end
 
@@ -119,8 +129,10 @@ function jewels.register_jewel(toolname, new_toolname, def)
 	 desc = desc .. "\nDig level: " .. plus_power(data.stats.maxlevel)
       end
 
-      if data.stats.fleshy and new_tooldef.tool_capabilities.damage_groups and new_tooldef.tool_capabilities.damage_groups.fleshy then
-	 new_tooldef.tool_capabilities.damage_groups.fleshy = new_tooldef.tool_capabilities.damage_groups.fleshy + data.stats.fleshy
+      if data.stats.fleshy and new_tooldef.tool_capabilities.damage_groups
+      and new_tooldef.tool_capabilities.damage_groups.fleshy then
+	 new_tooldef.tool_capabilities.damage_groups.fleshy =
+            new_tooldef.tool_capabilities.damage_groups.fleshy + data.stats.fleshy
 	 desc = desc .. "\nDamage: " .. plus_power(data.stats.fleshy)
       end
    end
@@ -128,16 +140,6 @@ function jewels.register_jewel(toolname, new_toolname, def)
    new_tooldef.description = desc
 
    minetest.register_tool(new_toolname, new_tooldef)
-end
-
-function jewels.can_jewel(toolname)
-   for name, _ in pairs(jewels.registered_jewels) do
-      if name == toolname then
-	 return true
-      end
-   end
-
-   return false
 end
 
 function jewels.get_jeweled(toolname)
@@ -148,6 +150,8 @@ function jewels.get_jeweled(toolname)
    end
 end
 
+-- Items
+
 minetest.register_craftitem(
    "jewels:jewel",
    {
@@ -155,6 +159,8 @@ minetest.register_craftitem(
       inventory_image = "jewels_jewel.png",
       stack_max = 10
 })
+
+-- Nodes
 
 minetest.register_node(
    "jewels:bench",
@@ -203,26 +209,21 @@ minetest.register_node(
       end,
 })
 
-crafting.register_craft(
-   {
-      output = "jewels:bench",
-      items = {
-         "group:planks 5",
-         "default:ingot_carbonsteel 2",
-         "jewels:jewel",
-      }
-})
-
 minetest.register_node(
    "jewels:jewel_ore",
    {
       description = "Jewel Ore",
-      groups = {cracky = 1, stone = 1, not_in_craftingguide = 1},
-      tiles = {"default_tree_birch_top.png", "default_tree_birch_top.png", "default_tree_birch.png^jewels_ore.png"},
+      tiles = {
+         "default_tree_birch_top.png",
+         "default_tree_birch_top.png",
+         "default_tree_birch.png^jewels_ore.png"
+      },
       drop = "jewels:jewel",
       groups = {snappy=1, choppy=1, tree=1},
       sounds = default.node_sound_wood_defaults(),
 })
+
+-- Ore
 
 minetest.register_ore(
    {
@@ -234,6 +235,16 @@ minetest.register_ore(
       clust_size     = 6,
       y_min     = 0,
       y_max     = 31000,
+})
+
+crafting.register_craft(
+   {
+      output = "jewels:bench",
+      items = {
+         "group:planks 5",
+         "default:ingot_carbon_steel 2",
+         "jewels:jewel",
+      }
 })
 
 -- Achievements

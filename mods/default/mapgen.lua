@@ -1,8 +1,10 @@
--- minetest/default/mapgen.lua
 
 --
--- Aliases for map generator outputs(Might not be needed with v7, but JIC)
+-- Mapgen
 --
+
+-- Aliases for map generator outputs
+-- Might not be needed with v7, but just in case
 
 minetest.register_alias("mapgen_stone", "default:stone")
 minetest.register_alias("mapgen_tree", "default:tree")
@@ -25,9 +27,7 @@ minetest.register_alias("mapgen_mese", "default:block_steel")
 minetest.register_alias("mapgen_stair_cobble", "default:reinforced_frame")
 minetest.register_alias("mapgen_lava_source", "default:water_source")
 
---
 -- Biome setup
---
 
 minetest.clear_registered_biomes()
 
@@ -48,7 +48,7 @@ minetest.register_biome(
 
       heat_point = 35,
       humidity_point = 55,
-   })
+})
 
 minetest.register_biome(
    {
@@ -65,7 +65,7 @@ minetest.register_biome(
 
       heat_point = 30,
       humidity_point = 42,
-   })
+})
 
 minetest.register_biome(
    {
@@ -82,7 +82,7 @@ minetest.register_biome(
 
       heat_point = 33,
       humidity_point = 40,
-   })
+})
 
 minetest.register_biome(
    {
@@ -99,7 +99,7 @@ minetest.register_biome(
 
       heat_point = 35,
       humidity_point = 40,
-   })
+})
 
 minetest.register_biome(
    {
@@ -116,7 +116,7 @@ minetest.register_biome(
 
       heat_point = 40,
       humidity_point = 38,
-   })
+})
 
 minetest.register_biome(
    {
@@ -133,7 +133,7 @@ minetest.register_biome(
 
       heat_point = 46,
       humidity_point = 35,
-   })
+})
 
 minetest.register_biome(
    {
@@ -150,7 +150,7 @@ minetest.register_biome(
 
       heat_point = 50,
       humidity_point = 33,
-   })
+})
 
 minetest.register_biome(
    {
@@ -167,7 +167,7 @@ minetest.register_biome(
 
       heat_point = 50,
       humidity_point = 33,
-   })
+})
 
 minetest.register_biome(
    {
@@ -184,7 +184,7 @@ minetest.register_biome(
 
       heat_point = 60,
       humidity_point = 30,
-   })
+})
 
 minetest.register_biome(
    {
@@ -201,7 +201,7 @@ minetest.register_biome(
 
       heat_point = 60,
       humidity_point = 25,
-   })
+})
 
 minetest.register_biome(
    {
@@ -218,7 +218,7 @@ minetest.register_biome(
 
       heat_point = 75,
       humidity_point = 20,
-   })
+})
 
 minetest.register_biome(
    {
@@ -235,7 +235,7 @@ minetest.register_biome(
 
       heat_point = 80,
       humidity_point = 20,
-   })
+})
 
 -- Oceans
 
@@ -254,7 +254,7 @@ minetest.register_biome(
 
       heat_point = 50,
       humidity_point = 35,
-   })
+})
 
 minetest.register_biome(
    {
@@ -271,7 +271,7 @@ minetest.register_biome(
 
       heat_point = 59,
       humidity_point = 31,
-   })
+})
 
 minetest.register_biome(
    {
@@ -288,13 +288,9 @@ minetest.register_biome(
 
       heat_point = 60,
       humidity_point = 30,
-   })
+})
 
---
--- Decorations
---
-
--- Trees
+-- Tree decorations
 
 minetest.register_decoration(
    {
@@ -304,11 +300,16 @@ minetest.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Forest"},
       flags = "place_center_x, place_center_z",
-      replacements = {["default:leaves"] = "default:leaves_birch", ["default:tree"] = "default:tree_birch", ["default:apple"] = "air"},
-      schematic = minetest.get_modpath("default").."/schematics/default_squaretree.mts",
+      replacements = {
+         ["default:leaves"] = "default:leaves_birch",
+         ["default:tree"] = "default:tree_birch",
+         ["default:apple"] = "air"
+      },
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_squaretree.mts",
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -318,10 +319,11 @@ minetest.register_decoration(
       fill_ratio = 0.007,
       biomes = {"Orchard"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_tree.mts",
       y_min = 10,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -331,11 +333,16 @@ minetest.register_decoration(
       fill_ratio = 0.009,
       biomes = {"Forest", "Deep Forest"},
       flags = "place_center_x, place_center_z",
-      replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
-      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      replacements = {
+         ["default:leaves"] = "default:leaves_oak",
+         ["default:tree"] = "default:tree_oak",
+         ["default:apple"] = "air",
+      },
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_tree.mts",
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -345,10 +352,11 @@ minetest.register_decoration(
       fill_ratio = 0.008,
       biomes = {"Forest"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_megatree.mts",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_megatree.mts",
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -358,10 +366,11 @@ minetest.register_decoration(
       fill_ratio = 0.023,
       biomes = {"Deep Forest"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_gigatree.mts",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_gigatree.mts",
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -371,11 +380,14 @@ minetest.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Wilderness"},
       flags = "place_center_x, place_center_z",
-      replacements = {["default:apple"] = "air"},
-      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      replacements = {
+         ["default:apple"] = "air",
+      },
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_tree.mts",
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -385,11 +397,16 @@ minetest.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Wilderness"},
       flags = "place_center_x, place_center_z",
-      replacements = {["default:leaves"] = "default:leaves_oak", ["default:tree"] = "default:tree_oak", ["default:apple"] = "air"},
-      schematic = minetest.get_modpath("default").."/schematics/default_tree.mts",
+      replacements = {
+         ["default:leaves"] = "default:leaves_oak",
+         ["default:tree"] = "default:tree_oak",
+         ["default:apple"] = "air",
+      },
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_tree.mts",
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -399,12 +416,13 @@ minetest.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Grove"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_talltree.mts",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_talltree.mts",
       y_min = 0,
       y_max = 32000,
-   })
+})
 
--- Papyrus
+-- Papyrus decorations
 
 minetest.register_decoration(
    {
@@ -419,9 +437,9 @@ minetest.register_decoration(
       height = 2,
       y_max = 3,
       y_min = 0,
-   })
+})
 
--- Flowers
+-- Flower decorations
 
 minetest.register_decoration(
    {
@@ -433,9 +451,9 @@ minetest.register_decoration(
       decoration = {"default:flower"},
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
--- Grasses
+-- Grass decorations
 
 minetest.register_decoration(
    {
@@ -447,7 +465,7 @@ minetest.register_decoration(
       decoration = {"default:grass"},
       y_min = 10,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -459,7 +477,7 @@ minetest.register_decoration(
       decoration = {"default:swamp_grass"},
       y_min = 2,
       y_max = 40,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -471,7 +489,7 @@ minetest.register_decoration(
       decoration = {"default:dry_grass"},
       y_min = 10,
       y_max = 500,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -483,7 +501,7 @@ minetest.register_decoration(
       decoration = {"default:grass"},
       y_min = 0,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -495,7 +513,7 @@ minetest.register_decoration(
       decoration = {"default:tall_grass"},
       y_min = 0,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -507,7 +525,7 @@ minetest.register_decoration(
       decoration = {"default:tall_grass"},
       y_min = 0,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -519,7 +537,7 @@ minetest.register_decoration(
       decoration = {"default:grass"},
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
 minetest.register_decoration(
    {
@@ -531,9 +549,9 @@ minetest.register_decoration(
       decoration = {"default:tall_grass"},
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
--- Thistle
+-- Thistle decorations
 
 minetest.register_decoration(
    {
@@ -546,9 +564,9 @@ minetest.register_decoration(
       height = 2,
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
--- Ferns
+-- Fern decorations
 
 minetest.register_decoration(
    {
@@ -560,49 +578,9 @@ minetest.register_decoration(
       decoration = {"default:fern"},
       y_min = -32000,
       y_max = 32000,
-   })
+})
 
--- Farming
-
-if minetest.get_modpath("farming") ~= nil then
-   minetest.register_decoration(
-      {
-	 deco_type = "simple",
-	 place_on = "default:dirt_with_grass",
-	 sidelen = 16,
-	 fill_ratio = 0.008,
-	 biomes = {"Wilderness"},
-	 decoration = {"farming:wheat_4"},
-	 y_min = 0,
-	 y_max = 32000,
-      })
-
-   minetest.register_decoration(
-      {
-	 deco_type = "simple",
-	 place_on = "default:dirt_with_grass",
-	 sidelen = 16,
-	 fill_ratio = 0.006,
-	 biomes = {"Grassland", "Savanna"},
-	 decoration = {"farming:wheat_4"},
-	 y_min = 0,
-	 y_max = 32000,
-      })
-
-   minetest.register_decoration(
-      {
-	 deco_type = "simple",
-	 place_on = "default:sand",
-	 sidelen = 16,
-	 fill_ratio = 0.004,
-	 biomes = {"Desert"},
-	 decoration = {"farming:cotton_4"},
-	 y_min = 0,
-	 y_max = 32000,
-      })
-end
-
--- Cactus
+-- Cactus decorations
 
 minetest.register_decoration(
    {
@@ -612,13 +590,13 @@ minetest.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Desert"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_cactus.mts",
+      schematic = minetest.get_modpath("default") .. "/schematics/default_cactus.mts",
       y_min = 10,
       y_max = 500,
       rotation = "random",
-   })
+})
 
--- Shrubs
+-- Shrub decorations
 
 minetest.register_decoration(
    {
@@ -629,11 +607,11 @@ minetest.register_decoration(
       biomes = {"Savanna", "Chaparral"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:dry_leaves"},
-      schematic = minetest.get_modpath("default").."/schematics/default_shrub.mts",
+      schematic = minetest.get_modpath("default") .. "/schematics/default_shrub.mts",
       y_min = 3,
       y_max = 32000,
       rotation = "0",
-   })
+})
 
 minetest.register_decoration(
    {
@@ -644,11 +622,11 @@ minetest.register_decoration(
       biomes = {"Chaparral"},
       flags = "place_center_x, place_center_z",
       replacements = {["default:leaves"] = "default:dry_leaves"},
-      schematic = minetest.get_modpath("default").."/schematics/default_bush.mts",
+      schematic = minetest.get_modpath("default") .. "/schematics/default_bush.mts",
       y_min = -32000,
       y_max = 32000,
       rotation = "0",
-   })
+})
 
 minetest.register_decoration(
    {
@@ -658,13 +636,13 @@ minetest.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Wilderness", "Grove"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_bush.mts",
+      schematic = minetest.get_modpath("default") .. "/schematics/default_bush.mts",
       y_min = 3,
       y_max = 32000,
       rotation = "0",
-   })
+})
 
--- Rocks
+-- Rock decorations
 
 minetest.register_decoration(
    {
@@ -674,11 +652,12 @@ minetest.register_decoration(
       fill_ratio = 0.006,
       biomes = {"Wasteland"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_small_rock.mts",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_small_rock.mts",
       y_min = -32000,
       y_max = 32000,
       rotation = "random",
-   })
+})
 
 minetest.register_decoration(
    {
@@ -688,13 +667,14 @@ minetest.register_decoration(
       fill_ratio = 0.004,
       biomes = {"Wasteland"},
       flags = "place_center_x, place_center_z",
-      schematic = minetest.get_modpath("default").."/schematics/default_large_rock.mts",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/default_large_rock.mts",
       y_min = -32000,
       y_max = 32000,
       rotation = "random",
-   })
+})
 
--- Clams
+-- Clam decorations
 
 minetest.register_decoration(
    {
@@ -706,14 +686,10 @@ minetest.register_decoration(
       decoration = {"default:clam"},
       y_min = 0,
       y_max = 1,
-   })
+})
 
 
---
--- Ore generation
---
-
--- Coal
+-- Coal ore
 
 minetest.register_ore(
    {
@@ -725,7 +701,7 @@ minetest.register_ore(
       clust_size     = 4,
       y_min          = -31000,
       y_max          = 32,
-   })
+})
 
 minetest.register_ore(
    {
@@ -737,7 +713,7 @@ minetest.register_ore(
       clust_size     = 6,
       y_min          = -31000,
       y_max          = -32,
-   })
+})
 
 minetest.register_ore(
    {
@@ -749,9 +725,9 @@ minetest.register_ore(
       clust_size     = 10,
       y_min          = -31000,
       y_max          = -64,
-   })
+})
 
--- Iron
+-- Iron ore
 
 minetest.register_ore(
    {
@@ -763,7 +739,7 @@ minetest.register_ore(
       clust_size     = 4,
       y_min          = -31000,
       y_max          = 0,
-   })
+})
 
 minetest.register_ore(
    {
@@ -775,21 +751,7 @@ minetest.register_ore(
       clust_size     = 10,
       y_min          = -31000,
       y_max          = -32,
-   })
-
--- Steel blocks
-
-minetest.register_ore(
-   {
-      ore_type       = "blob",
-      ore            = "default:block_steel",
-      wherein        = "default:stone",
-      clust_scarcity = 12*12*12,
-      clust_num_ores = 10,
-      clust_size     = 10,
-      y_min          = -31000,
-      y_max          = -128,
-   })
+})
 
 -- Water
 
@@ -799,12 +761,12 @@ minetest.register_ore( -- Springs
       ore            = "default:water_source",
       wherein        = "default:dirt_with_grass",
       biomes         = {"Grassland"},
-      clust_scarcity = 18*18*18,
+      clust_scarcity = 26*26*26,
       clust_num_ores = 1,
       clust_size     = 1,
       y_min          = 20,
       y_max          = 31000,
-   })
+})
 
 minetest.register_ore( -- Pools
    {
@@ -812,12 +774,12 @@ minetest.register_ore( -- Pools
       ore            = "default:water_source",
       wherein        = "default:dirt_with_grass",
       biomes         = {"Wilderness"},
-      clust_scarcity = 30*30*30,
+      clust_scarcity = 32*32*32,
       clust_num_ores = 20,
       clust_size     = 6,
       y_min          = 10,
-      y_max          = 40,
-   })
+      y_max          = 30,
+})
 
 minetest.register_ore( -- Swamp
    {
@@ -825,12 +787,12 @@ minetest.register_ore( -- Swamp
       ore            = "default:swamp_water_source",
       wherein        = {"default:dirt_with_swamp_grass", "default:swamp_dirt"},
       biomes         = {"Swamp"},
-      clust_scarcity = 10*10*10,
+      clust_scarcity = 14*14*14,
       clust_num_ores = 10,
       clust_size     = 4,
       y_min          = -31000,
       y_max          = 31000,
-   })
+})
 
 minetest.register_ore( -- Marsh
    {
@@ -838,11 +800,11 @@ minetest.register_ore( -- Marsh
       ore            = "default:swamp_water_source",
       wherein        = {"default:dirt_with_grass", "default:dirt"},
       biomes         = {"Marsh"},
-      clust_scarcity = 6*6*6,
+      clust_scarcity = 8*8*8,
       clust_num_ores = 10,
       clust_size     = 6,
       y_min          = -31000,
       y_max          = 31000,
-   })
+})
 
 default.log("mapgen", "loaded")

@@ -47,7 +47,7 @@ for _, npc_type in pairs(npc_types) do
 	 water_damage = 0,
 	 lava_damage = 2,
 	 light_damage = 0,
-	 follow = "gold:gold",
+	 follow = "gold:ingot_gold",
 	 view_range = 15,
 	 owner = "",
 	 order = "stand",

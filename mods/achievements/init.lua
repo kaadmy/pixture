@@ -307,9 +307,9 @@ achievements.register_achievement(
    "hardened_miner",
    {
       title = "Hardened Miner",
-      description = "Craft 3 carbon steel pickaxes.",
+      description = "Craft 3 Carbon Steel pickaxes.",
       times = 3,
-      craftitem = "default:pick_carbonsteel",
+      craftitem = "default:pick_carbon_steel",
 })
 
 -- Dirt/soil

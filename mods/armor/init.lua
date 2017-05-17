@@ -8,11 +8,11 @@ armor = {}
 armor.player_skin = "character.png"
 
 armor.materials = {
-   -- material     craftitem                    %   description
-   {"wood",        "group:planks",              15, "Wooden"},
-   {"steel",       "default:ingot_steel",       30, "Steel"},
-   {"chainmail",   "armor:chainmail_sheet",     45, "Chainmail"},
-   {"carbonsteel", "default:ingot_carbonsteel", 60, "Carbonsteel"},
+   -- material      craftitem                     %   description
+   {"wood",         "group:planks",               15, "Wooden"},
+   {"steel",        "default:ingot_steel",        30, "Steel"},
+   {"chainmail",    "armor:chainmail_sheet",      45, "Chainmail"},
+   {"carbon_steel", "default:ingot_carbon_steel", 60, "Carbon Steel"},
 }
 
 -- Usable slots
@@ -242,24 +242,24 @@ crafting.register_craft(
 
 -- Armor pieces
 
-for mat_index, _ in ipairs(armor.materials) do
-   local def = armor.materials[mat_index]
-   local mat = def[1]
+for mat_index, matdef in ipairs(armor.materials) do
+   local mat = matdef[1]
 
-   local armor_def = math.floor(def[3] / #armor.slots)
+   local armor_def = math.floor(matdef[3] / #armor.slots)
    --   print("Material " .. mat .. ": " .. armor_def)
 
    for _, slot in ipairs(armor.slots) do
-      local slot_pretty = slot:gsub(
+      local prettystring = slot:gsub(
          "(%a)([%w_']*)",
          function(first, rest)
-            return first:upper() .. rest:lower()
+            return first:upper()..rest:lower()
       end)
+
 
       minetest.register_craftitem(
 	 "armor:" .. slot .. "_" .. mat,
 	 {
-	    description = def[4] .. " " .. slot_pretty,
+	    description = matdef[4] .. " " .. prettystring,
 
 	    inventory_image = "armor_" .. slot .. "_" .. mat .. "_inventory.png",
 	    wield_image = "armor_" .. slot .. "_" .. mat .. "_inventory.png",
@@ -278,7 +278,7 @@ for mat_index, _ in ipairs(armor.materials) do
       {
 	 output = "armor:helmet_" .. mat,
 	 items = {
-            def[2] .. " 5",
+            matdef[2] .. " 5",
 	 }
    })
 
@@ -286,7 +286,7 @@ for mat_index, _ in ipairs(armor.materials) do
       {
 	 output = "armor:chestplate_" .. mat,
 	 items = {
-            def[2] .. " 8",
+            matdef[2] .. " 8",
 	 }
    })
 
@@ -294,7 +294,7 @@ for mat_index, _ in ipairs(armor.materials) do
       {
 	 output = "armor:boots_" .. mat,
 	 items = {
-            def[2] .. " 6",
+            matdef[2] .. " 6",
 	 }
    })
 end

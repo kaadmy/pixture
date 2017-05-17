@@ -62,9 +62,9 @@ if minetest.get_modpath("village") ~= nil then
       goodies.types["forge"]["jewels:jewel"] = 30
    end
    if minetest.get_modpath("gold") ~= nil then
-      goodies.types["house"]["gold:gold"] = 12
-      goodies.types["tavern"]["gold:gold"] = 10
-      goodies.types["forge"]["gold:gold"] = 8
+      goodies.types["house"]["gold:ingot_gold"] = 12
+      goodies.types["tavern"]["gold:ingot_gold"] = 10
+      goodies.types["forge"]["gold:ingot_gold"] = 8
    end
 end
 
