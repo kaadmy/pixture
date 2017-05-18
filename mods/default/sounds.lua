@@ -104,3 +104,11 @@ function default.node_sound_snow_defaults(table)
    default.node_sound_defaults(table)
    return table
 end
+
+function default.node_sound_liquid_defaults(table)
+   table = table or {}
+   table.footstep = table.footstep or
+      {name="default_liquid_footstep", gain=1.0}
+   default.node_sound_defaults(table)
+   return table
+end

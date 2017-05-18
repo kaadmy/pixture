@@ -941,6 +941,7 @@ minetest.register_node(
       liquid_viscosity = default.WATER_VISC,
       post_effect_color = {a = 90, r = 40, g = 40, b = 100},
       groups = {water = 1, flowing_water = 1, liquid = 1},
+      sounds = default.node_sound_liquid_defaults(),
       is_ground_content = false,
 })
 
@@ -970,6 +971,7 @@ minetest.register_node(
       liquid_viscosity = default.WATER_VISC,
       post_effect_color = {a=90, r=40, g=40, b=100},
       groups = {water=1, liquid=1},
+      sounds = default.node_sound_liquid_defaults(),
       is_ground_content = false,
 })
 
@@ -1007,6 +1009,7 @@ minetest.register_node(
       liquid_range = 1,
       post_effect_color = {a=40, r=40, g=70, b=100},
       groups = {water=1, flowing_water = 1, river_water = 1, liquid=1},
+      sounds = default.node_sound_liquid_defaults(),
       is_ground_content = false,
 })
 
@@ -1038,6 +1041,7 @@ minetest.register_node(
       liquid_range = 1,
       post_effect_color = {a=40, r=40, g=70, b=100},
       groups = {water = 1, river_water = 1, liquid = 1},
+      sounds = default.node_sound_liquid_defaults(),
       is_ground_content = false,
 })
 
@@ -1075,6 +1079,7 @@ minetest.register_node(
       liquid_range = 2,
       post_effect_color = {a=220, r=50, g=40, b=70},
       groups = {water=1, flowing_water = 1, swamp_water = 1, liquid=1},
+      sounds = default.node_sound_liquid_defaults(),
       is_ground_content = false,
 })
 
@@ -1106,6 +1111,7 @@ minetest.register_node(
       liquid_range = 2,
       post_effect_color = {a=220, r=50, g=40, b=70},
       groups = {water = 1, swamp_water = 1, liquid = 1},
+      sounds = default.node_sound_liquid_defaults(),
       is_ground_content = false,
 })
 
