@@ -197,7 +197,7 @@ achievements.register_achievement(
       title = "Enlightened",
       description = "Place 9 lumien crystals.",
       times = 9,
-      plcenode = "lumien:lumien_crystal_off",
+      placenode = "lumien:lumien_crystal_off",
 })
 
 default.log("mod:lumien", "loaded")

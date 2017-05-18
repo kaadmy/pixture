@@ -156,7 +156,7 @@ achievements.register_achievement(
       title = "True Navigator",
       description = "Craft a compass",
       times = 1,
-      craftitem = "nav:compass",
+      craftitem = "nav:compass_0",
 })
 
 default.log("compass", "loaded")
