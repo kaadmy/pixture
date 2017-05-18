@@ -328,7 +328,7 @@ achievements.register_achievement(
       title = "Gold Rush",
       description = "Dig 60 gold ore.",
       times = 60,
-      dignode = "gold:ore",
+      dignode = "gold:stone_with_gold",
 })
 
 default.log("mod:gold", "loaded")
