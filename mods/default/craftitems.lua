@@ -111,6 +111,20 @@ minetest.register_craftitem(
 })
 
 minetest.register_craftitem(
+   "default:ingot_copper",
+   {
+      description = "Copper Ingot",
+      inventory_image = "default_ingot_copper.png",
+})
+
+minetest.register_craftitem(
+   "default:ingot_tin",
+   {
+      description = "Tin Ingot",
+      inventory_image = "default_ingot_tin.png",
+})
+
+minetest.register_craftitem(
    "default:ingot_bronze",
    {
       description = "Bronze Ingot",

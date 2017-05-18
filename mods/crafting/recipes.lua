@@ -100,10 +100,10 @@ crafting.register_craft(
 
 crafting.register_craft(
    {
-      output = "default:lump_bronze 2",
+      output = "default:ingot_bronze 2",
       items = {
-         "default:lump_tin 2",
-         "default:lump_copper 5",
+         "default:ingot_tin 2",
+         "default:ingot_copper 5",
       }
 })
 
