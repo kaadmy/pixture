@@ -683,7 +683,7 @@ minetest.register_tool(
 minetest.register_tool(
    "default:spear_bronze",
    {
-      description = "Wrought Iron Spear",
+      description = "Bronze Spear",
       inventory_image = "default_spear_bronze.png",
       tool_capabilities = {
 	 full_punch_interval = 1.0,
