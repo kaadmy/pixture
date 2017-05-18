@@ -1,3 +1,4 @@
+
 --
 -- Partial blocks mod
 -- By Kaadmy, for Pixture
@@ -5,7 +6,7 @@
 
 partialblocks = {}
 
-function partialblocks.register_material(name, desc, node, can_burn)
+function partialblocks.register_material(name, desc, node, is_fuel)
    local nodedef = minetest.registered_nodes[node]
 
    if nodedef == nil then
@@ -17,39 +18,47 @@ function partialblocks.register_material(name, desc, node, can_burn)
    -- Slab
 
    minetest.register_node(
-      "partialblocks:" .. name .. "_slab",
+      "partialblocks:slab_" .. name,
       {
 	 tiles = nodedef.tiles,
 	 groups = nodedef.groups,
 	 sounds = nodedef.sounds,
 
-	 description = desc .. " slab",
+	 description = desc .. " Slab",
 	 drawtype = "nodebox",
 
 	 node_box = {
-	    type = "wallmounted",
-	    wall_top = {-0.5, 0, -0.5, 0.5, 0.5, 0.5},
-	    wall_side = {-0.5, -0.5, -0.5, 0, 0.5, 0.5},
-	    wall_bottom = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
+	    type = "fixed",
+	    fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
 	 },
 
 	 paramtype = "light",
-	 paramtype2 = "wallmounted",
+
+         on_rightclick = function(pos, _, _, itemstack, _)
+            if minetest.get_node(pos).name == itemstack:get_name()
+            and itemstack:get_count() >= 1 then
+               minetest.set_node(pos, {name = node})
+
+               itemstack:take_item()
+
+               return itemstack
+            end
+         end,
    })
 
    crafting.register_craft( -- Craft to
       {
-	 output = "partialblocks:" .. name .. "_slab 3",
+	 output = "partialblocks:slab_" .. name,
 	 items = {
-	    node .. " 3",
+	    node,
 	 },
    })
 
-   if can_burn then
+   if is_fuel then
       minetest.register_craft( -- Fuel
 	 {
 	    type = "fuel",
-	    recipe = "partialblocks:" .. name .. "_slab",
+	    recipe = "partialblocks:slab_" .. name,
 	    burntime = 7,
       })
    end
@@ -57,13 +66,13 @@ function partialblocks.register_material(name, desc, node, can_burn)
    -- Stair
 
    minetest.register_node(
-      "partialblocks:" .. name .. "_stair",
+      "partialblocks:stair_" .. name,
       {
 	 tiles = nodedef.tiles,
 	 groups = nodedef.groups,
 	 sounds = nodedef.sounds,
 
-	 description = desc .. " stair",
+	 description = desc .. " Stair",
 	 drawtype = "nodebox",
 
 	 node_box = {
@@ -80,17 +89,17 @@ function partialblocks.register_material(name, desc, node, can_burn)
 
    crafting.register_craft( -- Craft to
       {
-	 output = "partialblocks:" .. name .. "_stair 6",
+	 output = "partialblocks:stair_" .. name,
 	 items = {
-            node .. " 6",
+            node,
 	 },
    })
 
-   if can_burn then
+   if is_fuel then
       minetest.register_craft( -- Fuel
 	 {
 	    type = "fuel",
-	    recipe = "partialblocks:" .. name .. "_stair",
+	    recipe = "partialblocks:stair_" .. name,
 	    burntime = 7,
       })
    end
