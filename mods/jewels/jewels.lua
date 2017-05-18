@@ -2,337 +2,163 @@
 -- Jeweled tool defs
 --
 
--- Pickaxes
+--  Automatic jeweling on specific tools
 
-jewels.register_jewel(
-   "default:pick_stone",
-   "jewels:pick_stone_digspeed",
-   {
-      stats = {
-	 digspeed = -0.1,
-      }
-   })
+local tool_types = {
+   pick = {
+      steel = {
+         digspeed = {
+            digspeed = -0.1,
+         },
+         damage = {
+            damage = 1,
+         },
+         uses = {
+            uses = 3,
+         },
+      },
+      carbon_steel = {
+         digspeed = {
+            digspeed = -0.13,
+         },
+         damage = {
+            damage = 2,
+         },
+         uses = {
+            uses = 5,
+         },
+      },
+      bronze = {
+         digspeed = {
+            digspeed = -0.14,
+         },
+         damage = {
+            damage = 3,
+         },
+         uses = {
+            uses = 6,
+         },
+      },
+   },
+   shovel = {
+      steel = {
+         digspeed = {
+            digspeed = -0.1,
+         },
+         damage = {
+            damage = 1,
+         },
+         uses = {
+            uses = 3,
+         },
+      },
+      carbon_steel = {
+         digspeed = {
+            digspeed = -0.13,
+         },
+         damage = {
+            damage = 2,
+         },
+         uses = {
+            uses = 5,
+         },
+      },
+      bronze = {
+         digspeed = {
+            digspeed = -0.14,
+         },
+         damage = {
+            damage = 3,
+         },
+         uses = {
+            uses = 6,
+         },
+      },
+   },
+   axe = {
+      steel = {
+         digspeed = {
+            digspeed = -0.1,
+         },
+         damage = {
+            damage = 2,
+         },
+         uses = {
+            uses = 3,
+         },
+      },
+      carbon_steel = {
+         digspeed = {
+            digspeed = -0.13,
+         },
+         damage = {
+            damage = 3,
+         },
+         uses = {
+            uses = 5,
+         },
+      },
+      bronze = {
+         digspeed = {
+            digspeed = -0.14,
+         },
+         damage = {
+            damage = 4,
+         },
+         uses = {
+            uses = 6,
+         },
+      },
+   },
+   spear = {
+      steel = {
+         reach = {
+            reach = 1,
+         },
+         damage = {
+            damage = 3,
+         },
+         uses = {
+            uses = 3,
+         },
+      },
+      carbon_steel = {
+         reach = {
+            reach = 2,
+         },
+         damage = {
+            damage = 4,
+         },
+         uses = {
+            uses = 5,
+         },
+      },
+      bronze = {
+         reach = {
+            reach = 2,
+         },
+         damage = {
+            damage = 5,
+         },
+         uses = {
+            uses = 6,
+         },
+      },
+   },
+}
 
-jewels.register_jewel(
-   "default:pick_steel",
-   "jewels:pick_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.13,
-      }
-   })
-
-jewels.register_jewel(
-   "default:pick_carbon_steel",
-   "jewels:pick_carbon_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.16,
-      }
-   })
-
-jewels.register_jewel(
-   "default:pick_stone",
-   "jewels:pick_stone_damage",
-   {
-      stats = {
-	 fleshy = 1,
-      }
-   })
-
-jewels.register_jewel(
-   "default:pick_steel",
-   "jewels:pick_steel_damage",
-   {
-      stats = {
-	 fleshy = 2,
-      }
-   })
-
-jewels.register_jewel(
-   "default:pick_carbon_steel",
-   "jewels:pick_carbon_steel_damage",
-   {
-      stats = {
-	 fleshy = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:pick_stone",
-   "jewels:pick_stone_uses",
-   {
-      stats = {
-	 uses = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:pick_steel",
-   "jewels:pick_steel_uses",
-   {
-      stats = {
-	 uses = 5,
-      }
-   })
-
-jewels.register_jewel(
-   "default:pick_carbon_steel",
-   "jewels:pick_carbon_steel_uses",
-   {
-      stats = {
-	 uses = 7,
-      }
-   })
-
--- Shovels
-
-jewels.register_jewel(
-   "default:shovel_stone",
-   "jewels:shovel_stone_digspeed",
-   {
-      stats = {
-	 digspeed = -0.12,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_steel",
-   "jewels:shovel_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.15,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_carbon_steel",
-   "jewels:shovel_carbon_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.17,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_stone",
-   "jewels:shovel_stone_damage",
-   {
-      stats = {
-	 fleshy = 1,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_steel",
-   "jewels:shovel_steel_damage",
-   {
-      stats = {
-	 fleshy = 2,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_carbon_steel",
-   "jewels:shovel_carbon_steel_damage",
-   {
-      stats = {
-	 fleshy = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_stone",
-   "jewels:shovel_stone_uses",
-   {
-      stats = {
-	 uses = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_steel",
-   "jewels:shovel_steel_uses",
-   {
-      stats = {
-	 uses = 5,
-      }
-   })
-
-jewels.register_jewel(
-   "default:shovel_carbon_steel",
-   "jewels:shovel_carbon_steel_uses",
-   {
-      stats = {
-	 uses = 7,
-      }
-   })
-
--- Axes
-
-jewels.register_jewel(
-   "default:axe_stone",
-   "jewels:axe_stone_digspeed",
-   {
-      stats = {
-	 digspeed = -0.1,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_steel",
-   "jewels:axe_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.13,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_carbon_steel",
-   "jewels:axe_carbon_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.16,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_stone",
-   "jewels:axe_stone_damage",
-   {
-      stats = {
-	 fleshy = 2,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_steel",
-   "jewels:axe_steel_damage",
-   {
-      stats = {
-	 fleshy = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_carbon_steel",
-   "jewels:axe_carbon_steel_damage",
-   {
-      stats = {
-	 fleshy = 4,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_stone",
-   "jewels:axe_stone_uses",
-   {
-      stats = {
-	 uses = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_steel",
-   "jewels:axe_steel_uses",
-   {
-      stats = {
-	 uses = 5,
-      }
-   })
-
-jewels.register_jewel(
-   "default:axe_carbon_steel",
-   "jewels:axe_carbon_steel_uses",
-   {
-      stats = {
-	 uses = 7,
-      }
-   })
-
--- Spears
-
-jewels.register_jewel(
-   "default:spear_stone",
-   "jewels:spear_stone_digspeed",
-   {
-      stats = {
-	 digspeed = -0.1,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_steel",
-   "jewels:spear_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.13,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_carbon_steel",
-   "jewels:spear_carbon_steel_digspeed",
-   {
-      stats = {
-	 digspeed = -0.16,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_stone",
-   "jewels:spear_stone_damage",
-   {
-      stats = {
-	 fleshy = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_steel",
-   "jewels:spear_steel_damage",
-   {
-      stats = {
-	 fleshy = 5,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_carbon_steel",
-   "jewels:spear_carbon_steel_damage",
-   {
-      stats = {
-	 fleshy = 7,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_stone",
-   "jewels:spear_stone_uses",
-   {
-      stats = {
-	 uses = 3,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_steel",
-   "jewels:spear_steel_uses",
-   {
-      stats = {
-	 uses = 5,
-      }
-   })
-
-jewels.register_jewel(
-   "default:spear_carbon_steel",
-   "jewels:spear_carbon_steel_uses",
-   {
-      stats = {
-	 uses = 7,
-      }
-   })
+for tool_name, tool_def in pairs(tool_types) do
+   for material_name, material_def in pairs(tool_def) do
+      for jewel_name, jewel_def in pairs(material_def) do
+         jewels.register_jewel(
+            "default:" .. tool_name .. "_" .. material_name,
+            "jewels:" .. tool_name .. "_" .. material_name .. "_" .. jewel_name,
+            {
+               stats = jewel_def,
+         })
+      end
+   end
+end
 
 -- Broadswords
 
@@ -345,7 +171,7 @@ jewels.register_jewel(
       stats = {
 	 fleshy = 2,
       }
-   })
+})
 
 jewels.register_jewel(
    "jewels:broadsword_jeweled_pommel",
@@ -356,7 +182,7 @@ jewels.register_jewel(
       stats = {
 	 range = 1,
       }
-   })
+})
 
 jewels.register_jewel(
    "jewels:broadsword_jeweled_pommel_and_guard",
@@ -368,6 +194,6 @@ jewels.register_jewel(
 	 fleshy = 2,
 	 range = 1,
       }
-   })
+})
 
 default.log("jewels", "loaded")

@@ -46,7 +46,7 @@ function jewels.register_jewel(toolname, new_toolname, def)
       stats = {
 	 digspeed = def.stats.digspeed, -- negative digs faster
 	 maxlevel = def.stats.maxlevel, -- positive digs higher levels
-	 maxdrop= def.stats.maxdrop, -- positive increases max drop level
+	 maxdrop = def.stats.maxdrop, -- positive increases max drop level
 	 uses = def.stats.uses, -- positive increases uses
 	 fleshy = def.stats.fleshy, -- positive increases fleshy damage
 	 range = def.stats.range, -- positive increases reach distance with tool
@@ -142,6 +142,16 @@ function jewels.register_jewel(toolname, new_toolname, def)
    minetest.register_tool(new_toolname, new_tooldef)
 end
 
+function jewels.can_jewel(toolname)
+   for name, _ in pairs(jewels.registered_jewels) do
+      if name == toolname then
+	 return true
+      end
+   end
+
+   return false
+end
+
 function jewels.get_jeweled(toolname)
    for name, jables in pairs(jewels.registered_jewels) do
       if name == toolname then
@@ -172,6 +182,7 @@ minetest.register_node(
       legacy_facedir_simple = true,
       is_ground_content = false,
       sounds = default.node_sound_wood_defaults(),
+
       on_construct = function(pos)
          local meta = minetest.get_meta(pos)
          meta:set_string("formspec", default.ui.get_page("jewels_bench"))
