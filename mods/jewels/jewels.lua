@@ -11,7 +11,7 @@ local tool_types = {
             digspeed = -0.1,
          },
          damage = {
-            damage = 1,
+            fleshy = 1,
          },
          uses = {
             uses = 3,
@@ -22,7 +22,7 @@ local tool_types = {
             digspeed = -0.13,
          },
          damage = {
-            damage = 2,
+            fleshy = 2,
          },
          uses = {
             uses = 5,
@@ -33,7 +33,7 @@ local tool_types = {
             digspeed = -0.14,
          },
          damage = {
-            damage = 3,
+            fleshy = 3,
          },
          uses = {
             uses = 6,
@@ -46,7 +46,7 @@ local tool_types = {
             digspeed = -0.1,
          },
          damage = {
-            damage = 1,
+            fleshy = 1,
          },
          uses = {
             uses = 3,
@@ -57,7 +57,7 @@ local tool_types = {
             digspeed = -0.13,
          },
          damage = {
-            damage = 2,
+            fleshy = 2,
          },
          uses = {
             uses = 5,
@@ -68,7 +68,7 @@ local tool_types = {
             digspeed = -0.14,
          },
          damage = {
-            damage = 3,
+            fleshy = 3,
          },
          uses = {
             uses = 6,
@@ -81,7 +81,7 @@ local tool_types = {
             digspeed = -0.1,
          },
          damage = {
-            damage = 2,
+            fleshy = 2,
          },
          uses = {
             uses = 3,
@@ -92,7 +92,7 @@ local tool_types = {
             digspeed = -0.13,
          },
          damage = {
-            damage = 3,
+            fleshy = 3,
          },
          uses = {
             uses = 5,
@@ -103,7 +103,7 @@ local tool_types = {
             digspeed = -0.14,
          },
          damage = {
-            damage = 4,
+            fleshy = 4,
          },
          uses = {
             uses = 6,
@@ -116,7 +116,7 @@ local tool_types = {
             reach = 1,
          },
          damage = {
-            damage = 3,
+            fleshy = 3,
          },
          uses = {
             uses = 3,
@@ -127,7 +127,7 @@ local tool_types = {
             reach = 2,
          },
          damage = {
-            damage = 4,
+            fleshy = 4,
          },
          uses = {
             uses = 5,
@@ -138,7 +138,7 @@ local tool_types = {
             reach = 2,
          },
          damage = {
-            damage = 5,
+            fleshy = 5,
          },
          uses = {
             uses = 6,
