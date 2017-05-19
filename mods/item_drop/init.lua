@@ -75,14 +75,11 @@ minetest.register_globalstep(
                         end
                      end
                   else
-                     object:setvelocity({x = 0, y = 0, z = 0})
+                     object:setvelocity({x = 0, y = object:getvelocity().y, z = 0})
 
                      object:get_luaentity().physical_state = true
 
-                     object:get_luaentity().object:set_properties(
-                        {
-                           physical = true
-                                                                 })
+                     object:get_luaentity().object:set_properties({physical = true})
                   end
                end
             end
