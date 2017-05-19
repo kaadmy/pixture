@@ -336,7 +336,7 @@ local function fake_on_item_eat(hpdata, replace_with_item, itemstack,
    return itemstack
 end
 
-if minetest.setting_getbool("hunger_enable") then
+if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunger_enable") then
 
    minetest.after(0, on_load)
 

@@ -131,6 +131,7 @@ if minetest.setting_getbool("music_enable") then
 
    minetest.register_abm(
       {
+         label = "Music player",
 	 nodenames = {"music:player"},
 	 chance = 1,
 	 interval = 1,

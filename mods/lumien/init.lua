@@ -137,6 +137,7 @@ minetest.register_ore(
 
 minetest.register_abm(
    {
+      label = "Lumien crystals",
       nodenames = {"lumien:crystal_on"},
       interval = timer_interval,
       chance = 1,

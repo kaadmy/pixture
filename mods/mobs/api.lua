@@ -1293,6 +1293,7 @@ function mobs:spawn_specific(name, nodes, neighbors, min_light, max_light, inter
    mobs.spawning_mobs[name] = true
    minetest.register_abm(
       {
+         label = "Mob spawn (" .. name .. ")",
          nodenames = nodes,
          neighbors = neighbors,
          interval = interval,

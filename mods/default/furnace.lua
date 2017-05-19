@@ -131,6 +131,7 @@ end
 
 minetest.register_abm(
    {
+      label = "Furnace",
       nodenames = {"default:furnace", "default:furnace_active"},
       interval = 1.0,
       chance = 1,

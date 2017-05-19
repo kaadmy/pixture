@@ -3,9 +3,9 @@
 -- Tool definitions
 --
 
-local creative_digtime=0.5
+local creative_digtime = 0.15
 
-local tool_levels=nil
+local tool_levels = nil
 
 -- Creative mode/hand defs
 if minetest.setting_getbool("creative_mode") == true then

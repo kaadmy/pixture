@@ -41,6 +41,7 @@ function farming.register_plant(name, plant)
 
    minetest.register_abm(
       {
+         label = "Farming growing (" .. name .. ")",
 	 nodenames = {
 	    "farming:"..name.."_1",
 	    "farming:"..name.."_2",
