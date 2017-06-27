@@ -326,7 +326,7 @@ minetest.register_node(
             meta:set_string("player", "")
          elseif meta:get_string("player") == "" and not default.player_attached[name]
          and bed.userdata[name].in_bed == false then
-            if not minetest.setting_getbool("bed_enabled") then
+            if not minetest.settings:get_bool("bed_enabled") then
                return
             end
 

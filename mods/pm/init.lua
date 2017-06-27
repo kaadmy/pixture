@@ -3,7 +3,7 @@
 -- By Kaadmy, for Pixture
 --
 
-local enable_saving = minetest.setting_getbool("pm_enable_saving")
+local enable_saving = minetest.settings:get_bool("pm_enable_saving")
 if enable_saving == nil then enable_saving = true end
 if minetest.is_singleplayer() then
    enable_saving = false

@@ -4,7 +4,7 @@
 --
 
 local spawn_pos = minetest.setting_get_pos("static_spawnpoint") or {x = 0, y = 0, z = 0}
-local spawn_radius = minetest.setting_get("static_spawn_radius") or 256
+local spawn_radius = minetest.settings:get("static_spawn_radius") or 256
 
 -- Nodes
 
@@ -69,7 +69,7 @@ minetest.register_lbm(
       action = function(pos, node)
          minetest.remove_node(pos)
 
-         if minetest.setting_getbool("mapgen_disable_villages") == true then
+         if minetest.settings:get_bool("mapgen_disable_villages") == true then
             return
          end
 
@@ -101,7 +101,7 @@ minetest.register_lbm(
 
 -- Spawn decoration
 
-if not minetest.setting_getbool("mapgen_disable_villages") then
+if not minetest.settings:get_bool("mapgen_disable_villages") then
    minetest.register_decoration(
       {
          deco_type = "simple",

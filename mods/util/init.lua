@@ -42,7 +42,7 @@ function util.fixlight(pos1, pos2)
    return #nodes
 end
 
-if minetest.setting_getbool("fixlight_command_enable") then
+if minetest.settings:get_bool("fixlight_command_enable") then
    minetest.register_privilege(
       "fixlight",
       {

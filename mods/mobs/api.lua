@@ -6,20 +6,20 @@ mobs.mod = "redo"
 
 -- Initial settings check
 
-local damage_enabled = minetest.setting_getbool("enable_damage") or false
-local peaceful_only = minetest.setting_getbool("only_peaceful_mobs") or false
-local enable_blood = minetest.setting_getbool("mobs_enable_blood") or false
+local damage_enabled = minetest.settings:get_bool("enable_damage") or false
+local peaceful_only = minetest.settings:get_bool("only_peaceful_mobs") or false
+local enable_blood = minetest.settings:get_bool("mobs_enable_blood") or false
 
-mobs.protected = tonumber(minetest.setting_get("mobs_spawn_protected")) or 0
-mobs.remove = minetest.setting_getbool("remove_far_mobs") or false
+mobs.protected = tonumber(minetest.settings:get("mobs_spawn_protected")) or 0
+mobs.remove = minetest.settings:get_bool("remove_far_mobs") or false
 
 local function is_too_near_spawn(pos)
-   if minetest.is_singleplayer() or not minetest.setting_getbool("mobs_safe_spawn") then
+   if minetest.is_singleplayer() or not minetest.settings:get_bool("mobs_safe_spawn") then
       return false
    end
 
    local sp = minetest.setting_get_pos("static_spawnpoint") or {x = 0, y = 0, z = 0}
-   local rad = minetest.setting_get("static_spawn_radius") or 256
+   local rad = minetest.settings:get("static_spawn_radius") or 256
 
    return (vector.distance(pos, sp) < rad)
 end
@@ -1343,7 +1343,7 @@ function mobs:spawn_specific(name, nodes, neighbors, min_light, max_light, inter
                return
             end
 
-            if minetest.setting_getbool("display_mob_spawn") then
+            if minetest.settings:get_bool("display_mob_spawn") then
                minetest.chat_send_all("[mobs] Add "..name.." at "..minetest.pos_to_string(pos))
             end
 
@@ -1634,7 +1634,7 @@ function mobs:feed_tame(self, clicker, feed_count, breed)
       if name ~= nil then
          -- Take item
 
-         if not minetest.setting_getbool("creative_mode") then
+         if not minetest.settings:get_bool("creative_mode") then
 	    item:take_item()
 
 	    clicker:set_wielded_item(item)

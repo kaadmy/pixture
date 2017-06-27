@@ -9,8 +9,8 @@ player_skins = {}
 
 player_skins.skin_names = {"male", "female"}
 
-if minetest.setting_get("player_skins_names") then
-   player_skins.skin_names = util.split(minetest.setting_get("player_skins_names"), ",")
+if minetest.settings:get("player_skins_names") then
+   player_skins.skin_names = util.split(minetest.settings:get("player_skins_names"), ",")
 end
 
 player_skins.old_skins = {}

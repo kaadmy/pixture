@@ -15,7 +15,7 @@ welcome.rules = {
 }
 
 function welcome.get_formspec(name)
-   if not minetest.setting_getbool("welcome_enable") then
+   if not minetest.settings:get_bool("welcome_enable") then
       minetest.chat_send_player(name, "Welcoming is disabled")
       return ""
    end
@@ -81,7 +81,7 @@ minetest.register_on_joinplayer(
    function(player)
       local name = player:get_player_name()
 
-      if not minetest.check_player_privs(name, {interact = true}) and minetest.setting_getbool("welcome_enable") then
+      if not minetest.check_player_privs(name, {interact = true}) and minetest.settings:get_bool("welcome_enable") then
 	 welcome.show_rules(name)
       end
    end)

@@ -49,9 +49,9 @@ ambiance.sounds["flowing_water"] = {
    nodename = "group:flowing_water",
 }
 
-local ambiance_volume = tonumber(minetest.setting_get("ambiance_volume")) or 1.0
+local ambiance_volume = tonumber(minetest.settings:get("ambiance_volume")) or 1.0
 
-if minetest.setting_getbool("ambiance_enable") == true then
+if minetest.settings:get_bool("ambiance_enable") == true then
    local soundspec = {}
    local lastsound = {}
 
@@ -73,7 +73,7 @@ if minetest.setting_getbool("ambiance_enable") == true then
          local name = player:get_player_name()
 
          for soundname, sound in pairs(ambiance.sounds) do
-            if not minetest.setting_getbool("ambiance_disable_" .. soundname) then
+            if not minetest.settings:get_bool("ambiance_disable_" .. soundname) then
                if lastsound[name][soundname] then
                   lastsound[name][soundname] = lastsound[name][soundname] + dtime
                else

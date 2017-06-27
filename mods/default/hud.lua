@@ -69,7 +69,7 @@ function default.hud.initialize_builtin_statbars(player)
       player:hud_set_flags(flg)
    end
 
-   if minetest.is_yes(minetest.setting_get("enable_damage")) then
+   if minetest.is_yes(minetest.settings:get("enable_damage")) then
       if default.hud.ids[name].id_healthbar == nil then
 	 health_bar_definition.number = player:get_hp()
 	 default.hud.ids[name].id_healthbar_bg  = player:hud_add(health_bar_bg)
@@ -83,7 +83,7 @@ function default.hud.initialize_builtin_statbars(player)
    end
 
    if (player:get_breath() < 11) then
-      if minetest.is_yes(minetest.setting_get("enable_damage")) then
+      if minetest.is_yes(minetest.settings:get("enable_damage")) then
 	 if default.hud.ids[name].id_breathbar == nil then
 
 	    default.hud.ids[name].id_breathbar_bg  = player:hud_add(breath_bar_bg)

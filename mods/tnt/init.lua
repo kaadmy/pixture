@@ -10,13 +10,13 @@ tnt = {}
 -- Default to enabled in singleplayer and disabled in multiplayer
 
 local singleplayer = minetest.is_singleplayer()
-local setting = minetest.setting_getbool("tnt_enable")
+local setting = minetest.settings:get_bool("tnt_enable")
 
 if (not singleplayer and setting ~= true) or (singleplayer and setting == false) then
    return
 end
 
-local tnt_radius = tonumber(minetest.setting_get("tnt_radius") or 3)
+local tnt_radius = tonumber(minetest.settings:get("tnt_radius") or 3)
 
 -- Loss probabilities array (one in X will be lost)
 

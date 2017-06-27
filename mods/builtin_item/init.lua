@@ -93,7 +93,7 @@ minetest.register_entity(
 		    end,
       
       on_step = function(self, dtime)
-		   local time = tonumber(minetest.setting_get("remove_items"))
+		   local time = tonumber(minetest.settings:get("remove_items"))
 		   if not time then time = 600 end
 		   if not self.timer then self.timer = 0 end
 		   

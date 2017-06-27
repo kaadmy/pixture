@@ -8,7 +8,7 @@ local creative_digtime = 0.15
 local tool_levels = nil
 
 -- Creative mode/hand defs
-if minetest.setting_getbool("creative_mode") == true then
+if minetest.settings:get_bool("creative_mode") == true then
    tool_levels = {
       wood = {
          crumbly = {

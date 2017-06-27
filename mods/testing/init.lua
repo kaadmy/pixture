@@ -3,7 +3,7 @@
 -- By Kaadmy, for Pixture
 --
 
-if minetest.setting_getbool("testing_enable") then
+if minetest.settings:get_bool("testing_enable") then
    local t1 = os.clock()
    for i = 1, 10000 do
       dump({x=0,y=50,z=100})

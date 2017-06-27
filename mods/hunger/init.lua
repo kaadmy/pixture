@@ -19,7 +19,7 @@ local hunger_file = minetest.get_worldpath() .. "/hunger.dat"
 local saving = false
 
 -- Seconds per hunger update, 2.0 is slightly fast
-local timer_interval = tonumber(minetest.setting_get("hunger_step")) or 3.0
+local timer_interval = tonumber(minetest.settings:get("hunger_step")) or 3.0
 local timer = 0
 
 local function save_hunger()
@@ -336,7 +336,7 @@ local function fake_on_item_eat(hpdata, replace_with_item, itemstack,
    return itemstack
 end
 
-if minetest.setting_getbool("enable_damage") and minetest.setting_getbool("hunger_enable") then
+if minetest.settings:get_bool("enable_damage") and minetest.settings:get_bool("hunger_enable") then
 
    minetest.after(0, on_load)
 

@@ -12,7 +12,7 @@ end
 minetest.register_globalstep(
    function(dtime)
       for _,player in ipairs(minetest.get_connected_players()) do
-	 if player:get_hp() > 0 or not minetest.setting_getbool("enable_damage") then
+	 if player:get_hp() > 0 or not minetest.settings:get_bool("enable_damage") then
 	    local pos = player:getpos()
 	    local inv = player:get_inventory()
 
@@ -111,8 +111,8 @@ function minetest.handle_node_drops(pos, drops, digger)
 	    obj:setvelocity({x=1/x, y=obj:getvelocity().y, z=1/z})
 
 	    -- FIXME this doesnt work for deactiveted objects
-	    if minetest.setting_get("remove_items") and tonumber(minetest.setting_get("remove_items")) then
-	       minetest.after(tonumber(minetest.setting_get("remove_items")), function(obj)
+	    if minetest.settings:get("remove_items") and tonumber(minetest.settings:get("remove_items")) then
+	       minetest.after(tonumber(minetest.settings:get("remove_items")), function(obj)
                                  obj:remove()
 									      end, obj)
 	    end

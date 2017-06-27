@@ -11,7 +11,7 @@ local function addvec(v1, v2)
    return {x = v1.x + v2.x, y = v1.y + v2.y, z = v1.z + v2.z}
 end
 
-local snow_enable = minetest.setting_getbool("weather_snow_enable") or false
+local snow_enable = minetest.settings:get_bool("weather_snow_enable") or false
 
 local weather_soundspec=nil
 local weather_pr=PseudoRandom(minetest.get_mapgen_params().seed + 2387)
@@ -51,7 +51,7 @@ end
 
 minetest.register_globalstep(
    function(dtime)
-      if minetest.setting_getbool("weather_enable") then
+      if minetest.settings:get_bool("weather_enable") then
 	 if weather_pr:next(0, 5000) < 1 then
 	    local weathertype = weather_pr:next(0, 19)
 

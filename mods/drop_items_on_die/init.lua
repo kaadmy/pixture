@@ -7,7 +7,7 @@ drop_items_on_die = {}
 
 drop_items_on_die.registered_listnames = {}
 
-local enable_drop = minetest.setting_getbool("drop_items_on_die") or false
+local enable_drop = minetest.settings:get_bool("drop_items_on_die") or false
 
 function drop_items_on_die.register_listname(listname)
    table.insert(drop_items_on_die.registered_listnames, listname)
