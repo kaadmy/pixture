@@ -16,6 +16,8 @@ local snow_enable = minetest.settings:get_bool("weather_snow_enable") or false
 local weather_soundspec=nil
 local weather_pr=PseudoRandom(minetest.get_mapgen_params().seed + 2387)
 
+local default_cloud_state = nil
+
 local function play_sound()
    if weather_soundspec ~= nil then
       minetest.sound_stop(weather_soundspec)
@@ -70,21 +72,41 @@ minetest.register_globalstep(
 	 end
       end
 
-      local light = (minetest.get_timeofday()*2)
+      local light = (minetest.get_timeofday() * 2)
 
       if light > 1 then
-	 light=1-(light-1)
+	 light = 1 - (light - 1)
       end
-      light=(light*0.6)+0.1
 
-      local skycol=math.floor(light*190)
+      light = (light * 0.5) + 0.15
 
-      for _,player in ipairs(minetest.get_connected_players()) do
+      local skycol = math.floor(light * 190)
+
+      for _, player in ipairs(minetest.get_connected_players()) do
 	 if weather.weather == "storm" or weather.weather == "snowstorm" then
-	    player:set_sky({r = skycol, g = skycol, b = skycol*1.2}, "plain", {})
+	    player:set_sky({r = skycol, g = skycol, b = skycol * 1.2}, "plain", {}, true)
+
+            if default_cloud_state == nil then
+               default_cloud_state = player:get_clouds()
+            end
+
+            player:set_clouds({
+                  density = 0.5,
+                  color = "#a0a0a0f0",
+                  ambient = "#000000",
+                  height = 100,
+                  thickness = 40,
+                  speed = {x = -2, y = 1},
+            })
+
 	    player:override_day_night_ratio(light)
 	 else
-	    player:set_sky(nil, "regular", {})
+	    player:set_sky(nil, "regular", {}, true)
+
+            if default_cloud_state ~= nil then
+               player:set_clouds(default_cloud_state)
+            end
+
 	    player:override_day_night_ratio(nil)
 	 end
 
