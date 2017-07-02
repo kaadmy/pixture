@@ -327,13 +327,38 @@ function crafting.get_formspec(name)
 end
 
 local function on_player_receive_fields(player, form_name, fields)
+   local inv = player:get_inventory()
+
+
+   if fields.quit then
+      local pos = player:getpos()
+
+      for i = 1, inv:get_size("craft_in") do
+         local itemstack = inv:get_stack("craft_in", i)
+
+         item_drop.drop_item(pos, itemstack)
+
+         itemstack:clear()
+
+         inv:set_stack("craft_in", i, itemstack)
+      end
+
+      for i = 1, inv:get_size("craft_out") do
+         local itemstack = inv:get_stack("craft_out", i)
+
+         item_drop.drop_item(pos, itemstack)
+
+         itemstack:clear()
+
+         inv:set_stack("craft_out", i, itemstack)
+      end
+   end
+
    if fields.crafting_tracker == nil then
       return
    end
 
    local name = player:get_player_name()
-
-   local inv = player:get_inventory()
 
    if fields.do_craft_1 or fields.do_craft_10 then
       local craftitems = crafting.get_crafts(nil)

@@ -5,6 +5,31 @@
 -- Tweaked by Kaadmy, for Pixture
 --
 
+item_drop = {}
+
+function item_drop.drop_item(pos, itemstack)
+   local rpos = {
+      x = pos.x + math.random(-0.3, 0.3),
+      y = pos.y,
+      z = pos.z + math.random(-0.3, 0.3)
+   }
+
+   local drop = minetest.add_item(rpos, itemstack)
+
+   if drop ~= nil then
+      local x = math.random(1, 5)
+      if math.random(1, 2) == 1 then
+         x = -x
+      end
+      local z = math.random(1, 5)
+      if math.random(1, 2) == 1 then
+         z = -z
+      end
+
+      drop:setvelocity({x = 1 / x, y = drop:getvelocity().y, z = 1 / z})
+   end
+end
+
 local function valid(object)
    return object:get_luaentity().timer ~= nil and object:get_luaentity().timer > 1
 end

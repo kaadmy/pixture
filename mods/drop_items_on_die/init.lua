@@ -22,26 +22,7 @@ local function on_die(player)
       for i = 1, inv:get_size(listname) do
          local item = inv:get_stack(listname, i)
 
-         local rpos = {
-            x = pos.x + math.random(-0.3, 0.3),
-            y = pos.y,
-            z = pos.z + math.random(-0.3, 0.3)
-         }
-
-         local drop = minetest.add_item(rpos, item)
-
-         if drop ~= nil then
-            local x = math.random(1, 5)
-            if math.random(1, 2) == 1 then
-               x = -x
-            end
-            local z = math.random(1, 5)
-            if math.random(1, 2) == 1 then
-               z = -z
-            end
-
-            drop:setvelocity({x = 1 / x, y = drop:getvelocity().y, z = 1 / z})
-         end
+         item_drop.drop_item(pos, item)
 
          item:clear()
 
