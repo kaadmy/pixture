@@ -390,7 +390,11 @@ local function on_player_receive_fields(player, form_name, fields)
          if inv:room_for_item("craft_out", crafted.output) then
             inv:set_stack("craft_out", 1, crafted.output)
 
-            inv:set_list("craft_in", crafted.items)
+            -- FIXME? inv:set_list worked in 0.4.15 but no longer works for some reason
+            inv:set_stack("craft_in", 1, crafted.items[1])
+            inv:set_stack("craft_in", 2, crafted.items[2])
+            inv:set_stack("craft_in", 3, crafted.items[3])
+            inv:set_stack("craft_in", 4, crafted.items[4])
          end
       end
    elseif fields.craft_list then
