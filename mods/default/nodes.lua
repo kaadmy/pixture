@@ -442,6 +442,16 @@ minetest.register_node(
       groups = {snappy = 2, dig_immediate = 2, attached_node = 1, sapling = 1},
       is_ground_content = false,
       sounds = default.node_sound_defaults(),
+
+      on_timer = function(pos)
+         default.grow_sapling(pos, "apple")
+      end,
+
+      on_construct = function(pos)
+         minetest.get_node_timer(pos):start(math.random(300, 480))
+      end,
+
+      on_place = default.place_sapling,
 })
 
 minetest.register_node(
@@ -461,6 +471,16 @@ minetest.register_node(
       },
       groups = {snappy = 2, dig_immediate = 2, attached_node = 1, sapling = 1},
       sounds = default.node_sound_defaults(),
+
+      on_timer = function(pos)
+         default.grow_sapling(pos, "oak")
+      end,
+
+      on_construct = function(pos)
+         minetest.get_node_timer(pos):start(math.random(700, 960))
+      end,
+
+      on_place = default.place_sapling,
 })
 
 minetest.register_node(
@@ -481,6 +501,16 @@ minetest.register_node(
       groups = {snappy = 2, dig_immediate = 2, attached_node = 1, sapling = 1},
       is_ground_content = false,
       sounds = default.node_sound_defaults(),
+
+      on_timer = function(pos)
+         default.grow_sapling(pos, "birch")
+      end,
+
+      on_construct = function(pos)
+         minetest.get_node_timer(pos):start(math.random(480, 780))
+      end,
+
+      on_place = default.place_sapling,
 })
 
 -- Trees

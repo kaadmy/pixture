@@ -3,11 +3,15 @@
 --
 
 -- Chest naming via signs
+
 function default.write_name(pos, text)
-   -- check above, if allowed
+   -- Check above, if allowed
+
    if minetest.settings:get_bool("signs_allow_name_above") then
       local above = {x = pos.x, y = pos.y + 1, z = pos.z}
+
       local abovedef = nil
+
       if minetest.registered_nodes[minetest.get_node(above).name] then
 	 abovedef = minetest.registered_nodes[minetest.get_node(above).name]
       end
@@ -16,36 +20,56 @@ function default.write_name(pos, text)
       end
    end
 
-   -- then below
+   -- Then below
+
    local below = {x = pos.x, y = pos.y - 1, z = pos.z}
+
    local belowdef = nil
+
    if minetest.registered_nodes[minetest.get_node(below).name] then
       belowdef = minetest.registered_nodes[minetest.get_node(below).name]
    end
+
    if belowdef and belowdef.write_name ~= nil then
       belowdef.write_name(below, text)
    end
 end
 
--- Saplings growing
+-- Saplings growing and placing
 
-function default.grow_tree(pos, variety)
+function default.place_sapling(itemstack, placer, pointed_thing)
+   -- Check growability
+
+   print(itemstack:get_name())
+
+   local underdef = minetest.get_node(pointed_thing.under)
+
+   if minetest.get_item_group(underdef.name, "soil") == 0 then
+      return itemstack
+   end
+
+   minetest.set_node(pointed_thing.above, {name = itemstack:get_name()})
+
+   return itemstack:take_item()
+end
+
+function default.grow_sapling(pos, variety)
    local function grow()
       if variety == "apple" then
 	 minetest.place_schematic(
             {
-               x = pos.x-2,
-               y = pos.y-1,
-               z = pos.z-2
+               x = pos.x - 2,
+               y = pos.y - 1,
+               z = pos.z - 2
             },
             minetest.get_modpath("default")
                .. "/schematics/default_tree.mts", "0", {}, false)
       elseif variety == "oak" then
 	 minetest.place_schematic(
             {
-               x = pos.x-2,
-               y = pos.y-1,
-               z = pos.z-2
+               x = pos.x - 2,
+               y = pos.y - 1,
+               z = pos.z - 2
             },
             minetest.get_modpath("default")
                .. "/schematics/default_tree.mts", "0",
@@ -57,9 +81,9 @@ function default.grow_tree(pos, variety)
       elseif variety == "birch" then
 	 minetest.place_schematic(
             {
-               x = pos.x-1,
-               y = pos.y-1,
-               z = pos.z-1
+               x = pos.x - 1,
+               y = pos.y - 1,
+               z = pos.z - 1
             },
             minetest.get_modpath("default")
                .. "/schematics/default_squaretree.mts", "0",
@@ -77,57 +101,6 @@ function default.grow_tree(pos, variety)
 
    default.log(variety.." tree sapling grows at "..minetest.pos_to_string(pos), "info")
 end
-
-minetest.register_abm( -- apple trees or default trees
-   {
-      label = "Grow apple saplings",
-      nodenames = {"default:sapling"},
-      interval = 10,
-      chance = 40,
-      action = function(pos, node)
-         local is_soil = minetest.registered_nodes[minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
-
-         if is_soil == nil or is_soil == 0 then
-            return
-         end
-
-         default.grow_tree(pos, "apple")
-      end
-})
-
-minetest.register_abm( -- oak trees
-   {
-      label = "Grow oak saplings",
-      nodenames = {"default:sapling_oak"},
-      interval = 10,
-      chance = 60,
-      action = function(pos, node)
-         local is_soil = minetest.registered_nodes[minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
-
-         if is_soil == nil or is_soil == 0 then
-            return
-         end
-
-         default.grow_tree(pos, "oak")
-      end
-})
-
-minetest.register_abm( -- birch trees
-   {
-      label = "Grow birch saplings",
-      nodenames = {"default:sapling_birch"},
-      interval = 10,
-      chance = 50,
-      action = function(pos, node)
-         local is_soil = minetest.registered_nodes[minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name].groups.soil
-
-         if is_soil == nil or is_soil == 0 then
-            return
-         end
-
-         default.grow_tree(pos, "birch")
-      end
-})
 
 -- Vertical plants
 
