@@ -122,8 +122,8 @@ local function on_joinplayer(player)
    -- Uncomment to enable player-on-player collisions
    --   player:set_properties({physical = true})
 
-   -- Uncomment to disable the sneak glitch
-   player:set_physics_override({sneak_glitch = false})
+   -- Uncomment to disable sneaking
+   player:set_physics_override({sneak = false})
 
    -- Uncomment to disable the minimap
    player:hud_set_flags({minimap = false})

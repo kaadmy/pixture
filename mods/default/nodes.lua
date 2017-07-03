@@ -760,7 +760,7 @@ minetest.register_node(
       paramtype = "light",
       collision_box = {
 	 type = "fixed",
-	 fixed = {-0.4, -0.5, -0.4, 0.4, 0.75, 0.4},
+	 fixed = {-0.4, -0.5, -0.4, 0.4, 1.0, 0.4},
       },
       groups = {snappy = 2, choppy = 2, oddly_breakable_by_hand = 2, fence = 1},
       is_ground_content = false,
@@ -781,7 +781,7 @@ minetest.register_node(
       paramtype = "light",
       collision_box = {
 	 type = "fixed",
-	 fixed = {-0.4, -0.5, -0.4, 0.4, 0.75, 0.4},
+	 fixed = {-0.4, -0.5, -0.4, 0.4, 1.0, 0.4},
       },
       groups = {snappy = 1, choppy = 1, oddly_breakable_by_hand = 1, fence = 1},
       is_ground_content = false,
@@ -802,7 +802,7 @@ minetest.register_node(
       paramtype = "light",
       collision_box = {
 	 type = "fixed",
-	 fixed = {-0.4, -0.5, -0.4, 0.4, 0.75, 0.4},
+	 fixed = {-0.4, -0.5, -0.4, 0.4, 1.0, 0.4},
       },
       groups = {snappy = 1, choppy = 1, oddly_breakable_by_hand = 1, fence = 1},
       is_ground_content = false,
