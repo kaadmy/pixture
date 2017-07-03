@@ -16,6 +16,8 @@ local snow_enable = minetest.settings:get_bool("weather_snow_enable") or false
 local weather_soundspec=nil
 local weather_pr=PseudoRandom(minetest.get_mapgen_params().seed + 2387)
 
+local sound_min_height = -20 -- Below -20m you can't hear weather
+
 local default_cloud_state = nil
 
 local function play_sound()
@@ -24,12 +26,30 @@ local function play_sound()
    end
 
    if weather.weather == "storm" then
-      weather_soundspec=minetest.sound_play({name="weather_storm"})
+      for _, player in ipairs(minetest.get_connected_players()) do
+         if player:getpos().y > sound_min_height then
+            weather_soundspec = minetest.sound_play(
+               {
+               name = "weather_storm",
+               to_player = player:get_player_name()
+               }
+            )
+         end
+      end
 
       minetest.after(18, play_sound)
       return
    elseif weather.weather == "snowstorm" then
-      weather_soundspec=minetest.sound_play({name="weather_snowstorm"})
+      for _, player in ipairs(minetest.get_connected_players()) do
+         if player:getpos().y > sound_min_height then
+            weather_soundspec = minetest.sound_play(
+               {
+                  name = "weather_snowstorm",
+                  to_player = player:get_player_name()
+               }
+            )
+         end
+      end
 
       minetest.after(7, play_sound)
       return
