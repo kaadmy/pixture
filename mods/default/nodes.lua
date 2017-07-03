@@ -448,7 +448,7 @@ minetest.register_node(
       end,
 
       on_construct = function(pos)
-         minetest.get_node_timer(pos):start(math.random(300, 480))
+         default.begin_growing_sapling(pos)
       end,
 
       on_place = default.place_sapling,
@@ -477,7 +477,7 @@ minetest.register_node(
       end,
 
       on_construct = function(pos)
-         minetest.get_node_timer(pos):start(math.random(700, 960))
+         default.begin_growing_sapling(pos)
       end,
 
       on_place = default.place_sapling,
@@ -507,7 +507,7 @@ minetest.register_node(
       end,
 
       on_construct = function(pos)
-         minetest.get_node_timer(pos):start(math.random(480, 780))
+         default.begin_growing_sapling(pos)
       end,
 
       on_place = default.place_sapling,

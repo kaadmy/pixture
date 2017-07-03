@@ -50,7 +50,21 @@ function default.place_sapling(itemstack, placer, pointed_thing)
 
    minetest.set_node(pointed_thing.above, {name = itemstack:get_name()})
 
-   return itemstack:take_item()
+   itemstack:take_item()
+
+   return itemstack
+end
+
+function default.begin_growing_sapling(pos)
+   local node = minetest.get_node(pos)
+
+   if node.name == "default:sapling" then
+      minetest.get_node_timer(pos):start(math.random(300, 480))
+   elseif node.name == "default:sapling_oak" then
+      minetest.get_node_timer(pos):start(math.random(700, 960))
+   elseif node.name == "default:sapling_birch" then
+      minetest.get_node_timer(pos):start(math.random(480, 780))
+   end
 end
 
 function default.grow_sapling(pos, variety)
@@ -99,8 +113,22 @@ function default.grow_sapling(pos, variety)
 
    minetest.after(0, grow)
 
-   default.log(variety.." tree sapling grows at "..minetest.pos_to_string(pos), "info")
+   default.log("A " .. variety .. " tree sapling grows at " ..
+                  minetest.pos_to_string(pos), "info")
 end
+
+-- Make preexisting trees restart the growing process
+
+minetest.register_lbm(
+   {
+      label = "Grow legacy trees",
+      name = "default:grow_legacy_trees",
+      nodenames = {"default:sapling", "default:sapling_oak", "default:sapling_birch"},
+      action = function(pos, node)
+         default.begin_growing_sapling(pos)
+      end
+   }
+)
 
 -- Vertical plants
 
