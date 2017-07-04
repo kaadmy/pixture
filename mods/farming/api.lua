@@ -28,7 +28,7 @@ function farming.register_plant(name, plant)
       }
    )
 
-   function add_callbacks(nodename)
+   local function add_callbacks(nodename)
       minetest.override_item(
          nodename,
          {
