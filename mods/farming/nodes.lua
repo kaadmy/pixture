@@ -27,7 +27,8 @@ minetest.register_node(
       },
       groups = {dig_immediate=2},
       sounds=default.node_sound_leaves_defaults()
-})
+   }
+)
 
 minetest.register_node(
    "farming:wheat_2",
@@ -51,7 +52,8 @@ minetest.register_node(
       },
       groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
-})
+   }
+)
 
 minetest.register_node(
    "farming:wheat_3",
@@ -75,7 +77,8 @@ minetest.register_node(
       },
       groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
-})
+   }
+)
 
 minetest.register_node(
    "farming:wheat_4",
@@ -102,7 +105,8 @@ minetest.register_node(
       },
       groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
-})
+   }
+)
 
 minetest.register_node(
    "farming:cotton_1",
@@ -128,7 +132,8 @@ minetest.register_node(
       },
       groups = {dig_immediate=2},
       sounds=default.node_sound_leaves_defaults()
-})
+   }
+)
 
 minetest.register_node(
    "farming:cotton_2",
@@ -152,7 +157,8 @@ minetest.register_node(
       },
       groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
-})
+   }
+)
 
 minetest.register_node(
    "farming:cotton_3",
@@ -176,7 +182,8 @@ minetest.register_node(
       },
       groups = {dig_immediate=2, not_in_craftingguide = 1},
       sounds=default.node_sound_leaves_defaults()
-})
+   }
+)
 
 minetest.register_node(
    "farming:cotton_4",
@@ -207,45 +214,31 @@ minetest.register_node(
          local name = player:get_wielded_item():get_name()
 
          if name == "default:shears" then
-            minetest.set_node(pos, {name = "farming:cotton_3"})
+            minetest.set_node(pos, {name = "farming:cotton_2"})
+
+            -- Drop some seeds
+
+            if math.random(1, 2) == 1 then
+               item_drop.drop_item(pos, "farming:cotton_1")
+            end
+
+            -- Drop an extra cotton ball
 
             for i = 1, 2 do
-               if math.random(1, 2) == 1 then
-                  break
-               end
-
-               local item = "farming:cotton"
-               if math.random(1, 4) == 1 then
-                  item = item .. " 2"
-               end
-
-               local rpos = {
-                  x = pos.x + math.random(-0.3, 0.3),
-                  y = pos.y,
-                  z = pos.z + math.random(-0.3, 0.3)
-               }
-
-               local drop = minetest.add_item(rpos, item)
-
-               if drop ~= nil then
-                  local x = math.random(1, 5)
-
-                  if math.random(1, 2) == 1 then
-                     x = -x
-                  end
-
-                  local z = math.random(1, 5)
-
-                  if math.random(1, 2) == 1 then
-                     z = -z
-                  end
-
-                  drop:setvelocity({x = 1 / x, y = drop:getvelocity().y, z = 1 / z})
+               if math.random(1, 4) == 1 then -- 25% chance of dropping 2x
+                  item_drop.drop_item(pos, "farming:cotton 2")
+               else
+                  item_drop.drop_item(pos, "farming:cotton")
                end
             end
+
+            -- Keep it growing
+
+            farming.begin_growing_plant(pos)
          end
       end,
-})
+   }
+)
 
 minetest.register_node(
    "farming:cotton_bale",
@@ -256,7 +249,8 @@ minetest.register_node(
       groups = {snappy = 2, oddly_breakable_by_hand = 3,
                 fall_damage_add_percent = -15, fuzzy = 1},
       sounds = default.node_sound_leaves_defaults(),
-})
+   }
+)
 
 minetest.register_alias("farming:cotton_seed", "farming:cotton_1")
 minetest.register_alias("farming:wheat_seed", "farming:wheat_1")
