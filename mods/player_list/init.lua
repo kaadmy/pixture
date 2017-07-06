@@ -1,13 +1,13 @@
 --
--- Playerlist mod
+-- Player listing mod
 -- By Kaadmy, for Pixture
 --
 
-playerlist = {}
+player_list = {}
 
 -- current players format:
 -- {<playername> = <last connect(if connected, or nil)>}
-playerlist.players = {}
+player_list.players = {}
 
 local function divmod(f, d)
    return {math.floor(f / d), f % d}
@@ -38,13 +38,13 @@ end
 local function on_joinplayer(player)
    local name = player:get_player_name()
 
-   playerlist.players[name] = minetest.get_gametime()
+   player_list.players[name] = minetest.get_gametime()
 end
 
 local function on_leaveplayer(player)
    local name = player:get_player_name()
 
-   playerlist.players[name] = minetest.get_gametime()
+   player_list.players[name] = minetest.get_gametime()
 end
 
 minetest.register_on_joinplayer(on_joinplayer)
@@ -54,7 +54,7 @@ minetest.register_chatcommand(
    "plist",
    {
       params = "[all|recent]",
-      description = "List players that are connected and have connected since the last server restart",
+      description = "List current, recent, or all players since the last server restart",
       func = function(player_name, param)
 		local time = minetest.get_gametime()
 
@@ -69,7 +69,7 @@ minetest.register_chatcommand(
 		end
 
 		local player_count = 0
-		for name, jointime in pairs(playerlist.players) do
+		for name, jointime in pairs(player_list.players) do
 		   local plyr = minetest.get_player_by_name(name)
 
 		   if param == "all" then
@@ -79,18 +79,26 @@ minetest.register_chatcommand(
 		      else
 			 minetest.chat_send_player(player_name, "  " .. name .. ": last seen " .. prettytime(time - jointime) .. " ago")
 		      end
-		   else
-		      if param == "recent" then
-			 if plyr == nil then
-			    player_count = player_count + 1
-			    str = str .. name .. ", "
-			 end
-		      elseif plyr ~= nil then
-			 player_count = player_count + 1
-			 str = str .. name .. ", "
-		      end
-		   end
-		end
+		   elseif param == "recent" then
+                      if plyr == nil then -- Only show players that were connected but are currently disconnected
+                         player_count = player_count + 1
+
+                         if player_count == 1 then
+                            str = str .. name
+                         else
+                            str = str .. ", " .. name
+                         end
+                      end
+                   elseif plyr ~= nil then
+                      player_count = player_count + 1
+
+                      if player_count == 1 then
+                         str = str .. name
+                      else
+                         str = str .. ", " .. name
+                      end
+                   end
+                end
 
 		minetest.chat_send_player(player_name, str)
 
@@ -102,4 +110,4 @@ minetest.register_chatcommand(
 	     end
    })
 
-default.log("mod:playerlist", "loaded")
+default.log("mod:player_list", "loaded")
