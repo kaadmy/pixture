@@ -429,12 +429,19 @@ local function on_joinplayer(player)
    end
 end
 
+local function on_leaveplayer(player)
+   local name = player:get_player_name()
+
+   crafting.userdata[name] = nil
+end
+
 if minetest.get_modpath("drop_items_on_die") ~= nil then
    drop_items_on_die.register_listname("craft_in")
    drop_items_on_die.register_listname("craft_out")
 end
 
 minetest.register_on_joinplayer(on_joinplayer)
+minetest.register_on_leaveplayer(on_leaveplayer)
 minetest.register_on_player_receive_fields(on_player_receive_fields)
 
 default.log("api", "loaded")
