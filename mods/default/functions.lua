@@ -40,8 +40,6 @@ end
 function default.place_sapling(itemstack, placer, pointed_thing)
    -- Check growability
 
-   print(itemstack:get_name())
-
    local underdef = minetest.get_node(pointed_thing.under)
 
    if minetest.get_item_group(underdef.name, "soil") == 0 then
