@@ -1234,7 +1234,7 @@ minetest.register_node(
       walkable = false,
       floodable = true,
       light_source = default.LIGHT_MAX-4,
-      overlay_light_type = "bright_glow",
+      overlay_light_type = "glow",
       node_box = {
 	 type = "wallmounted",
 	 wall_top = {-2/16, 0, -2/16, 2/16, 0.5, 2/16},
