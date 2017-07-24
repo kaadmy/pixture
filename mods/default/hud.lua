@@ -191,4 +191,3 @@ minetest.register_on_leaveplayer(default.hud.cleanup_builtin_statbars)
 minetest.register_playerevent(default.hud.player_event_handler)
 
 default.log("hud", "loaded")
-
