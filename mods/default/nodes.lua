@@ -1154,35 +1154,17 @@ minetest.register_node(
       drawtype = "nodebox",
       tiles = {
 	 {
-	    name = "default_torch_3d_ends.png",
-	    animation = {
-	       type = "vertical_frames",
-	       aspect_w = 16,
-	       aspect_h = 16,
-	       length = 1.0,
-	    },
+	    name = "default_torch_ends.png",
 	 },
 	 {
-	    name = "default_torch_3d_ends.png",
-	    animation = {
-	       type = "vertical_frames",
-	       aspect_w = 16,
-	       aspect_h = 16,
-	       length = 1.0,
-	    },
+	    name = "default_torch_ends.png",
 	 },
 	 {
-	    name = "default_torch_3d.png",
-	    animation = {
-	       type = "vertical_frames",
-	       aspect_w = 16,
-	       aspect_h = 16,
-	       length = 1.0,
-	    },
+	    name = "default_torch_base.png",
 	 },
       },
-      inventory_image = "default_torch_dead.png",
-      wield_image = "default_torch_dead.png",
+      inventory_image = "default_torch_dead_inventory.png",
+      wield_image = "default_torch_dead_inventory.png",
       paramtype = "light",
       paramtype2 = "wallmounted",
       sunlight_propagates = true,
@@ -1192,7 +1174,7 @@ minetest.register_node(
 	 type = "wallmounted",
 	 wall_top = {-2/16, 0, -2/16, 2/16, 0.5, 2/16},
 	 wall_bottom = {-2/16, -0.5, -2/16, 2/16, 0, 2/16},
-	 wall_side = {-0.5, -8/16, -0.1, -0.5+4/16, 0, 0.1},
+	 wall_side = {-0.5, -8/16, -2/16, -0.5+4/16, 0, 2/16},
       },
       groups = {choppy = 2, dig_immediate = 3, attached_node = 1},
       is_ground_content = false,
@@ -1206,7 +1188,18 @@ minetest.register_node(
       drawtype = "nodebox",
       tiles = {
 	 {
-	    name = "default_torch_3d_ends_animated.png",
+	    name = "default_torch_ends.png",
+	 },
+	 {
+	    name = "default_torch_ends.png",
+	 },
+	 {
+	    name = "default_torch_base.png",
+	 },
+      },
+      overlay_tiles = {
+	 {
+	    name = "default_torch_ends_overlay.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1215,7 +1208,7 @@ minetest.register_node(
 	    },
 	 },
 	 {
-	    name = "default_torch_3d_ends.png",
+	    name = "default_torch_ends_overlay.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1224,7 +1217,7 @@ minetest.register_node(
 	    },
 	 },
 	 {
-	    name = "default_torch_3d_animated.png",
+	    name = "default_torch_overlay.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1233,8 +1226,8 @@ minetest.register_node(
 	    },
 	 },
       },
-      inventory_image = "default_torch.png",
-      wield_image = "default_torch.png",
+      inventory_image = "default_torch_inventory.png",
+      wield_image = "default_torch_inventory.png",
       paramtype = "light",
       paramtype2 = "wallmounted",
       sunlight_propagates = true,
@@ -1245,7 +1238,7 @@ minetest.register_node(
 	 type = "wallmounted",
 	 wall_top = {-2/16, 0, -2/16, 2/16, 0.5, 2/16},
 	 wall_bottom = {-2/16, -0.5, -2/16, 2/16, 0, 2/16},
-	 wall_side = {-0.5, -8/16, -0.1, -0.5+4/16, 0, 0.1},
+	 wall_side = {-0.5, -8/16, -2/16, -0.5+4/16, 0, 2/16},
       },
       groups = {choppy = 2, dig_immediate = 3, attached_node = 1},
       is_ground_content = false,
@@ -1259,7 +1252,18 @@ minetest.register_node(
       drawtype = "nodebox",
       tiles = {
 	 {
-	    name = "default_torch_3d_ends_animated.png",
+	    name = "default_torch_ends.png",
+	 },
+	 {
+	    name = "default_torch_ends.png",
+	 },
+	 {
+	    name = "default_torch_base.png",
+	 },
+      },
+      overlay_tiles = {
+	 {
+	    name = "default_torch_ends_overlay.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1268,7 +1272,7 @@ minetest.register_node(
 	    },
 	 },
 	 {
-	    name = "default_torch_3d_ends.png",
+	    name = "default_torch_ends_overlay.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1277,7 +1281,7 @@ minetest.register_node(
 	    },
 	 },
 	 {
-	    name = "default_torch_3d_animated.png",
+	    name = "default_torch_overlay.png",
 	    animation = {
 	       type = "vertical_frames",
 	       aspect_w = 16,
@@ -1286,19 +1290,20 @@ minetest.register_node(
 	    },
 	 },
       },
-      inventory_image = "default_torch.png",
-      wield_image = "default_torch.png",
+      inventory_image = "default_torch_inventory.png",
+      wield_image = "default_torch_inventory.png",
       paramtype = "light",
       paramtype2 = "wallmounted",
       sunlight_propagates = true,
       walkable = false,
       floodable = true,
       light_source = default.LIGHT_MAX-1,
+      overlay_light_type = "glow_flicker",
       node_box = {
 	 type = "wallmounted",
 	 wall_top = {-2/16, 0, -2/16, 2/16, 0.5, 2/16},
 	 wall_bottom = {-2/16, -0.5, -2/16, 2/16, 0, 2/16},
-	 wall_side = {-0.5, -8/16, -0.1, -0.5+4/16, 0, 0.1},
+	 wall_side = {-0.5, -8/16, -2/16, -0.5+4/16, 0, 2/16},
       },
       groups = {choppy = 2, dig_immediate = 3, attached_node = 1},
       is_ground_content = false,
