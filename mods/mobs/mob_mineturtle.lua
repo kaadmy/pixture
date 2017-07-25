@@ -1,5 +1,5 @@
 
--- Mineturtle by Kaadmy
+-- Mineturtle by KaadmY
 
 mobs:register_mob(
    "mobs:mineturtle",

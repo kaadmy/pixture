@@ -1,7 +1,7 @@
 Mobs mod
 ========
 By PilzAdam, KrupnovPavel, Zeg9, TenPlus1
-Tweaked by Kaadmy, for Pixture
+Tweaked by KaadmY, for Pixture
 
 Asset license: CC BY-SA 4.0
 Source License:
@@ -11,4 +11,3 @@ Source License:
     npc.lua: MIT
     mineturtle.lua: LGPLv2.1
     crafts.lua: LGPLv2.1
-	

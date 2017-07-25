@@ -1,5 +1,5 @@
 
--- Sheep by PilzAdam; tweaked for Pixture by Kaadmy
+-- Sheep by PilzAdam; tweaked for Pixture by KaadmY
 
 mobs:register_mob(
    "mobs:sheep",

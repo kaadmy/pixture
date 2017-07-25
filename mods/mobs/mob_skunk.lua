@@ -1,5 +1,5 @@
 -- Boar by KrupnoPavel
--- Changed to Skunk and tweaked by Kaadmy
+-- Changed to Skunk and tweaked by KaadmY
 
 mobs:register_mob(
    "mobs:skunk",

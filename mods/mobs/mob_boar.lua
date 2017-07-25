@@ -1,6 +1,6 @@
 
 -- Warthog(Boar) by KrupnoPavel
--- Changed to Boar and tweaked by Kaadmy
+-- Changed to Boar and tweaked by KaadmY
 
 mobs:register_mob(
    "mobs:boar",

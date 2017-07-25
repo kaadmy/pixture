@@ -1,6 +1,6 @@
 
 -- Npc by TenPlus1
--- Modded by Kaadmy
+-- Modded by KaadmY
 
 local npc_types = {
    "farmer",

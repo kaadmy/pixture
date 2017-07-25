@@ -1,4 +1,4 @@
--- Walker by Kaadmy
+-- Walker by KaadmY
 
 mobs:register_mob(
    "mobs:walker",
@@ -6,7 +6,7 @@ mobs:register_mob(
       type = "monster",
       passive = false,
       attack_type = "dogfight",
-      damage = 2,
+      damage = 3,
       hp_min = 8,
       hp_max = 16,
       armor = 200,
@@ -22,10 +22,10 @@ mobs:register_mob(
 	 distance = 16,
       },
       walk_velocity = 1,
-      run_velocity = 5,
-      jump = false,
+      run_velocity = 3,
+      jump = true,
       follow = "default:rope",
-      view_range = 8,
+      view_range = 14,
       drops = {
 	 {
 	    name = "default:stick",
@@ -40,20 +40,19 @@ mobs:register_mob(
 	    chance = 15, min = 2, max = 3
 	 },
       },
-      water_damage = 6,
-      lava_damage = 10,
-      light_damage = 1,
+      water_damage = 2,
+      lava_damage = 30,
       animation = {
 	 speed_normal = 20,
-	 speed_run = 30,
+	 speed_run = 20,
 	 stand_start = 0,
 	 stand_end = 24,
-	 run_start = 35,
-	 run_end = 50,
-	 walk_start = 35,
-	 walk_end = 50,
 	 punch_start = 25,
 	 punch_end = 34,
+	 walk_start = 35,
+	 walk_end = 50,
+	 run_start = 35,
+	 run_end = 50,
       },
 })
 
@@ -65,7 +64,7 @@ mobs:register_spawn(
    },
    20,
    14,
-   200000,
+   12000,
    1,
    31000
 )
