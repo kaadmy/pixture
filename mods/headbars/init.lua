@@ -44,7 +44,7 @@ minetest.register_entity(
       visual_size = {x = 1 * headbars_scale, y = 0.1 * headbars_scale, z = 1},
       textures = {headbars.get_sprite("heart.png", "ui_null.png", 20, 20)},
 
-      glow = 3,
+      glow = 5,
 
       physical = false,
       collisionbox = {0, 0, 0, 0, 0, 0},
