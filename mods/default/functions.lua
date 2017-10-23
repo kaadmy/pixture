@@ -236,7 +236,6 @@ minetest.register_abm( -- leaf decay
             end
             -- Remove node
             minetest.remove_node(p0)
-            nodeupdate(p0)
          end
       end
 })
